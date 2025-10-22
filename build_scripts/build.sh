@@ -1,13 +1,27 @@
 #!/bin/bash
 
-# Build script for different environments
+# Build script for different environments with app configuration
 # Usage: ./build_scripts/build.sh [development|staging|production]
 
 set -e
 
 ENVIRONMENT=${1:-development}
 
-echo "Building for environment: $ENVIRONMENT"
+echo "🔧 Configuring and building for environment: $ENVIRONMENT"
+
+# Configure app branding first
+echo "📱 Configuring app branding..."
+dart tool/configure_app.dart $ENVIRONMENT
+
+# Clean and prepare
+echo "🧹 Cleaning previous builds..."
+flutter clean
+flutter pub get
+
+echo "🎨 Generating app icons..."
+flutter pub run flutter_launcher_icons:main
+
+flutter pub run build_runner build --delete-conflicting-outputs
 
 case $ENVIRONMENT in
   development)

@@ -47,6 +47,7 @@ dependencies:
   provider: 6.1.2
   encrypt: 5.0.3
   path: 1.9.0
+  yaml: ^3.1.2
 
 
 
@@ -93,6 +94,7 @@ flutter:
     - .env.development
     - .env.staging
     - .env.production
+    - branding.yaml
   #   - images/a_dot_ham.jpeg\
 
 flutter_icons:

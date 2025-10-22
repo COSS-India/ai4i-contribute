@@ -31,6 +31,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 17.0.13+10-LTS-268, mixed mode, sharing
 - flutter pub get
 - flutter pub run build_runner build --delete-conflicting-outputs
 - flutter run
+- ./build_scripts/build.sh production
 
 # API Specification Document
 

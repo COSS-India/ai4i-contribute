@@ -1,6 +1,6 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import '../constants/app_constants.dart';
+import 'branding_config.dart';
 
 /// AppConfig class manages environment variables and API endpoints
 /// following Flutter enterprise standards
@@ -19,6 +19,9 @@ class AppConfig {
 
     // Load the environment file
     await dotenv.load(fileName: envFile);
+    
+    // Initialize branding configuration
+    await BrandingConfig.initialize();
   }
 
   /// API Base URL
@@ -71,4 +74,13 @@ class AppConfig {
   /// Get a specific environment variable with default value
   String getEnvOrDefault(String key, String defaultValue) => 
       dotenv.env[key] ?? defaultValue;
+
+  /// Get app name from environment or branding config
+  String get appName => dotenv.env['APP_NAME'] ?? BrandingConfig.instance.appName;
+
+  /// Get app display name from environment or branding config
+  String get appDisplayName => dotenv.env['APP_DISPLAY_NAME'] ?? BrandingConfig.instance.appDisplayName;
+
+  /// Get package ID from environment or branding config
+  String get packageId => dotenv.env['PACKAGE_ID'] ?? BrandingConfig.instance.packageId;
 }

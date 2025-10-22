@@ -1,0 +1,26 @@
+# Branding Configuration for VoiceGive
+# This file controls all branding elements of the app
+# Modify this file to customize the app for different organizations
+
+app:
+  display_name: "VoiceGive"
+
+branding:
+  # Primary brand colors (hex format)
+  primary_color: "#2196F3"
+  secondary_color: "#FFC107"
+  bg_color: "#FF5722"
+  text_color: "#212121"
+  banner_color: "#4CAF50"
+  
+  # App icons and splash screen
+  app_icon: "assets/launcher/bhashini_logo.png"
+  splash_logo: ""
+  splash_animation: "assets/animations/bhashadaan_splash_screen.json"
+
+# Instructions for customization:
+# 1. Change app.display_name to your desired app name
+# 2. Replace branding.primary_color, secondary_color, accent_color with your brand colors
+# 4. Replace app_icon with your app icon (recommended: 1024x1024 PNG)
+# 5. Replace splash_logo and organization_logo with your logos
+# 6.  Replace partner_logos with your partner/sponsor logos
