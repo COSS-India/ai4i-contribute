@@ -6,17 +6,34 @@ app:
   display_name: "VoiceGive"
 
 branding:
-  # Primary brand colors (hex format)
-  primary_color: "#2196F3"
-  secondary_color: "#FFC107"
-  bg_color: "#FF5722"
-  text_color: "#212121"
-  banner_color: "#4CAF50"
+  # Primary brand colors (RGBA format)
+  primary_color: "21, 125, 82, 1"
+  secondary_color: "231, 97, 32, 1"
+  bg_color: ""
+  fg_color: ""
+  banner_color: ""
   
   # App icons and splash screen
-  app_icon: "assets/launcher/bhashini_logo.png"
+  app_icon: ""
   splash_logo: ""
   splash_animation: "assets/animations/bhashadaan_splash_screen.json"
+  
+  # Header image
+  header_primary_image: ""
+  header_secondary_image: ""
+  header_tertiary_image: ""
+
+  # banner image
+  banner_image: ""
+
+  #home screen images
+  home_screen_body_image: ""
+  home_screen_footer_image: ""
+  
+  # Consent document URLs
+  terms_of_use_url: ""
+  privacy_policy_url: ""
+  copyright_policy_url: ""
 
 # Instructions for customization:
 # 1. Change app.display_name to your desired app name

@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:VoiceGive/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:yaml/yaml.dart';
 
 /// BrandingConfig manages app branding and theming
-/// This allows easy customization for different organizations
 class BrandingConfig {
   static BrandingConfig? _instance;
   static BrandingConfig get instance {
@@ -17,7 +17,6 @@ class BrandingConfig {
 
   late Map<String, dynamic> _config;
 
-  /// Initialize branding configuration
   static Future<void> initialize() async {
     try {
       final yamlString = await rootBundle.loadString('branding.yaml');
@@ -29,75 +28,103 @@ class BrandingConfig {
     }
   }
 
-  /// Get app name
-  String get appName => _config['app']?['name'] ?? 'VoiceGive';
 
   /// Get app display name
   String get appDisplayName => _config['app']?['display_name'] ?? 'VoiceGive';
 
-  /// Get package ID
-  String get packageId => _config['app']?['package_id'] ?? 'com.voicegive.app';
-
   /// Get primary brand color
   Color get primaryColor {
-    final colorHex = _config['branding']?['primary_color'] ?? '#2196F3';
-    return Color(int.parse(colorHex.replaceFirst('#', '0xFF')));
+    final colorRgba = _config['branding']?['primary_color'] ?? '21, 125, 82, 1';
+    if (colorRgba.isEmpty) {
+      return const Color.fromRGBO(21, 125, 82, 1);
+    }
+    return _parseRgbaColor(colorRgba);
   }
 
   /// Get secondary brand color
   Color get secondaryColor {
-    final colorHex = _config['branding']?['secondary_color'] ?? '#FFC107';
-    return Color(int.parse(colorHex.replaceFirst('#', '0xFF')));
+    final colorRgba =
+        _config['branding']?['secondary_color'] ?? '231, 97, 32, 1';
+    if (colorRgba.isEmpty) {
+      return const Color.fromRGBO(231, 97, 32, 1);
+    }
+    return _parseRgbaColor(colorRgba);
   }
 
-  /// Get accent brand color
-  Color get accentColor {
-    final colorHex = _config['branding']?['accent_color'] ?? '#FF5722';
-    return Color(int.parse(colorHex.replaceFirst('#', '0xFF')));
+  /// Get background brand color
+  Color get bgColor {
+    final colorRgba = _config['branding']?['bg_color'] ?? '240, 243, 244, 1';
+    if (colorRgba.isEmpty) {
+      return const Color.fromRGBO(240, 243, 244, 1);
+    }
+    return _parseRgbaColor(colorRgba);
+  }
+
+  /// Get text color
+  Color get textColor {
+    final colorRgba = _config['branding']?['text_color'] ?? '0,0,0,1';
+    if (colorRgba.isEmpty) {
+      return const Color.fromRGBO(0, 0, 0, 1);
+    }
+    return _parseRgbaColor(colorRgba);
+  }
+
+  /// Get banner color
+  Color get bannerColor {
+    final colorRgba = _config['branding']?['banner_color'] ?? '231, 97, 32, 1';
+    if (colorRgba.isEmpty) {
+      return const Color.fromRGBO(231, 97, 32, 1);
+    }
+    return _parseRgbaColor(colorRgba);
+  }
+
+  /// Parse RGBA color string to Color object
+  Color _parseRgbaColor(String rgbaString) {
+    final parts = rgbaString.split(',');
+    if (parts.length == 4) {
+      final r = int.tryParse(parts[0].trim()) ?? 0;
+      final g = int.tryParse(parts[1].trim()) ?? 0;
+      final b = int.tryParse(parts[2].trim()) ?? 0;
+      final a = double.tryParse(parts[3].trim()) ?? 1.0;
+      return Color.fromRGBO(r, g, b, a);
+    }
+    return const Color.fromRGBO(33, 150, 243, 1.0); // Default blue
   }
 
   /// Get app icon path
-  String get appIcon => _config['branding']?['app_icon'] ?? 'assets/launcher/bhashadaan.png';
+  String get appIcon =>
+      _config['branding']?['app_icon'] ?? 'assets/launcher/bhashadaan.png';
 
   /// Get splash logo path
-  String get splashLogo => _config['branding']?['splash_logo'] ?? 'assets/images/bolo_logo.png';
+  String get splashLogo => _config['branding']?['splash_logo'] ?? '';
 
   /// Get splash animation path
-  String get splashAnimation => _config['branding']?['splash_animation'] ?? 'assets/animations/bhashadaan_splash_screen.json';
+  String get splashAnimation =>
+      _config['branding']?['splash_animation'] ??
+      'assets/animations/bhashadaan_splash_screen.json';
 
-  /// Get organization name
-  String get organizationName => _config['branding']?['organization_name'] ?? 'COSS India';
+  /// Get header image path
+  String get headerPrimaryImage =>
+      _config['branding']?['header_primary_image'] ?? '';
 
-  /// Get organization logo path
-  String get organizationLogo => _config['branding']?['organization_logo'] ?? 'assets/images/bhashini_logo.svg';
+  String get headerSecondaryImage =>
+      _config['branding']?['header_secondary_image'] ?? '';
 
-  /// Get partner logos
-  List<String> get partnerLogos {
-    final logos = _config['branding']?['partner_logos'];
-    if (logos is List) {
-      return List<String>.from(logos);
-    }
-    return [
-      'assets/images/digital_india_logo.png',
-      'assets/images/meity_logo.png',
-      'assets/images/mygov_logo.png',
-    ];
-  }
+  String get headerTertiaryImage =>
+      _config['branding']?['header_tertiary_image'] ?? '';
 
-  /// Get environment-specific app name suffix
-  String getAppNameSuffix(String environment) {
-    return _config['environments']?[environment]?['app_name_suffix'] ?? '';
-  }
+  String get bannerImage => _config['branding']?['banner_image'] ?? '';
 
-  /// Check if debug mode is enabled for environment
-  bool isDebugMode(String environment) {
-    return _config['environments']?[environment]?['debug_mode'] ?? false;
-  }
+  String get homeScreenBodyImage =>
+      _config['branding']?['home_screen_body_image'] ?? '';
+      
+  String get homeScreenFooterImage =>
+      _config['branding']?['home_screen_footer_image'] ?? '';
 
-  /// Get complete app name with environment suffix
-  String getEnvironmentAppName(String environment) {
-    return appDisplayName + getAppNameSuffix(environment);
-  }
+  /// Get consent document URLs
+  String get termsOfUseUrl => _config['branding']?['terms_of_use_url'] ?? '';
+  String get privacyPolicyUrl => _config['branding']?['privacy_policy_url'] ?? '';
+  String get copyrightPolicyUrl => _config['branding']?['copyright_policy_url'] ?? '';
 
   /// Default configuration fallback
   static Map<String, dynamic> _getDefaultConfig() {
@@ -108,9 +135,11 @@ class BrandingConfig {
         'package_id': 'com.voicegive.app',
       },
       'branding': {
-        'primary_color': '#2196F3',
-        'secondary_color': '#FFC107',
-        'accent_color': '#FF5722',
+        'primary_color': '33,150,243,1',
+        'secondary_color': '255,193,7,1',
+        'bg_color': '255,87,34,1',
+        'text_color': '33,33,33,1',
+        'banner_color': '33,150,243,1',
         'app_icon': 'assets/launcher/bhashadaan.png',
         'splash_logo': 'assets/images/bolo_logo.png',
         'organization_name': 'COSS India',

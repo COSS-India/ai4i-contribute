@@ -28,16 +28,16 @@ class HowItWorksSection extends StatelessWidget {
                 title: AppLocalizations.of(context)!.contribute,
                 description:
                     AppLocalizations.of(context)!.speakClearlyAndRecord,
-                iconPath: 'assets/icons/contribute_icon.png'),
+                iconPath: 'assets/icons/speaking.png'),
             cardWidget(
                 title: AppLocalizations.of(context)!.validate,
                 description: AppLocalizations.of(context)!.listenAndValidate,
-                iconPath: 'assets/icons/validate_icon.png'),
+                iconPath: 'assets/icons/deaf.png'),
             cardWidget(
                 title: AppLocalizations.of(context)!.earnCertificate,
                 description:
                     AppLocalizations.of(context)!.earnCertificateDescription,
-                iconPath: 'assets/icons/certificate_icon.png')
+                iconPath: 'assets/icons/certificate.png')
           ],
         ),
       ],

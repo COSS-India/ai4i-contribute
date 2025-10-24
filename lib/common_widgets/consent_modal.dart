@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
+import '../config/branding_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InformedConsentModal extends StatefulWidget {
   final VoidCallback onApprove;
@@ -205,6 +207,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                         AppLocalizations.of(context)!.termsOfUse,
                         _termsAccepted,
                         (value) => setState(() => _termsAccepted = value!),
+                        url: BrandingConfig.instance.termsOfUseUrl,
                       ),
                       SizedBox(height: 8.w),
 
@@ -212,6 +215,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                         AppLocalizations.of(context)!.privacyPolicy,
                         _privacyAccepted,
                         (value) => setState(() => _privacyAccepted = value!),
+                        url: BrandingConfig.instance.privacyPolicyUrl,
                       ),
                       SizedBox(height: 8.w),
 
@@ -219,6 +223,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                         AppLocalizations.of(context)!.copyrightPolicy,
                         _copyrightAccepted,
                         (value) => setState(() => _copyrightAccepted = value!),
+                        url: BrandingConfig.instance.copyrightPolicyUrl,
                       ),
                       SizedBox(height: 40.h),
                     ],
@@ -358,15 +363,15 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
   }
 
   Widget _buildCheckboxItem(
-      String text, bool value, ValueChanged<bool?> onChanged) {
-    return InkWell(
-      onTap: () => onChanged(!value),
-      borderRadius: BorderRadius.circular(4),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        child: Row(
-          children: [
-            AnimatedContainer(
+      String text, bool value, ValueChanged<bool?> onChanged, {String? url}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          InkWell(
+            onTap: () => onChanged(!value),
+            borderRadius: BorderRadius.circular(4),
+            child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               width: 24,
               height: 24,
@@ -386,21 +391,39 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                     )
                   : null,
             ),
-            const SizedBox(width: 12),
-            Expanded(
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: InkWell(
+              onTap: url != null && url.isNotEmpty ? () => _launchUrl(url) : null,
               child: Text(
                 text,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFF047857),
+                  color: AppColors.darkGreen,
                   decoration: TextDecoration.underline,
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
+  }
+
+  Future<void> _launchUrl(String url) async {
+    try {
+      final Uri uri = Uri.parse(url);
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } catch (e) {
+      // Fallback: try without canLaunchUrl check
+      try {
+        final Uri uri = Uri.parse(url);
+        await launchUrl(uri);
+      } catch (e) {
+        // Silent fail - URL couldn't be opened
+      }
+    }
   }
 }

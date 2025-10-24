@@ -1,21 +1,38 @@
 import 'package:flutter/material.dart';
+import '../config/branding_config.dart';
 
 class AppColors {
   static const darkBlue = Color.fromRGBO(27, 76, 161, 1);
   static const whiteGradientOne = Color.fromRGBO(239, 243, 249, 1);
   static const disabledTextGrey = Color.fromRGBO(102, 102, 102, 1);
   static const disabledTextGrey0 = Color.fromRGBO(102, 102, 102, 0);
-  static const lightBackground = Color.fromRGBO(240, 243, 244, 1);
+  // static const lightBackground = Color.fromRGBO(240, 243, 244, 1);
+  static Color get lightBackground => BrandingConfig.instance.bgColor;
+
   static const appBarBackground = Color.fromRGBO(255, 255, 255, 1);
   static const saffron = Color.fromRGBO(255, 153, 51, 1);
   static const blue1 = Color.fromRGBO(173, 189, 235, 1);
   static const blue2 = Color.fromRGBO(250, 251, 255, 1);
-  static const orange = Color.fromRGBO(231, 97, 32, 1);
-  static const darkGreen = Color.fromRGBO(21, 125, 82, 1);
-  static const lightGreen = Color.fromRGBO(35, 208, 136, 1);
-  static const lightGreen2 = Color.fromRGBO(233, 250, 243, 1);
-  static const lightGreen3 = Color.fromRGBO(248, 254, 251, 1);
-  static const lightGreen4 = Color.fromRGBO(227, 249, 239, 1);
+  // static const orange = Color.fromRGBO(231, 97, 32, 1);
+  static Color get orange => BrandingConfig.instance.secondaryColor;
+  static Color get darkGreen => BrandingConfig.instance.primaryColor;
+  static Color get lightGreen =>
+      BrandingConfig.instance.primaryColor.withOpacity(0.3);
+  static Color get lightGreen2 =>
+      BrandingConfig.instance.primaryColor.withOpacity(0.1);
+  static Color get lightGreen3 =>
+      BrandingConfig.instance.primaryColor.withOpacity(0.05);
+  static Color get lightGreen4 =>
+      BrandingConfig.instance.primaryColor.withOpacity(0.15);
+  static Color get bannerColor {
+    final branding = BrandingConfig.instance;
+    // First try banner_color from branding
+    if (branding.bannerColor != const Color.fromRGBO(33, 150, 243, 1.0)) {
+      return branding.bannerColor;
+    }
+    // Then try secondary_color from branding
+    return branding.secondaryColor;
+  }
 
   // Greys
   static const grey = Color.fromRGBO(158, 158, 158, 1);

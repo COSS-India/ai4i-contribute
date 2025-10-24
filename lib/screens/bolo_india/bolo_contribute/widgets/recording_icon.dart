@@ -19,12 +19,11 @@ class RecordingButton extends StatefulWidget {
   final String text;
   final Function(File?) getRecordedFile;
   final Function(RecordingState?) isRecording;
-  const RecordingButton({
-    super.key,
-    required this.text,
-    required this.getRecordedFile,
-    required this.isRecording
-  });
+  const RecordingButton(
+      {super.key,
+      required this.text,
+      required this.getRecordedFile,
+      required this.isRecording});
 
   @override
   State<RecordingButton> createState() => _RecordingButtonState();
@@ -158,12 +157,14 @@ class _RecordingButtonState extends State<RecordingButton>
   Widget _buildIcon() {
     switch (_state) {
       case RecordingState.idle:
-        return ImageWidget(
-            imageUrl: "assets/images/record.png",
-            height: 150,
-            width: 240,
-            boxFit: BoxFit.contain);
-
+        return SizedBox(
+          height: 150,
+          child: CircleAvatar(
+              radius: 36.r,
+              backgroundColor: AppColors.darkGreen,
+              child:
+                  Icon(Icons.mic_outlined, size: 45.sp, color: Colors.white)),
+        );
       case RecordingState.recording:
         return SizedBox(
           height: 150,
@@ -174,11 +175,14 @@ class _RecordingButtonState extends State<RecordingButton>
                   Icon(Icons.stop_rounded, size: 45.sp, color: Colors.white)),
         );
       case RecordingState.stopped:
-        return ImageWidget(
-            imageUrl: "assets/images/record.png",
-            height: 150,
-            width: 240,
-            boxFit: BoxFit.contain);
+        return SizedBox(
+          height: 150,
+          child: CircleAvatar(
+              radius: 36.r,
+              backgroundColor: AppColors.darkGreen,
+              child:
+                  Icon(Icons.mic_outlined, size: 45.sp, color: Colors.white)),
+        );
     }
   }
 

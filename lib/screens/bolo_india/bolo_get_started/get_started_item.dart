@@ -9,7 +9,8 @@ class GetStartedItem extends StatelessWidget {
   final String title;
   final String description;
 
-  const GetStartedItem({super.key, 
+  const GetStartedItem({
+    super.key,
     required this.iconPath,
     required this.title,
     required this.description,
@@ -23,6 +24,7 @@ class GetStartedItem extends StatelessWidget {
           children: [
             ImageWidget(
               imageUrl: iconPath,
+              imageColor: AppColors.darkGreen,
               height: 28.w,
               width: 28.w,
               boxFit: BoxFit.contain,

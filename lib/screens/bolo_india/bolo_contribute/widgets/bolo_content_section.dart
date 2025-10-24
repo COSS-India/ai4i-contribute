@@ -16,11 +16,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 typedef IntCallback = void Function(int value);
+
 class BoloContentSection extends StatefulWidget {
   final LanguageModel language;
   final IntCallback indexUpdate;
   final int currentIndex;
-  const BoloContentSection({super.key, required this.language, required this.indexUpdate, required this.currentIndex});
+  const BoloContentSection(
+      {super.key,
+      required this.language,
+      required this.indexUpdate,
+      required this.currentIndex});
 
   @override
   State<BoloContentSection> createState() => _BoloContentSectionState();
@@ -56,15 +61,15 @@ class _BoloContentSectionState extends State<BoloContentSection> {
       boloContributeFuture = BoloContributeRepository()
           .getContributionSentances(language: widget.language.languageCode);
     }
-    if(currentIndex != widget.currentIndex){
+    if (currentIndex != widget.currentIndex) {
       currentIndex = widget.currentIndex;
     }
-    if(recordedFiles.isNotEmpty && recordedFiles.length > currentIndex + 1){
+    if (recordedFiles.isNotEmpty && recordedFiles.length > currentIndex + 1) {
       recordedFiles.removeLast();
     }
-    if(mounted){
+    if (mounted) {
       setState(() {});
-      }
+    }
   }
 
   @override
@@ -434,15 +439,14 @@ class _BoloContentSectionState extends State<BoloContentSection> {
     enableSkip.value = false;
     bool isSubmitted = false;
 
-    if(recordedFile!=null){
+    if (recordedFile != null) {
       isSubmitted = await BoloContributeRepository().submitContributeAudio(
-      duration: 10,
-      sentenceId: currentSentence.sentenceId,
-      sequenceNumber: currentSentence.sequenceNumber,
-      audioFile: recordedFile!,
-      languageCode: widget.language.languageCode,
-    );
-
+        duration: 10,
+        sentenceId: currentSentence.sentenceId,
+        sequenceNumber: currentSentence.sequenceNumber,
+        audioFile: recordedFile!,
+        languageCode: widget.language.languageCode,
+      );
     }
     if (isSubmitted) {
       enableSubmit.value = true;
