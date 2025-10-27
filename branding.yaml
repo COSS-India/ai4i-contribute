@@ -2,8 +2,10 @@
 # This file controls all branding elements of the app
 # Modify this file to customize the app for different organizations
 
+# App Name and Logo
 app:
-  display_name: "VoiceGive"
+  display_name: ""
+  app_icon: ""
 
 branding:
   # Primary brand colors (RGBA format: "23, 125, 86, 1")
@@ -13,8 +15,8 @@ branding:
   fg_color: ""
   banner_color: ""
   
-  # App icons and splash screen
-  app_icon: ""
+
+  # Splash screen
   splash_logo: ""
   splash_animation: ""
   
@@ -29,7 +31,7 @@ branding:
   #home screen images
   home_screen_body_image: ""
   home_screen_footer_image: ""
-  home_screen_footer_url: "https://fonts.google.com/icons"
+  home_screen_footer_url: ""
 
   # Consent document URLs
   terms_of_use_url: ""

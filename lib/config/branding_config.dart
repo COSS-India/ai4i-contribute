@@ -28,9 +28,12 @@ class BrandingConfig {
     }
   }
 
-
   /// Get app display name
   String get appDisplayName => _config['app']?['display_name'] ?? 'VoiceGive';
+
+  /// Get app icon path
+  String get appIcon =>
+      _config['app']?['app_icon'] ?? 'assets/launcher/bhashadaan.png';
 
   /// Get primary brand color
   Color get primaryColor {
@@ -91,10 +94,6 @@ class BrandingConfig {
     return const Color.fromRGBO(33, 150, 243, 1.0); // Default blue
   }
 
-  /// Get app icon path
-  String get appIcon =>
-      _config['branding']?['app_icon'] ?? 'assets/launcher/bhashadaan.png';
-
   /// Get splash logo path
   String get splashLogo => _config['branding']?['splash_logo'] ?? '';
 
@@ -117,17 +116,19 @@ class BrandingConfig {
 
   String get homeScreenBodyImage =>
       _config['branding']?['home_screen_body_image'] ?? '';
-      
+
   String get homeScreenFooterImage =>
       _config['branding']?['home_screen_footer_image'] ?? '';
-      
+
   String get homeScreenFooterUrl =>
       _config['branding']?['home_screen_footer_url'] ?? '';
 
   /// Get consent document URLs
   String get termsOfUseUrl => _config['branding']?['terms_of_use_url'] ?? '';
-  String get privacyPolicyUrl => _config['branding']?['privacy_policy_url'] ?? '';
-  String get copyrightPolicyUrl => _config['branding']?['copyright_policy_url'] ?? '';
+  String get privacyPolicyUrl =>
+      _config['branding']?['privacy_policy_url'] ?? '';
+  String get copyrightPolicyUrl =>
+      _config['branding']?['copyright_policy_url'] ?? '';
 
   /// Default configuration fallback
   static Map<String, dynamic> _getDefaultConfig() {

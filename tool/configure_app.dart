@@ -139,7 +139,7 @@ Future<void> configureAndroid(
 Future<void> updateAppIcon(Map<String, dynamic> config) async {
   log('🎨 Configuring app icon...');
 
-  final branding = Map<String, dynamic>.from(config['branding'] ?? {});
+  final branding = Map<String, dynamic>.from(config['app'] ?? {});
   final iconPath = branding['app_icon'] ?? 'assets/launcher/bhashadaan.png';
   final iconFile = File(iconPath);
 
