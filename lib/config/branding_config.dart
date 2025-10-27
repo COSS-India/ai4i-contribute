@@ -120,6 +120,9 @@ class BrandingConfig {
       
   String get homeScreenFooterImage =>
       _config['branding']?['home_screen_footer_image'] ?? '';
+      
+  String get homeScreenFooterUrl =>
+      _config['branding']?['home_screen_footer_url'] ?? '';
 
   /// Get consent document URLs
   String get termsOfUseUrl => _config['branding']?['terms_of_use_url'] ?? '';

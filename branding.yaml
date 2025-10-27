@@ -6,9 +6,9 @@ app:
   display_name: "VoiceGive"
 
 branding:
-  # Primary brand colors (RGBA format)
-  primary_color: "21, 125, 82, 1"
-  secondary_color: "231, 97, 32, 1"
+  # Primary brand colors (RGBA format: "23, 125, 86, 1")
+  primary_color: ""
+  secondary_color: "" 
   bg_color: ""
   fg_color: ""
   banner_color: ""
@@ -16,7 +16,7 @@ branding:
   # App icons and splash screen
   app_icon: ""
   splash_logo: ""
-  splash_animation: "assets/animations/bhashadaan_splash_screen.json"
+  splash_animation: ""
   
   # Header image
   header_primary_image: ""
@@ -29,7 +29,8 @@ branding:
   #home screen images
   home_screen_body_image: ""
   home_screen_footer_image: ""
-  
+  home_screen_footer_url: "https://fonts.google.com/icons"
+
   # Consent document URLs
   terms_of_use_url: ""
   privacy_policy_url: ""
