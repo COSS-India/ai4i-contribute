@@ -41,7 +41,6 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
   @override
   Widget build(BuildContext context) {
     final splashLogo = BrandingConfig.instance.splashLogo;
-    
     // If splash_logo is specified, only show image
     if (splashLogo.isNotEmpty) {
       return Scaffold(
@@ -49,18 +48,18 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
         body: _buildImageSplash(splashLogo),
       );
     }
-    
+
     // Otherwise show animation
-    final animationPath = BrandingConfig.instance.splashAnimation.isNotEmpty 
+    final animationPath = BrandingConfig.instance.splashAnimation.isNotEmpty
         ? BrandingConfig.instance.splashAnimation
         : 'assets/animations/bhashadaan_splash_screen.json';
-    
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: _buildAnimationSplash(animationPath),
     );
   }
-  
+
   Widget _buildImageSplash(String logoPath) {
     // Auto-navigate after 3 seconds for image splash
     Future.delayed(const Duration(seconds: 3), () {
@@ -68,17 +67,29 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
         Navigator.of(context).pushReplacementNamed(AppRoutes.home);
       }
     });
-    
+
     return Center(
-      child: ImageWidget(
-        imageUrl: logoPath,
-        width: 200,
-        height: 200,
-        boxFit: BoxFit.contain,
+      child: Column(
+        children: [
+          ImageWidget(
+            imageUrl: logoPath,
+            width: 200,
+            height: 200,
+            boxFit: BoxFit.contain,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            BrandingConfig.instance.appDisplayName,
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
       ),
     );
   }
-  
+
   Widget _buildAnimationSplash(String animationPath) {
     return Lottie.asset(
       animationPath,
