@@ -56,7 +56,7 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
     if (splashName.isNotEmpty) {
       return Scaffold(
         backgroundColor: Colors.white,
-        body: _buildImageSplash('assets/launcher/bhashadaan.png', splashName),
+        body: _buildImageSplash('assets/launcher/ai4i_logo.png', splashName),
       );
     }
 
@@ -64,7 +64,7 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
     if (splashLogo.isNotEmpty) {
       return Scaffold(
         backgroundColor: Colors.white,
-        body: _buildImageSplash(splashLogo, 'AI4I-Contribute'),
+        body: _buildImageSplash(splashLogo, 'Contribute'),
       );
     }
 
@@ -79,8 +79,7 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
     // Fallback: Default animation
     return Scaffold(
       backgroundColor: Colors.white,
-      body: _buildAnimationSplash(
-          'assets/animations/bhashadaan_splash_screen.json'),
+      body: _buildImageSplash('assets/launcher/ai4i_logo.png', 'Contribute'),
     );
   }
 

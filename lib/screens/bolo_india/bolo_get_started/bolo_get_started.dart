@@ -127,11 +127,7 @@ class _BoloGetStartedState extends State<BoloGetStarted> {
                           height: 40.w,
                           width: 40.w,
                         )
-                      : ImageWidget(
-                          height: 40.w,
-                          width: 40.w,
-                          imageUrl: "assets/images/bolo_icon_white.svg",
-                        ),
+                      : SizedBox(width: 40.w, height: 40.w),
                   SizedBox(width: 8.w),
                   if (branding.bannerImage.isEmpty)
                     Column(

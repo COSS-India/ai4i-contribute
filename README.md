@@ -33,6 +33,15 @@ Java HotSpot(TM) 64-Bit Server VM (build 17.0.13+10-LTS-268, mixed mode, sharing
 - flutter run
 - ./build_scripts/build.sh production
 
+## App Customization
+
+For organizations wanting to customize the app with their own branding, see the [**Branding Guide**](BRANDING_GUIDE.md) for complete instructions on:
+- App name and icon customization
+- Color schemes and themes
+- Images and animations
+- Consent form configuration
+- Build process
+
 # API Specification Document
 
 Ref Backend installation guide : https://github.com/COSS-India/VoiceGive/blob/dev_api_spec/backend/README.md

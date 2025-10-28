@@ -98,15 +98,15 @@ class _HomeHeaderSectionState extends State<HomeHeaderSection> {
                   ),
                 ],
               ),
-              Positioned(
-                top: 0,
-                right: -20,
-                child: ImageWidget(
-                  imageUrl: "assets/images/home_header_image.png",
-                  width: 180.w,
-                  height: 180.h,
-                ),
-              ),
+              // Positioned(
+              //   top: 0,
+              //   right: -20,
+              //   child: ImageWidget(
+              //     imageUrl: "assets/images/home_header_image.png",
+              //     width: 180.w,
+              //     height: 180.h,
+              //   ),
+              // ),
             ],
           ),
           SizedBox(height: 12.w),
@@ -123,14 +123,13 @@ class _HomeHeaderSectionState extends State<HomeHeaderSection> {
             child: ElevatedButton(
               onPressed: () async {
                 String sessionId = await BoloService.sessionId;
-                if(sessionId.isNotEmpty){
+                if (sessionId.isNotEmpty) {
                   Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) => const BoloGetStarted(),
-                                  ),
-                                );
-                }
-                else{
+                    MaterialPageRoute(
+                      builder: (_) => const BoloGetStarted(),
+                    ),
+                  );
+                } else {
                   _showConsentModal(context);
                 }
               },

@@ -33,7 +33,7 @@ class BrandingConfig {
 
   /// Get app icon path
   String get appIcon =>
-      _config['app']?['app_icon'] ?? 'assets/launcher/bhashadaan.png';
+      _config['app']?['app_icon'] ?? 'assets/launcher/ai4i_logo.png';
 
   /// Get primary brand color
   Color get primaryColor {
@@ -98,8 +98,7 @@ class BrandingConfig {
   String get splashLogo => _config['branding']?['splash_logo'] ?? '';
 
   /// Get splash name
-  String get splashName =>
-      _config['branding']?['splash_name'] ?? 'AI4I-Contribute';
+  String get splashName => _config['branding']?['splash_name'] ?? 'Contribute';
 
   /// Get splash animation path
   String get splashAnimation =>
@@ -134,6 +133,9 @@ class BrandingConfig {
   String get copyrightPolicyUrl =>
       _config['branding']?['copyright_policy_url'] ?? '';
 
+  /// Get badge image
+  String get badgeImage => _config['branding']?['badge_image'] ?? '';
+
   /// Default configuration fallback
   static Map<String, dynamic> _getDefaultConfig() {
     return {
@@ -148,7 +150,7 @@ class BrandingConfig {
         'bg_color': '255,87,34,1',
         'text_color': '33,33,33,1',
         'banner_color': '33,150,243,1',
-        'app_icon': 'assets/launcher/bhashadaan.png',
+        'app_icon': 'assets/launcher/ai4i_logo.png',
         'splash_logo': 'assets/images/bolo_logo.png',
         'organization_name': 'COSS India',
       },

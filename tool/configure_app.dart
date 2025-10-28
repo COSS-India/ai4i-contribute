@@ -45,10 +45,10 @@ void main(List<String> arguments) async {
 
     // Get app configuration
     final app = Map<String, dynamic>.from(config['app'] ?? {});
-    final appName = app['name'] ?? 'AI4I-Contribute';
+    final appName = app['name'] ?? 'Contribute';
     final rawDisplayName = app['display_name'] ?? '';
     final displayName = rawDisplayName.toString().trim().isEmpty
-        ? 'AI4I-Contribute'
+        ? 'Contribute'
         : rawDisplayName;
     final packageId = app['package_id'] ?? 'com.voicegive.app';
 
@@ -154,7 +154,7 @@ Future<void> updateAppIcon(Map<String, dynamic> config) async {
   log('🎨 Configuring app icon...');
 
   final branding = Map<String, dynamic>.from(config['app'] ?? {});
-  final iconPath = branding['app_icon'] ?? 'assets/launcher/bhashadaan.png';
+  final iconPath = branding['app_icon'] ?? 'assets/launcher/ai4i_logo.png';
   final iconFile = File(iconPath);
 
   String finalIconPath;
@@ -162,7 +162,7 @@ Future<void> updateAppIcon(Map<String, dynamic> config) async {
     finalIconPath = iconPath;
     log('  ✓ Using custom icon: $iconPath');
   } else {
-    finalIconPath = 'assets/launcher/bhashadaan.png';
+    finalIconPath = 'assets/launcher/ai4i_logo.png';
     log('  ⚠️  Custom icon not found, using default: $finalIconPath');
   }
 

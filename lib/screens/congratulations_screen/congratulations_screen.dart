@@ -12,6 +12,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../config/branding_config.dart';
+
 class CongratulationsScreen extends StatefulWidget {
   const CongratulationsScreen({
     super.key,
@@ -153,6 +155,8 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
   }
 
   Widget _buildCongratulationsSection() {
+    final branding = BrandingConfig.instance;
+
     return AnimatedBuilder(
       animation: _scaleAnimation,
       builder: (context, child) {
@@ -161,12 +165,19 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
           child: Column(
             children: [
               // Badge
-              ImageWidget(
-                height: 120.w,
-                width: 120.w,
-                imageUrl: 'assets/images/bolo_logo.png',
-                boxFit: BoxFit.contain,
-              ),
+              branding.headerPrimaryImage.isNotEmpty
+                  ? ImageWidget(
+                      imageUrl: branding.badgeImage,
+                      height: 120.w,
+                      width: 120.w,
+                      boxFit: BoxFit.contain,
+                    )
+                  : ImageWidget(
+                      height: 120.w,
+                      width: 120.w,
+                      imageUrl: 'assets/images/bolo_logo.png',
+                      boxFit: BoxFit.contain,
+                    ),
               SizedBox(height: 24.w),
               // Congratulations Text
               Text(

@@ -36,6 +36,9 @@ branding:
   privacy_policy_url: ""
   copyright_policy_url: ""
 
+  #badge image
+  badge_image: ""
+
 # Instructions for customization:
 # 1. Change app.display_name to your desired app name
 # 2. Replace branding.primary_color, secondary_color, accent_color with your brand colors
