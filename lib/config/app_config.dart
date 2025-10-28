@@ -75,6 +75,5 @@ class AppConfig {
   String? getEnv(String key) => dotenv.env[key];
 
   /// Get app display name from environment or branding config
-  String get appDisplayName =>
-      dotenv.env['APP_DISPLAY_NAME'] ?? BrandingConfig.instance.appDisplayName;
+  String get appDisplayName => BrandingConfig.instance.appDisplayName;
 }

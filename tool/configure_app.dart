@@ -5,6 +5,14 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 import 'package:yaml/yaml.dart';
 
+/// Validation constants
+class ValidationConstants {
+  static const int appNameTechnicalLimit = 255;
+  static const int urlTechnicalLimit = 2083;
+  static final RegExp appNamePattern = RegExp(r'^[a-zA-Z0-9\s_-]+$');
+  static final RegExp urlPattern = RegExp(r'^https?:\/\/[^\s]+$');
+}
+
 /// Logger for build-time configuration
 void log(String message) {
   if (bool.fromEnvironment('dart.vm.product')) {
@@ -37,9 +45,15 @@ void main(List<String> arguments) async {
 
     // Get app configuration
     final app = Map<String, dynamic>.from(config['app'] ?? {});
-    final appName = app['name'] ?? 'VoiceGive';
-    final displayName = app['display_name'] ?? 'VoiceGive';
+    final appName = app['name'] ?? 'AI4I-Contribute';
+    final rawDisplayName = app['display_name'] ?? '';
+    final displayName = rawDisplayName.toString().trim().isEmpty
+        ? 'AI4I-Contribute'
+        : rawDisplayName;
     final packageId = app['package_id'] ?? 'com.voicegive.app';
+
+    // Validate app configuration
+    validateAppConfiguration(displayName, config);
 
     // Get environment-specific suffix
     final environments =
@@ -171,16 +185,16 @@ Future<void> updateAppIcon(Map<String, dynamic> config) async {
 /// Update environment file with current configuration
 // Future<void> updateEnvironmentFile(String environment, String appName, String displayName, String packageId) async {
 //   log('🔧 Updating environment file...');
-  
+
 //   final envFile = File('.env.$environment');
 //   if (envFile.existsSync()) {
 //     String content = await envFile.readAsString();
-    
+
 //     // Update or add app configuration
 //     content = _updateOrAddEnvVar(content, 'APP_NAME', appName);
 //     content = _updateOrAddEnvVar(content, 'APP_DISPLAY_NAME', displayName);
 //     content = _updateOrAddEnvVar(content, 'PACKAGE_ID', packageId);
-    
+
 //     await envFile.writeAsString(content);
 //     log('  ✓ Updated .env.$environment');
 //   }
@@ -190,10 +204,52 @@ Future<void> updateAppIcon(Map<String, dynamic> config) async {
 // String _updateOrAddEnvVar(String content, String key, String value) {
 //   final regex = RegExp('^$key=.*\$', multiLine: true);
 //   final newLine = '$key=$value';
-  
+
 //   if (content.contains(regex)) {
 //     return content.replaceAll(regex, newLine);
 //   } else {
 //     return content + '\n$newLine';
 //   }
 // }
+
+/// Validate app configuration values
+void validateAppConfiguration(String displayName, Map<String, dynamic> config) {
+  log('🔍 Validating configuration...');
+
+  // Validate app name
+  if (displayName.length > ValidationConstants.appNameTechnicalLimit) {
+    log('❌ App name "$displayName" exceeds ${ValidationConstants.appNameTechnicalLimit} characters');
+    exit(1);
+  }
+
+  if (!ValidationConstants.appNamePattern.hasMatch(displayName)) {
+    log('❌ App name "$displayName" contains invalid characters. Only letters, numbers, spaces, hyphens, and underscores are allowed.');
+    exit(1);
+  }
+
+  // Validate URLs in branding section
+  final branding = Map<String, dynamic>.from(config['branding'] ?? {});
+  final urlFields = [
+    'home_screen_footer_url',
+    'terms_of_use_url',
+    'privacy_policy_url',
+    'copyright_policy_url'
+  ];
+
+  for (final field in urlFields) {
+    final url = branding[field]?.toString() ?? '';
+    if (url.isNotEmpty) {
+      if (url.length > ValidationConstants.urlTechnicalLimit) {
+        log('❌ URL in $field exceeds ${ValidationConstants.urlTechnicalLimit} characters');
+        exit(1);
+      }
+
+      if (!ValidationConstants.urlPattern.hasMatch(url)) {
+        log('❌ Invalid URL format in $field: "$url"');
+        exit(1);
+      }
+    }
+  }
+
+  log('✅ Configuration validation passed');
+}

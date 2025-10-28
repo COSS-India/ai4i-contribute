@@ -97,6 +97,10 @@ class BrandingConfig {
   /// Get splash logo path
   String get splashLogo => _config['branding']?['splash_logo'] ?? '';
 
+  /// Get splash name
+  String get splashName =>
+      _config['branding']?['splash_name'] ?? 'AI4I-Contribute';
+
   /// Get splash animation path
   String get splashAnimation =>
       _config['branding']?['splash_animation'] ??

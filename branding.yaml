@@ -4,18 +4,18 @@
 
 # App Name and Logo
 app:
-  display_name: "Voicegive"
+  display_name: ""
   app_icon: ""
 
 branding:
   # Primary brand colors (RGBA format: "23, 125, 86, 1")
   primary_color: ""
   secondary_color: "" 
-  banner_color: ""
-  
+  banner_color: "" 
 
   # Splash screen
   splash_logo: ""
+  splash_name: ""
   splash_animation: ""
   
   # Header image

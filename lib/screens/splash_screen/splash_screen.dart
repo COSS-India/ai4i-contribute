@@ -41,26 +41,50 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
   @override
   Widget build(BuildContext context) {
     final splashLogo = BrandingConfig.instance.splashLogo;
-    // If splash_logo is specified, only show image
-    if (splashLogo.isNotEmpty) {
+    final splashName = BrandingConfig.instance.splashName;
+    final splashAnimation = BrandingConfig.instance.splashAnimation;
+
+    // Priority 1: Both logo and name
+    if (splashLogo.isNotEmpty && splashName.isNotEmpty) {
       return Scaffold(
         backgroundColor: Colors.white,
-        body: _buildImageSplash(splashLogo),
+        body: _buildImageSplash(splashLogo, splashName),
       );
     }
 
-    // Otherwise show animation
-    final animationPath = BrandingConfig.instance.splashAnimation.isNotEmpty
-        ? BrandingConfig.instance.splashAnimation
-        : 'assets/animations/bhashadaan_splash_screen.json';
+    // Priority 2: Only name (use default logo)
+    if (splashName.isNotEmpty) {
+      return Scaffold(
+        backgroundColor: Colors.white,
+        body: _buildImageSplash('assets/launcher/bhashadaan.png', splashName),
+      );
+    }
 
+    // Priority 3: Only logo (use default name)
+    if (splashLogo.isNotEmpty) {
+      return Scaffold(
+        backgroundColor: Colors.white,
+        body: _buildImageSplash(splashLogo, 'AI4I-Contribute'),
+      );
+    }
+
+    // Priority 4: Animation if available
+    if (splashAnimation.isNotEmpty) {
+      return Scaffold(
+        backgroundColor: Colors.white,
+        body: _buildAnimationSplash(splashAnimation),
+      );
+    }
+
+    // Fallback: Default animation
     return Scaffold(
       backgroundColor: Colors.white,
-      body: _buildAnimationSplash(animationPath),
+      body: _buildAnimationSplash(
+          'assets/animations/bhashadaan_splash_screen.json'),
     );
   }
 
-  Widget _buildImageSplash(String logoPath) {
+  Widget _buildImageSplash(String logoPath, String splashName) {
     // Auto-navigate after 3 seconds for image splash
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
@@ -70,6 +94,7 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
 
     return Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ImageWidget(
             imageUrl: logoPath,
@@ -79,7 +104,7 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
           ),
           const SizedBox(height: 16),
           Text(
-            BrandingConfig.instance.appDisplayName,
+            splashName,
             style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
