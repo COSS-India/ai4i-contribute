@@ -45,7 +45,7 @@ For organizations wanting to customize the app with their own branding, see the 
 # API Specification Document
 
 Ref Backend installation guide : https://github.com/COSS-India/VoiceGive/blob/dev_api_spec/backend/README.md
-Swagger UI : http://43.205.235.156:9000/docs
+Swagger UI : http://52.66.71.106:9000/docs
 
 ## Code Structure
 
