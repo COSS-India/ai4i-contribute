@@ -16,7 +16,7 @@ class BrandingAlignmentWidget extends StatelessWidget {
   final double bhashaDaanYOffsetFactor;
   // Nudge AgriDaan group vertically
   final double agriDaanYOffsetFactor;
-  
+
   const BrandingAlignmentWidget({
     super.key,
     this.fontSize,
@@ -46,20 +46,8 @@ class BrandingAlignmentWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.baseline,
             textBaseline: TextBaseline.alphabetic,
             children: [
-              if (showBhashiniIcon) ...[
-                Baseline(
-                  baseline: resolvedFontSize * 0.8,
-                  baselineType: TextBaseline.alphabetic,
-                  child: SvgPicture.asset(
-                    'assets/images/bhashini_logo.svg',
-                    height: resolvedFontSize * iconScale,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                SizedBox(width: 6.w),
-              ],
               Text(
-                'BHASHINI',
+                'AI4I - Contribute',
                 style: GoogleFonts.notoSans(
                   fontSize: resolvedFontSize,
                   fontWeight: FontWeight.bold,
@@ -69,7 +57,7 @@ class BrandingAlignmentWidget extends StatelessWidget {
             ],
           ),
         ),
-        
+
         if (showSeparators) ...[
           SizedBox(width: 8.w),
           Container(
@@ -79,62 +67,6 @@ class BrandingAlignmentWidget extends StatelessWidget {
           ),
           SizedBox(width: 8.w),
         ],
-        
-        // BhashaDaan
-        Transform.translate(
-          offset: Offset(0, -resolvedFontSize * bhashaDaanYOffsetFactor),
-          child: RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: 'Bhasha',
-                  style: GoogleFonts.notoSans(
-                    fontSize: resolvedFontSize,
-                    fontWeight: FontWeight.bold,
-                    color: textColor ?? const Color(0xFF1E3A8A), // Dark blue
-                  ),
-                ),
-                TextSpan(
-                  text: 'Daan',
-                  style: GoogleFonts.notoSans(
-                    fontSize: resolvedFontSize,
-                    fontWeight: FontWeight.bold,
-                    color: textColor ?? const Color(0xFFFFD700), // Gold/Yellow
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        
-        SizedBox(width: 16.w),
-        
-        // AgriDaan
-        Transform.translate(
-          offset: Offset(0, -resolvedFontSize * agriDaanYOffsetFactor),
-          child: RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: 'Agri',
-                  style: GoogleFonts.notoSans(
-                    fontSize: resolvedFontSize,
-                    fontWeight: FontWeight.bold,
-                    color: textColor ?? const Color(0xFF166534), // Dark green
-                  ),
-                ),
-                TextSpan(
-                  text: 'Daan',
-                  style: GoogleFonts.notoSans(
-                    fontSize: resolvedFontSize,
-                    fontWeight: FontWeight.bold,
-                    color: textColor ?? const Color(0xFF0D9488), // Teal/light green
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
       ],
     );
   }

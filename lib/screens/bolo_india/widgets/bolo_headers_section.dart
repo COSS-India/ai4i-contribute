@@ -19,7 +19,7 @@ class BoloHeadersSection extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.all(16).r,
-      decoration: BoxDecoration(color: AppColors.orange),
+      decoration: BoxDecoration(color: AppColors.bannerColor),
       child: Row(children: [
         InkWell(
           onTap: () {
@@ -43,32 +43,11 @@ class BoloHeadersSection extends StatelessWidget {
                   height: 40.w,
                   width: 40.w,
                 )
-              : ImageWidget(
+              : SizedBox(
                   height: 40.w,
                   width: 40.w,
-                  imageUrl: "assets/images/bolo_icon_white.svg",
                 ),
           SizedBox(width: 8.w),
-          if (branding.bannerImage.isEmpty)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "BOLO India",
-                  style: GoogleFonts.notoSans(
-                      color: Colors.white,
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w600),
-                ),
-                Text(
-                  "Enrich your language by donating your voice. ",
-                  style: GoogleFonts.notoSans(
-                      color: Colors.white,
-                      fontSize: 10.sp,
-                      fontWeight: FontWeight.w600),
-                ),
-              ],
-            ),
         ],
       ]),
     );

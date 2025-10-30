@@ -61,6 +61,8 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
 
   @override
   Widget build(BuildContext context) {
+    final branding = BrandingConfig.instance;
+
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) {
@@ -90,34 +92,13 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                       ),
                     ),
                     SizedBox(width: 24.w),
-                    ImageWidget(
-                      height: 40.w,
-                      width: 40.w,
-                      imageUrl: "assets/images/bolo_icon_white.svg",
-                    ),
-                    SizedBox(width: 8.w),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.boloIndia,
-                          style: GoogleFonts.notoSans(
-                            color: Colors.white,
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!
-                              .enrichYourLanguageByDonatingVoice,
-                          style: GoogleFonts.notoSans(
-                            color: Colors.white,
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
+                    branding.bannerImage.isNotEmpty
+                        ? ImageWidget(
+                            imageUrl: branding.bannerImage,
+                            height: 40.w,
+                            width: 40.w,
+                          )
+                        : SizedBox(width: 40.w, height: 40.w),
                   ],
                 ),
               ),
@@ -165,7 +146,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
           child: Column(
             children: [
               // Badge
-              branding.headerPrimaryImage.isNotEmpty
+              branding.badgeImage.isNotEmpty
                   ? ImageWidget(
                       imageUrl: branding.badgeImage,
                       height: 120.w,
@@ -173,9 +154,9 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                       boxFit: BoxFit.contain,
                     )
                   : ImageWidget(
+                      imageUrl: 'assets/images/bolo_logo.png',
                       height: 120.w,
                       width: 120.w,
-                      imageUrl: 'assets/images/bolo_logo.png',
                       boxFit: BoxFit.contain,
                     ),
               SizedBox(height: 24.w),
@@ -499,83 +480,6 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
       child: Column(
         children: [
           // Government Logo and Ministry
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "इलेक्ट्रॉनिकी एवं सूचना प्रौद्योगिकी मंत्रालय",
-                      style: GoogleFonts.notoSans(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(height: 4.w),
-                    Text(
-                      "MINISTRY OF ELECTRONICS AND INFORMATION TECHNOLOGY",
-                      style: GoogleFonts.notoSans(
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey[600],
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(height: 8.w),
-                    Text(
-                      "Digital India",
-                      style: GoogleFonts.notoSans(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.orange,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              // BHASHINI Logo
-              Flexible(
-                flex: 1,
-                child: Container(
-                  padding: EdgeInsets.all(8).r,
-                  decoration: BoxDecoration(
-                    color: AppColors.lightGreen3,
-                    borderRadius: BorderRadius.circular(8).r,
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        "BHASHINI",
-                        style: GoogleFonts.notoSans(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.darkGreen,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      Text(
-                        "भाषिणी",
-                        style: GoogleFonts.notoSans(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.orange,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 32.w),
 
           // Certificate Title
           Text(
@@ -657,7 +561,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
               children: [
                 const TextSpan(text: "Recognized as a "),
                 TextSpan(
-                  text: "Agri Bhasha Samarthak",
+                  text: "Contributor",
                   style: GoogleFonts.notoSans(
                     color: AppColors.darkGreen,
                     fontWeight: FontWeight.w700,
@@ -681,9 +585,13 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 8.w),
-              BrandingAlignmentWidget(
-                fontSize: 12.sp,
-                textColor: Colors.black87,
+              Text(
+                'AI4I - Contribute',
+                style: GoogleFonts.notoSans(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
               ),
               SizedBox(height: 8.w),
               Text(
@@ -701,7 +609,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
 
           // Signatory
           Text(
-            "CEO, BHASHINI",
+            "CEO, AI4I",
             style: GoogleFonts.notoSans(
               fontSize: 14.sp,
               fontWeight: FontWeight.w600,

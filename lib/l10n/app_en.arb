@@ -146,7 +146,7 @@
 
     "bhasha": "Bhasha",
     "daan": "Daan",
-    "agriDaan": "AgriDaan",
+    "voiceGive": "Empower India’s Linguistic Diversity",
     
     "quickTips": "Quick Tips",
     "howItWorks": "How it Works?",
@@ -237,8 +237,8 @@
     "ofAppreciation": "OF APPRECIATION",
     "proudlyPresentedTo": "PROUDLY PRESENTED TO",
     
-    "whatIsAgriDaan": "What is AgriDaan?",
-    "agriDaanDescription": "Agridaan is an initiative to crowdsource agriculture-related knowledge from citizens across India as part of Project BHASHINI. It calls upon people to contribute local terms, practices, and insights to build an open repository of agricultural data, helping to digitally enrich and preserve India's diverse farming heritage.",
+    "whatIsVoiceGive": "What is Contribute?",
+    "voiceGiveDescription": "This enables citizens to contribute and validate language and domain-specific content to build open, multilingual datasets. The goal is to make digital services more inclusive by capturing India’s linguistic richness and local knowledge.",
     "empowerIndiasLinguisticDiversity": "Empower India's Linguistic\nDiversity",
     "joinTheMovementDescription": "Join the movement to enhance language understanding and accessibility for all 22 official languages of India.",
     "letsGetStarted": "Let's Get Started",
@@ -267,7 +267,7 @@
     "registrationSubmitError" : "Some fields are missing or contain invalid values",
 
     "weRespectYourPrivacy": "We Respect Your Privacy",
-    "namasteContributor": "Welcome Contributor/Validator",
+    "namasteContributor": "Welcome user",
     "namasteEmoji": "🙏",
     "consentMessage": "Before you begin contributing or validating, please take a moment to review our Privacy Policy and Terms of Use. Your consent ensures transparency and responsible use of the data you share.",
     "consentConfirm": "By clicking \"{button}\", you confirm that:",

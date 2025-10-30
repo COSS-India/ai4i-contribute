@@ -65,25 +65,6 @@ class _HomeHeaderSectionState extends State<HomeHeaderSection> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ShaderMask(
-                            shaderCallback: (bounds) => LinearGradient(
-                              colors: [
-                                AppColors.darkGreen,
-                                AppColors.lightGreen
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ).createShader(Rect.fromLTWH(
-                                0, 0, bounds.width, bounds.height)),
-                            child: Text(
-                              AppLocalizations.of(context)!.agriDaan,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
                           Text(
                             AppLocalizations.of(context)!
                                 .empowerIndiasLinguisticDiversity,

@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 boxFit: BoxFit.cover,
                               ),
                             ))
-                        : HomeFooterSection(),
+                        : SizedBox.shrink(),
                   ],
                 ),
               ),

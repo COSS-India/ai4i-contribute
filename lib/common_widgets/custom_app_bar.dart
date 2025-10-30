@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../constants/app_colors.dart';
 import '../config/branding_config.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'image_widget.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -58,6 +56,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     imageUrl: branding.headerSecondaryImage,
                     height: 36.w,
                   ),
+                Spacer(),
                 // Position 3: Tertiary image
                 if (branding.headerTertiaryImage.isNotEmpty)
                   ImageWidget(

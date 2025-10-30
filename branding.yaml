@@ -19,8 +19,8 @@ branding:
   splash_animation: ""
   
   # Header image
-  header_primary_image: ""
-  header_secondary_image: ""
+  header_primary_image: "assets/launcher/ai4i_logo.png"
+  header_secondary_image: "assets/images/contribute.png"
   header_tertiary_image: ""
 
   # banner image
@@ -37,7 +37,7 @@ branding:
   copyright_policy_url: ""
 
   #badge image
-  badge_image: ""
+  badge_image: "assets/launcher/ai4i_logo.png"
 
 # Instructions for customization:
 # 1. Change app.display_name to your desired app name

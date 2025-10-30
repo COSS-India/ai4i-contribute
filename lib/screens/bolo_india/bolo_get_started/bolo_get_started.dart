@@ -119,39 +119,15 @@ class _BoloGetStartedState extends State<BoloGetStarted> {
                     size: 36.sp,
                   ),
                 ),
-                if (!hasAnyHeaderImage) ...[
-                  SizedBox(width: 24.w),
-                  branding.bannerImage.isNotEmpty
-                      ? ImageWidget(
-                          imageUrl: branding.bannerImage,
-                          height: 40.w,
-                          width: 40.w,
-                        )
-                      : SizedBox(width: 40.w, height: 40.w),
-                  SizedBox(width: 8.w),
-                  if (branding.bannerImage.isEmpty)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "BOLO India",
-                          style: GoogleFonts.notoSans(
-                            color: Colors.white,
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          "Enrich your language by donating your voice.",
-                          style: GoogleFonts.notoSans(
-                            color: Colors.white,
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                ],
+                SizedBox(width: 24.w),
+                branding.bannerImage.isNotEmpty
+                    ? ImageWidget(
+                        imageUrl: branding.bannerImage,
+                        height: 40.w,
+                        width: 40.w,
+                      )
+                    : SizedBox(width: 40.w, height: 40.w),
+                SizedBox(width: 8.w),
               ]),
             ),
             Expanded(
