@@ -89,9 +89,7 @@ class _BoloGetStartedState extends State<BoloGetStarted> {
   @override
   Widget build(BuildContext context) {
     final branding = BrandingConfig.instance;
-    final hasAnyHeaderImage = branding.headerPrimaryImage.isNotEmpty ||
-        branding.headerSecondaryImage.isNotEmpty ||
-        branding.headerTertiaryImage.isNotEmpty;
+    
 
     return Scaffold(
       backgroundColor: Colors.white,

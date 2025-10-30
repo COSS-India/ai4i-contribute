@@ -13,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../config/branding_config.dart';
+
 class BoloValidateSection extends StatefulWidget {
   final Function() onComplete;
   final LanguageModel languageModel;
@@ -72,77 +74,82 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
             recordedTexts = snapshot.data!.validationItems;
 
             return Container(
-              padding: EdgeInsets.all(12).r,
-              decoration: BoxDecoration(
-                image: const DecorationImage(
-                  image: AssetImage("assets/images/contribute_bg.png"),
-                  fit: BoxFit.cover,
-                ),
-                color: AppColors.lightGreen3,
-                borderRadius: BorderRadius.circular(8).r,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.5),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: const Offset(0, 3),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8).r,
+                  border: Border.all(
+                    color: Colors.grey[700]!,
                   ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  Row(
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8).r,
+                  child: Stack(
                     children: [
-                      const Spacer(),
-                      Text(
-                        "${currentIndex + 1}/${recordedTexts.length}",
-                        style: GoogleFonts.notoSans(
-                          fontSize: 12.sp,
-                          color: AppColors.darkGreen,
-                          fontWeight: FontWeight.w600,
+                      Image.asset(
+                        "assets/images/contribute_bg.png",
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        color: BrandingConfig.instance.primaryColor,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(12).r,
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                const Spacer(),
+                                Text(
+                                  "${currentIndex + 1}/${recordedTexts.length}",
+                                  style: GoogleFonts.notoSans(
+                                    fontSize: 12.sp,
+                                    color: AppColors.darkGreen,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 12.w),
+                            SizedBox(
+                              height: 4.0,
+                              child: LinearProgressIndicator(
+                                value: progress,
+                                backgroundColor: AppColors.lightGreen4,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    AppColors.darkGreen),
+                              ),
+                            ),
+                            SizedBox(height: 40.w),
+                            Padding(
+                              padding: EdgeInsets.only(left: 32, right: 32).r,
+                              child: Text(
+                                recordedTexts[currentIndex].text,
+                                style: GoogleFonts.notoSans(
+                                  fontSize: 16.sp,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            SizedBox(height: 30.w),
+                            AudioPlayerButtons(
+                              audioUrl:
+                                  recordedTexts[currentIndex].audioContent,
+                              playerStatus: (value) {
+                                if (value == AudioPlayerButtonState.completed ||
+                                    value == AudioPlayerButtonState.replay) {
+                                  enableActionButtons.value = true;
+                                }
+                              },
+                            ),
+                            SizedBox(height: 30.w),
+                            actionButtons(item: recordedTexts[currentIndex]),
+                            SizedBox(height: 30.w),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 12.w),
-                  SizedBox(
-                    height: 4.0,
-                    child: LinearProgressIndicator(
-                      value: progress,
-                      backgroundColor: AppColors.lightGreen4,
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(AppColors.darkGreen),
-                    ),
-                  ),
-                  SizedBox(height: 40.w),
-                  Padding(
-                    padding: EdgeInsets.only(left: 32, right: 32).r,
-                    child: Text(
-                      recordedTexts[currentIndex].text,
-                      style: GoogleFonts.notoSans(
-                        fontSize: 16.sp,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  SizedBox(height: 30.w),
-                  AudioPlayerButtons(
-                    audioUrl: recordedTexts[currentIndex].audioContent,
-                    playerStatus: (value) {
-                      if (value == AudioPlayerButtonState.completed ||
-                          value == AudioPlayerButtonState.replay) {
-                        enableActionButtons.value = true;
-                      }
-                    },
-                  ),
-                  SizedBox(height: 30.w),
-                  actionButtons(item: recordedTexts[currentIndex]),
-                  SizedBox(height: 30.w),
-                ],
-              ),
-            );
+                ));
           }
           return SizedBox();
         });

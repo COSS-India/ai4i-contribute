@@ -148,7 +148,7 @@ class _CustomAudioPlayerState extends State<CustomAudioPlayer> {
     _hasEnded = false;
     _initializePlayer();
   }
-  
+
   @override
   void dispose() {
     _player.dispose();
@@ -253,16 +253,10 @@ class _CustomAudioPlayerState extends State<CustomAudioPlayer> {
 
     return Container(
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(40).r,
-          border: Border.all(color: AppColors.darkGreen),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            ),
-          ]),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(40).r,
+        border: Border.all(color: AppColors.darkGreen),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

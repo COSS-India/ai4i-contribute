@@ -24,54 +24,52 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.white,
       elevation: 0,
       centerTitle: false,
-      title: hasAnyHeaderImage
-          ? Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                // Position 1: Primary image
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 4.0).r,
-                  child: branding.headerPrimaryImage.isNotEmpty
-                      ? ImageWidget(
-                          imageUrl: branding.headerPrimaryImage,
-                          height: 36.w,
-                        )
-                      : SizedBox(height: 36.w),
-                ),
-                // Separator and spacing
-                if (branding.headerPrimaryImage.isNotEmpty &&
-                    branding.headerSecondaryImage.isNotEmpty)
-                  Container(
-                    margin: EdgeInsets.only(left: 10, right: 10).r,
-                    width: 1,
-                    height: 40,
-                    color: AppColors.grey24,
-                  )
-                else if (branding.headerPrimaryImage.isNotEmpty)
-                  SizedBox(width: 10.w),
-                // Position 2: Secondary image
-                if (branding.headerSecondaryImage.isNotEmpty)
-                  ImageWidget(
-                    imageUrl: branding.headerSecondaryImage,
-                    height: 36.w,
-                  ),
-                Spacer(),
-                // Position 3: Tertiary image
-                if (branding.headerTertiaryImage.isNotEmpty)
-                  ImageWidget(
-                    imageUrl: branding.headerTertiaryImage,
-                    height: 36.w,
-                  )
-              ],
-            )
-          : Padding(
-              padding: const EdgeInsets.only(bottom: 4.0).r,
-              child: ImageWidget(
-                imageUrl: "assets/launcher/ai4i_logo.png",
-                height: 36.w,
-              ),
+      title: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          // Position 1: Primary image
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4.0).r,
+            child: ImageWidget(
+              imageUrl: hasAnyHeaderImage
+                  ? (branding.headerPrimaryImage.isNotEmpty
+                      ? branding.headerPrimaryImage
+                      : "")
+                  : "assets/launcher/ai4i_logo.png",
+              height: 36.w,
             ),
+          ),
+          // Separator and spacing
+          if ((hasAnyHeaderImage && branding.headerPrimaryImage.isNotEmpty && branding.headerSecondaryImage.isNotEmpty) ||
+              (!hasAnyHeaderImage))
+            Container(
+              margin: EdgeInsets.only(left: 10, right: 10).r,
+              width: 1,
+              height: 40,
+              color: AppColors.grey24,
+            )
+          else if (hasAnyHeaderImage && branding.headerPrimaryImage.isNotEmpty)
+            SizedBox(width: 10.w),
+          // Position 2: Secondary image
+          if (hasAnyHeaderImage
+              ? branding.headerSecondaryImage.isNotEmpty
+              : true)
+            ImageWidget(
+              imageUrl: hasAnyHeaderImage
+                  ? branding.headerSecondaryImage
+                  : "assets/images/contribute.png",
+              height: 36.w,
+            ),
+          Spacer(),
+          // Position 3: Tertiary image
+          if (branding.headerTertiaryImage.isNotEmpty)
+            ImageWidget(
+              imageUrl: branding.headerTertiaryImage,
+              height: 36.w,
+            )
+        ],
+      ),
     );
   }
 }

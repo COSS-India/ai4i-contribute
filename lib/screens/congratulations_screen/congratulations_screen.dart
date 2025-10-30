@@ -257,7 +257,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8).r,
                         child: Image.asset(
-                          'assets/images/certificate.jpg',
+                          'assets/images/certificate.png',
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -608,14 +608,14 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
           SizedBox(height: 32.w),
 
           // Signatory
-          Text(
-            "CEO, AI4I",
-            style: GoogleFonts.notoSans(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w600,
-              color: Colors.black87,
-            ),
-          ),
+          // Text(
+          //   "CEO, AI4I",
+          //   style: GoogleFonts.notoSans(
+          //     fontSize: 14.sp,
+          //     fontWeight: FontWeight.w600,
+          //     color: Colors.black87,
+          //   ),
+          // ),
           Container(
             width: 100.w,
             height: 2.w,

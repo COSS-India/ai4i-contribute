@@ -21,7 +21,7 @@ class Helper {
       {required BuildContext context,
       required String text,
       int? durationInSec,
-      Color bgColor = AppColors.darkBlue}) {
+      Color? bgColor}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: Duration(seconds: durationInSec ?? 2),
@@ -29,7 +29,7 @@ class Helper {
             style: GoogleFonts.lato(
               color: Colors.white,
             )),
-        backgroundColor: bgColor,
+        backgroundColor: bgColor ?? AppColors.darkBlue,
       ),
     );
   }

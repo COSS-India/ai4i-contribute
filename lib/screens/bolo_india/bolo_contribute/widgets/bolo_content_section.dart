@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../../config/branding_config.dart';
 
 typedef IntCallback = void Function(int value);
 
@@ -104,36 +105,44 @@ class _BoloContentSectionState extends State<BoloContentSection> {
         final double progress = (currentIndex + 1) / sentencesLength;
 
         return Container(
-          padding: EdgeInsets.all(12).r,
           decoration: BoxDecoration(
-            image: const DecorationImage(
-              image: AssetImage("assets/images/contribute_bg.png"),
-              fit: BoxFit.cover,
-            ),
-            color: AppColors.lightGreen3,
             borderRadius: BorderRadius.circular(8).r,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withValues(alpha: 0.5),
-                spreadRadius: 2,
-                blurRadius: 5,
-                offset: const Offset(0, 3),
-              ),
-            ],
+            border: Border.all(
+              color: Colors.grey[700]!,
+            ),
           ),
-          child: Column(
-            children: [
-              _progressHeader(progress: progress, total: sentencesLength),
-              SizedBox(height: 24.w),
-              _sentenceText(contributeSentences[currentIndex].text),
-              SizedBox(height: 50.w),
-              recordingButton(sentence: contributeSentences[currentIndex]),
-              SizedBox(height: 30.w),
-              _actionButtons(
-                  length: sentencesLength,
-                  currentSentence: contributeSentences[currentIndex]),
-              SizedBox(height: 50.w),
-            ],
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8).r,
+            child: Stack(
+              fit: StackFit.passthrough,
+              children: [
+                Image.asset(
+                  'assets/images/contribute_bg.png',
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  color: BrandingConfig.instance.primaryColor,
+                ),
+                Padding(
+                  padding: EdgeInsets.all(12).r,
+                  child: Column(
+                    children: [
+                      _progressHeader(
+                          progress: progress, total: sentencesLength),
+                      SizedBox(height: 24.w),
+                      _sentenceText(contributeSentences[currentIndex].text),
+                      SizedBox(height: 50.w),
+                      recordingButton(
+                          sentence: contributeSentences[currentIndex]),
+                      SizedBox(height: 30.w),
+                      _actionButtons(
+                          length: sentencesLength,
+                          currentSentence: contributeSentences[currentIndex]),
+                      SizedBox(height: 50.w),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },

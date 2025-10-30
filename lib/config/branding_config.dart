@@ -81,6 +81,14 @@ class BrandingConfig {
     return _parseRgbaColor(colorRgba);
   }
 
+  Color get toastColor {
+    final colorRgba = _config['branding']?['toast_color'] ?? '27, 76, 161, 1';
+    if (colorRgba.isEmpty) {
+      return const Color.fromRGBO(27, 76, 161, 1);
+    }
+    return _parseRgbaColor(colorRgba);
+  }
+
   /// Parse RGBA color string to Color object
   Color _parseRgbaColor(String rgbaString) {
     final parts = rgbaString.split(',');

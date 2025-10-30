@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../config/branding_config.dart';
 
 class AppColors {
-  static const darkBlue = Color.fromRGBO(27, 76, 161, 1);
+  static Color get darkBlue => BrandingConfig.instance.toastColor;
   static const whiteGradientOne = Color.fromRGBO(239, 243, 249, 1);
   static const disabledTextGrey = Color.fromRGBO(102, 102, 102, 1);
   static const disabledTextGrey0 = Color.fromRGBO(102, 102, 102, 0);
