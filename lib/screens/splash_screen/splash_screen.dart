@@ -44,31 +44,7 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
     final splashName = BrandingConfig.instance.splashName;
     final splashAnimation = BrandingConfig.instance.splashAnimation;
 
-    // Priority 1: Both logo and name
-    if (splashLogo.isNotEmpty && splashName.isNotEmpty) {
-      return Scaffold(
-        backgroundColor: Colors.white,
-        body: _buildImageSplash(splashLogo, splashName),
-      );
-    }
-
-    // Priority 2: Only name (use default logo)
-    if (splashName.isNotEmpty) {
-      return Scaffold(
-        backgroundColor: Colors.white,
-        body: _buildImageSplash('assets/launcher/ai4i_logo.png', splashName),
-      );
-    }
-
-    // Priority 3: Only logo (use default name)
-    if (splashLogo.isNotEmpty) {
-      return Scaffold(
-        backgroundColor: Colors.white,
-        body: _buildImageSplash(splashLogo, 'Contribute'),
-      );
-    }
-
-    // Priority 4: Animation if available
+    // Priority 1: Animation (highest priority)
     if (splashAnimation.isNotEmpty) {
       return Scaffold(
         backgroundColor: Colors.white,
@@ -76,7 +52,31 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
       );
     }
 
-    // Fallback: Default animation
+    // Priority 2: Both logo and name
+    if (splashLogo.isNotEmpty && splashName.isNotEmpty) {
+      return Scaffold(
+        backgroundColor: Colors.white,
+        body: _buildImageSplash(splashLogo, splashName),
+      );
+    }
+
+    // Priority 3: Logo only (show logo without name)
+    if (splashLogo.isNotEmpty && splashName.isEmpty) {
+      return Scaffold(
+        backgroundColor: Colors.white,
+        body: _buildImageSplash(splashLogo, ''),
+      );
+    }
+
+    // Priority 4: Name only (show name without logo)
+    if (splashName.isNotEmpty && splashLogo.isEmpty) {
+      return Scaffold(
+        backgroundColor: Colors.white,
+        body: _buildImageSplash('', splashName),
+      );
+    }
+
+    // Fallback: Default (logo and "Contribute" text)
     return Scaffold(
       backgroundColor: Colors.white,
       body: _buildImageSplash('assets/launcher/ai4i_logo.png', 'Contribute'),
@@ -95,20 +95,23 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ImageWidget(
-            imageUrl: logoPath,
-            width: 200,
-            height: 200,
-            boxFit: BoxFit.contain,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            splashName,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
+          if (logoPath.isNotEmpty)
+            ImageWidget(
+              imageUrl: logoPath,
+              width: 200,
+              height: 200,
+              boxFit: BoxFit.contain,
             ),
-          ),
+          if (logoPath.isNotEmpty && splashName.isNotEmpty)
+            const SizedBox(height: 8),
+          if (splashName.isNotEmpty)
+            Text(
+              splashName,
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
         ],
       ),
     );
