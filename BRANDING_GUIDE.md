@@ -23,6 +23,7 @@ branding:
   primary_color: "21, 125, 82, 1"
   secondary_color: "231, 97, 32, 1"
   banner_color: "231, 97, 32, 1"
+  toast_color: "13, 71, 161, 1"
   
   splash_logo: "assets/images/your_splash_logo.png"
   splash_name: "Your App Name"
@@ -78,6 +79,11 @@ All colors use RGBA format: `"R, G, B, A"`
 - **Field**: `branding.banner_color`
 - **Usage**: Top banners, headers
 - **Example**: `"231, 97, 32, 1"`
+
+### Toast Color
+- **Field**: `branding.toast_color`
+- **Usage**: Notification messages, snackbars
+- **Example**: `"13, 71, 161, 1"` (blue)
 
 ## Splash Screen
 
@@ -141,7 +147,10 @@ All colors use RGBA format: `"R, G, B, A"`
 - **Format**: PNG (with transparency recommended)
 - **Resolution**: 512x512 pixels recommended
 - **File Size**: < 100KB
-- **Usage**: Achievement badges and certificates
+- **Usage**: Achievement badges and certificates in congratulations screen
+- **Fallback**: Uses `assets/images/bolo_logo.png` if not provided
+- **Display**: Shown as 120x120 pixels in congratulations screen
+- **Note**: This image appears when users complete contribution/validation sessions
 
 ## URLs
 
@@ -210,7 +219,7 @@ assets/
 │   ├── banner.png                 # Banner (1080x200, <150KB)
 │   ├── home_body.png              # Home body (1080x600, <300KB)
 │   ├── footer.png                 # Footer (1080x300, <200KB)
-│   └── badge.png                  # Badge (512x512, <100KB)
+│   └── badge.png                  # Badge/Achievement (512x512, <100KB)
 └── animations/
     └── your_splash.json           # Lottie animation (<500KB)
 ```
@@ -223,7 +232,7 @@ assets/
 - **Header Images**: < 500KB each (JPG for photos, PNG for graphics)
 - **Banner**: < 150KB (optimize for fast loading)
 - **Home Images**: < 300KB (balance quality and performance)
-- **Badge**: < 100KB (PNG with transparency)
+- **Badge**: < 100KB (PNG with transparency for congratulations screen)
 
 ### Animation Guidelines
 - **Lottie Files**: < 500KB (keep animations simple)

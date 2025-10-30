@@ -144,6 +144,9 @@ class BrandingConfig {
   /// Get badge image
   String get badgeImage => _config['branding']?['badge_image'] ?? '';
 
+  String get certificateImage =>
+      _config['branding']?['certificate_image'] ?? '';
+
   /// Default configuration fallback
   static Map<String, dynamic> _getDefaultConfig() {
     return {

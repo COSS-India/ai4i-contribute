@@ -256,10 +256,16 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8).r,
-                        child: Image.asset(
-                          'assets/images/certificate.png',
-                          fit: BoxFit.contain,
-                        ),
+                        child: BrandingConfig
+                                .instance.certificateImage.isNotEmpty
+                            ? ImageWidget(
+                                imageUrl:
+                                    BrandingConfig.instance.certificateImage,
+                              )
+                            : Image.asset(
+                                'assets/images/certificate.png',
+                                fit: BoxFit.contain,
+                              ),
                       ),
                     ),
                   ),
