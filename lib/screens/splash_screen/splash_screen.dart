@@ -103,7 +103,7 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
               boxFit: BoxFit.contain,
             ),
           if (logoPath.isNotEmpty && splashName.isNotEmpty)
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
           if (splashName.isNotEmpty)
             Text(
               splashName,

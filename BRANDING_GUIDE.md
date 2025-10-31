@@ -39,6 +39,7 @@ branding:
   home_screen_footer_url: "https://yourwebsite.com"
   
   badge_image: "assets/images/badge.png"
+  certificate_image: "assets/images/certificate.png"
   
   terms_of_use_url: "https://yoursite.com/terms"
   privacy_policy_url: "https://yoursite.com/privacy"
@@ -152,6 +153,16 @@ All colors use RGBA format: `"R, G, B, A"`
 - **Display**: Shown as 120x120 pixels in congratulations screen
 - **Note**: This image appears when users complete contribution/validation sessions
 
+### Certificate Image
+- **Field**: `branding.certificate_image`
+- **Format**: PNG, JPG
+- **Resolution**: 1080x1400 pixels recommended (portrait orientation)
+- **File Size**: < 300KB
+- **Usage**: Certificate template shown in congratulations screen
+- **Fallback**: Uses `assets/images/certificate.png` if not provided
+- **Display**: Shown in certificate preview and download
+- **Note**: This is the actual certificate users can preview and download
+
 ## URLs
 
 ### Character Limits
@@ -219,7 +230,8 @@ assets/
 │   ├── banner.png                 # Banner (1080x200, <150KB)
 │   ├── home_body.png              # Home body (1080x600, <300KB)
 │   ├── footer.png                 # Footer (1080x300, <200KB)
-│   └── badge.png                  # Badge/Achievement (512x512, <100KB)
+│   ├── badge.png                  # Badge/Achievement (512x512, <100KB)
+│   └── certificate.png            # Certificate template (1080x1400, <300KB)
 └── animations/
     └── your_splash.json           # Lottie animation (<500KB)
 ```
@@ -233,6 +245,7 @@ assets/
 - **Banner**: < 150KB (optimize for fast loading)
 - **Home Images**: < 300KB (balance quality and performance)
 - **Badge**: < 100KB (PNG with transparency for congratulations screen)
+- **Certificate**: < 300KB (PNG/JPG for certificate template)
 
 ### Animation Guidelines
 - **Lottie Files**: < 500KB (keep animations simple)

@@ -22,9 +22,7 @@ class BoloContentSkeleton extends StatelessWidget {
           child: Stack(
             children: [
               Image.asset(
-                BrandingConfig.instance.bannerImage.isNotEmpty
-                    ? BrandingConfig.instance.bannerImage
-                    : "assets/images/contribute_bg.png",
+                "assets/images/contribute_bg.png",
                 fit: BoxFit.cover,
                 width: double.infinity,
                 color: BrandingConfig.instance.primaryColor,

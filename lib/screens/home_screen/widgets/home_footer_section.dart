@@ -20,12 +20,7 @@ class HomeFooterSection extends StatelessWidget {
           color: AppColors.appBarBackground,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildLogo('assets/images/negd_logo.png'),
-              _buildLogo('assets/images/meity_logo.png'),
-              _buildLogo('assets/images/npi_logo.png'),
-              _buildLogo('assets/images/mygov_logo.png'),
-            ],
+            children: [],
           ),
         ),
         // Dark blue footer section
@@ -68,11 +63,6 @@ class HomeFooterSection extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 8.w),
-                  ImageWidget(
-                    imageUrl: 'assets/images/digital_india_logo.png',
-                    height: 20.w,
-                    width: 80.w,
-                  ),
                 ],
               ),
               SizedBox(height: 16.w),

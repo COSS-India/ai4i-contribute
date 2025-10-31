@@ -74,11 +74,12 @@ class BrandingConfig {
 
   /// Get banner color
   Color get bannerColor {
-    final colorRgba = _config['branding']?['banner_color'] ?? '231, 97, 32, 1';
-    if (colorRgba.isEmpty) {
-      return const Color.fromRGBO(231, 97, 32, 1);
+    final bannerColorRgba = _config['branding']?['banner_color'] ?? '';
+    if (bannerColorRgba.isNotEmpty) {
+      return _parseRgbaColor(bannerColorRgba);
     }
-    return _parseRgbaColor(colorRgba);
+    // Fallback to secondary color
+    return secondaryColor;
   }
 
   Color get toastColor {
@@ -146,6 +147,13 @@ class BrandingConfig {
 
   String get certificateImage =>
       _config['branding']?['certificate_image'] ?? '';
+
+  /// Get banner color string for checking if empty
+  String get bannerColorString => _config['branding']?['banner_color'] ?? '';
+
+  /// Get secondary color string for checking if empty
+  String get secondaryColorString =>
+      _config['branding']?['secondary_color'] ?? '';
 
   /// Default configuration fallback
   static Map<String, dynamic> _getDefaultConfig() {

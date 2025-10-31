@@ -29,17 +29,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           // Position 1: Primary image
-          Padding(
-            padding: const EdgeInsets.only(bottom: 4.0).r,
-            child: ImageWidget(
-              imageUrl: hasAnyHeaderImage
-                  ? (branding.headerPrimaryImage.isNotEmpty
-                      ? branding.headerPrimaryImage
-                      : "")
-                  : "assets/launcher/ai4i_logo.png",
-              height: 36.w,
+          if (hasAnyHeaderImage
+              ? branding.headerPrimaryImage.isNotEmpty
+              : true)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4.0).r,
+              child: ImageWidget(
+                imageUrl: hasAnyHeaderImage
+                    ? branding.headerPrimaryImage
+                    : "assets/launcher/ai4i_logo.png",
+                height: 36.w,
+              ),
             ),
-          ),
           // Separator and spacing
           if ((hasAnyHeaderImage && branding.headerPrimaryImage.isNotEmpty && branding.headerSecondaryImage.isNotEmpty) ||
               (!hasAnyHeaderImage))

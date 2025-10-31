@@ -80,7 +80,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
               // Header Section
               Container(
                 padding: EdgeInsets.all(16).r,
-                decoration: BoxDecoration(color: AppColors.orange),
+                decoration: BoxDecoration(color: AppColors.bannerColor),
                 child: Row(
                   children: [
                     InkWell(
@@ -600,15 +600,6 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                 ),
               ),
               SizedBox(height: 8.w),
-              Text(
-                "strengthening agricultural knowledge in Indian languages and advancing the vision of an inclusive, self-reliant Bharat.",
-                style: GoogleFonts.notoSans(
-                  fontSize: 12.sp,
-                  color: Colors.black87,
-                  height: 1.5,
-                ),
-                textAlign: TextAlign.center,
-              ),
             ],
           ),
           SizedBox(height: 32.w),
