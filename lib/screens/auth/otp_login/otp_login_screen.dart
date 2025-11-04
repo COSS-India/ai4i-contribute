@@ -55,13 +55,14 @@ class _OtpLoginScreenState extends State<OtpLoginScreen> {
   Future<void> _requestOtp() async {
     if (_formKey.currentState!.validate()) {
       _isLoading.value = true;
-      final String? message = await LoginAuthRepository().sendOtp(_phoneController.text, "+91");
+      final String? message =
+          await LoginAuthRepository().sendOtp(_phoneController.text, "+91");
       _isLoading.value = false;
       ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message??'Error occurred while sending OTP'),
-      ),
-    );
+        SnackBar(
+          content: Text(message ?? 'Error occurred while sending OTP'),
+        ),
+      );
       if (message != null) {
         Navigator.push(
           context,
@@ -69,16 +70,17 @@ class _OtpLoginScreenState extends State<OtpLoginScreen> {
             builder: (context) => OtpVerificationScreen(
               phoneNumber: _phoneController.text,
               countryCode: "+91",
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
-  }}
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.appBarBackground,
+      backgroundColor: AppColors.backgroundColor,
       resizeToAvoidBottomInset: true,
       appBar: const CustomAppBar(),
       body: SafeArea(
@@ -160,7 +162,7 @@ class _OtpLoginScreenState extends State<OtpLoginScreen> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: isPhoneValid
                               ? AppColors.orange
-                              : AppColors.lightGrey,
+                              : AppColors.grey40,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(6.r),
                           ),
@@ -176,14 +178,16 @@ class _OtpLoginScreenState extends State<OtpLoginScreen> {
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2,
                                   valueColor: AlwaysStoppedAnimation<Color>(
-                                      AppColors.appBarBackground),
+                                      AppColors.backgroundColor),
                                 ),
                               );
                             }
                             return Text(
                               AppLocalizations.of(context)!.getOtp,
                               style: GoogleFonts.notoSans(
-                                color: AppColors.appBarBackground,
+                                color: isPhoneValid
+                                    ? AppColors.backgroundColor
+                                    : AppColors.grey40,
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.normal,
                               ),

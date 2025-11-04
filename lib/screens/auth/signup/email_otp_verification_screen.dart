@@ -129,7 +129,7 @@ class _EmailOtpVerificationScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundColor,
       resizeToAvoidBottomInset: true,
       appBar: const CustomAppBar(),
       body: SafeArea(

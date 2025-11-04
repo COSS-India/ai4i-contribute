@@ -27,14 +27,14 @@ class NeedMoreInfo extends StatelessWidget {
             style: GoogleFonts.notoSans(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w500,
-                color: AppColors.appBarBackground),
+                color: Colors.white),
           ),
           const SizedBox(height: 8),
           Text(
             AppLocalizations.of(context)!.writeYourConcern,
             style: GoogleFonts.notoSans(
                 fontSize: 12.sp,
-                color: AppColors.appBarBackground,
+                color: Colors.white,
                 fontWeight: FontWeight.w400),
           ),
           SizedBox(height: 16.w),
@@ -59,7 +59,7 @@ class NeedMoreInfo extends StatelessWidget {
                   SizedBox(width: 8.w),
                   Icon(
                     Icons.arrow_forward_rounded,
-                    color: Colors.white,
+                    color: AppColors.backgroundColor,
                   )
                 ],
               )),

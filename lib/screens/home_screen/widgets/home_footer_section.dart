@@ -1,4 +1,3 @@
-import 'package:VoiceGive/common_widgets/image_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,7 +32,7 @@ class HomeFooterSection extends StatelessWidget {
             children: [
               // Main heading
               Text(
-                AppLocalizations.of(context)!.digitalIndiaBhashiniDivision,
+                '',
                 style: GoogleFonts.notoSans(
                   color: AppColors.appBarBackground,
                   fontSize: 18.sp,
@@ -119,14 +118,4 @@ class HomeFooterSection extends StatelessWidget {
     );
   }
 
-  Widget _buildLogo(String imagePath) {
-    return SizedBox(
-      height: 50.w,
-      width: 60.w,
-      child: ImageWidget(
-        imageUrl: imagePath,
-        boxFit: BoxFit.contain,
-      ),
-    );
-  }
 }

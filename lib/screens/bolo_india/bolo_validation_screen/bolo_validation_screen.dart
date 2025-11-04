@@ -1,4 +1,5 @@
 import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
+import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_validation_screen/widgets/bolo_validate_section.dart';
 import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/actions_section.dart';
@@ -51,7 +52,7 @@ class _BoloValidationScreenState extends State<BoloValidationScreen>
         return Future.value(false);
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.backgroundColor,
         appBar: CustomAppBar(),
         body: Stack(
           children: [

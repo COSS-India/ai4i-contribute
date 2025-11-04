@@ -1,4 +1,3 @@
-import 'package:VoiceGive/common_widgets/branding_alignment_widget.dart';
 import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
 import 'package:VoiceGive/common_widgets/image_widget.dart';
 import 'package:VoiceGive/common_widgets/primary_button_widget.dart';
@@ -71,7 +70,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
         _navigateBackToHome();
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.backgroundColor,
         appBar: CustomAppBar(),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -165,7 +164,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                 '${AppLocalizations.of(context)!.congratulations}!',
                 style: GoogleFonts.notoSans(
                   fontSize: 28.sp,
-                  color: Colors.black,
+                  color: AppColors.greys87,
                   fontWeight: FontWeight.w700,
                 ),
                 textAlign: TextAlign.center,
@@ -177,7 +176,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                 text: TextSpan(
                   style: GoogleFonts.notoSans(
                     fontSize: 16.sp,
-                    color: Colors.black87,
+                    color: AppColors.greys87,
                     height: 1.4,
                   ),
                   children: [
@@ -236,7 +235,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
             Text(
               AppLocalizations.of(context)!.tapToPreviewCertificate,
               style: GoogleFonts.notoSans(
-                  color: AppColors.greys,
+                  color: AppColors.greys87,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500),
             ),
@@ -351,7 +350,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
               },
               textColor: AppColors.orange,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.backgroundColor,
                 border: Border.all(color: AppColors.orange, width: 1.5),
                 borderRadius: BorderRadius.circular(6).r,
               ),
@@ -371,7 +370,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                   MaterialPageRoute(builder: (context) => BoloContribute()),
                 );
               },
-              textColor: Colors.white,
+              textColor: AppColors.backgroundColor,
               decoration: BoxDecoration(
                 color: AppColors.orange,
                 border: Border.all(color: AppColors.orange, width: 1.5),
@@ -389,12 +388,12 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          backgroundColor: Colors.transparent,
+          backgroundColor: AppColors.backgroundColor,
           child: Container(
             width: MediaQuery.of(context).size.width * 0.9,
             height: MediaQuery.of(context).size.height * 0.8,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.backgroundColor,
               borderRadius: BorderRadius.circular(12).r,
               boxShadow: [
                 BoxShadow(
@@ -479,7 +478,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
     return Container(
       padding: EdgeInsets.all(32).r,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.backgroundColor,
         border: Border.all(color: Colors.grey.shade300, width: 2),
         borderRadius: BorderRadius.circular(8).r,
       ),
@@ -493,7 +492,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
             style: GoogleFonts.notoSans(
               fontSize: 28.sp,
               fontWeight: FontWeight.w700,
-              color: Colors.black87,
+              color: AppColors.greys87,
             ),
           ),
           Text(
@@ -512,7 +511,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
             style: GoogleFonts.notoSans(
               fontSize: 14.sp,
               fontWeight: FontWeight.w600,
-              color: Colors.black87,
+              color: AppColors.greys87,
             ),
           ),
           SizedBox(height: 16.w),
@@ -523,7 +522,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
             style: GoogleFonts.notoSans(
               fontSize: 24.sp,
               fontWeight: FontWeight.w700,
-              color: Colors.black87,
+              color: AppColors.greys87,
               letterSpacing: 1.2,
             ),
           ),
@@ -562,7 +561,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
             text: TextSpan(
               style: GoogleFonts.notoSans(
                 fontSize: 14.sp,
-                color: Colors.black87,
+                color: AppColors.greys87,
               ),
               children: [
                 const TextSpan(text: "Recognized as a "),
@@ -585,7 +584,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                 "For contributing to",
                 style: GoogleFonts.notoSans(
                   fontSize: 12.sp,
-                  color: Colors.black87,
+                  color: AppColors.greys87,
                   height: 1.5,
                 ),
                 textAlign: TextAlign.center,
@@ -596,7 +595,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                 style: GoogleFonts.notoSans(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                  color: AppColors.greys87,
                 ),
               ),
               SizedBox(height: 8.w),

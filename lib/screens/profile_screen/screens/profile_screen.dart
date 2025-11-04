@@ -68,6 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      backgroundColor: AppColors.backgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
       ),
@@ -123,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       },
       child: Scaffold(
         appBar: const CustomAppBar(),
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.backgroundColor,
         body: SafeArea(
           child: Column(
             children: [
@@ -238,9 +239,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ]),
                                 ),
-                                border: _outline(AppColors.darkGrey),
-                                enabledBorder: _outline(AppColors.darkGrey),
-                                focusedBorder: _outline(AppColors.darkGrey),
+                                border: _outline(AppColors.grey40),
+                                enabledBorder: _outline(AppColors.grey40),
+                                focusedBorder: _outline(AppColors.grey40),
                                 suffixIcon: Icon(Icons.keyboard_arrow_down,
                                     color: AppColors.greys87, size: 20.w),
                                 contentPadding: EdgeInsets.symmetric(
@@ -297,9 +298,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ]),
                                 ),
-                                border: _outline(AppColors.darkGrey),
-                                enabledBorder: _outline(AppColors.darkGrey),
-                                focusedBorder: _outline(AppColors.darkGrey),
+                                border: _outline(AppColors.grey40),
+                                enabledBorder: _outline(AppColors.grey40),
+                                focusedBorder: _outline(AppColors.grey40),
                                 suffixIcon: Icon(Icons.keyboard_arrow_down,
                                     color: AppColors.greys87, size: 20.w),
                                 contentPadding: EdgeInsets.symmetric(
@@ -320,7 +321,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               readOnly: true,
                               decoration: InputDecoration(
                                 enabled: false,
-                                enabledBorder: _outline(AppColors.darkGrey),
+                                enabledBorder: _outline(AppColors.grey40),
                                 fillColor: AppColors.lightGrey2,
                                 filled: true,
                                 disabledBorder: _outline(AppColors.darkGrey),
@@ -341,8 +342,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               labelText: AppLocalizations.of(context)!.emailId,
                               labelStyle: GoogleFonts.notoSans(
                                   color: AppColors.greys60, fontSize: 14.sp),
-                              enabledBorder: _outline(AppColors.darkGrey),
-                              focusedBorder: _outline(AppColors.darkGrey),
+                              enabledBorder: _outline(AppColors.grey40),
+                              focusedBorder: _outline(AppColors.grey40),
                               errorBorder: _outline(AppColors.negativeLight),
                               focusedErrorBorder:
                                   _outline(AppColors.negativeLight),

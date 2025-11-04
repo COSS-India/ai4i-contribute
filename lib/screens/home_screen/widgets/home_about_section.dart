@@ -29,7 +29,7 @@ class _HomeAboutSectionState extends State<HomeAboutSection> {
         Text(
           AppLocalizations.of(context)!.voiceGiveDescription,
           style: GoogleFonts.notoSans(
-            color: Colors.black,
+            color: AppColors.greys87,
             fontSize: 14.sp,
             fontWeight: FontWeight.normal,
           ),

@@ -13,6 +13,8 @@ branding:
   secondary_color: "" 
   banner_color: "" 
   toast_color: ""
+  text_color: ""
+  bg_color: ""
 
   # Splash screen
   splash_logo: ""

@@ -89,10 +89,9 @@ class _BoloGetStartedState extends State<BoloGetStarted> {
   @override
   Widget build(BuildContext context) {
     final branding = BrandingConfig.instance;
-    
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundColor,
       appBar: const CustomAppBar(),
       body: SafeArea(
         child: Column(
@@ -214,7 +213,7 @@ class _BoloGetStartedState extends State<BoloGetStarted> {
                     width: 130.w,
                     child: PrimaryButtonWidget(
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.backgroundColor,
                         borderRadius: BorderRadius.circular(8).r,
                         border: Border.all(color: AppColors.grey),
                       ),

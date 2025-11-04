@@ -253,7 +253,7 @@ class _CustomAudioPlayerState extends State<CustomAudioPlayer> {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.backgroundColor,
         borderRadius: BorderRadius.circular(40).r,
         border: Border.all(color: AppColors.darkGreen),
       ),
@@ -268,7 +268,7 @@ class _CustomAudioPlayerState extends State<CustomAudioPlayer> {
               fontSize: 12,
               color: _hasEnded
                   ? sliderColor.withValues(alpha: 0.7)
-                  : Colors.black87,
+                  : AppColors.greys87,
               fontWeight: _hasEnded ? FontWeight.w600 : FontWeight.normal,
             ),
           ),
@@ -305,9 +305,9 @@ class _CustomAudioPlayerState extends State<CustomAudioPlayer> {
           ),
           Text(
             _formatTime(_duration),
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 12,
-              color: Colors.black87,
+              color: AppColors.greys87,
             ),
           ),
           // Optional: Add a small indicator when audio has ended

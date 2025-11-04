@@ -52,6 +52,7 @@ class _LanguageSelectionState extends State<LanguageSelection> {
                 onTap: () {
                   showBottomSheet(
                       context: context,
+                      backgroundColor: AppColors.backgroundColor,
                       builder: (context) {
                         return Column(
                           mainAxisSize: MainAxisSize.min,
@@ -93,13 +94,13 @@ class _LanguageSelectionState extends State<LanguageSelection> {
                         selectedLanguage.languageName,
                         style: GoogleFonts.notoSans(
                             fontSize: 12.sp,
-                            color: Colors.white,
+                            color: AppColors.backgroundColor,
                             fontWeight: FontWeight.w500),
                       ),
                       SizedBox(width: 8.w),
                       Icon(
                         Icons.keyboard_arrow_down_rounded,
-                        color: Colors.white,
+                        color: AppColors.backgroundColor,
                         size: 16.sp,
                       )
                     ],

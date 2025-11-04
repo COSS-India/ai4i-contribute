@@ -21,7 +21,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       automaticallyImplyLeading: false,
       toolbarHeight: 58.h,
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundColor,
       elevation: 0,
       centerTitle: false,
       title: Row(
@@ -29,9 +29,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           // Position 1: Primary image
-          if (hasAnyHeaderImage
-              ? branding.headerPrimaryImage.isNotEmpty
-              : true)
+          if (hasAnyHeaderImage ? branding.headerPrimaryImage.isNotEmpty : true)
             Padding(
               padding: const EdgeInsets.only(bottom: 4.0).r,
               child: ImageWidget(
@@ -42,7 +40,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
           // Separator and spacing
-          if ((hasAnyHeaderImage && branding.headerPrimaryImage.isNotEmpty && branding.headerSecondaryImage.isNotEmpty) ||
+          if ((hasAnyHeaderImage &&
+                  branding.headerPrimaryImage.isNotEmpty &&
+                  branding.headerSecondaryImage.isNotEmpty) ||
               (!hasAnyHeaderImage))
             Container(
               margin: EdgeInsets.only(left: 10, right: 10).r,
@@ -61,6 +61,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ? branding.headerSecondaryImage
                   : "assets/images/contribute.png",
               height: 36.w,
+              imageColor:
+                  hasAnyHeaderImage ? null : BrandingConfig.instance.textColor,
             ),
           Spacer(),
           // Position 3: Tertiary image

@@ -54,6 +54,7 @@ class ItemsList extends StatelessWidget {
               dense: true,
               visualDensity: const VisualDensity(vertical: -2),
               title: Text(filtered[index].languageName),
+              textColor: AppColors.greys87,
               onTap: () {
                 onItemSelected(filtered[index]);
                 // Do not pop here; parent handles closing to avoid popping main route

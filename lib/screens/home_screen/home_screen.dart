@@ -3,12 +3,12 @@
 import 'package:VoiceGive/common_widgets/consent_modal.dart';
 import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
 import 'package:VoiceGive/common_widgets/image_widget.dart';
+import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/constants/app_routes.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_get_started/bolo_get_started.dart';
 import 'package:VoiceGive/screens/bolo_india/service/bolo_service.dart';
 import 'package:VoiceGive/screens/home_screen/widgets/home_about_section.dart';
 import 'package:VoiceGive/screens/home_screen/widgets/home_header_section.dart';
-import 'package:VoiceGive/screens/home_screen/widgets/home_footer_section.dart';
 import 'package:VoiceGive/screens/home_screen/widgets/how_it_works_section.dart';
 import 'package:VoiceGive/screens/home_screen/widgets/need_more_info.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final branding = BrandingConfig.instance;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundColor,
       appBar: CustomAppBar(),
       body: SafeArea(
         child: Column(

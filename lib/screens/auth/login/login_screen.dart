@@ -207,7 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
           _navigateBackToHome();
         },
         child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.backgroundColor,
           resizeToAvoidBottomInset: true,
           appBar: const CustomAppBar(),
           body: SafeArea(
@@ -225,7 +225,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             Text(
                               AppLocalizations.of(context)!
-                                  .loginIntoYourBhashaDaanAccount,
+                                  .loginIntoYourAccount,
                               style: GoogleFonts.notoSans(
                                 color: AppColors.greys87,
                                 fontSize: 28.sp,
@@ -388,7 +388,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
                                       valueColor: AlwaysStoppedAnimation<Color>(
-                                          Colors.white),
+                                          AppColors.backgroundColor),
                                     ),
                                   )
                                 : Text(
@@ -396,7 +396,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         .login
                                         .toUpperCase(),
                                     style: GoogleFonts.notoSans(
-                                      color: Colors.white,
+                                      color: AppColors.backgroundColor,
                                       fontSize: 16.sp,
                                       fontWeight: FontWeight.normal,
                                     ),

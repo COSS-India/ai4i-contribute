@@ -1,5 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:VoiceGive/common_widgets/consent_modal.dart';
-import 'package:VoiceGive/common_widgets/image_widget.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/constants/app_routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -123,7 +124,7 @@ class _HomeHeaderSectionState extends State<HomeHeaderSection> {
               child: Text(
                 AppLocalizations.of(context)!.letsGetStarted,
                 style: GoogleFonts.notoSans(
-                    color: Colors.white,
+                    color: AppColors.backgroundColor,
                     fontSize: 16.sp,
                     fontWeight: FontWeight.normal),
               ),

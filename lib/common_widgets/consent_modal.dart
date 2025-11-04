@@ -65,7 +65,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
         width: double.infinity,
         height: MediaQuery.of(context).size.height * 0.85,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.backgroundColor,
           borderRadius: BorderRadius.circular(16.r),
         ),
         child: Column(
@@ -79,7 +79,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                     onTap: widget.onDeny,
                     child: Icon(
                       Icons.arrow_back,
-                      color: Colors.black,
+                      color: AppColors.greys87,
                       size: 20.w,
                     ),
                   ),
@@ -112,7 +112,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                       Text(
                         AppLocalizations.of(context)!.namasteContributor,
                         style: GoogleFonts.notoSans(
-                          color: Colors.black,
+                          color: AppColors.greys87,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
                         ),
@@ -130,7 +130,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                   Text(
                     AppLocalizations.of(context)!.consentMessage,
                     style: GoogleFonts.notoSans(
-                      color: Colors.black,
+                      color: AppColors.greys87,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       height: 1.4,
@@ -150,7 +150,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                     end: Alignment.bottomCenter,
                     colors: [
                       AppColors.lightGreen2,
-                      Colors.white,
+                      AppColors.backgroundColor,
                     ],
                   ),
                 ),
@@ -164,7 +164,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                         AppLocalizations.of(context)!.consentConfirm(
                             AppLocalizations.of(context)!.iAgree),
                         style: GoogleFonts.notoSans(
-                          color: Colors.black,
+                          color: AppColors.greys87,
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
                         ),
@@ -271,7 +271,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                                       Icon(
                                         Icons.check,
                                         color: _allAccepted
-                                            ? Colors.white
+                                            ? AppColors.backgroundColor
                                             : AppColors.grey84,
                                         size: 18.w,
                                       ),
@@ -280,7 +280,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                                         AppLocalizations.of(context)!.iAgree,
                                         style: GoogleFonts.notoSans(
                                           color: _allAccepted
-                                              ? Colors.white
+                                              ? AppColors.backgroundColor
                                               : AppColors.grey84,
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w500,
@@ -299,7 +299,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 14.w),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: AppColors.backgroundColor,
                           borderRadius: BorderRadius.circular(8.r),
                           border: Border.all(color: AppColors.lightGrey),
                         ),
@@ -341,7 +341,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
         Text(
           number,
           style: GoogleFonts.notoSans(
-            color: Colors.black,
+            color: AppColors.greys87,
             fontSize: 14.sp,
             fontWeight: FontWeight.w500,
           ),
@@ -351,7 +351,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
           child: Text(
             text,
             style: GoogleFonts.notoSans(
-              color: Colors.black,
+              color: AppColors.greys87,
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,
               height: 1.4,
@@ -363,7 +363,8 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
   }
 
   Widget _buildCheckboxItem(
-      String text, bool value, ValueChanged<bool?> onChanged, {String? url}) {
+      String text, bool value, ValueChanged<bool?> onChanged,
+      {String? url}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
@@ -384,10 +385,10 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                 borderRadius: BorderRadius.circular(4),
               ),
               child: value
-                  ? const Icon(
+                  ? Icon(
                       Icons.check,
                       size: 16,
-                      color: Colors.white,
+                      color: AppColors.backgroundColor,
                     )
                   : null,
             ),
@@ -395,7 +396,8 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
           const SizedBox(width: 12),
           Expanded(
             child: InkWell(
-              onTap: url != null && url.isNotEmpty ? () => _launchUrl(url) : null,
+              onTap:
+                  url != null && url.isNotEmpty ? () => _launchUrl(url) : null,
               child: Text(
                 text,
                 style: TextStyle(

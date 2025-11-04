@@ -1,4 +1,5 @@
 import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
+import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
 import 'package:VoiceGive/screens/home_screen/home_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -29,7 +30,7 @@ class _BoloContributeState extends State<BoloContribute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundColor,
       appBar: CustomAppBar(),
       body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),

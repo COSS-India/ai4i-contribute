@@ -53,7 +53,7 @@ class ActionsSection extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(8).r,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.backgroundColor,
           border: Border.all(color: AppColors.darkGreen),
           borderRadius: BorderRadius.circular(8).r,
         ),

@@ -150,7 +150,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundColor,
       resizeToAvoidBottomInset: true,
       appBar: const CustomAppBar(),
       body: SafeArea(
@@ -277,7 +277,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             return Text(
                               AppLocalizations.of(context)!.submit,
                               style: GoogleFonts.notoSans(
-                                color: Colors.white,
+                                color: isOtpValid
+                                    ? AppColors.backgroundColor
+                                    : AppColors.grey40,
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.normal,
                               ),

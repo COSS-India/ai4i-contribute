@@ -1,7 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
-import 'package:VoiceGive/screens/home_screen/home_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:yaml/yaml.dart';
 
@@ -56,9 +52,9 @@ class BrandingConfig {
 
   /// Get background brand color
   Color get bgColor {
-    final colorRgba = _config['branding']?['bg_color'] ?? '240, 243, 244, 1';
+    final colorRgba = _config['branding']?['bg_color'] ?? '255, 255, 255, 1';
     if (colorRgba.isEmpty) {
-      return const Color.fromRGBO(240, 243, 244, 1);
+      return const Color.fromRGBO(255, 255, 255, 1);
     }
     return _parseRgbaColor(colorRgba);
   }
@@ -110,9 +106,7 @@ class BrandingConfig {
   String get splashName => _config['branding']?['splash_name'] ?? 'Contribute';
 
   /// Get splash animation path
-  String get splashAnimation =>
-      _config['branding']?['splash_animation'] ??
-      'assets/animations/bhashadaan_splash_screen.json';
+  String get splashAnimation => _config['branding']?['splash_animation'] ?? '';
 
   /// Get header image path
   String get headerPrimaryImage =>

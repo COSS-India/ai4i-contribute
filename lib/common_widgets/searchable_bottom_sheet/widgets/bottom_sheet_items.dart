@@ -30,7 +30,7 @@ class ItemsList extends StatelessWidget {
               style: GoogleFonts.lato(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
-                color: AppColors.grey16,
+                color: AppColors.greys87,
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -52,7 +52,14 @@ class ItemsList extends StatelessWidget {
             return ListTile(
               dense: true,
               visualDensity: const VisualDensity(vertical: -2),
-              title: Text(filtered[index]),
+              title: Text(filtered[index],
+                  style: GoogleFonts.lato(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.greys87,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis),
               onTap: () {
                 onItemSelected(filtered[index]);
                 // Do not pop here; parent handles closing to avoid popping main route

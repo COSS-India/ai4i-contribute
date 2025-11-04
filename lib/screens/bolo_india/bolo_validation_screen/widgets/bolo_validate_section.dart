@@ -124,7 +124,7 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
                                 recordedTexts[currentIndex].text,
                                 style: GoogleFonts.notoSans(
                                   fontSize: 16.sp,
-                                  color: Colors.black,
+                                  color: AppColors.greys87,
                                   fontWeight: FontWeight.w500,
                                 ),
                                 textAlign: TextAlign.center,
@@ -177,7 +177,7 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
                   },
                   textColor: value ? AppColors.orange : AppColors.grey24,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.backgroundColor,
                     border: Border.all(
                       color: value ? AppColors.orange : AppColors.grey24,
                     ),
@@ -199,7 +199,7 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
                             text:
                                 "Please listen to the audio completely before validating.");
                   },
-                  textColor: Colors.white,
+                  textColor: AppColors.backgroundColor,
                   decoration: BoxDecoration(
                     color: value ? AppColors.orange : AppColors.grey24,
                     border: Border.all(

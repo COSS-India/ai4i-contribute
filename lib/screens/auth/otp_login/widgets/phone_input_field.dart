@@ -37,7 +37,7 @@ class PhoneInputField extends StatelessWidget {
               width: 80.w,
               padding: EdgeInsets.symmetric(horizontal: 12.w),
               decoration: BoxDecoration(
-                border: Border.all(color: AppColors.lightGrey),
+                border: Border.all(color: AppColors.grey40),
                 borderRadius: BorderRadius.circular(8.r),
               ),
               child: DropdownButtonHideUnderline(
@@ -69,7 +69,10 @@ class PhoneInputField extends StatelessWidget {
                   controller: controller,
                   keyboardType: TextInputType.number,
                   keyboardAppearance: Brightness.dark,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly,LengthLimitingTextInputFormatter(10)],
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(10)
+                  ],
                   validator: validator,
                   decoration: InputDecoration(
                     hintText: '',
@@ -79,7 +82,7 @@ class PhoneInputField extends StatelessWidget {
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.r),
-                      borderSide: BorderSide(color: AppColors.lightGrey),
+                      borderSide: BorderSide(color: AppColors.grey40),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.r),

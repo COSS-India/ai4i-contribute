@@ -22,7 +22,8 @@ class EmailOtpInputField extends StatefulWidget {
 }
 
 class _EmailOtpInputFieldState extends State<EmailOtpInputField> {
-  final List<TextEditingController> _controllers = List.generate(6, (index) => TextEditingController());
+  final List<TextEditingController> _controllers =
+      List.generate(6, (index) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
   String _otp = '';
 
@@ -58,7 +59,7 @@ class _EmailOtpInputFieldState extends State<EmailOtpInputField> {
     for (var controller in _controllers) {
       newOtp += controller.text;
     }
-    
+
     if (newOtp != _otp) {
       _otp = newOtp;
       widget.onChanged(_otp);
@@ -87,15 +88,15 @@ class _EmailOtpInputFieldState extends State<EmailOtpInputField> {
               height: 40.w,
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: widget.errorText != null 
-                    ? AppColors.negativeLight 
-                    : _focusNodes[index].hasFocus 
-                      ? AppColors.lightGreen 
-                      : AppColors.lightGrey,
+                  color: widget.errorText != null
+                      ? AppColors.negativeLight
+                      : _focusNodes[index].hasFocus
+                          ? AppColors.lightGreen
+                          : AppColors.lightGrey,
                   width: 1.5,
                 ),
                 borderRadius: BorderRadius.circular(6.r),
-                color: Colors.white,
+                color: AppColors.backgroundColor,
               ),
               child: Center(
                 child: TextFormField(
@@ -124,7 +125,8 @@ class _EmailOtpInputFieldState extends State<EmailOtpInputField> {
                   onChanged: (value) => _onTextChanged(value, index),
                   onTap: () {
                     if (_controllers[index].text.isEmpty) {
-                      _controllers[index].selection = TextSelection.fromPosition(
+                      _controllers[index].selection =
+                          TextSelection.fromPosition(
                         TextPosition(offset: _controllers[index].text.length),
                       );
                     }

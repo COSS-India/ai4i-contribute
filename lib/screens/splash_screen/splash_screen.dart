@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'dart:io';
 
+import '../../constants/app_colors.dart';
 import '../../constants/app_routes.dart';
 import '../../config/branding_config.dart';
 import '../../common_widgets/image_widget.dart';
@@ -47,7 +47,7 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
     // Priority 1: Animation (highest priority)
     if (splashAnimation.isNotEmpty) {
       return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.backgroundColor,
         body: _buildAnimationSplash(splashAnimation),
       );
     }
@@ -55,7 +55,7 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
     // Priority 2: Both logo and name
     if (splashLogo.isNotEmpty && splashName.isNotEmpty) {
       return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.backgroundColor,
         body: _buildImageSplash(splashLogo, splashName),
       );
     }
@@ -63,7 +63,7 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
     // Priority 3: Logo only (show logo without name)
     if (splashLogo.isNotEmpty && splashName.isEmpty) {
       return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.backgroundColor,
         body: _buildImageSplash(splashLogo, ''),
       );
     }
@@ -71,14 +71,14 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
     // Priority 4: Name only (show name without logo)
     if (splashName.isNotEmpty && splashLogo.isEmpty) {
       return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.backgroundColor,
         body: _buildImageSplash('', splashName),
       );
     }
 
     // Fallback: Default (logo and "Contribute" text)
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundColor,
       body: _buildImageSplash('assets/launcher/ai4i_logo.png', 'Contribute'),
     );
   }
@@ -107,9 +107,10 @@ class _CustomSplashScreenState extends State<CustomSplashScreen>
           if (splashName.isNotEmpty)
             Text(
               splashName,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
+                color: AppColors.greys87,
               ),
             ),
         ],

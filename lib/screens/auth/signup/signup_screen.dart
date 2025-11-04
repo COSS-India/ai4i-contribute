@@ -193,7 +193,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             // Title
                             Text(
                               AppLocalizations.of(context)!
-                                  .createBhashaDaanAccount,
+                                  .createAccount,
                               style: GoogleFonts.notoSans(
                                 color: AppColors.greys87,
                                 fontSize: 28.sp,

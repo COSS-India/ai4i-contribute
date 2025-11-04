@@ -183,7 +183,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
           text,
           style: GoogleFonts.notoSans(
             fontSize: 16.sp,
-            color: Colors.black,
+            color: AppColors.greys87,
             fontWeight: FontWeight.w500,
           ),
           textAlign: TextAlign.center,
@@ -297,7 +297,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
           },
           textColor: AppColors.orange,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.backgroundColor,
             border: Border.all(color: AppColors.orange),
             borderRadius: BorderRadius.all(Radius.circular(6.0).r),
           ),
@@ -328,7 +328,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
               }
             }
           },
-          textColor: Colors.white,
+          textColor: AppColors.backgroundColor,
           decoration: BoxDecoration(
             color: AppColors.orange,
             border: Border.all(color: AppColors.orange),
@@ -352,7 +352,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
             },
             textColor: enableSkipValue ? AppColors.orange : AppColors.grey16,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.backgroundColor,
               border: Border.all(
                 color: enableSkipValue ? AppColors.orange : AppColors.grey16,
               ),
@@ -375,7 +375,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
               submitEnabled: enableSubmitValue,
               currentSentence: currentSentence,
             ),
-            textColor: Colors.white,
+            textColor: AppColors.backgroundColor,
             decoration: BoxDecoration(
               color: enableSubmitValue ? AppColors.orange : AppColors.grey16,
               border: Border.all(

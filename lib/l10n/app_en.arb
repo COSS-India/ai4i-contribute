@@ -3,7 +3,6 @@
     "@@locale": "en",
     
     
-    "bhashadaan": "Bhashadaan",
     "home": "Home",
     "bolo": "Bolo",
     "suno": "Suno",
@@ -31,8 +30,8 @@
     "signUp": "Sign Up",
     "alreadyHaveAccount": "Already have an account?",
     "doesntHaveAccount": "Don't have an account? ",
-    "createBhashaDaanAccount": "Create a BhashaDaan Account",
-    "loginIntoYourBhashaDaanAccount": "Login into your\nBhashaDaan Account",
+    "createAccount": "Create an Account",
+    "loginIntoYourAccount": "Login into your\n Account",
     "fillInYour": "Fill in your ",
     "personalDetails": "personal details ",
     "toCreateYourAccount": "to create your account",
@@ -144,8 +143,7 @@
     "iAgree": "I agree",
     "deny": "I deny",
 
-    "bhasha": "Bhasha",
-    "daan": "Daan",
+   
     "voiceGive": "Empower India’s Linguistic Diversity",
     
     "quickTips": "Quick Tips",
@@ -243,7 +241,6 @@
     "joinTheMovementDescription": "Join the movement to enhance language understanding and accessibility for all 22 official languages of India.",
     "letsGetStarted": "Let's Get Started",
     
-    "digitalIndiaBhashiniDivision": "Digital India Bhashini Division",
     "electronicsNiketanAddress": "Electronics Niketan, 6-CGO Complex, New Delhi - 110003",
     "poweredBy": "Powered by",
     "digitalIndiaCorporation": "Digital India Corporation(DIC)",

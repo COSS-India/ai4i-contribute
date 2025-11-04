@@ -72,9 +72,9 @@ class HowItWorksSection extends StatelessWidget {
           Text(
             title,
             style: GoogleFonts.notoSans(
-              fontSize: 10.sp,
-              fontWeight: FontWeight.w600,
-            ),
+                fontSize: 10.sp,
+                fontWeight: FontWeight.w600,
+                color: AppColors.greys87),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 2.w),
@@ -83,6 +83,7 @@ class HowItWorksSection extends StatelessWidget {
             style: GoogleFonts.notoSans(
               fontSize: 8.sp,
               fontWeight: FontWeight.w400,
+              color: AppColors.greys87,
             ),
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,

@@ -1,4 +1,5 @@
 import 'package:VoiceGive/common_widgets/container_skeleton.dart';
+import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -15,7 +16,7 @@ class _AudioPlayerSkeletonState extends State<AudioPlayerSkeleton> {
     return Container(
       padding: const EdgeInsets.all(16).r,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.backgroundColor,
         borderRadius: BorderRadius.circular(40).r,
         boxShadow: [
           BoxShadow(

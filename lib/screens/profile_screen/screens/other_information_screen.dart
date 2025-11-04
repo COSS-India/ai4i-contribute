@@ -76,6 +76,7 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
     await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      backgroundColor: AppColors.backgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
       ),
@@ -109,7 +110,7 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
       },
       child: Scaffold(
         appBar: const CustomAppBar(),
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.backgroundColor,
         body: SafeArea(
           child: Column(
             children: [
@@ -169,7 +170,7 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                 // Check if country actually changed
                                 if (_country != v) {
                                   _country = v;
-                                  
+
                                   // Clear dependent fields
                                   _state = '';
                                   _district = null;
@@ -179,14 +180,15 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                   stateList = [];
                                   districtList = [];
                                   _showDistrictError = false;
-                                  
+
                                   // Fetch states for new country
                                   String countryId = getCountryId(_country);
                                   stateList = await ProfileRepository()
                                       .getState(countryId);
-                                  _states =
-                                      stateList.map((e) => e.stateName).toList();
-                                  
+                                  _states = stateList
+                                      .map((e) => e.stateName)
+                                      .toList();
+
                                   if (mounted) {
                                     setState(() {});
                                   }
@@ -209,9 +211,9 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                           fontSize: 14.sp)),
                                 ]),
                               ),
-                              border: _outline(AppColors.darkGrey),
-                              enabledBorder: _outline(AppColors.darkGrey),
-                              focusedBorder: _outline(AppColors.darkGrey),
+                              border: _outline(AppColors.grey40),
+                              enabledBorder: _outline(AppColors.grey40),
+                              focusedBorder: _outline(AppColors.grey40),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 12.w, vertical: 16.w),
                               suffixIcon: Icon(Icons.keyboard_arrow_down,
@@ -238,14 +240,14 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                       // Check if state actually changed
                                       if (_state != v) {
                                         _state = v;
-                                        
+
                                         // Clear dependent fields
                                         _district = null;
                                         _districtController.clear();
                                         _districts = [];
                                         districtList = [];
                                         _showDistrictError = false;
-                                        
+
                                         // Fetch districts for new state
                                         String stateId = getStateId(_state);
                                         districtList = await ProfileRepository()
@@ -253,7 +255,7 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                         _districts = districtList
                                             .map((e) => e.districtName)
                                             .toList();
-                                        
+
                                         if (mounted) {
                                           setState(() {});
                                         }
@@ -276,9 +278,9 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                           fontSize: 14.sp)),
                                 ]),
                               ),
-                              border: _outline(AppColors.darkGrey),
-                              enabledBorder: _outline(AppColors.darkGrey),
-                              focusedBorder: _outline(AppColors.darkGrey),
+                              border: _outline(AppColors.grey40),
+                              enabledBorder: _outline(AppColors.grey40),
+                              focusedBorder: _outline(AppColors.grey40),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 12.w, vertical: 16.w),
                               suffixIcon: Icon(Icons.keyboard_arrow_down,
@@ -327,9 +329,9 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                           fontSize: 14.sp)),
                                 ]),
                               ),
-                              border: _outline(AppColors.darkGrey),
-                              enabledBorder: _outline(AppColors.darkGrey),
-                              focusedBorder: _outline(AppColors.darkGrey),
+                              border: _outline(AppColors.grey40),
+                              enabledBorder: _outline(AppColors.grey40),
+                              focusedBorder: _outline(AppColors.grey40),
                               suffixIcon: Icon(Icons.keyboard_arrow_down,
                                   color: AppColors.greys87, size: 20.w),
                               contentPadding: EdgeInsets.symmetric(
@@ -372,9 +374,9 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                 AppLocalizations.of(context)!.preferredLanguage,
                             labelStyle: GoogleFonts.notoSans(
                                 color: AppColors.greys60, fontSize: 14.sp),
-                            border: _outline(AppColors.darkGrey),
-                            enabledBorder: _outline(AppColors.darkGrey),
-                            focusedBorder: _outline(AppColors.darkGrey),
+                            border: _outline(AppColors.grey40),
+                            enabledBorder: _outline(AppColors.grey40),
+                            focusedBorder: _outline(AppColors.grey40),
                             suffixIcon: Icon(Icons.keyboard_arrow_down,
                                 color: AppColors.greys87, size: 20.w),
                             contentPadding: EdgeInsets.symmetric(
