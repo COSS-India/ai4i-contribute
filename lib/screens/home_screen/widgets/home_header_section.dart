@@ -3,10 +3,10 @@
 import 'package:VoiceGive/common_widgets/consent_modal.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/constants/app_routes.dart';
+import 'package:VoiceGive/config/branding_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../bolo_india/bolo_get_started/bolo_get_started.dart';
 import '../../bolo_india/service/bolo_service.dart';
@@ -69,7 +69,7 @@ class _HomeHeaderSectionState extends State<HomeHeaderSection> {
                           Text(
                             AppLocalizations.of(context)!
                                 .empowerIndiasLinguisticDiversity,
-                            style: GoogleFonts.notoSans(
+                            style: BrandingConfig.instance.getPrimaryTextStyle(
                                 color: AppColors.darkBlue,
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w500),
@@ -94,7 +94,7 @@ class _HomeHeaderSectionState extends State<HomeHeaderSection> {
           SizedBox(height: 12.w),
           Text(
             AppLocalizations.of(context)!.joinTheMovementDescription,
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
                 color: Colors.black,
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w500),
@@ -123,7 +123,7 @@ class _HomeHeaderSectionState extends State<HomeHeaderSection> {
               ),
               child: Text(
                 AppLocalizations.of(context)!.letsGetStarted,
-                style: GoogleFonts.notoSans(
+                style: BrandingConfig.instance.getPrimaryTextStyle(
                     color: AppColors.backgroundColor,
                     fontSize: 16.sp,
                     fontWeight: FontWeight.normal),

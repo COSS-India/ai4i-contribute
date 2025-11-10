@@ -2,10 +2,10 @@ import 'package:VoiceGive/screens/profile_screen/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../common_widgets/custom_app_bar.dart';
+import '../../../config/branding_config.dart';
 import '../../../constants/app_colors.dart';
 import '../repository/login_auth_repository.dart';
 import 'widgets/gradient_header.dart';
@@ -167,7 +167,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       SizedBox(height: 40.h),
                       Text(
                         AppLocalizations.of(context)!.otpVerification,
-                        style: GoogleFonts.notoSans(
+                        style: BrandingConfig.instance.getPrimaryTextStyle(
                           color: AppColors.greys87,
                           fontSize: 28.sp,
                           fontWeight: FontWeight.w700,
@@ -177,7 +177,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       SizedBox(height: 16.h),
                       Text(
                         "${AppLocalizations.of(context)!.enterOtpFromSms} ${widget.phoneNumber}",
-                        style: GoogleFonts.notoSans(
+                        style: BrandingConfig.instance.getPrimaryTextStyle(
                           color: AppColors.greys60,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w400,
@@ -189,7 +189,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       if (!_canResendOtp) ...[
                         Text(
                           _formatOtpTime(_otpSeconds),
-                          style: GoogleFonts.notoSans(
+                          style: BrandingConfig.instance.getPrimaryTextStyle(
                             color: AppColors.lightGreen,
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w600,
@@ -215,7 +215,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                               children: [
                                 TextSpan(
                                   text: "I didn't receive any OTP. ",
-                                  style: GoogleFonts.notoSans(
+                                  style: BrandingConfig.instance
+                                      .getPrimaryTextStyle(
                                     color: AppColors.greys60,
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w500,
@@ -223,7 +224,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                 ),
                                 TextSpan(
                                   text: "RESEND",
-                                  style: GoogleFonts.notoSans(
+                                  style: BrandingConfig.instance
+                                      .getPrimaryTextStyle(
                                     color: AppColors.lightGreen,
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w600,
@@ -276,7 +278,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             }
                             return Text(
                               AppLocalizations.of(context)!.submit,
-                              style: GoogleFonts.notoSans(
+                              style:
+                                  BrandingConfig.instance.getPrimaryTextStyle(
                                 color: isOtpValid
                                     ? AppColors.backgroundColor
                                     : AppColors.grey40,

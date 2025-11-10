@@ -18,6 +18,9 @@ echo "🧹 Cleaning previous builds..."
 flutter clean
 flutter pub get
 
+echo "🔤 Generating font configuration..."
+dart run build_scripts/generate_fonts.dart
+
 echo "🎨 Generating app icons..."
 flutter pub run flutter_launcher_icons:main
 

@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:yaml/yaml.dart';
 
 /// BrandingConfig manages app branding and theming
@@ -148,6 +150,141 @@ class BrandingConfig {
   /// Get secondary color string for checking if empty
   String get secondaryColorString =>
       _config['branding']?['secondary_color'] ?? '';
+
+  /// Get primary font path
+  String get primaryFont => _config['branding']?['primary_font'] ?? '';
+
+  /// Get secondary font path
+  String get secondaryFont => _config['branding']?['secondary_font'] ?? '';
+
+  /// Get tertiary font path
+  String get tertiaryFont => _config['branding']?['tertiary_font'] ?? '';
+
+  /// Get primary text style - supports both TTF files and Google Fonts
+  TextStyle getPrimaryTextStyle({
+    double? fontSize,
+    FontWeight? fontWeight,
+    Color? color,
+    double? height,
+    double? letterSpacing,
+    TextDecoration? decoration,
+  }) {
+    if (primaryFont.isNotEmpty) {
+      if (primaryFont.contains('assets/')) {
+        // TTF file path - use CustomPrimary font family
+        return TextStyle(
+          fontFamily: 'CustomPrimary',
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          color: color,
+          height: height,
+          letterSpacing: letterSpacing,
+          decoration: decoration,
+        );
+      } else {
+        // Google Font name
+        try {
+          return GoogleFonts.getFont(
+            primaryFont,
+            fontSize: fontSize,
+            fontWeight: fontWeight,
+            color: color,
+            height: height,
+            letterSpacing: letterSpacing,
+            decoration: decoration,
+          );
+        } catch (e) {
+          // Fallback if Google Font not found
+        }
+      }
+    }
+    return GoogleFonts.notoSans(
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      color: color,
+      height: height,
+      letterSpacing: letterSpacing,
+      decoration: decoration,
+    );
+  }
+
+  /// Get secondary text style - supports both TTF files and Google Fonts
+  TextStyle getSecondaryTextStyle({
+    double? fontSize,
+    FontWeight? fontWeight,
+    Color? color,
+    double? height,
+    double? letterSpacing,
+  }) {
+    if (secondaryFont.isNotEmpty) {
+      if (secondaryFont.contains('assets/')) {
+        // TTF file path - use CustomSecondary font family
+        return TextStyle(
+          fontFamily: 'CustomSecondary',
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          color: color,
+          height: height,
+          letterSpacing: letterSpacing,
+        );
+      } else {
+        // Google Font name
+        try {
+          return GoogleFonts.getFont(
+            secondaryFont,
+            fontSize: fontSize,
+            fontWeight: fontWeight,
+            color: color,
+            height: height,
+            letterSpacing: letterSpacing,
+          );
+        } catch (e) {
+          // Fallback to primary font
+        }
+      }
+    }
+    return getPrimaryTextStyle(
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      color: color,
+      height: height,
+      letterSpacing: letterSpacing,
+    );
+  }
+
+  /// Get tertiary text style with custom or Google font
+  TextStyle getTertiaryTextStyle({
+    double? fontSize,
+    FontWeight? fontWeight,
+    Color? color,
+    double? height,
+    double? letterSpacing,
+    TextDecoration? decoration,
+  }) {
+    if (tertiaryFont.isNotEmpty) {
+      try {
+        return TextStyle(
+          fontFamily: 'CustomTertiary',
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          color: color,
+          height: height,
+          letterSpacing: letterSpacing,
+          decoration: decoration,
+        );
+      } catch (e) {
+        // Fall back to primary font
+      }
+    }
+    return getPrimaryTextStyle(
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      color: color,
+      height: height,
+      letterSpacing: letterSpacing,
+      decoration: decoration,
+    );
+  }
 
   /// Default configuration fallback
   static Map<String, dynamic> _getDefaultConfig() {

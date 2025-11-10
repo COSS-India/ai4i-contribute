@@ -5,7 +5,8 @@ import 'package:VoiceGive/screens/bolo_india/service/bolo_service.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import '../../../config/branding_config.dart';
 
 class LanguageSelection extends StatefulWidget {
   final String description;
@@ -42,7 +43,7 @@ class _LanguageSelectionState extends State<LanguageSelection> {
             children: [
               Text(
                 widget.description,
-                style: GoogleFonts.notoSans(
+                style: BrandingConfig.instance.getPrimaryTextStyle(
                     fontSize: 12.sp,
                     color: AppColors.darkGreen,
                     fontWeight: FontWeight.w500),
@@ -92,7 +93,7 @@ class _LanguageSelectionState extends State<LanguageSelection> {
                     children: [
                       Text(
                         selectedLanguage.languageName,
-                        style: GoogleFonts.notoSans(
+                        style: BrandingConfig.instance.getPrimaryTextStyle(
                             fontSize: 12.sp,
                             color: AppColors.backgroundColor,
                             fontWeight: FontWeight.w500),

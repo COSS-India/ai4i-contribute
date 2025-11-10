@@ -1,8 +1,8 @@
 import 'package:VoiceGive/constants/app_colors.dart';
+import 'package:VoiceGive/config/branding_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ActionsSection extends StatelessWidget {
   const ActionsSection({super.key});
@@ -68,7 +68,7 @@ class ActionsSection extends StatelessWidget {
             ),
             SizedBox(width: 4.w),
             Text(title,
-                style: GoogleFonts.notoSans(
+                style: BrandingConfig.instance.getPrimaryTextStyle(
                     color: AppColors.darkGreen,
                     fontSize: 10.sp,
                     fontWeight: FontWeight.w600)),

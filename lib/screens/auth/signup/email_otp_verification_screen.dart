@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../common_widgets/custom_app_bar.dart';
+import '../../../config/branding_config.dart';
 import '../../../constants/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../profile_screen/screens/profile_screen.dart';
@@ -145,7 +145,7 @@ class _EmailOtpVerificationScreenState
                     children: [
                       Text(
                         AppLocalizations.of(context)!.verifyOtp,
-                        style: GoogleFonts.notoSans(
+                        style: BrandingConfig.instance.getPrimaryTextStyle(
                           color: AppColors.greys87,
                           fontSize: 28.sp,
                           fontWeight: FontWeight.w700,
@@ -155,7 +155,7 @@ class _EmailOtpVerificationScreenState
                       SizedBox(height: 16.h),
                       Text(
                         AppLocalizations.of(context)!.otpSentToMail,
-                        style: GoogleFonts.notoSans(
+                        style: BrandingConfig.instance.getPrimaryTextStyle(
                           color: AppColors.greys60,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w400,
@@ -232,7 +232,8 @@ class _EmailOtpVerificationScreenState
                                       )
                                     : Text(
                                         'Verify OTP',
-                                        style: GoogleFonts.notoSans(
+                                        style: BrandingConfig.instance
+                                            .getPrimaryTextStyle(
                                           color: Colors.white,
                                           fontSize: 16.sp,
                                           fontWeight: FontWeight.normal,

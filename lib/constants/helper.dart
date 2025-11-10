@@ -1,7 +1,8 @@
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../config/branding_config.dart';
 
 class Helper {
   static Future<bool> requestPermission(Permission permission) async {
@@ -26,7 +27,7 @@ class Helper {
       SnackBar(
         duration: Duration(seconds: durationInSec ?? 2),
         content: Text(text,
-            style: GoogleFonts.lato(
+            style: BrandingConfig.instance.getSecondaryTextStyle(
               color: Colors.white,
             )),
         backgroundColor: bgColor ?? AppColors.darkBlue,

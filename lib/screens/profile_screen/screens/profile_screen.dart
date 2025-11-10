@@ -9,8 +9,8 @@ import 'package:VoiceGive/screens/home_screen/home_screen.dart';
 import 'package:VoiceGive/screens/profile_screen/screens/other_information_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../../config/branding_config.dart';
 import '../../../constants/app_constants.dart';
 import '../model/gender_model.dart';
 import '../widgets/name_widget.dart';
@@ -151,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Text(
                       AppLocalizations.of(context)!.completeYourProfile,
-                      style: GoogleFonts.notoSans(
+                      style: BrandingConfig.instance.getPrimaryTextStyle(
                         color: Colors.white,
                         fontSize: 20.sp,
                         fontWeight: FontWeight.normal,
@@ -172,7 +172,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(height: 16.h),
                           Text(
                             AppLocalizations.of(context)!.personalInformation,
-                            style: GoogleFonts.notoSans(
+                            style: BrandingConfig.instance.getPrimaryTextStyle(
                               color: AppColors.greys87,
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w700,
@@ -226,16 +226,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   text: TextSpan(children: [
                                     TextSpan(
                                       text: '*',
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.negativeLight,
-                                          fontSize: 14.sp),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.negativeLight,
+                                              fontSize: 14.sp),
                                     ),
                                     TextSpan(
                                       text: AppLocalizations.of(context)!
                                           .chooseYourAgeGroup,
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.greys60,
-                                          fontSize: 14.sp),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.greys60,
+                                              fontSize: 14.sp),
                                     ),
                                   ]),
                                 ),
@@ -247,10 +249,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 12.w, vertical: 16.w),
                               ),
-                              style: GoogleFonts.notoSans(
-                                  color: AppColors.greys87,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500),
+                              style: BrandingConfig.instance
+                                  .getPrimaryTextStyle(
+                                      color: AppColors.greys87,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500),
                             ),
                           ),
                           SizedBox(height: 16.h),
@@ -285,16 +288,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   text: TextSpan(children: [
                                     TextSpan(
                                       text: '*',
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.negativeLight,
-                                          fontSize: 14.sp),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.negativeLight,
+                                              fontSize: 14.sp),
                                     ),
                                     TextSpan(
                                       text:
                                           AppLocalizations.of(context)!.gender,
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.greys60,
-                                          fontSize: 14.sp),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.greys60,
+                                              fontSize: 14.sp),
                                     ),
                                   ]),
                                 ),
@@ -306,10 +311,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 12.w, vertical: 16.w),
                               ),
-                              style: GoogleFonts.notoSans(
-                                  color: AppColors.greys87,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500),
+                              style: BrandingConfig.instance
+                                  .getPrimaryTextStyle(
+                                      color: AppColors.greys87,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500),
                             ),
                           ),
                           SizedBox(height: 16.h),
@@ -328,10 +334,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 12.w, vertical: 12.w),
                               ),
-                              style: GoogleFonts.notoSans(
-                                  color: AppColors.darkGreen,
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w500),
+                              style: BrandingConfig.instance
+                                  .getPrimaryTextStyle(
+                                      color: AppColors.darkGreen,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w500),
                             ),
                           SizedBox(height: 16.h),
                           // Email
@@ -340,8 +347,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               labelText: AppLocalizations.of(context)!.emailId,
-                              labelStyle: GoogleFonts.notoSans(
-                                  color: AppColors.greys60, fontSize: 14.sp),
+                              labelStyle: BrandingConfig.instance
+                                  .getPrimaryTextStyle(
+                                      color: AppColors.greys60,
+                                      fontSize: 14.sp),
                               enabledBorder: _outline(AppColors.grey40),
                               focusedBorder: _outline(AppColors.grey40),
                               errorBorder: _outline(AppColors.negativeLight),
@@ -368,7 +377,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 return null;
                               }
                             },
-                            style: GoogleFonts.notoSans(
+                            style: BrandingConfig.instance.getPrimaryTextStyle(
                                 color: AppColors.greys87,
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w500),
@@ -422,7 +431,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 child: Text(
                                   AppLocalizations.of(context)!.saveAndContinue,
-                                  style: GoogleFonts.notoSans(
+                                  style: BrandingConfig.instance
+                                      .getPrimaryTextStyle(
                                     color: Colors.white,
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.normal,

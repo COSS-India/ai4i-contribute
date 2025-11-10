@@ -43,9 +43,20 @@ branding:
   badge_image: ""
   certificate_image: ""
 
+  # Font Configuration - ONLY UPDATE HERE!
+  # 1. Place TTF files in assets/fonts/
+  # 2. Update paths below (any filename works)
+  # 3. Leave empty to use Google Fonts
+  primary_font: ""     # e.g., "assets/fonts/primary_font.ttf"
+  secondary_font: ""   # e.g., "assets/fonts/secondary_font.ttf"
+  tertiary_font: ""    # e.g., "assets/fonts/tertiary_font.ttf"
 # Instructions for customization:
 # 1. Change app.display_name to your desired app name
 # 2. Replace branding.primary_color, secondary_color, accent_color with your brand colors
-# 4. Replace app_icon with your app icon (recommended: 1024x1024 PNG)
-# 5. Replace splash_logo and organization_logo with your logos
-# 6.  Replace partner_logos with your partner/sponsor logos
+# 3. Replace app_icon with your app icon (recommended: 1024x1024 PNG)
+# 4. Replace splash_logo and organization_logo with your logos
+# 5. Replace partner_logos with your partner/sponsor logos
+# 6. Add custom fonts (SIMPLE!):
+#    - Place TTF files in assets/fonts/
+#    - Update font paths in branding.yaml ONLY
+#    - No need to modify pubspec.yaml

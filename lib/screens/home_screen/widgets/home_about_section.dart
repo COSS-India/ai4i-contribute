@@ -1,8 +1,8 @@
 import 'package:VoiceGive/constants/app_colors.dart';
+import 'package:VoiceGive/config/branding_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HomeAboutSection extends StatefulWidget {
   const HomeAboutSection({super.key});
@@ -19,7 +19,7 @@ class _HomeAboutSectionState extends State<HomeAboutSection> {
       children: [
         Text(
           AppLocalizations.of(context)!.whatIsVoiceGive,
-          style: GoogleFonts.notoSans(
+          style: BrandingConfig.instance.getPrimaryTextStyle(
             color: AppColors.darkGreen,
             fontSize: 18.sp,
             fontWeight: FontWeight.bold,
@@ -28,7 +28,7 @@ class _HomeAboutSectionState extends State<HomeAboutSection> {
         SizedBox(height: 16.w),
         Text(
           AppLocalizations.of(context)!.voiceGiveDescription,
-          style: GoogleFonts.notoSans(
+          style: BrandingConfig.instance.getPrimaryTextStyle(
             color: AppColors.greys87,
             fontSize: 14.sp,
             fontWeight: FontWeight.normal,

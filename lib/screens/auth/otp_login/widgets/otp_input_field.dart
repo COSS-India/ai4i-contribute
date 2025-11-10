@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../config/branding_config.dart';
 import '../../../../constants/app_colors.dart';
 
 class OtpInputField extends StatefulWidget {
@@ -118,7 +118,7 @@ class _OtpInputFieldState extends State<OtpInputField> {
                   textAlignVertical: TextAlignVertical.center,
                   keyboardType: TextInputType.number,
                   maxLength: 1,
-                  style: GoogleFonts.notoSans(
+                  style: BrandingConfig.instance.getPrimaryTextStyle(
                     fontSize: 24.sp,
                     fontWeight: FontWeight.w600,
                     color: AppColors.greys87,
@@ -152,7 +152,7 @@ class _OtpInputFieldState extends State<OtpInputField> {
           SizedBox(height: 8.h),
           Text(
             widget.errorText!,
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
               color: AppColors.negativeLight,
               fontSize: 12.sp,
               fontWeight: FontWeight.w400,

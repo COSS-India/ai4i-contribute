@@ -11,7 +11,6 @@ import 'package:VoiceGive/screens/bolo_india/bolo_validation_screen/widgets/audi
 import 'package:VoiceGive/screens/congratulations_screen/congratulations_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../config/branding_config.dart';
 
@@ -36,7 +35,7 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
   @override
   void initState() {
     getValidationsQueue = BoloValidateRepository().getValidationsQueue(
-        language: widget.languageModel.languageCode, count: 25);
+        language: widget.languageModel.languageCode, count: 2);
     super.initState();
   }
 
@@ -99,7 +98,8 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
                                 const Spacer(),
                                 Text(
                                   "${currentIndex + 1}/${recordedTexts.length}",
-                                  style: GoogleFonts.notoSans(
+                                  style: BrandingConfig.instance
+                                      .getPrimaryTextStyle(
                                     fontSize: 12.sp,
                                     color: AppColors.darkGreen,
                                     fontWeight: FontWeight.w600,
@@ -122,7 +122,8 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
                               padding: EdgeInsets.only(left: 32, right: 32).r,
                               child: Text(
                                 recordedTexts[currentIndex].text,
-                                style: GoogleFonts.notoSans(
+                                style:
+                                    BrandingConfig.instance.getPrimaryTextStyle(
                                   fontSize: 16.sp,
                                   color: AppColors.greys87,
                                   fontWeight: FontWeight.w500,

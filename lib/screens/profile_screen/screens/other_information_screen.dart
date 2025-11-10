@@ -6,8 +6,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_get_started/bolo_get_started.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../../config/branding_config.dart';
 import '../model/district_model.dart';
 import '../model/language_model.dart';
 import '../model/state_model.dart';
@@ -136,7 +136,7 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                     ),
                     Text(
                       AppLocalizations.of(context)!.completeYourProfile,
-                      style: GoogleFonts.notoSans(
+                      style: BrandingConfig.instance.getPrimaryTextStyle(
                         color: Colors.white,
                         fontSize: 20.sp,
                         fontWeight: FontWeight.normal,
@@ -154,7 +154,7 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                       children: [
                         Text(
                           AppLocalizations.of(context)!.otherInformation,
-                          style: GoogleFonts.notoSans(
+                          style: BrandingConfig.instance.getPrimaryTextStyle(
                             color: AppColors.greys87,
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w700,
@@ -200,15 +200,17 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                 text: TextSpan(children: [
                                   TextSpan(
                                       text: '*',
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.negativeLight,
-                                          fontSize: 14.sp)),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.negativeLight,
+                                              fontSize: 14.sp)),
                                   TextSpan(
                                       text:
                                           AppLocalizations.of(context)!.country,
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.greys60,
-                                          fontSize: 14.sp)),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.greys60,
+                                              fontSize: 14.sp)),
                                 ]),
                               ),
                               border: _outline(AppColors.grey40),
@@ -221,10 +223,11 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                             ),
                             child: Text(
                               _country,
-                              style: GoogleFonts.notoSans(
-                                  color: AppColors.greys87,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500),
+                              style: BrandingConfig.instance
+                                  .getPrimaryTextStyle(
+                                      color: AppColors.greys87,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500),
                             ),
                           ),
                         ),
@@ -268,14 +271,16 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                 text: TextSpan(children: [
                                   TextSpan(
                                       text: '*',
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.negativeLight,
-                                          fontSize: 14.sp)),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.negativeLight,
+                                              fontSize: 14.sp)),
                                   TextSpan(
                                       text: AppLocalizations.of(context)!.state,
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.greys60,
-                                          fontSize: 14.sp)),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.greys60,
+                                              fontSize: 14.sp)),
                                 ]),
                               ),
                               border: _outline(AppColors.grey40),
@@ -288,10 +293,11 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                             ),
                             child: Text(
                               _state,
-                              style: GoogleFonts.notoSans(
-                                  color: AppColors.greys87,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500),
+                              style: BrandingConfig.instance
+                                  .getPrimaryTextStyle(
+                                      color: AppColors.greys87,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500),
                             ),
                           ),
                         ),
@@ -318,15 +324,17 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                 text: TextSpan(children: [
                                   TextSpan(
                                       text: '*',
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.negativeLight,
-                                          fontSize: 14.sp)),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.negativeLight,
+                                              fontSize: 14.sp)),
                                   TextSpan(
                                       text: AppLocalizations.of(context)!
                                           .district,
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.greys60,
-                                          fontSize: 14.sp)),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.greys60,
+                                              fontSize: 14.sp)),
                                 ]),
                               ),
                               border: _outline(AppColors.grey40),
@@ -337,7 +345,7 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 12.w, vertical: 16.w),
                             ),
-                            style: GoogleFonts.notoSans(
+                            style: BrandingConfig.instance.getPrimaryTextStyle(
                                 color: AppColors.greys87,
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w500),
@@ -349,7 +357,8 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .thisFieldIsRequiredToContinue,
-                              style: GoogleFonts.notoSans(
+                              style:
+                                  BrandingConfig.instance.getPrimaryTextStyle(
                                 color: AppColors.negativeLight,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w400,
@@ -372,8 +381,9 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                           decoration: InputDecoration(
                             labelText:
                                 AppLocalizations.of(context)!.preferredLanguage,
-                            labelStyle: GoogleFonts.notoSans(
-                                color: AppColors.greys60, fontSize: 14.sp),
+                            labelStyle: BrandingConfig.instance
+                                .getPrimaryTextStyle(
+                                    color: AppColors.greys60, fontSize: 14.sp),
                             border: _outline(AppColors.grey40),
                             enabledBorder: _outline(AppColors.grey40),
                             focusedBorder: _outline(AppColors.grey40),
@@ -382,7 +392,7 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 12.w, vertical: 16.w),
                           ),
-                          style: GoogleFonts.notoSans(
+                          style: BrandingConfig.instance.getPrimaryTextStyle(
                               color: AppColors.greys87,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w500),
@@ -443,7 +453,8 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                               ),
                               child: Text(
                                 AppLocalizations.of(context)!.saveAndContinue,
-                                style: GoogleFonts.notoSans(
+                                style:
+                                    BrandingConfig.instance.getPrimaryTextStyle(
                                   color: Colors.white,
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w600,

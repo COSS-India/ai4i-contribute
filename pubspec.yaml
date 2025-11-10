@@ -91,11 +91,17 @@ flutter:
     - assets/icons/
     - assets/animations/
     - assets/launcher/
+    - assets/fonts/
     - .env.development
     - .env.staging
     - .env.production
     - branding.yaml
   #   - images/a_dot_ham.jpeg\
+
+
+
+
+  # No custom fonts - using Google Fonts
 
 flutter_icons:
   ios: true
@@ -103,5 +109,3 @@ flutter_icons:
   image_path_android: "assets/launcher/ai4i_logo.png"
   image_path_ios: "assets/launcher/ai4i_logo.png"
   remove_alpha_ios: true
-
-

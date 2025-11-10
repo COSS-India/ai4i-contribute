@@ -12,7 +12,6 @@ import 'package:VoiceGive/screens/bolo_india/bolo_validation_screen/bolo_validat
 import 'package:VoiceGive/screens/bolo_india/widgets/bolo_content_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../config/branding_config.dart';
 
@@ -157,7 +156,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
               const Spacer(),
               Text(
                 "${currentIndex + 1}/$total",
-                style: GoogleFonts.notoSans(
+                style: BrandingConfig.instance.getPrimaryTextStyle(
                   fontSize: 12.sp,
                   color: AppColors.darkGreen,
                   fontWeight: FontWeight.w600,
@@ -181,7 +180,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
         padding: EdgeInsets.symmetric(horizontal: 32).r,
         child: Text(
           text,
-          style: GoogleFonts.notoSans(
+          style: BrandingConfig.instance.getPrimaryTextStyle(
             fontSize: 16.sp,
             color: AppColors.greys87,
             fontWeight: FontWeight.w500,
@@ -201,10 +200,11 @@ class _BoloContentSectionState extends State<BoloContentSection> {
                     ? Column(
                         children: [
                           Text(skipvalue ? "Skipping..." : "Submitting...",
-                              style: GoogleFonts.notoSans(
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.darkGreen)),
+                              style: BrandingConfig.instance
+                                  .getPrimaryTextStyle(
+                                      fontSize: 20.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.darkGreen)),
                           SizedBox(
                             height: 50,
                           ),

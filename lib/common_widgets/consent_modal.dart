@@ -4,7 +4,6 @@ import 'package:VoiceGive/models/auth/consent_response.dart';
 import 'package:VoiceGive/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 import '../config/branding_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -87,7 +86,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                     child: Center(
                       child: Text(
                         AppLocalizations.of(context)!.weRespectYourPrivacy,
-                        style: GoogleFonts.notoSans(
+                        style: BrandingConfig.instance.getPrimaryTextStyle(
                           color: AppColors.darkGreen,
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w600,
@@ -111,7 +110,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                     children: [
                       Text(
                         AppLocalizations.of(context)!.namasteContributor,
-                        style: GoogleFonts.notoSans(
+                        style: BrandingConfig.instance.getPrimaryTextStyle(
                           color: AppColors.greys87,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
@@ -129,7 +128,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                   // Introduction paragraph
                   Text(
                     AppLocalizations.of(context)!.consentMessage,
-                    style: GoogleFonts.notoSans(
+                    style: BrandingConfig.instance.getPrimaryTextStyle(
                       color: AppColors.greys87,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
@@ -163,7 +162,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                       Text(
                         AppLocalizations.of(context)!.consentConfirm(
                             AppLocalizations.of(context)!.iAgree),
-                        style: GoogleFonts.notoSans(
+                        style: BrandingConfig.instance.getPrimaryTextStyle(
                           color: AppColors.greys87,
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
@@ -278,7 +277,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                                       SizedBox(width: 8.w),
                                       Text(
                                         AppLocalizations.of(context)!.iAgree,
-                                        style: GoogleFonts.notoSans(
+                                        style: BrandingConfig.instance.getPrimaryTextStyle(
                                           color: _allAccepted
                                               ? AppColors.backgroundColor
                                               : AppColors.grey84,
@@ -314,7 +313,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                             SizedBox(width: 8.w),
                             Text(
                               AppLocalizations.of(context)!.deny,
-                              style: GoogleFonts.notoSans(
+                              style: BrandingConfig.instance.getPrimaryTextStyle(
                                 color: AppColors.grey84,
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
@@ -340,7 +339,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
       children: [
         Text(
           number,
-          style: GoogleFonts.notoSans(
+          style: BrandingConfig.instance.getPrimaryTextStyle(
             color: AppColors.greys87,
             fontSize: 14.sp,
             fontWeight: FontWeight.w500,
@@ -350,7 +349,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
         Expanded(
           child: Text(
             text,
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
               color: AppColors.greys87,
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,

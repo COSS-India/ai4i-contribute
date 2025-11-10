@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../config/branding_config.dart';
 import '../../../../constants/app_colors.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -31,7 +31,7 @@ class CustomTextField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: GoogleFonts.notoSans(
+          style: BrandingConfig.instance.getPrimaryTextStyle(
             color: AppColors.greys87,
             fontSize: 14.sp,
             fontWeight: FontWeight.w500,
@@ -69,7 +69,7 @@ class CustomTextField extends StatelessWidget {
                 vertical: 12.h,
               ),
             ),
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
               color: AppColors.greys87,
               fontSize: 14.sp,
               fontWeight: FontWeight.w500,

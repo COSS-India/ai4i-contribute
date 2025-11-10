@@ -29,8 +29,11 @@ Java HotSpot(TM) 64-Bit Server VM (build 17.0.13+10-LTS-268, mixed mode, sharing
 **Steps to run the app:**
 - flutter clean
 - flutter pub get
+- dart run build_scripts/generate_fonts.dart
 - flutter pub run build_runner build --delete-conflicting-outputs
 - flutter run
+
+**Production build:**
 - ./build_scripts/build.sh production
 
 ## App Customization

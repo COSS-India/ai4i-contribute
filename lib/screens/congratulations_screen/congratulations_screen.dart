@@ -7,7 +7,6 @@ import 'package:VoiceGive/screens/bolo_india/bolo_validation_screen/bolo_validat
 import 'package:VoiceGive/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -162,7 +161,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
               // Congratulations Text
               Text(
                 '${AppLocalizations.of(context)!.congratulations}!',
-                style: GoogleFonts.notoSans(
+                style: BrandingConfig.instance.getPrimaryTextStyle(
                   fontSize: 28.sp,
                   color: AppColors.greys87,
                   fontWeight: FontWeight.w700,
@@ -174,7 +173,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                  style: GoogleFonts.notoSans(
+                  style: BrandingConfig.instance.getPrimaryTextStyle(
                     fontSize: 16.sp,
                     color: AppColors.greys87,
                     height: 1.4,
@@ -183,7 +182,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                     const TextSpan(text: "You've "),
                     TextSpan(
                       text: "contributed 5 sentences",
-                      style: GoogleFonts.notoSans(
+                      style: BrandingConfig.instance.getPrimaryTextStyle(
                         color: AppColors.darkGreen,
                         fontWeight: FontWeight.w700,
                       ),
@@ -191,7 +190,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                     const TextSpan(text: " and "),
                     TextSpan(
                       text: "validated 25",
-                      style: GoogleFonts.notoSans(
+                      style: BrandingConfig.instance.getPrimaryTextStyle(
                         color: AppColors.darkGreen,
                         fontWeight: FontWeight.w700,
                       ),
@@ -234,7 +233,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
             // Certificate Header
             Text(
               AppLocalizations.of(context)!.tapToPreviewCertificate,
-              style: GoogleFonts.notoSans(
+              style: BrandingConfig.instance.getPrimaryTextStyle(
                   color: AppColors.greys87,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500),
@@ -313,7 +312,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
       children: [
         Text(
           "PDF (print-ready, includes your name & achievement)",
-          style: GoogleFonts.notoSans(
+          style: BrandingConfig.instance.getPrimaryTextStyle(
               fontSize: 10.sp,
               fontWeight: FontWeight.w400,
               color: AppColors.disabledTextGrey),
@@ -322,7 +321,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
         SizedBox(height: 2.w),
         Text(
           "Issued on: 17 Sep 2025. Certificate ID: DIC-20250917-0123",
-          style: GoogleFonts.notoSans(
+          style: BrandingConfig.instance.getPrimaryTextStyle(
               fontSize: 10.sp,
               fontWeight: FontWeight.w400,
               color: AppColors.disabledTextGrey),
@@ -421,7 +420,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                     children: [
                       Text(
                         "Certificate Preview",
-                        style: GoogleFonts.notoSans(
+                        style: BrandingConfig.instance.getPrimaryTextStyle(
                           color: Colors.white,
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w600,
@@ -489,7 +488,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
           // Certificate Title
           Text(
             "CERTIFICATE",
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
               fontSize: 28.sp,
               fontWeight: FontWeight.w700,
               color: AppColors.greys87,
@@ -497,7 +496,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
           ),
           Text(
             "OF APPRECIATION",
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
               fontSize: 20.sp,
               fontWeight: FontWeight.w600,
               color: AppColors.orange,
@@ -508,7 +507,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
           // Presentation Text
           Text(
             "PROUDLY PRESENTED TO",
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w600,
               color: AppColors.greys87,
@@ -519,7 +518,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
           // Recipient Name
           Text(
             "Animesh Patil",
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
               fontSize: 24.sp,
               fontWeight: FontWeight.w700,
               color: AppColors.greys87,
@@ -559,7 +558,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
           RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-              style: GoogleFonts.notoSans(
+              style: BrandingConfig.instance.getPrimaryTextStyle(
                 fontSize: 14.sp,
                 color: AppColors.greys87,
               ),
@@ -567,7 +566,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                 const TextSpan(text: "Recognized as a "),
                 TextSpan(
                   text: "Contributor",
-                  style: GoogleFonts.notoSans(
+                  style: BrandingConfig.instance.getPrimaryTextStyle(
                     color: AppColors.darkGreen,
                     fontWeight: FontWeight.w700,
                   ),
@@ -582,7 +581,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
             children: [
               Text(
                 "For contributing to",
-                style: GoogleFonts.notoSans(
+                style: BrandingConfig.instance.getPrimaryTextStyle(
                   fontSize: 12.sp,
                   color: AppColors.greys87,
                   height: 1.5,
@@ -592,7 +591,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
               SizedBox(height: 8.w),
               Text(
                 'AI4I - Contribute',
-                style: GoogleFonts.notoSans(
+                style: BrandingConfig.instance.getPrimaryTextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   color: AppColors.greys87,
@@ -602,16 +601,6 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
             ],
           ),
           SizedBox(height: 32.w),
-
-          // Signatory
-          // Text(
-          //   "CEO, AI4I",
-          //   style: GoogleFonts.notoSans(
-          //     fontSize: 14.sp,
-          //     fontWeight: FontWeight.w600,
-          //     color: Colors.black87,
-          //   ),
-          // ),
           Container(
             width: 100.w,
             height: 2.w,

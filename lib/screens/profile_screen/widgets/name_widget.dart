@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../../config/branding_config.dart';
 import '../../../constants/app_colors.dart';
 import '../../../constants/app_constants.dart';
 
@@ -26,7 +26,7 @@ class NameWidget extends StatelessWidget {
             children: [
               TextSpan(
                 text: '*',
-                style: GoogleFonts.notoSans(
+                style: BrandingConfig.instance.getPrimaryTextStyle(
                   color: AppColors.negativeLight,
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w400,
@@ -34,7 +34,7 @@ class NameWidget extends StatelessWidget {
               ),
               TextSpan(
                 text: helperText,
-                style: GoogleFonts.notoSans(
+                style: BrandingConfig.instance.getPrimaryTextStyle(
                   color: AppColors.greys60,
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w400,
@@ -64,7 +64,7 @@ class NameWidget extends StatelessWidget {
       },
       autovalidateMode: AutovalidateMode.onUserInteraction,
       keyboardType: TextInputType.text,
-      style: GoogleFonts.notoSans(
+      style: BrandingConfig.instance.getPrimaryTextStyle(
           color: AppColors.greys87,
           fontSize: 14.sp,
           fontWeight: FontWeight.w500),

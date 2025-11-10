@@ -10,7 +10,6 @@ import 'package:VoiceGive/screens/home_screen/home_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../config/branding_config.dart';
 
@@ -141,7 +140,7 @@ class _BoloGetStartedState extends State<BoloGetStarted> {
                         children: [
                           Text(
                             data.title,
-                            style: GoogleFonts.notoSans(
+                            style: BrandingConfig.instance.getPrimaryTextStyle(
                               fontSize: 28.sp,
                               fontWeight: FontWeight.w700,
                               color: AppColors.darkGreen,

@@ -2,7 +2,8 @@ import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import '../../../config/branding_config.dart';
 
 class NeedMoreInfo extends StatelessWidget {
   const NeedMoreInfo({super.key});
@@ -24,7 +25,7 @@ class NeedMoreInfo extends StatelessWidget {
         children: [
           Text(
             AppLocalizations.of(context)!.needMoreInfo,
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w500,
                 color: Colors.white),
@@ -32,7 +33,7 @@ class NeedMoreInfo extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             AppLocalizations.of(context)!.writeYourConcern,
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
                 fontSize: 12.sp,
                 color: Colors.white,
                 fontWeight: FontWeight.w400),
@@ -51,7 +52,7 @@ class NeedMoreInfo extends StatelessWidget {
                 children: [
                   Text(
                     AppLocalizations.of(context)!.contactUs,
-                    style: GoogleFonts.notoSans(
+                    style: BrandingConfig.instance.getPrimaryTextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w600,
                         color: AppColors.appBarBackground),

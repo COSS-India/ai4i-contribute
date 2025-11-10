@@ -7,8 +7,7 @@ This guide helps adopters customize the VoiceGive app with their own branding, i
 1. Edit `branding.yaml` in the root directory
 2. Customize consent text in `lib/l10n/app_en.arb`
 3. Add your assets to the `assets/` folder
-4. Run the build script: `dart tool/configure_app.dart production`
-5. Build your APK: `flutter build apk`
+4. Run the build script: `./build_scripts/build.sh production`
 
 ## Configuration File Structure
 
@@ -44,7 +43,102 @@ branding:
   terms_of_use_url: "https://yoursite.com/terms"
   privacy_policy_url: "https://yoursite.com/privacy"
   copyright_policy_url: "https://yoursite.com/copyright"
+  
+  # Font Configuration
+  primary_font: ""     # Google Font name OR TTF path
+  secondary_font: ""   # Google Font name OR TTF path (optional)
 ```
+
+## Fonts
+
+### Font Configuration
+Customize app fonts using either Google Fonts or custom TTF files:
+
+```yaml
+branding:
+  primary_font: ""     # Main font used throughout app
+  secondary_font: ""   # Secondary font (optional, falls back to primary)
+```
+
+### Option 1: Google Fonts (Recommended)
+Use any Google Font by name - no files needed:
+
+```yaml
+branding:
+  primary_font: "Roboto"        # Popular choices:
+  secondary_font: "Open Sans"   # "Poppins", "Inter", "Lato", 
+                                # "Montserrat", "Nunito"
+```
+
+**Benefits:**
+- No file management
+- Automatic font loading
+- Works on all devices
+- 1000+ fonts available
+
+### Option 2: Custom TTF Files
+Use your own TTF font files:
+
+1. **Add TTF files** to `assets/fonts/`:
+   ```
+   assets/fonts/
+   ├── primary_font.ttf
+   └── secondary_font.ttf
+   ```
+
+2. **Update branding.yaml** with file paths:
+   ```yaml
+   branding:
+     primary_font: "assets/fonts/primary_font.ttf"
+     secondary_font: "assets/fonts/secondary_font.ttf"
+   ```
+
+3. **Update pubspec.yaml** fonts section to match your TTF filenames:
+   ```yaml
+   fonts:
+     - family: CustomPrimary
+       fonts:
+         - asset: assets/fonts/primary_font.ttf
+     - family: CustomSecondary
+       fonts:
+         - asset: assets/fonts/secondary_font.ttf
+   ```
+
+**TTF Requirements:**
+- **Format**: TTF (TrueType Font)
+- **File Size**: < 2MB per font
+- **Variants**: Include regular, bold, italic if needed
+- **Important**: TTF file paths in `branding.yaml` and `pubspec.yaml` must match exactly
+
+### Font Usage
+- **Primary Font**: Used for all main text (headers, body, buttons)
+- **Secondary Font**: Falls back to primary if not specified
+- **Empty Values**: Uses Google Fonts Noto Sans (default)
+
+### Examples
+
+**Google Fonts Only:**
+```yaml
+branding:
+  primary_font: "Poppins"      # Clean, modern
+  secondary_font: "Roboto"     # Technical, readable
+```
+
+**TTF Files Only:**
+```yaml
+branding:
+  primary_font: "assets/fonts/primary_font.ttf"    # Custom brand font
+  secondary_font: "assets/fonts/secondary_font.ttf" # Custom secondary font
+```
+
+**Default (Empty):**
+```yaml
+branding:
+  primary_font: ""    # Uses Noto Sans
+  secondary_font: ""  # Uses Noto Sans
+```
+
+**Note:** Mixing Google Fonts and TTF files is supported but not recommended for consistency.
 
 ## App Name & Icon
 
@@ -277,6 +371,7 @@ The build script automatically:
 - Validates branding configuration
 - Configures app name and package ID
 - Cleans previous builds
+- Generates font configuration
 - Generates app icons
 - Runs code generation
 - Builds APK for the specified environment
@@ -325,6 +420,9 @@ dart tool/configure_app.dart production
 # Clean and prepare
 flutter clean
 flutter pub get
+
+# Generate font configuration
+dart run build_scripts/generate_fonts.dart
 
 # Generate app icons
 flutter pub run flutter_launcher_icons:main

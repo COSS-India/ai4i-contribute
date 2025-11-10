@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../config/branding_config.dart';
 import '../../../../constants/app_colors.dart';
 
 class CaptchaWidget extends StatefulWidget {
@@ -50,7 +50,7 @@ class _CaptchaWidgetState extends State<CaptchaWidget> {
               child: Center(
                 child: Text(
                   widget.captchaText,
-                  style: GoogleFonts.notoSans(
+                  style: BrandingConfig.instance.getPrimaryTextStyle(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w600,
                     color: AppColors.greys87,
@@ -89,7 +89,7 @@ class _CaptchaWidgetState extends State<CaptchaWidget> {
                   validator: widget.validator,
                   decoration: InputDecoration(
                     labelText: '*Enter CAPTCHA',
-                    labelStyle: GoogleFonts.notoSans(
+                    labelStyle: BrandingConfig.instance.getPrimaryTextStyle(
                       color: AppColors.greys87,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -115,7 +115,7 @@ class _CaptchaWidgetState extends State<CaptchaWidget> {
                       vertical: 12.h,
                     ),
                   ),
-                  style: GoogleFonts.notoSans(
+                  style: BrandingConfig.instance.getPrimaryTextStyle(
                     color: AppColors.greys87,
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w500,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../common_widgets/custom_app_bar.dart';
+import '../../../config/branding_config.dart';
 import '../../../constants/app_colors.dart';
 import '../repository/login_auth_repository.dart';
 import 'widgets/gradient_header.dart';
@@ -98,7 +98,7 @@ class _OtpLoginScreenState extends State<OtpLoginScreen> {
                       children: [
                         Text(
                           AppLocalizations.of(context)!.verifyYourPhoneNumber,
-                          style: GoogleFonts.notoSans(
+                          style: BrandingConfig.instance.getPrimaryTextStyle(
                             color: AppColors.greys87,
                             fontSize: 28.sp,
                             fontWeight: FontWeight.w700,
@@ -111,7 +111,8 @@ class _OtpLoginScreenState extends State<OtpLoginScreen> {
                             children: [
                               TextSpan(
                                 text: AppLocalizations.of(context)!.weWillSendA,
-                                style: GoogleFonts.notoSans(
+                                style:
+                                    BrandingConfig.instance.getPrimaryTextStyle(
                                   color: AppColors.greys60,
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w400,
@@ -120,7 +121,8 @@ class _OtpLoginScreenState extends State<OtpLoginScreen> {
                               TextSpan(
                                 text: AppLocalizations.of(context)!
                                     .oneTimePasswordOtp,
-                                style: GoogleFonts.notoSans(
+                                style:
+                                    BrandingConfig.instance.getPrimaryTextStyle(
                                   color: AppColors.greys87,
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w700,
@@ -129,7 +131,8 @@ class _OtpLoginScreenState extends State<OtpLoginScreen> {
                               TextSpan(
                                 text: AppLocalizations.of(context)!
                                     .toThisMobileNumber,
-                                style: GoogleFonts.notoSans(
+                                style:
+                                    BrandingConfig.instance.getPrimaryTextStyle(
                                   color: AppColors.greys60,
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w400,
@@ -184,7 +187,8 @@ class _OtpLoginScreenState extends State<OtpLoginScreen> {
                             }
                             return Text(
                               AppLocalizations.of(context)!.getOtp,
-                              style: GoogleFonts.notoSans(
+                              style:
+                                  BrandingConfig.instance.getPrimaryTextStyle(
                                 color: isPhoneValid
                                     ? AppColors.backgroundColor
                                     : AppColors.grey40,
