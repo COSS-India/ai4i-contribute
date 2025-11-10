@@ -19,8 +19,8 @@ def dekho_status():
 @router.get("/sample")
 def dekho_sample():
     """Return mock sample data for Dekho (Phase 1 only)."""
-    # backend/modules/dekho/routes.py → go up 3 levels → backend/
-    data_path = Path(__file__).resolve().parents[3] / "data" / "dekho" / "sample.json"
+    # backend/modules/dekho/routes.py → go up 2 levels → backend/
+    data_path = Path(__file__).resolve().parents[2] / "data" / "dekho" / "sample.json"
 
     if not data_path.exists():
         raise HTTPException(status_code=500, detail="dekho sample.json missing")

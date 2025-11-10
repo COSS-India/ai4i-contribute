@@ -19,8 +19,8 @@ def likho_status():
 @router.get("/sample")
 def likho_sample():
     """Return mock sample data for Likho (Phase 1 only)."""
-    # backend/modules/likho/routes.py → go up 3 levels → backend/
-    data_path = Path(__file__).resolve().parents[3] / "data" / "likho" / "sample.json"
+    # backend/modules/likho/routes.py → go up 2 levels → backend/
+    data_path = Path(__file__).resolve().parents[2] / "data" / "likho" / "sample.json"
 
     if not data_path.exists():
         raise HTTPException(status_code=500, detail="likho sample.json missing")
