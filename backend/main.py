@@ -21,8 +21,21 @@ from database import get_db, init_database, get_user_by_mobile, get_session_by_i
 from logging_config import setup_logging, get_logger, log_api_call, log_authentication, log_contribution, log_validation, log_certificate, log_error
 from storage_service import storage_service
 
+# Import Phase 1 module routers
+from modules.suno.routes import router as suno_router
+from modules.likho.routes import router as likho_router
+from modules.dekho.routes import router as dekho_router
+
+
 # Initialize FastAPI app
 app = FastAPI()
+
+# Register Phase 1 module routers (non-breaking)
+app.include_router(suno_router)
+app.include_router(likho_router)
+app.include_router(dekho_router)
+
+
 
 # Setup middleware
 from middleware import setup_middleware

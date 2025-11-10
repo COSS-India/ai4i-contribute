@@ -1,0 +1,7 @@
+{
+  "_comment": "Phase 1 mock data for module validation. Replace in Phase 2/3/4.",
+  "module": "suno",
+  "sample_items": [
+    { "id": "s1", "text": "Suno sample item 1" }
+  ]
+}
