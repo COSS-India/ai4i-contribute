@@ -1,0 +1,11 @@
+[
+  {
+    "item_id": "dekho_i_5010",
+    "language": "ta",
+    "data_url": "/data/dekho/img_5010.jpg",
+    "metadata": {
+      "type": "scene",
+      "label_required": true
+    }
+  }
+]
