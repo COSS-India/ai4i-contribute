@@ -64,6 +64,28 @@ The backend uses local storage only. Files are stored in the `./uploads` directo
 - **Thumbnails**: `./uploads/thumbnails/`
 - **Temporary files**: `./uploads/temp/`
 
+## 📘 Phase 1 Summary (Completed)
+
+The backend currently runs **Phase 1** of AI4I Contribute.
+
+### Implemented Endpoints
+| Module | Endpoints | Purpose |
+|---------|------------|----------|
+| **Suno** | `/status`, `/sample` | Speech module mock |
+| **Likho** | `/status`, `/sample` | Text module mock |
+| **Dekho** | `/status`, `/sample` | Visual module mock |
+
+All endpoints return static mock data under `/data/`.
+
+### Next Phase
+Phase 2 (AI4I Contribute) will introduce:
+- `/queue`, `/submit`, `/session-complete`
+- Expanded mock data per module
+- Non-breaking Pydantic model extensions
+
+See [`docs/phase1_summary.md`](docs/phase1_summary.md) for full details.
+
+
 ## 🎯 Enhanced Features
 
 ### ✅ **Enhanced Logging System**
