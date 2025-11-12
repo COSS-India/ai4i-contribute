@@ -324,3 +324,72 @@ class ValidationError(BaseModel):
         "field": "district",
         "validationErrors": []
     })
+
+# --- Phase 2 Models: AI4I Contribute ---
+from enum import Enum
+from pydantic import BaseModel, Field
+from typing import Optional, List, Dict, Any
+
+# --------------------------------------------------------------------
+# Shared Models
+
+class Module(str, Enum):
+    SUNO = "suno"
+    LIKHO = "likho"
+    DEKHO = "dekho"
+
+class APIError(BaseModel):
+    code: int = Field(..., example=400)
+    message: str = Field(..., example="Invalid language code")
+    details: Optional[Dict[str, Any]] = None
+
+class APIResponse(BaseModel):
+    success: bool = True
+    data: Optional[Any] = None
+    error: Optional[APIError] = None
+
+# --------------------------------------------------------------------
+# /queue Request & Response Models
+
+class QueueRequest(BaseModel):
+    module: Module
+    language: str = Field(..., description="ISO 639-1 code, e.g. 'hi'")
+    batch_size: Optional[int] = Field(5, description="Requested batch size")
+
+class QueueItem(BaseModel):
+    item_id: str
+    language: str
+    data_url: Optional[str] = Field(None, description="URL or path to media (audio/image)")
+    text_input: Optional[str] = Field(None, description="Input text for translation tasks")
+    metadata: Optional[Dict[str, Any]] = None
+
+class QueueResponse(APIResponse):
+    data: Optional[List[QueueItem]] = None
+
+# --------------------------------------------------------------------
+# /submit Request & Response Models
+
+class SubmitRequest(BaseModel):
+    module: Module
+    item_id: str
+    language: str
+    payload: Dict[str, Any] = Field(..., description="User response payload (transcript/translation/label)")
+    metadata: Optional[Dict[str, Any]] = None
+    client_timestamp: Optional[str] = None
+
+class SubmitResponse(APIResponse):
+    data: Optional[Dict[str, Any]] = None
+
+# --------------------------------------------------------------------
+# /session-complete Request & Response Models
+
+class SessionCompleteRequest(BaseModel):
+    module: Module
+    language: str
+    session_id: Optional[str] = None
+    items_submitted: Optional[List[Dict[str, Any]]] = None
+    session_start: Optional[str] = None
+    session_end: Optional[str] = None
+
+class SessionCompleteResponse(APIResponse):
+    data: Optional[Dict[str, Any]] = None
