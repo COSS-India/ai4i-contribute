@@ -2,10 +2,12 @@
 Pydantic models for AgriDaan API
 All request/response models based on the API documentation
 """
-from pydantic import BaseModel, Field, EmailStr
-from typing import List, Optional, Dict, Any
+from pydantic import BaseModel, Field, EmailStr, model_validator
+from typing import List, Optional, Dict, Any, Self
 from datetime import datetime
 from enum import Enum
+from data_config import data_config
+from validators.script_validator import text_matches_script
 
 # ==================== Authentication Models ====================
 
@@ -140,6 +142,33 @@ class Language(BaseModel):
     languageName: str = Field(..., example="Marathi")
     nativeName: str = Field(..., example="मराठी")
     isActive: bool = Field(default=True)
+
+# =================== Language Molels ========================
+
+class LanguageCode(str, Enum):
+    hi = "hi"
+    en = "en"
+    bn = "bn"
+    te = "te"
+    ta = "ta"
+    ml = "ml"
+    kn = "kn"
+    mr = "mr"
+    gu = "gu"
+    pa = "pa"
+    or_ = "or"
+    as_ = "as"
+    mai = "mai"
+    bho = "bho"
+    ur = "ur"
+    kok = "kok"
+    ne = "ne"
+    sd = "sd"
+    si = "si"
+    ks = "ks"
+    brx = "brx"
+    mni = "mni"
+
 
 # ==================== Contribution Models ====================
 
@@ -372,10 +401,37 @@ class QueueResponse(APIResponse):
 class SubmitRequest(BaseModel):
     module: Module
     item_id: str
-    language: str
+    language: LanguageCode
     payload: Dict[str, Any] = Field(..., description="User response payload (transcript/translation/label)")
     metadata: Optional[Dict[str, Any]] = None
     client_timestamp: Optional[str] = None
+    
+    @model_validator(mode="after")
+    def _validate_submit_payload(self) -> Self:
+        module = self.module.value.lower()
+        payload = self.payload
+        language = self.language.value
+
+        _MODULE_REQUIRED_KEYS = {
+            "suno": ["transcript"],
+            "likho": ["translation", "text"],
+            "dekho": ["label", "labels"]
+        }
+        required_keys = _MODULE_REQUIRED_KEYS.get(module, [])
+
+        if required_keys:
+            if not any(k in payload for k in required_keys):
+                raise ValueError(f"MISSING_FIELD_IN_PAYLOAD: expected one of {required_keys}")
+
+        text_keys = ["transcript", "translation", "text"]
+        for key in text_keys:
+            if key in payload and isinstance(payload.get(key), str):
+                if not text_matches_script(payload[key], language):
+                    raise ValueError(f"INVALID_SCRIPT: field '{key}' does not match language '{language}'")
+
+        return self
+
+
 
 class SubmitResponse(APIResponse):
     data: Optional[Dict[str, Any]] = None

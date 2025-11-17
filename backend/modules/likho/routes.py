@@ -56,23 +56,23 @@ async def get_queue():
     return QueueResponse(success=True, data=items, error=None)
 
 @router.post("/submit")
-async def submit_contribution(payload: SubmitRequest = Body(...)):
+async def submit_contribution(request: SubmitRequest):
     """Mock submission handler for Likho contributions."""
     return SubmitResponse(
         success=True,
         data={
             "message": "Translation recorded",
             "submission_id": "sub_mock_0002",
-            "received_item": payload.item_id,
+            "received_item": request.item_id,
         },
         error=None,
     )
 
 @router.post("/session-complete")
-async def session_complete(payload: SessionCompleteRequest = Body(...)):
+async def session_complete(request: SessionCompleteRequest = Body(...)):
     """Mark session as complete for Likho mock module."""
     return SessionCompleteResponse(
         success=True,
-        data={"summary": {"completed_count": len(payload.items_submitted or [])}},
+        data={"summary": {"completed_count": len(request.items_submitted or [])}},
         error=None,
     )
