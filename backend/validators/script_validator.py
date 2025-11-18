@@ -1,81 +1,166 @@
-from typing import Optional
+from typing import Optional, List, Tuple
+import unicodedata
+import re
 
-# conservative Unicode range map for AI4I 22 languages (Scheduled Languages)
+# =============================================================
+#  STRICT SCRIPT VALIDATION
+# =============================================================
+
 SCRIPT_RANGES = {
-    # Bengali/Assamese scripts
-    "as": [(0x0980, 0x09FF)],   # Assamese (Bengali script block)
-    "bn": [(0x0980, 0x09FF)],   # Bengali
+    # Bengali/Assamese
+    "as": [(0x0980, 0x09FF)],
+    "bn": [(0x0980, 0x09FF)],
 
-    # Devanagari (many languages)
-    "brx": [(0x0900, 0x097F)],  # Bodo (Devanagari)
-    "doi": [(0x0900, 0x097F)],  # Dogri (Devanagari)
-    "hi":  [(0x0900, 0x097F)],  # Hindi
-    "mai": [(0x0900, 0x097F)],  # Maithili
-    "mr":  [(0x0900, 0x097F)],  # Marathi
-    "ne":  [(0x0900, 0x097F)],  # Nepali
-    "sa":  [(0x0900, 0x097F)],  # Sanskrit
-    "kok": [(0x0900, 0x097F)],  # Konkani (commonly Devanagari)
+    # Devanagari group
+    "brx": [(0x0900, 0x097F)],
+    "doi": [(0x0900, 0x097F)],
+    "hi":  [(0x0900, 0x097F)],
+    "mai": [(0x0900, 0x097F)],
+    "mr":  [(0x0900, 0x097F)],
+    "ne":  [(0x0900, 0x097F)],
+    "sa":  [(0x0900, 0x097F)],
+    "kok": [(0x0900, 0x097F)],
 
     # Gujarati
-    "gu": [(0x0A80, 0x0AFF)],   # Gujarati
+    "gu": [(0x0A80, 0x0AFF)],
 
-    # Gurmukhi (Punjabi)
-    "pa": [(0x0A00, 0x0A7F)],   # Gurmukhi
+    # Gurmukhi
+    "pa": [(0x0A00, 0x0A7F)],
 
-    # Oriya / Odia
-    "or": [(0x0B00, 0x0B7F)],   # Odia
+    # Odia
+    "or": [(0x0B00, 0x0B7F)],
 
     # Tamil
-    "ta": [(0x0B80, 0x0BFF)],   # Tamil
+    "ta": [(0x0B80, 0x0BFF)],
 
     # Telugu
-    "te": [(0x0C00, 0x0C7F)],   # Telugu
+    "te": [(0x0C00, 0x0C7F)],
 
     # Kannada
-    "kn": [(0x0C80, 0x0CFF)],   # Kannada
+    "kn": [(0x0C80, 0x0CFF)],
 
     # Malayalam
-    "ml": [(0x0D00, 0x0D7F)],   # Malayalam
+    "ml": [(0x0D00, 0x0D7F)],
 
-    # Meitei Mayek (Manipuri / mni)
-    "mni": [(0xABC0, 0xABFF)],  # Meitei Mayek block
+    # Meitei Mayek
+    "mni": [(0xABC0, 0xABFF)],
 
-    # Santali (Ol Chiki)
-    "sat": [(0x1C50, 0x1C7F)],  # Ol Chiki
+    # Santali
+    "sat": [(0x1C50, 0x1C7F)],
 
-    # Arabic-script languages (use Arabic Unicode block)
-    "ks": [(0x0600, 0x06FF)],   # Kashmiri (Arabic script chosen)
-    "sd": [(0x0600, 0x06FF)],   # Sindhi (Arabic script chosen)
-    "ur": [(0x0600, 0x06FF)],   # Urdu
+    # Arabic script languages
+    "ks": [(0x0600, 0x06FF)],
+    "sd": [(0x0600, 0x06FF)],
+    "ur": [(0x0600, 0x06FF)],
 
-    # English (Latin script)
-    "en": [(0x0041, 0x007A)],   # Latin letters (basic A-Z,a-z) — conservative
-
-    # Fallbacks / shortcodes already in repo
-    # (If other codes exist, add them with appropriate ranges)
+    # English (conservative)
+    "en": [(0x0041, 0x007A)],
 }
 
-def _char_in_ranges(ch: str, ranges) -> bool:
+# -------------------------------------------------------------
+#  EMOJI DETECTION
+# -------------------------------------------------------------
+
+_EMOJI_RE = re.compile(
+    "[" 
+    "\U0001F300-\U0001F5FF"
+    "\U0001F600-\U0001F64F"
+    "\U0001F680-\U0001F6FF"
+    "\U0001F700-\U0001F77F"
+    "\U0001F780-\U0001F7FF"
+    "\U0001F800-\U0001F8FF"
+    "\U0001F900-\U0001F9FF"
+    "\U0001FA00-\U0001FA6F"
+    "\U0001FA70-\U0001FAFF"
+    "]+", 
+    flags=re.UNICODE,
+)
+
+def contains_emoji(text: str) -> bool:
+    return bool(_EMOJI_RE.search(text))
+
+
+# -------------------------------------------------------------
+#  CHARACTER CLASS HELPERS
+# -------------------------------------------------------------
+
+def _char_in_ranges(ch: str, ranges: List[Tuple[int, int]]) -> bool:
     cp = ord(ch)
     for start, end in ranges:
         if start <= cp <= end:
             return True
     return False
 
-def text_matches_script(text: Optional[str], language_code: Optional[str]) -> bool:
+
+def _is_punc_space_symbol_digit(ch: str) -> bool:
     """
-    Return True if text contains at least one character from the script range of language_code.
-    If language_code is unknown or empty, return True (do not block unknown languages).
-    If text is empty or None, return False (presence should be enforced separately).
+    Allowed noise:
+    - whitespace (any)
+    - punctuation (Unicode P*)
+    - symbols     (Unicode S*)
+    - digits 0-9
+    """
+    if ch.isdigit():
+        return True
+
+    if ch.isspace():
+        return True
+
+    cat = unicodedata.category(ch)
+    if cat.startswith("P"):
+        return True
+    if cat.startswith("S"):
+        return True
+
+    return False
+
+
+# -------------------------------------------------------------
+#  STRICT VALIDATION
+# -------------------------------------------------------------
+
+def validate_script_exclusive(text: Optional[str], language_code: Optional[str]) -> bool:
+    """
+    STRICT validator:
+      ✔ must contain ≥1 target-script character
+      ✔ punctuation/symbols/digits/whitespace allowed
+      ✔ emoji rejected
+      ✔ ANY foreign-script letter => reject
+      ✔ unknown language codes => reject
     """
     if not text or not language_code:
         return False
+
+    if contains_emoji(text):
+        return False
+
     code = language_code.lower()
+
+    # unknown languages are NOT allowed
     if code not in SCRIPT_RANGES:
-        # Unknown language: do not strictly enforce here (avoid false negatives)
-        return True
+        return False
+
     ranges = SCRIPT_RANGES[code]
+
+    seen_native = False
+
     for ch in text:
+        if _is_punc_space_symbol_digit(ch):
+            continue
+
         if _char_in_ranges(ch, ranges):
-            return True
-    return False
+            seen_native = True
+            continue
+
+        # non-punctuation + outside target script => reject
+        return False
+
+    return seen_native
+
+
+# -------------------------------------------------------------
+#  BACKWARD COMPATIBILITY WRAPPER
+# -------------------------------------------------------------
+
+def text_matches_script(text: Optional[str], language_code: Optional[str]) -> bool:
+    return validate_script_exclusive(text, language_code)
