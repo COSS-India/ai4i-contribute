@@ -1,78 +1,139 @@
-"""
-Likho Module (Phase 1 → Phase 2)
-Implements mock-compatible endpoints aligned with Bolo's text contribution APIs.
-Phase 1 placeholder routes (/status, /sample) are retained.
-"""
-
-from fastapi import APIRouter, HTTPException, Body
+from fastapi import APIRouter
 from pathlib import Path
 import json
+from fastapi.staticfiles import StaticFiles
+import os
+
 from models import (
-    QueueResponse,
-    SubmitResponse,
-    SessionCompleteResponse,
-    SubmitRequest,
-    SessionCompleteRequest,
+    LikhoQueueRequest,
+    LikhoSubmitRequest,
+    LikhoSkipRequest,
+    LikhoReportRequest,
+    LikhoValidationAcceptRequest,
+    LikhoValidationRejectRequest,
+    LikhoValidationCorrectionRequest,
+    APIResponse,
 )
 
-# -------------------------------------------------------------------
-# Module router
-router = APIRouter(prefix="/likho", tags=["Likho"])
+router = APIRouter(prefix="/likho", tags=["likho"])
 
-# -------------------------------------------------------------------
-# Phase 1 Endpoints
-@router.get("/status")
-def likho_status():
-    """Basic health check for Likho module."""
-    return {"module": "likho", "status": "ok"}
+BASE_PATH = Path(__file__).resolve().parents[2] / "data" / "likho"
 
-@router.get("/sample")
-def likho_sample():
-    """Return mock sample data for likho (Phase 1 only)."""
-    data_path = Path(__file__).resolve().parents[2] / "data" / "likho" / "sample.json"
 
-    if not data_path.exists():
-        raise HTTPException(status_code=500, detail="likho sample.json missing")
-
-    with open(data_path, "r", encoding="utf-8") as f:
+def load_json(path: Path):
+    if not path.exists():
+        return []
+    with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
-# -------------------------------------------------------------------
-# Phase 2 Endpoints
-# -------------------------------------------------------------------
 
-def _load_mock_queue(module: str):
-    """Helper to load mock queue data from backend/data/{module}/queue/sample_batch.json"""
-    base = Path(__file__).resolve().parents[2] / "data" / module / "queue" / "sample_batch.json"
-    if base.exists():
-        with open(base, "r", encoding="utf-8") as f:
-            return json.load(f)
-    return []
-
-@router.get("/queue")
-async def get_queue():
-    """Fetch a mock queue batch for Likho module."""
-    items = _load_mock_queue("likho")
-    return QueueResponse(success=True, data=items, error=None)
-
-@router.post("/submit")
-async def submit_contribution(request: SubmitRequest):
-    """Mock submission handler for Likho contributions."""
-    return SubmitResponse(
+# ---------------------------------------------------------
+# Instructions + Help
+# ---------------------------------------------------------
+@router.get("/instructions")
+def instructions():
+    return APIResponse(
         success=True,
         data={
-            "message": "Translation recorded",
-            "submission_id": "sub_mock_0002",
-            "received_item": request.item_id,
+            "title": "Likho: Translation Instructions",
+            "description": "Translate the given text into the target language.",
+            "steps": [
+                "Read the source text carefully.",
+                "Translate into the target language only.",
+                "Ensure grammar and meaning are correct.",
+                "Submit after review.",
+            ],
         },
-        error=None,
     )
 
-@router.post("/session-complete")
-async def session_complete(request: SessionCompleteRequest = Body(...)):
-    """Mark session as complete for Likho mock module."""
-    return SessionCompleteResponse(
+
+@router.get("/help")
+def help_page():
+    return APIResponse(
         success=True,
-        data={"summary": {"completed_count": len(request.items_submitted or [])}},
-        error=None,
+        data={
+            "faqs": [
+                {
+                    "q": "Which language should I translate to?",
+                    "a": "Use the target language indicated on screen.",
+                },
+                {
+                    "q": "What if the text is offensive?",
+                    "a": "Use Report to flag the content.",
+                },
+            ]
+        },
     )
+
+
+# ---------------------------------------------------------
+# Contribution
+# ---------------------------------------------------------
+@router.post("/queue")
+def queue(req: LikhoQueueRequest):
+    batch = load_json(BASE_PATH / "queue" / "sample_batch.json")
+    return APIResponse(success=True, data=batch[: req.batch_size])
+
+
+@router.post("/submit")
+def submit(req: LikhoSubmitRequest):
+    return APIResponse(
+        success=True,
+        data={"item_id": req.item_id, "message": "Translation submitted"},
+    )
+
+
+@router.post("/skip")
+def skip(req: LikhoSkipRequest):
+    return APIResponse(success=True, data={"skipped_item": req.item_id})
+
+
+@router.post("/report")
+def report(req: LikhoReportRequest):
+    return APIResponse(success=True, data={"reported_item": req.item_id})
+
+
+@router.post("/session-complete")
+def session_complete(payload: dict):
+    items = payload.get("items", [])
+    return APIResponse(
+        success=True,
+        data={"summary": {"completed_count": len(items)}},
+    )
+
+
+# ---------------------------------------------------------
+# Validation
+# ---------------------------------------------------------
+@router.get("/validation")
+def validation_queue(batch_size: int = 5):
+    batch = load_json(BASE_PATH / "validation" / "sample_batch.json")
+    return APIResponse(success=True, data=batch[: batch_size])
+
+
+@router.post("/validation/correct")
+def validation_correct(req: LikhoValidationAcceptRequest):
+    return APIResponse(success=True, data={"validated_item": req.item_id})
+
+
+@router.post("/validation/reject")
+def validation_reject(req: LikhoValidationRejectRequest):
+    return APIResponse(
+        success=True,
+        data={"rejected_item": req.item_id, "reason": req.reason},
+    )
+
+
+@router.post("/validation/submit-correction")
+def validation_correction(req: LikhoValidationCorrectionRequest):
+    return APIResponse(success=True, data={"corrected_item": req.item_id})
+
+
+@router.post("/validation/skip")
+def validation_skip(req: LikhoSkipRequest):
+    return APIResponse(success=True, data={"skipped_item": req.item_id})
+
+
+@router.post("/validation/report")
+def validation_report(req: LikhoReportRequest):
+    return APIResponse(success=True, data={"reported_item": req.item_id})
