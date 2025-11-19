@@ -2,7 +2,9 @@ import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
 import 'package:VoiceGive/common_widgets/image_widget.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_get_started/bolo_get_started.dart';
-import 'package:VoiceGive/screens/demo_screen.dart';
+import 'package:VoiceGive/screens/suno/suno_demo_screen.dart';
+import 'package:VoiceGive/screens/likho/likho_demo_screen.dart';
+import 'package:VoiceGive/screens/dekho/dekho_demo_screen.dart';
 import 'package:VoiceGive/screens/home_screen/home_screen.dart';
 import 'package:VoiceGive/screens/unicode_validation_demo_screen.dart';
 import 'package:flutter/material.dart';
@@ -170,15 +172,17 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
       crossAxisCount: 2,
       crossAxisSpacing: 16.w,
       mainAxisSpacing: 16.h,
-      children: _getModuleData().map((module) => _buildModuleTile(
-        context,
-        title: module['title'],
-        subtitle: module['subtitle'],
-        icon: module['icon'],
-        color: module['color'],
-        onTap: module['onTap'],
-        isGridView: true,
-      )).toList(),
+      children: _getModuleData()
+          .map((module) => _buildModuleTile(
+                context,
+                title: module['title'],
+                subtitle: module['subtitle'],
+                icon: module['icon'],
+                color: module['color'],
+                onTap: module['onTap'],
+                isGridView: true,
+              ))
+          .toList(),
     );
   }
 
@@ -209,9 +213,9 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
         'icon': Icons.mic,
         'color': AppColors.orange,
         'onTap': () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => BoloGetStarted()),
-        ),
+              context,
+              MaterialPageRoute(builder: (_) => BoloGetStarted()),
+            ),
       },
       {
         'title': 'Suno',
@@ -219,9 +223,9 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
         'icon': Icons.headphones,
         'color': AppColors.darkGreen,
         'onTap': () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => DemoScreen(module: 'suno')),
-        ),
+              context,
+              MaterialPageRoute(builder: (_) => SunoDemoScreen()),
+            ),
       },
       {
         'title': 'Likho',
@@ -229,9 +233,9 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
         'icon': Icons.edit,
         'color': AppColors.lightGreen,
         'onTap': () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => DemoScreen(module: 'likho')),
-        ),
+              context,
+              MaterialPageRoute(builder: (_) => LikhoDemoScreen()),
+            ),
       },
       {
         'title': 'Dekho',
@@ -239,20 +243,20 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
         'icon': Icons.visibility,
         'color': AppColors.grey84,
         'onTap': () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => DemoScreen(module: 'dekho')),
-        ),
+              context,
+              MaterialPageRoute(builder: (_) => DekhoDemoScreen()),
+            ),
       },
-      {
-        'title': 'Unicode Demo',
-        'subtitle': 'Text Validation',
-        'icon': Icons.text_fields,
-        'color': Colors.purple,
-        'onTap': () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => UnicodeValidationDemoScreen()),
-        ),
-      },
+      // {
+      //   'title': 'Unicode Demo',
+      //   'subtitle': 'Text Validation',
+      //   'icon': Icons.text_fields,
+      //   'color': Colors.purple,
+      //   'onTap': () => Navigator.push(
+      //     context,
+      //     MaterialPageRoute(builder: (_) => UnicodeValidationDemoScreen()),
+      //   ),
+      // },
     ];
   }
 
@@ -281,12 +285,15 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
             ),
           ],
         ),
-        child: isGridView ? _buildGridTileContent(icon, color, title, subtitle) : _buildListTileContent(icon, color, title, subtitle),
+        child: isGridView
+            ? _buildGridTileContent(icon, color, title, subtitle)
+            : _buildListTileContent(icon, color, title, subtitle),
       ),
     );
   }
 
-  Widget _buildGridTileContent(IconData icon, Color color, String title, String subtitle) {
+  Widget _buildGridTileContent(
+      IconData icon, Color color, String title, String subtitle) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -325,7 +332,8 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
     );
   }
 
-  Widget _buildListTileContent(IconData icon, Color color, String title, String subtitle) {
+  Widget _buildListTileContent(
+      IconData icon, Color color, String title, String subtitle) {
     return Row(
       children: [
         Container(
