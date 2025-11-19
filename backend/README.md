@@ -1,4 +1,4 @@
-# VoiceGive FastAPI Backend - Production Ready
+# AI4I - Contribute FastAPI Backend - Production Ready
 
 Complete FastAPI backend implementation with **enhanced logging**, **database integration**, and **zero hardcoded values**.
 
@@ -63,6 +63,96 @@ The backend uses local storage only. Files are stored in the `./uploads` directo
 - **Certificates**: `./uploads/certificates/`
 - **Thumbnails**: `./uploads/thumbnails/`
 - **Temporary files**: `./uploads/temp/`
+
+## 📘 Phase 1 Summary (Completed)
+
+The backend currently runs **Phase 1** of AI4I Contribute.
+
+### Implemented Endpoints
+| Module | Endpoints | Purpose |
+|---------|------------|----------|
+| **Suno** | `/status`, `/sample` | Speech module mock |
+| **Likho** | `/status`, `/sample` | Text module mock |
+| **Dekho** | `/status`, `/sample` | Visual module mock |
+
+All endpoints return static mock data under `/data/`.
+
+### Next Phase
+Phase 2 (AI4I Contribute) will introduce:
+- `/queue`, `/submit`, `/session-complete`
+- Expanded mock data per module
+- Non-breaking Pydantic model extensions
+
+See [`docs/phase1_summary.md`](docs/phase1_summary.md) for full details.
+
+## 🧪 Mock-Only Mode (AI4I Phase 1–2)
+
+The AI4I modules currently run in **mock-only mode** for deterministic frontend development and stable integration.
+
+### 🔧 Behavior in Mock-Only Mode
+- No database writes or persistent storage are performed  
+- All queue items come from JSON files in `backend/data/{module}/queue/`  
+- `/sample` and `/queue` return static, predictable mock data  
+- `/submit` and `/session-complete` simulate success but do not store anything  
+- Sessions are not persisted  
+- All mock files represent the **frozen contract** between frontend and backend  
+
+### 📦 Active Mock Modules
+- **Suno** — speech contribution  
+- **Likho** — text contribution  
+- **Dekho** — visual/label contribution  
+
+Legacy **BOLO** routes remain unchanged and continue to use their original backend behavior.
+
+## 📜 AI4I API Contract (Frozen)
+
+**Version:** `v0.2.0-pre-freeze`  
+**Freeze Date:** 2025-11-17
+
+The following API endpoints and payload structures are now **frozen**.  
+No changes will be made to request/response schemas without a formal version bump.
+
+### 🔗 Common Endpoints (All Modules)
+GET /{module}/status
+GET /{module}/sample
+GET /{module}/queue
+POST /{module}/submit
+POST /{module}/session-complete
+
+
+### 🧩 Module Identifiers
+- `suno`  
+- `likho`  
+- `dekho`  
+
+### 📨 Submit Payload Contract
+- **Suno** → `{ transcript: str }`  
+- **Likho** → `{ translation: str }`  
+- **Dekho** → `{ label: str }`  
+
+### 🧾 Session-Complete Contract
+{
+module: str,
+language: str,
+session_id?: str,
+items_submitted?: [...],
+session_start?: str,
+session_end?: str
+}
+
+
+### ❗ Error Envelope (Frozen Structure)
+{
+"error": {
+"code": string,
+"message": string,
+"info": object,
+"timestamp": string
+}
+}
+
+This contract governs AI4I Phase 1–2 integration between frontend and backend.
+
 
 ## 🎯 Enhanced Features
 
