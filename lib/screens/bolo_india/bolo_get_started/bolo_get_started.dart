@@ -5,6 +5,7 @@ import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:VoiceGive/models/get_started_model.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_contribute/bolo_contribute.dart';
+import 'package:VoiceGive/screens/module_selection_screen.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_get_started/get_started_item.dart';
 import 'package:VoiceGive/screens/home_screen/home_screen.dart';
 
@@ -106,7 +107,8 @@ class _BoloGetStartedState extends State<BoloGetStarted> {
                   onTap: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (_) => const HomeScreen()),
+                      MaterialPageRoute(
+                          builder: (_) => const ModuleSelectionScreen()),
                     );
                   },
                   child: Icon(

@@ -4,6 +4,7 @@ import 'package:VoiceGive/common_widgets/consent_modal.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/constants/app_routes.dart';
 import 'package:VoiceGive/config/branding_config.dart';
+import 'package:VoiceGive/screens/module_selection_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -108,7 +109,7 @@ class _HomeHeaderSectionState extends State<HomeHeaderSection> {
                 if (sessionId.isNotEmpty) {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (_) => const BoloGetStarted(),
+                      builder: (_) => const ModuleSelectionScreen(),
                     ),
                   );
                 } else {

@@ -1,0 +1,196 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:VoiceGive/constants/app_colors.dart';
+import 'package:VoiceGive/config/branding_config.dart';
+
+class UnicodeValidationTextField extends StatefulWidget {
+  final String? hintText;
+  final String? labelText;
+  final String languageCode;
+  final TextEditingController? controller;
+  final Function(String)? onChanged;
+  final int? maxLines;
+  final bool enabled;
+
+  const UnicodeValidationTextField({
+    super.key,
+    this.hintText,
+    this.labelText,
+    required this.languageCode,
+    this.controller,
+    this.onChanged,
+    this.maxLines = 1,
+    this.enabled = true,
+  });
+
+  @override
+  State<UnicodeValidationTextField> createState() => _UnicodeValidationTextFieldState();
+}
+
+class _UnicodeValidationTextFieldState extends State<UnicodeValidationTextField> {
+  late TextEditingController _controller;
+  String? _errorMessage;
+
+  // Unicode ranges for Indian languages with comprehensive coverage
+  static const Map<String, List<List<int>>> _languageUnicodeRanges = {
+    'hi': [[0x0900, 0x097F], [0xA8E0, 0xA8FF]], // Hindi (Devanagari + Extended)
+    'bn': [[0x0980, 0x09FF]], // Bengali
+    'te': [[0x0C00, 0x0C7F]], // Telugu
+    'mr': [[0x0900, 0x097F], [0xA8E0, 0xA8FF]], // Marathi (Devanagari + Extended)
+    'ta': [[0x0B80, 0x0BFF]], // Tamil
+    'gu': [[0x0A80, 0x0AFF]], // Gujarati
+    'kn': [[0x0C80, 0x0CFF]], // Kannada
+    'ml': [[0x0D00, 0x0D7F]], // Malayalam
+    'pa': [[0x0A00, 0x0A7F]], // Punjabi (Gurmukhi)
+    'or': [[0x0B00, 0x0B7F]], // Odia
+    'as': [[0x0980, 0x09FF]], // Assamese (Bengali script)
+    'ur': [[0x0600, 0x06FF], [0x0750, 0x077F], [0xFB50, 0xFDFF], [0xFE70, 0xFEFF]], // Urdu (Arabic + supplements)
+    'sa': [[0x0900, 0x097F], [0xA8E0, 0xA8FF]], // Sanskrit (Devanagari + Extended)
+    'ne': [[0x0900, 0x097F], [0xA8E0, 0xA8FF]], // Nepali (Devanagari + Extended)
+    'si': [[0x0D80, 0x0DFF]], // Sinhala
+    'my': [[0x1000, 0x109F], [0xAA60, 0xAA7F]], // Myanmar + Extended
+    'bo': [[0x0F00, 0x0FFF]], // Tibetan
+    'dz': [[0x0F00, 0x0FFF]], // Dzongkha (Tibetan script)
+    'ks': [[0x0600, 0x06FF], [0x0750, 0x077F]], // Kashmiri (Arabic + supplement)
+    'sd': [[0x0600, 0x06FF], [0x0750, 0x077F]], // Sindhi (Arabic + supplement)
+    'mai': [[0x0900, 0x097F], [0xA8E0, 0xA8FF]], // Maithili (Devanagari + Extended)
+    'sat': [[0x1C50, 0x1C7F]], // Santali (Ol Chiki)
+    'en': [[0x0041, 0x005A], [0x0061, 0x007A]], // English (A-Z, a-z only)
+  };
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = widget.controller ?? TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    if (widget.controller == null) {
+      _controller.dispose();
+    }
+    super.dispose();
+  }
+
+  bool _isCharacterValid(String character, String languageCode) {
+    if (character.isEmpty) return true;
+    
+    final codePoint = character.runes.first;
+    
+    // Always allow whitespace and basic punctuation
+    if (_isCommonCharacter(codePoint)) {
+      return true;
+    }
+
+    final ranges = _languageUnicodeRanges[languageCode];
+    if (ranges == null) return true;
+
+    for (final range in ranges) {
+      if (codePoint >= range[0] && codePoint <= range[1]) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool _isCommonCharacter(int codePoint) {
+    return (
+      // Whitespace characters
+      codePoint == 0x0020 || // Space
+      codePoint == 0x0009 || // Tab
+      codePoint == 0x000A || // Line Feed
+      codePoint == 0x000D || // Carriage Return
+      // Numbers
+      (codePoint >= 0x0030 && codePoint <= 0x0039) || // 0-9
+      // Common punctuation
+      codePoint == 0x002E || // Period
+      codePoint == 0x002C || // Comma
+      codePoint == 0x003F || // Question mark
+      codePoint == 0x0021 || // Exclamation mark
+      codePoint == 0x003A || // Colon
+      codePoint == 0x003B || // Semicolon
+      codePoint == 0x0027 || // Apostrophe
+      codePoint == 0x0022 || // Quotation mark
+      codePoint == 0x0028 || // Left parenthesis
+      codePoint == 0x0029 || // Right parenthesis
+      codePoint == 0x002D    // Hyphen-minus
+    );
+  }
+
+  String? _validateText(String text) {
+    if (text.isEmpty) return null;
+
+    final invalidChars = <String>[];
+    final runes = text.runes.toList();
+    
+    for (final rune in runes) {
+      final char = String.fromCharCode(rune);
+      if (!_isCharacterValid(char, widget.languageCode)) {
+        if (!invalidChars.contains(char)) {
+          invalidChars.add(char);
+        }
+      }
+    }
+
+    if (invalidChars.isNotEmpty) {
+      return 'Invalid characters for ${widget.languageCode.toUpperCase()}: ${invalidChars.join(', ')}';
+    }
+    return null;
+  }
+
+  void _onTextChanged(String value) {
+    setState(() {
+      _errorMessage = _validateText(value);
+    });
+    widget.onChanged?.call(value);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextField(
+          controller: _controller,
+          enabled: widget.enabled,
+          maxLines: widget.maxLines,
+          onChanged: _onTextChanged,
+          decoration: InputDecoration(
+            hintText: widget.hintText,
+            labelText: widget.labelText,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide(
+                color: _errorMessage != null ? Colors.red : AppColors.darkGreen,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide(
+                color: _errorMessage != null ? Colors.red : AppColors.darkGreen,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide(
+                color: _errorMessage != null ? Colors.red : AppColors.orange,
+                width: 2,
+              ),
+            ),
+          ),
+        ),
+        if (_errorMessage != null) ...[
+          SizedBox(height: 4.h),
+          Text(
+            _errorMessage!,
+            style: BrandingConfig.instance.getPrimaryTextStyle(
+              fontSize: 12.sp,
+              color: Colors.red,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+}
