@@ -24,7 +24,6 @@ router = APIRouter(prefix="/suno", tags=["suno"])
 # Accessible at: /suno/static/<filename>
 # ------------------------------------------------------------------
 SUNO_STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
-router.mount("/static", StaticFiles(directory=SUNO_STATIC_DIR), name="suno_static")
 
 BASE_PATH = Path(__file__).resolve().parents[2] / "data" / "suno"
 

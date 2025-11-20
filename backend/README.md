@@ -64,82 +64,49 @@ The backend uses local storage only. Files are stored in the `./uploads` directo
 - **Thumbnails**: `./uploads/thumbnails/`
 - **Temporary files**: `./uploads/temp/`
 
-## 📘 Phase 1 Summary (Completed)
+## v0.2.0 – 2025-11-20
+### Updated Module API Documentation
 
-The backend currently runs **Phase 1** of AI4I Contribute.
+This version updates the AI4I Contribute module API documentation to reflect the **actual implemented backend endpoints**, replacing outdated placeholder contract details from the earlier README.
 
-### Implemented Endpoints
-| Module | Endpoints | Purpose |
-|---------|------------|----------|
-| **Suno** | `/status`, `/sample` | Speech module mock |
-| **Likho** | `/status`, `/sample` | Text module mock |
-| **Dekho** | `/status`, `/sample` | Visual module mock |
+### Added
+- Complete and accurate endpoint lists extracted directly from `routes.py`:
+  - **Suno**: 14 endpoints (including full validation flow and `/test-speaker`)
+  - **Likho**: 13 endpoints (with full validation flow)
+  - **Dekho**: 13 endpoints (with full validation flow)
+- Newly documented helper endpoints:
+  - `/instructions`
+  - `/help`
+- Newly documented validation endpoints for all modules:
+  - `/validation`, `/validation/correct`, `/validation/reject`,
+    `/validation/submit-correction`, `/validation/skip`, `/validation/report`
 
-All endpoints return static mock data under `/data/`.
+### Updated
+- Corrected queue endpoints from GET → POST for all modules.
+- Updated submit payload contract to match actual backend models:
+  - **Suno** → `{ "transcript": "..." }`
+  - **Likho** → `{ "translation": "..." }`
+  - **Dekho** → `{ "label": "..." }`
+- Corrected session-complete payload structure to reflect optional fields.
+- Adjusted mock-mode explanation to match real backend behavior:
+  - 5-item queues
+  - Static samples under module `/static/`
+  - Non-persistent sessions
 
-### Next Phase
-Phase 2 (AI4I Contribute) will introduce:
-- `/queue`, `/submit`, `/session-complete`
-- Expanded mock data per module
-- Non-breaking Pydantic model extensions
+### Removed
+- Removed outdated “frozen API contract” that did not match the implemented backend.
+- Removed incorrect claim that modules only exposed `/status` and `/sample`.
+- Removed old Phase-1 placeholder descriptions.
 
-See [`docs/phase1_summary.md`](docs/phase1_summary.md) for full details.
+### Summary
+This update ensures documentation now accurately matches the real backend state, including:
+- All module contribution + validation routes
+- Correct HTTP methods
+- Correct payload structures
+- Helper endpoints
+- Suno test-speaker endpoint
 
-## 🧪 Mock-Only Mode (AI4I Phase 1–2)
-
-The AI4I modules currently run in **mock-only mode** for deterministic frontend development and stable integration.
-
-### 🔧 Behavior in Mock-Only Mode
-- No database writes or persistent storage are performed  
-- All queue items come from JSON files in `backend/data/{module}/queue/`  
-- `/sample` and `/queue` return static, predictable mock data  
-- `/submit` and `/session-complete` simulate success but do not store anything  
-- Sessions are not persisted  
-- All mock files represent the **frozen contract** between frontend and backend  
-
-### 📦 Active Mock Modules
-- **Suno** — speech contribution  
-- **Likho** — text contribution  
-- **Dekho** — visual/label contribution  
-
-Legacy **BOLO** routes remain unchanged and continue to use their original backend behavior.
-
-## 📜 AI4I API Contract (Frozen)
-
-**Version:** `v0.2.0-pre-freeze`  
-**Freeze Date:** 2025-11-17
-
-The following API endpoints and payload structures are now **frozen**.  
-No changes will be made to request/response schemas without a formal version bump.
-
-### 🔗 Common Endpoints (All Modules)
-GET /{module}/status
-GET /{module}/sample
-GET /{module}/queue
-POST /{module}/submit
-POST /{module}/session-complete
-
-
-### 🧩 Module Identifiers
-- `suno`  
-- `likho`  
-- `dekho`  
-
-### 📨 Submit Payload Contract
-- **Suno** → `{ transcript: str }`  
-- **Likho** → `{ translation: str }`  
-- **Dekho** → `{ label: str }`  
-
-### 🧾 Session-Complete Contract
-{
-module: str,
-language: str,
-session_id?: str,
-items_submitted?: [...],
-session_start?: str,
-session_end?: str
-}
-
+The backend remains in mock-only mode for FE integration.
 
 ### ❗ Error Envelope (Frozen Structure)
 {
