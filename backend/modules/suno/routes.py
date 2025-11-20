@@ -16,7 +16,7 @@ from models import (
     APIResponse,
 )
 
-router = APIRouter(prefix="/suno", tags=["suno"])
+router = APIRouter(tags=["suno"])
 
 # ------------------------------------------------------------------
 # Mount static directory for Suno sample audio files
