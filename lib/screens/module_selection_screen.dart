@@ -23,187 +23,125 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final branding = BrandingConfig.instance;
-
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      appBar: CustomAppBar(),
-      body: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(16).r,
-            decoration: BoxDecoration(color: AppColors.bannerColor),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (_) => const HomeScreen()),
-                    );
-                  },
-                  child: Icon(
-                    Icons.arrow_circle_left_outlined,
-                    color: Colors.white,
-                    size: 36.sp,
-                  ),
-                ),
-                SizedBox(width: 24.w),
-                branding.bannerImage.isNotEmpty
-                    ? ImageWidget(
-                        imageUrl: branding.bannerImage,
-                        height: 40.w,
-                        width: 40.w,
-                      )
-                    : SizedBox(width: 40.w, height: 40.w),
-                SizedBox(width: 8.w),
-                Text(
-                  "Choose Module",
-                  style: BrandingConfig.instance.getPrimaryTextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/module_selector_bg.png'),
+            fit: BoxFit.cover,
           ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(24).r,
-              child: Column(
-                children: [
-                  SizedBox(height: 20.h),
-                  _buildViewToggle(),
-                  SizedBox(height: 16.h),
-                  Expanded(
-                    child: isGridView ? _buildGridView() : _buildListView(),
-                  ),
-                ],
+        ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(24.r),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: () => Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (_) => const HomeScreen()),
+                          ),
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: Colors.black,
+                            size: 24.sp,
+                          ),
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                    SizedBox(height: 40.h),
+                    Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Namaste ',
+                              style: BrandingConfig.instance.getPrimaryTextStyle(
+                                fontSize: 24.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.orange,
+                              ),
+                            ),
+                            Text(
+                              '🙏',
+                              style: TextStyle(fontSize: 24.sp),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 8.h),
+                        Text(
+                          'Contributor/Validator',
+                          textAlign: TextAlign.center,
+                          style: BrandingConfig.instance.getPrimaryTextStyle(
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.orange,
+                          ),
+                        ),
+                        SizedBox(height: 16.h),
+                        Text(
+                          'Welcome to BhashaDaan',
+                          textAlign: TextAlign.center,
+                          style: BrandingConfig.instance.getPrimaryTextStyle(
+                            fontSize: 28.sp,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.darkGreen,
+                          ),
+                        ),
+                        SizedBox(height: 12.h),
+                        Text(
+                          'A movement to strengthen India\'s languages. Your contributions help make technology truly multilingual.',
+                          textAlign: TextAlign.center,
+                          style: BrandingConfig.instance.getPrimaryTextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.darkGreen,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.w),
+                  child: _buildGridView(),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 
-  Widget _buildViewToggle() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8).r,
-        border: Border.all(color: AppColors.grey16),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                isGridView = true;
-              });
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-              decoration: BoxDecoration(
-                color: isGridView ? AppColors.orange : Colors.transparent,
-                borderRadius: BorderRadius.circular(6).r,
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.grid_view,
-                    size: 20.sp,
-                    color: isGridView ? Colors.white : AppColors.grey84,
-                  ),
-                  SizedBox(width: 4.w),
-                  Text(
-                    "Grid",
-                    style: BrandingConfig.instance.getPrimaryTextStyle(
-                      fontSize: 14.sp,
-                      color: isGridView ? Colors.white : AppColors.grey84,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                isGridView = false;
-              });
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-              decoration: BoxDecoration(
-                color: !isGridView ? AppColors.orange : Colors.transparent,
-                borderRadius: BorderRadius.circular(6).r,
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.list,
-                    size: 20.sp,
-                    color: !isGridView ? Colors.white : AppColors.grey84,
-                  ),
-                  SizedBox(width: 4.w),
-                  Text(
-                    "List",
-                    style: BrandingConfig.instance.getPrimaryTextStyle(
-                      fontSize: 14.sp,
-                      color: !isGridView ? Colors.white : AppColors.grey84,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   Widget _buildGridView() {
     return GridView.count(
       crossAxisCount: 2,
       crossAxisSpacing: 16.w,
       mainAxisSpacing: 16.h,
+      childAspectRatio: 188 / 235,
       children: _getModuleData()
           .map((module) => _buildModuleTile(
-                context,
                 title: module['title'],
                 subtitle: module['subtitle'],
                 icon: module['icon'],
-                color: module['color'],
                 onTap: module['onTap'],
-                isGridView: true,
               ))
           .toList(),
     );
   }
 
-  Widget _buildListView() {
-    return ListView.separated(
-      itemCount: _getModuleData().length,
-      separatorBuilder: (context, index) => SizedBox(height: 12.h),
-      itemBuilder: (context, index) {
-        final module = _getModuleData()[index];
-        return _buildModuleTile(
-          context,
-          title: module['title'],
-          subtitle: module['subtitle'],
-          icon: module['icon'],
-          color: module['color'],
-          onTap: module['onTap'],
-          isGridView: false,
-        );
-      },
-    );
-  }
+
 
   List<Map<String, dynamic>> _getModuleData() {
     return [
@@ -260,125 +198,51 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
     ];
   }
 
-  Widget _buildModuleTile(
-    BuildContext context, {
+  Widget _buildModuleTile({
     required String title,
     required String subtitle,
     required IconData icon,
-    required Color color,
     required VoidCallback onTap,
-    required bool isGridView,
   }) {
+    String assetPath = 'assets/images/${title.toLowerCase()}.png';
+    
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(16).r,
+        padding: EdgeInsets.all(20).r,
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12).r,
-          border: Border.all(color: color, width: 2),
-          boxShadow: [
-            BoxShadow(
-              color: color.withOpacity(0.1),
-              blurRadius: 8,
-              offset: Offset(0, 4),
+          color: Color(0xFFEBFFEF),
+          borderRadius: BorderRadius.circular(20).r,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              assetPath,
+              width: 80.w,
+              height: 80.w,
+              errorBuilder: (context, error, stackTrace) {
+                return Icon(
+                  icon,
+                  size: 80.sp,
+                  color: AppColors.darkGreen,
+                );
+              },
+            ),
+            SizedBox(height: 20.h),
+            Text(
+              title,
+              style: BrandingConfig.instance.getPrimaryTextStyle(
+                fontSize: 24.sp,
+                fontWeight: FontWeight.w700,
+                color: AppColors.darkGreen,
+              ),
             ),
           ],
         ),
-        child: isGridView
-            ? _buildGridTileContent(icon, color, title, subtitle)
-            : _buildListTileContent(icon, color, title, subtitle),
       ),
     );
   }
 
-  Widget _buildGridTileContent(
-      IconData icon, Color color, String title, String subtitle) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          width: 60.w,
-          height: 60.w,
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
-            shape: BoxShape.circle,
-          ),
-          child: Icon(
-            icon,
-            size: 32.sp,
-            color: color,
-          ),
-        ),
-        SizedBox(height: 16.h),
-        Text(
-          title,
-          style: BrandingConfig.instance.getPrimaryTextStyle(
-            fontSize: 18.sp,
-            fontWeight: FontWeight.w600,
-            color: AppColors.greys87,
-          ),
-        ),
-        SizedBox(height: 4.h),
-        Text(
-          subtitle,
-          style: BrandingConfig.instance.getPrimaryTextStyle(
-            fontSize: 12.sp,
-            color: AppColors.grey84,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ],
-    );
-  }
 
-  Widget _buildListTileContent(
-      IconData icon, Color color, String title, String subtitle) {
-    return Row(
-      children: [
-        Container(
-          width: 50.w,
-          height: 50.w,
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
-            shape: BoxShape.circle,
-          ),
-          child: Icon(
-            icon,
-            size: 24.sp,
-            color: color,
-          ),
-        ),
-        SizedBox(width: 16.w),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: BrandingConfig.instance.getPrimaryTextStyle(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.greys87,
-                ),
-              ),
-              SizedBox(height: 4.h),
-              Text(
-                subtitle,
-                style: BrandingConfig.instance.getPrimaryTextStyle(
-                  fontSize: 14.sp,
-                  color: AppColors.grey84,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Icon(
-          Icons.arrow_forward_ios,
-          size: 16.sp,
-          color: AppColors.grey84,
-        ),
-      ],
-    );
-  }
 }
