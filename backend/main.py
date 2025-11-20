@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response, JSONResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.exceptions import RequestValidationError
+from fastapi.staticfiles import StaticFiles
 from datetime import datetime, timedelta
 from pydantic import ValidationError as PydanticValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
@@ -243,10 +244,37 @@ async def value_error_handler(request: Request, exc: ValueError):
         info={"path": request.url.path},
         status_code=400,
     )
+
+
+# Mount static files
+from modules.suno.routes import SUNO_STATIC_DIR
+from modules.dekho.routes import DEKHO_STATIC_DIR
+
+app.mount(
+    "/suno/static",
+    StaticFiles(directory=SUNO_STATIC_DIR),
+    name="suno_static"
+)
+
+app.mount(
+    "/dekho/static",
+    StaticFiles(directory=DEKHO_STATIC_DIR),
+    name="dekho_static"
+)
+
 # Register Phase 1 module routers
-app.include_router(suno_router)
-app.include_router(likho_router)
-app.include_router(dekho_router)
+app.include_router(suno_router, prefix="/suno")
+app.include_router(likho_router, prefix="/likho")
+app.include_router(dekho_router, prefix="/dekho")
+
+# Mount static files
+from modules.suno.routes import SUNO_STATIC_DIR
+
+app.mount(
+    "/suno/static",
+    StaticFiles(directory=SUNO_STATIC_DIR),
+    name="suno_static"
+)
 
 
 

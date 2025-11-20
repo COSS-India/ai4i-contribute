@@ -23,7 +23,6 @@ router = APIRouter(prefix="/dekho", tags=["dekho"])
 # Accessible at: /dekho/static/<filename>
 # ------------------------------------------------------------------
 DEKHO_STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
-router.mount("/static", StaticFiles(directory=DEKHO_STATIC_DIR), name="dekho_static")
 
 BASE_PATH = Path(__file__).resolve().parents[2] / "data" / "dekho"
 
