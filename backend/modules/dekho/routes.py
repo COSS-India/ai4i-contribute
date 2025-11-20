@@ -15,7 +15,7 @@ from models import (
     APIResponse,
 )
 
-router = APIRouter(prefix="/dekho", tags=["dekho"])
+router = APIRouter(tags=["dekho"])
 
 # ------------------------------------------------------------------
 # Mount static directory for Dekho sample images
