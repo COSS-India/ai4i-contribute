@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../common_widgets/custom_app_bar.dart';
+import '../../../config/branding_config.dart';
 import '../../../constants/app_colors.dart';
 import '../repository/login_auth_repository.dart';
 import 'widgets/gradient_header.dart';
@@ -55,13 +55,14 @@ class _OtpLoginScreenState extends State<OtpLoginScreen> {
   Future<void> _requestOtp() async {
     if (_formKey.currentState!.validate()) {
       _isLoading.value = true;
-      final String? message = await LoginAuthRepository().sendOtp(_phoneController.text, "+91");
+      final String? message =
+          await LoginAuthRepository().sendOtp(_phoneController.text, "+91");
       _isLoading.value = false;
       ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message??'Error occurred while sending OTP'),
-      ),
-    );
+        SnackBar(
+          content: Text(message ?? 'Error occurred while sending OTP'),
+        ),
+      );
       if (message != null) {
         Navigator.push(
           context,
@@ -69,18 +70,19 @@ class _OtpLoginScreenState extends State<OtpLoginScreen> {
             builder: (context) => OtpVerificationScreen(
               phoneNumber: _phoneController.text,
               countryCode: "+91",
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
-  }}
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.appBarBackground,
+      backgroundColor: AppColors.backgroundColor,
       resizeToAvoidBottomInset: true,
-      appBar: const CustomAppBar(),
+      appBar: const CustomAppBar(showThreeLogos: true,),
       body: SafeArea(
         child: Column(
           children: [
@@ -96,7 +98,7 @@ class _OtpLoginScreenState extends State<OtpLoginScreen> {
                       children: [
                         Text(
                           AppLocalizations.of(context)!.verifyYourPhoneNumber,
-                          style: GoogleFonts.notoSans(
+                          style: BrandingConfig.instance.getPrimaryTextStyle(
                             color: AppColors.greys87,
                             fontSize: 28.sp,
                             fontWeight: FontWeight.w700,
@@ -109,7 +111,8 @@ class _OtpLoginScreenState extends State<OtpLoginScreen> {
                             children: [
                               TextSpan(
                                 text: AppLocalizations.of(context)!.weWillSendA,
-                                style: GoogleFonts.notoSans(
+                                style:
+                                    BrandingConfig.instance.getPrimaryTextStyle(
                                   color: AppColors.greys60,
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w400,
@@ -118,7 +121,8 @@ class _OtpLoginScreenState extends State<OtpLoginScreen> {
                               TextSpan(
                                 text: AppLocalizations.of(context)!
                                     .oneTimePasswordOtp,
-                                style: GoogleFonts.notoSans(
+                                style:
+                                    BrandingConfig.instance.getPrimaryTextStyle(
                                   color: AppColors.greys87,
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w700,
@@ -127,7 +131,8 @@ class _OtpLoginScreenState extends State<OtpLoginScreen> {
                               TextSpan(
                                 text: AppLocalizations.of(context)!
                                     .toThisMobileNumber,
-                                style: GoogleFonts.notoSans(
+                                style:
+                                    BrandingConfig.instance.getPrimaryTextStyle(
                                   color: AppColors.greys60,
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w400,
@@ -160,7 +165,7 @@ class _OtpLoginScreenState extends State<OtpLoginScreen> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: isPhoneValid
                               ? AppColors.orange
-                              : AppColors.lightGrey,
+                              : AppColors.grey40,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(6.r),
                           ),
@@ -176,14 +181,17 @@ class _OtpLoginScreenState extends State<OtpLoginScreen> {
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2,
                                   valueColor: AlwaysStoppedAnimation<Color>(
-                                      AppColors.appBarBackground),
+                                      AppColors.backgroundColor),
                                 ),
                               );
                             }
                             return Text(
                               AppLocalizations.of(context)!.getOtp,
-                              style: GoogleFonts.notoSans(
-                                color: AppColors.appBarBackground,
+                              style:
+                                  BrandingConfig.instance.getPrimaryTextStyle(
+                                color: isPhoneValid
+                                    ? AppColors.backgroundColor
+                                    : AppColors.grey40,
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.normal,
                               ),

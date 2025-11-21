@@ -1,4 +1,4 @@
-# VoiceGive FastAPI - Sample Backend (For understanding of API usage)
+# AI4I - Contribute FastAPI Backend - Production Ready
 
 Complete FastAPI backend implementation with **enhanced logging**, **database integration**, and **zero hardcoded values**.
 
@@ -63,6 +63,63 @@ The backend uses local storage only. Files are stored in the `./uploads` directo
 - **Certificates**: `./uploads/certificates/`
 - **Thumbnails**: `./uploads/thumbnails/`
 - **Temporary files**: `./uploads/temp/`
+
+## v0.2.0 – 2025-11-20
+### Updated Module API Documentation
+
+This version updates the AI4I Contribute module API documentation to reflect the **actual implemented backend endpoints**, replacing outdated placeholder contract details from the earlier README.
+
+### Added
+- Complete and accurate endpoint lists extracted directly from `routes.py`:
+  - **Suno**: 14 endpoints (including full validation flow and `/test-speaker`)
+  - **Likho**: 13 endpoints (with full validation flow)
+  - **Dekho**: 13 endpoints (with full validation flow)
+- Newly documented helper endpoints:
+  - `/instructions`
+  - `/help`
+- Newly documented validation endpoints for all modules:
+  - `/validation`, `/validation/correct`, `/validation/reject`,
+    `/validation/submit-correction`, `/validation/skip`, `/validation/report`
+
+### Updated
+- Corrected queue endpoints from GET → POST for all modules.
+- Updated submit payload contract to match actual backend models:
+  - **Suno** → `{ "transcript": "..." }`
+  - **Likho** → `{ "translation": "..." }`
+  - **Dekho** → `{ "label": "..." }`
+- Corrected session-complete payload structure to reflect optional fields.
+- Adjusted mock-mode explanation to match real backend behavior:
+  - 5-item queues
+  - Static samples under module `/static/`
+  - Non-persistent sessions
+
+### Removed
+- Removed outdated “frozen API contract” that did not match the implemented backend.
+- Removed incorrect claim that modules only exposed `/status` and `/sample`.
+- Removed old Phase-1 placeholder descriptions.
+
+### Summary
+This update ensures documentation now accurately matches the real backend state, including:
+- All module contribution + validation routes
+- Correct HTTP methods
+- Correct payload structures
+- Helper endpoints
+- Suno test-speaker endpoint
+
+The backend remains in mock-only mode for FE integration.
+
+### ❗ Error Envelope (Frozen Structure)
+{
+"error": {
+"code": string,
+"message": string,
+"info": object,
+"timestamp": string
+}
+}
+
+This contract governs AI4I Phase 1–2 integration between frontend and backend.
+
 
 ## 🎯 Enhanced Features
 

@@ -9,8 +9,8 @@ import 'package:VoiceGive/screens/home_screen/home_screen.dart';
 import 'package:VoiceGive/screens/profile_screen/screens/other_information_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../../config/branding_config.dart';
 import '../../../constants/app_constants.dart';
 import '../model/gender_model.dart';
 import '../widgets/name_widget.dart';
@@ -68,6 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      backgroundColor: AppColors.backgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
       ),
@@ -122,8 +123,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _navigateBackToOtp();
       },
       child: Scaffold(
-        appBar: const CustomAppBar(),
-        backgroundColor: Colors.white,
+        appBar: const CustomAppBar(
+          showThreeLogos: true,
+        ),
+        backgroundColor: AppColors.backgroundColor,
         body: SafeArea(
           child: Column(
             children: [
@@ -150,7 +153,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Text(
                       AppLocalizations.of(context)!.completeYourProfile,
-                      style: GoogleFonts.notoSans(
+                      style: BrandingConfig.instance.getPrimaryTextStyle(
                         color: Colors.white,
                         fontSize: 20.sp,
                         fontWeight: FontWeight.normal,
@@ -171,7 +174,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(height: 16.h),
                           Text(
                             AppLocalizations.of(context)!.personalInformation,
-                            style: GoogleFonts.notoSans(
+                            style: BrandingConfig.instance.getPrimaryTextStyle(
                               color: AppColors.greys87,
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w700,
@@ -225,31 +228,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   text: TextSpan(children: [
                                     TextSpan(
                                       text: '*',
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.negativeLight,
-                                          fontSize: 14.sp),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.negativeLight,
+                                              fontSize: 14.sp),
                                     ),
                                     TextSpan(
                                       text: AppLocalizations.of(context)!
                                           .chooseYourAgeGroup,
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.greys60,
-                                          fontSize: 14.sp),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.greys60,
+                                              fontSize: 14.sp),
                                     ),
                                   ]),
                                 ),
-                                border: _outline(AppColors.darkGrey),
-                                enabledBorder: _outline(AppColors.darkGrey),
-                                focusedBorder: _outline(AppColors.darkGrey),
+                                border: _outline(AppColors.grey40),
+                                enabledBorder: _outline(AppColors.grey40),
+                                focusedBorder: _outline(AppColors.grey40),
                                 suffixIcon: Icon(Icons.keyboard_arrow_down,
                                     color: AppColors.greys87, size: 20.w),
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 12.w, vertical: 16.w),
                               ),
-                              style: GoogleFonts.notoSans(
-                                  color: AppColors.greys87,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500),
+                              style: BrandingConfig.instance
+                                  .getPrimaryTextStyle(
+                                      color: AppColors.greys87,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500),
                             ),
                           ),
                           SizedBox(height: 16.h),
@@ -284,31 +290,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   text: TextSpan(children: [
                                     TextSpan(
                                       text: '*',
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.negativeLight,
-                                          fontSize: 14.sp),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.negativeLight,
+                                              fontSize: 14.sp),
                                     ),
                                     TextSpan(
                                       text:
                                           AppLocalizations.of(context)!.gender,
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.greys60,
-                                          fontSize: 14.sp),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.greys60,
+                                              fontSize: 14.sp),
                                     ),
                                   ]),
                                 ),
-                                border: _outline(AppColors.darkGrey),
-                                enabledBorder: _outline(AppColors.darkGrey),
-                                focusedBorder: _outline(AppColors.darkGrey),
+                                border: _outline(AppColors.grey40),
+                                enabledBorder: _outline(AppColors.grey40),
+                                focusedBorder: _outline(AppColors.grey40),
                                 suffixIcon: Icon(Icons.keyboard_arrow_down,
                                     color: AppColors.greys87, size: 20.w),
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 12.w, vertical: 16.w),
                               ),
-                              style: GoogleFonts.notoSans(
-                                  color: AppColors.greys87,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500),
+                              style: BrandingConfig.instance
+                                  .getPrimaryTextStyle(
+                                      color: AppColors.greys87,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500),
                             ),
                           ),
                           SizedBox(height: 16.h),
@@ -319,18 +328,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               initialValue: '+91 ${widget.phoneNumber}',
                               readOnly: true,
                               decoration: InputDecoration(
-                                enabled: false,
-                                enabledBorder: _outline(AppColors.darkGrey),
+                                enabledBorder: _outline(AppColors.grey40),
                                 fillColor: AppColors.lightGrey2,
                                 filled: true,
                                 disabledBorder: _outline(AppColors.darkGrey),
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 12.w, vertical: 12.w),
                               ),
-                              style: GoogleFonts.notoSans(
-                                  color: AppColors.darkGreen,
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w500),
+                              style: BrandingConfig.instance
+                                  .getPrimaryTextStyle(
+                                      color: AppColors.darkGreen,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w500),
                             ),
                           SizedBox(height: 16.h),
                           // Email
@@ -339,10 +348,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               labelText: AppLocalizations.of(context)!.emailId,
-                              labelStyle: GoogleFonts.notoSans(
-                                  color: AppColors.greys60, fontSize: 14.sp),
-                              enabledBorder: _outline(AppColors.darkGrey),
-                              focusedBorder: _outline(AppColors.darkGrey),
+                              labelStyle: BrandingConfig.instance
+                                  .getPrimaryTextStyle(
+                                      color: AppColors.greys60,
+                                      fontSize: 14.sp),
+                              enabledBorder: _outline(AppColors.grey40),
+                              focusedBorder: _outline(AppColors.grey40),
                               errorBorder: _outline(AppColors.negativeLight),
                               focusedErrorBorder:
                                   _outline(AppColors.negativeLight),
@@ -367,7 +378,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 return null;
                               }
                             },
-                            style: GoogleFonts.notoSans(
+                            style: BrandingConfig.instance.getPrimaryTextStyle(
                                 color: AppColors.greys87,
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w500),
@@ -421,7 +432,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 child: Text(
                                   AppLocalizations.of(context)!.saveAndContinue,
-                                  style: GoogleFonts.notoSans(
+                                  style: BrandingConfig.instance
+                                      .getPrimaryTextStyle(
                                     color: Colors.white,
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.normal,

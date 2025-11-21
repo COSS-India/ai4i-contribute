@@ -148,7 +148,7 @@ class _CustomAudioPlayerState extends State<CustomAudioPlayer> {
     _hasEnded = false;
     _initializePlayer();
   }
-  
+
   @override
   void dispose() {
     _player.dispose();

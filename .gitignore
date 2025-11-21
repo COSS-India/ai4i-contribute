@@ -52,7 +52,6 @@ app.*.map.json
 
 .vscode/
 
-
 # "JSON to Dart Model" generator tracker files locations.
 /.json_models/
 models.jsonc
@@ -85,3 +84,5 @@ ENV/
 env.bak/
 venv.bak/
 
+# FVM Version Cache
+.fvm/

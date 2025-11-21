@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../config/branding_config.dart';
 import '../../../../constants/app_colors.dart';
 
 class EmailOtpTimer extends StatefulWidget {
@@ -64,7 +64,7 @@ class _EmailOtpTimerState extends State<EmailOtpTimer> {
       _seconds = widget.initialSeconds;
       _canResend = false;
     });
-    
+
     // Start a combined timer that handles both countdowns
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -75,7 +75,7 @@ class _EmailOtpTimerState extends State<EmailOtpTimer> {
         } else if (_isResendCooldown && _resendCooldownSeconds == 0) {
           _isResendCooldown = false;
         }
-        
+
         // Handle OTP expiry timer
         if (_seconds > 0) {
           _seconds--;
@@ -83,7 +83,7 @@ class _EmailOtpTimerState extends State<EmailOtpTimer> {
           _canResend = true;
         }
       });
-      
+
       // Stop timer if both are done
       if (_canResend && !_isResendCooldown) {
         _timer?.cancel();
@@ -113,14 +113,14 @@ class _EmailOtpTimerState extends State<EmailOtpTimer> {
         if (!_canResend) ...[
           Text(
             "OTP expires in: ${_formatTime(_seconds)}",
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
               color: AppColors.greys60,
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,
             ),
           ),
         ],
-        
+
         // Resend OTP Section - Always visible
         SizedBox(height: 16.h),
         Row(
@@ -128,25 +128,27 @@ class _EmailOtpTimerState extends State<EmailOtpTimer> {
           children: [
             Text(
               "Didn't receive OTP? ",
-              style: GoogleFonts.notoSans(
+              style: BrandingConfig.instance.getPrimaryTextStyle(
                 color: AppColors.greys60,
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w400,
               ),
             ),
             GestureDetector(
-              onTap: _isResendCooldown ? null : () {
-                widget.onResend?.call();
-                _startResendCooldown();
-              },
+              onTap: _isResendCooldown
+                  ? null
+                  : () {
+                      widget.onResend?.call();
+                      _startResendCooldown();
+                    },
               child: Text(
-                _isResendCooldown 
-                  ? "Resend OTP in ${_resendCooldownSeconds}s"
-                  : "Resend OTP",
-                style: GoogleFonts.notoSans(
-                  color: _isResendCooldown 
-                    ? AppColors.greys60 
-                    : AppColors.darkBlue,
+                _isResendCooldown
+                    ? "Resend OTP in ${_resendCooldownSeconds}s"
+                    : "Resend OTP",
+                style: BrandingConfig.instance.getPrimaryTextStyle(
+                  color: _isResendCooldown
+                      ? AppColors.greys60
+                      : AppColors.darkBlue,
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w500,
                 ),

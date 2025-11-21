@@ -12,15 +12,20 @@ import 'package:VoiceGive/screens/bolo_india/bolo_validation_screen/bolo_validat
 import 'package:VoiceGive/screens/bolo_india/widgets/bolo_content_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../../config/branding_config.dart';
 
 typedef IntCallback = void Function(int value);
+
 class BoloContentSection extends StatefulWidget {
   final LanguageModel language;
   final IntCallback indexUpdate;
   final int currentIndex;
-  const BoloContentSection({super.key, required this.language, required this.indexUpdate, required this.currentIndex});
+  const BoloContentSection(
+      {super.key,
+      required this.language,
+      required this.indexUpdate,
+      required this.currentIndex});
 
   @override
   State<BoloContentSection> createState() => _BoloContentSectionState();
@@ -42,7 +47,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
   @override
   void initState() {
     boloContributeFuture = BoloContributeRepository()
-        .getContributionSentances(language: widget.language.languageCode);
+        .getContributionSentances(language: widget.language.languageName);
     super.initState();
   }
 
@@ -54,17 +59,17 @@ class _BoloContentSectionState extends State<BoloContentSection> {
       enableSubmit.value = false;
       recordedFile = null;
       boloContributeFuture = BoloContributeRepository()
-          .getContributionSentances(language: widget.language.languageCode);
+          .getContributionSentances(language: widget.language.languageName);
     }
-    if(currentIndex != widget.currentIndex){
+    if (currentIndex != widget.currentIndex) {
       currentIndex = widget.currentIndex;
     }
-    if(recordedFiles.isNotEmpty && recordedFiles.length > currentIndex + 1){
+    if (recordedFiles.isNotEmpty && recordedFiles.length > currentIndex + 1) {
       recordedFiles.removeLast();
     }
-    if(mounted){
+    if (mounted) {
       setState(() {});
-      }
+    }
   }
 
   @override
@@ -99,36 +104,44 @@ class _BoloContentSectionState extends State<BoloContentSection> {
         final double progress = (currentIndex + 1) / sentencesLength;
 
         return Container(
-          padding: EdgeInsets.all(12).r,
           decoration: BoxDecoration(
-            image: const DecorationImage(
-              image: AssetImage("assets/images/contribute_bg.png"),
-              fit: BoxFit.cover,
-            ),
-            color: AppColors.lightGreen3,
             borderRadius: BorderRadius.circular(8).r,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withValues(alpha: 0.5),
-                spreadRadius: 2,
-                blurRadius: 5,
-                offset: const Offset(0, 3),
-              ),
-            ],
+            border: Border.all(
+              color: Colors.grey[700]!,
+            ),
           ),
-          child: Column(
-            children: [
-              _progressHeader(progress: progress, total: sentencesLength),
-              SizedBox(height: 24.w),
-              _sentenceText(contributeSentences[currentIndex].text),
-              SizedBox(height: 50.w),
-              recordingButton(sentence: contributeSentences[currentIndex]),
-              SizedBox(height: 30.w),
-              _actionButtons(
-                  length: sentencesLength,
-                  currentSentence: contributeSentences[currentIndex]),
-              SizedBox(height: 50.w),
-            ],
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8).r,
+            child: Stack(
+              fit: StackFit.passthrough,
+              children: [
+                Image.asset(
+                  'assets/images/contribute_bg.png',
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  color: BrandingConfig.instance.primaryColor,
+                ),
+                Padding(
+                  padding: EdgeInsets.all(12).r,
+                  child: Column(
+                    children: [
+                      _progressHeader(
+                          progress: progress, total: sentencesLength),
+                      SizedBox(height: 24.w),
+                      _sentenceText(contributeSentences[currentIndex].text),
+                      SizedBox(height: 50.w),
+                      recordingButton(
+                          sentence: contributeSentences[currentIndex]),
+                      SizedBox(height: 30.w),
+                      _actionButtons(
+                          length: sentencesLength,
+                          currentSentence: contributeSentences[currentIndex]),
+                      SizedBox(height: 50.w),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -143,7 +156,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
               const Spacer(),
               Text(
                 "${currentIndex + 1}/$total",
-                style: GoogleFonts.notoSans(
+                style: BrandingConfig.instance.getPrimaryTextStyle(
                   fontSize: 12.sp,
                   color: AppColors.darkGreen,
                   fontWeight: FontWeight.w600,
@@ -167,9 +180,9 @@ class _BoloContentSectionState extends State<BoloContentSection> {
         padding: EdgeInsets.symmetric(horizontal: 32).r,
         child: Text(
           text,
-          style: GoogleFonts.notoSans(
+          style: BrandingConfig.instance.getPrimaryTextStyle(
             fontSize: 16.sp,
-            color: Colors.black,
+            color: AppColors.greys87,
             fontWeight: FontWeight.w500,
           ),
           textAlign: TextAlign.center,
@@ -187,10 +200,11 @@ class _BoloContentSectionState extends State<BoloContentSection> {
                     ? Column(
                         children: [
                           Text(skipvalue ? "Skipping..." : "Submitting...",
-                              style: GoogleFonts.notoSans(
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.darkGreen)),
+                              style: BrandingConfig.instance
+                                  .getPrimaryTextStyle(
+                                      fontSize: 20.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.darkGreen)),
                           SizedBox(
                             height: 50,
                           ),
@@ -283,7 +297,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
           },
           textColor: AppColors.orange,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.backgroundColor,
             border: Border.all(color: AppColors.orange),
             borderRadius: BorderRadius.all(Radius.circular(6.0).r),
           ),
@@ -314,7 +328,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
               }
             }
           },
-          textColor: Colors.white,
+          textColor: AppColors.backgroundColor,
           decoration: BoxDecoration(
             color: AppColors.orange,
             border: Border.all(color: AppColors.orange),
@@ -338,7 +352,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
             },
             textColor: enableSkipValue ? AppColors.orange : AppColors.grey16,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.backgroundColor,
               border: Border.all(
                 color: enableSkipValue ? AppColors.orange : AppColors.grey16,
               ),
@@ -361,7 +375,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
               submitEnabled: enableSubmitValue,
               currentSentence: currentSentence,
             ),
-            textColor: Colors.white,
+            textColor: AppColors.backgroundColor,
             decoration: BoxDecoration(
               color: enableSubmitValue ? AppColors.orange : AppColors.grey16,
               border: Border.all(
@@ -434,15 +448,14 @@ class _BoloContentSectionState extends State<BoloContentSection> {
     enableSkip.value = false;
     bool isSubmitted = false;
 
-    if(recordedFile!=null){
+    if (recordedFile != null) {
       isSubmitted = await BoloContributeRepository().submitContributeAudio(
-      duration: 10,
-      sentenceId: currentSentence.sentenceId,
-      sequenceNumber: currentSentence.sequenceNumber,
-      audioFile: recordedFile!,
-      languageCode: widget.language.languageCode,
-    );
-
+        duration: 10,
+        sentenceId: currentSentence.sentenceId,
+        sequenceNumber: currentSentence.sequenceNumber,
+        audioFile: recordedFile!,
+        languageCode: widget.language.languageCode,
+      );
     }
     if (isSubmitted) {
       enableSubmit.value = true;

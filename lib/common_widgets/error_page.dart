@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../config/branding_config.dart';
 import '../constants/app_colors.dart';
 
 class ErrorPage extends StatelessWidget {
@@ -28,7 +28,7 @@ class ErrorPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 24).w,
                 child: Text(
                   AppLocalizations.of(context)!.namasteContributor,
-                  style: GoogleFonts.montserrat(
+                  style: BrandingConfig.instance.getTertiaryTextStyle(
                       color: AppColors.darkGreen,
                       fontWeight: FontWeight.w600,
                       fontSize: 24.sp,
@@ -40,7 +40,7 @@ class ErrorPage extends StatelessWidget {
                 child: Text(
                   AppLocalizations.of(context)!.errorDesc,
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.montserrat(
+                  style: BrandingConfig.instance.getTertiaryTextStyle(
                       color: AppColors.greys87,
                       fontWeight: FontWeight.w600,
                       fontSize: 20.w,
@@ -52,7 +52,7 @@ class ErrorPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 16),
                 child: Text(
                   AppLocalizations.of(context)!.errorSubtitle,
-                  style: GoogleFonts.lato(
+                  style: BrandingConfig.instance.getSecondaryTextStyle(
                     color: AppColors.greys87,
                     fontWeight: FontWeight.w400,
                     fontSize: 16.sp,
@@ -77,7 +77,7 @@ class ErrorPage extends StatelessWidget {
                         )),
                     child: Text(
                       AppLocalizations.of(context)!.errorButton,
-                      style: GoogleFonts.lato(
+                      style: BrandingConfig.instance.getSecondaryTextStyle(
                           color: AppColors.appBarBackground,
                           fontWeight: FontWeight.w700,
                           fontSize: 14.sp,

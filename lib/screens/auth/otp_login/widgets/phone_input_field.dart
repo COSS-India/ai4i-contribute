@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../config/branding_config.dart';
 import '../../../../constants/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -23,7 +23,7 @@ class PhoneInputField extends StatelessWidget {
       children: [
         Text(
           AppLocalizations.of(context)!.enterMobileNumber,
-          style: GoogleFonts.notoSans(
+          style: BrandingConfig.instance.getPrimaryTextStyle(
             color: AppColors.grey,
             fontSize: 14.sp,
             fontWeight: FontWeight.w500,
@@ -37,7 +37,7 @@ class PhoneInputField extends StatelessWidget {
               width: 80.w,
               padding: EdgeInsets.symmetric(horizontal: 12.w),
               decoration: BoxDecoration(
-                border: Border.all(color: AppColors.lightGrey),
+                border: Border.all(color: AppColors.grey40),
                 borderRadius: BorderRadius.circular(8.r),
               ),
               child: DropdownButtonHideUnderline(
@@ -48,7 +48,7 @@ class PhoneInputField extends StatelessWidget {
                     DropdownMenuItem(value: '+91', child: Text('+91')),
                   ],
                   onChanged: (value) {},
-                  style: GoogleFonts.notoSans(
+                  style: BrandingConfig.instance.getPrimaryTextStyle(
                     color: AppColors.greys87,
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
@@ -69,17 +69,20 @@ class PhoneInputField extends StatelessWidget {
                   controller: controller,
                   keyboardType: TextInputType.number,
                   keyboardAppearance: Brightness.dark,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly,LengthLimitingTextInputFormatter(10)],
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(10)
+                  ],
                   validator: validator,
                   decoration: InputDecoration(
                     hintText: '',
-                    hintStyle: GoogleFonts.notoSans(
+                    hintStyle: BrandingConfig.instance.getPrimaryTextStyle(
                       color: AppColors.grey40,
                       fontSize: 14.sp,
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.r),
-                      borderSide: BorderSide(color: AppColors.lightGrey),
+                      borderSide: BorderSide(color: AppColors.grey40),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.r),
@@ -98,7 +101,7 @@ class PhoneInputField extends StatelessWidget {
                       vertical: 12.w,
                     ),
                   ),
-                  style: GoogleFonts.notoSans(
+                  style: BrandingConfig.instance.getPrimaryTextStyle(
                     color: AppColors.greys87,
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w500,

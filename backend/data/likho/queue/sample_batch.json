@@ -1,0 +1,37 @@
+[
+  {
+    "item_id": "likho-1",
+    "src_language": "hi",
+    "tgt_language": "en",
+    "text": "यह एक उदाहरण वाक्य है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho-2",
+    "src_language": "hi",
+    "tgt_language": "en",
+    "text": "कृपया इस संदेश का अनुवाद करें।",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho-3",
+    "src_language": "hi",
+    "tgt_language": "en",
+    "text": "आज मौसम बहुत अच्छा है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho-4",
+    "src_language": "hi",
+    "tgt_language": "en",
+    "text": "मैं बाज़ार जा रहा हूँ।",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho-5",
+    "src_language": "hi",
+    "tgt_language": "en",
+    "text": "आप कैसे हैं?",
+    "metadata": {}
+  }
+]

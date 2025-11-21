@@ -6,28 +6,33 @@ import 'package:VoiceGive/constants/storage_constants.dart';
 import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
 import 'package:VoiceGive/services/secure_storage_service.dart';
 import 'package:http/http.dart';
+import 'package:flutter/foundation.dart';
 
 class BoloService {
   static final _storage = SecureStorageService.instance.storage;
 
   static Future<String> get sessionId async {
-    return await _storage.read(key: StorageConstants.sessionId) ??
-        "3fa85f64-5717-4562-b3fc-2c963f66afa6";
+    return await _storage.read(key: StorageConstants.sessionId) ?? "";
   }
 
   Future<Response> getContributionSentances(
       {required String language, int? count}) async {
     Map data = {
-      //"language": language,
-      "languageCode": language,
+      "language": language,
       "count": count ?? 5,
     };
+
+    debugPrint('API Call - getContributionSentances');
+    debugPrint('Payload: ${jsonEncode(data)}');
 
     Response response = await post(
       Uri.parse(ApiUrl.getSentancesForRecordingUrl),
       headers: NetworkHeaders.postHeader,
       body: jsonEncode(data),
     );
+
+    debugPrint('Response Status: ${response.statusCode}');
+    debugPrint('Response Body: ${response.body}');
     return response;
   }
 
@@ -175,7 +180,7 @@ class BoloService {
     required int count,
   }) async {
     final url =
-        '${ApiUrl.getValidationsQueUrl}?languageCode=$language&count=$count';
+        '${ApiUrl.getValidationsQueUrl}?language=$language&count=$count';
 
     final response = await get(
       Uri.parse(url),

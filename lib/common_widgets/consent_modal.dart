@@ -4,9 +4,10 @@ import 'package:VoiceGive/models/auth/consent_response.dart';
 import 'package:VoiceGive/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
+import '../config/branding_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InformedConsentModal extends StatefulWidget {
   final VoidCallback onApprove;
@@ -63,7 +64,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
         width: double.infinity,
         height: MediaQuery.of(context).size.height * 0.85,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.backgroundColor,
           borderRadius: BorderRadius.circular(16.r),
         ),
         child: Column(
@@ -77,7 +78,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                     onTap: widget.onDeny,
                     child: Icon(
                       Icons.arrow_back,
-                      color: Colors.black,
+                      color: AppColors.greys87,
                       size: 20.w,
                     ),
                   ),
@@ -85,7 +86,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                     child: Center(
                       child: Text(
                         AppLocalizations.of(context)!.weRespectYourPrivacy,
-                        style: GoogleFonts.notoSans(
+                        style: BrandingConfig.instance.getPrimaryTextStyle(
                           color: AppColors.darkGreen,
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w600,
@@ -109,8 +110,8 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                     children: [
                       Text(
                         AppLocalizations.of(context)!.namasteContributor,
-                        style: GoogleFonts.notoSans(
-                          color: Colors.black,
+                        style: BrandingConfig.instance.getPrimaryTextStyle(
+                          color: AppColors.greys87,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
                         ),
@@ -127,8 +128,8 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                   // Introduction paragraph
                   Text(
                     AppLocalizations.of(context)!.consentMessage,
-                    style: GoogleFonts.notoSans(
-                      color: Colors.black,
+                    style: BrandingConfig.instance.getPrimaryTextStyle(
+                      color: AppColors.greys87,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       height: 1.4,
@@ -148,7 +149,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                     end: Alignment.bottomCenter,
                     colors: [
                       AppColors.lightGreen2,
-                      Colors.white,
+                      AppColors.backgroundColor,
                     ],
                   ),
                 ),
@@ -161,8 +162,8 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                       Text(
                         AppLocalizations.of(context)!.consentConfirm(
                             AppLocalizations.of(context)!.iAgree),
-                        style: GoogleFonts.notoSans(
-                          color: Colors.black,
+                        style: BrandingConfig.instance.getPrimaryTextStyle(
+                          color: AppColors.greys87,
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
                         ),
@@ -205,6 +206,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                         AppLocalizations.of(context)!.termsOfUse,
                         _termsAccepted,
                         (value) => setState(() => _termsAccepted = value!),
+                        url: BrandingConfig.instance.termsOfUseUrl,
                       ),
                       SizedBox(height: 8.w),
 
@@ -212,6 +214,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                         AppLocalizations.of(context)!.privacyPolicy,
                         _privacyAccepted,
                         (value) => setState(() => _privacyAccepted = value!),
+                        url: BrandingConfig.instance.privacyPolicyUrl,
                       ),
                       SizedBox(height: 8.w),
 
@@ -219,6 +222,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                         AppLocalizations.of(context)!.copyrightPolicy,
                         _copyrightAccepted,
                         (value) => setState(() => _copyrightAccepted = value!),
+                        url: BrandingConfig.instance.copyrightPolicyUrl,
                       ),
                       SizedBox(height: 40.h),
                     ],
@@ -266,16 +270,16 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                                       Icon(
                                         Icons.check,
                                         color: _allAccepted
-                                            ? Colors.white
+                                            ? AppColors.backgroundColor
                                             : AppColors.grey84,
                                         size: 18.w,
                                       ),
                                       SizedBox(width: 8.w),
                                       Text(
                                         AppLocalizations.of(context)!.iAgree,
-                                        style: GoogleFonts.notoSans(
+                                        style: BrandingConfig.instance.getPrimaryTextStyle(
                                           color: _allAccepted
-                                              ? Colors.white
+                                              ? AppColors.backgroundColor
                                               : AppColors.grey84,
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w500,
@@ -294,7 +298,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 14.w),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: AppColors.backgroundColor,
                           borderRadius: BorderRadius.circular(8.r),
                           border: Border.all(color: AppColors.lightGrey),
                         ),
@@ -309,7 +313,7 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                             SizedBox(width: 8.w),
                             Text(
                               AppLocalizations.of(context)!.deny,
-                              style: GoogleFonts.notoSans(
+                              style: BrandingConfig.instance.getPrimaryTextStyle(
                                 color: AppColors.grey84,
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
@@ -335,8 +339,8 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
       children: [
         Text(
           number,
-          style: GoogleFonts.notoSans(
-            color: Colors.black,
+          style: BrandingConfig.instance.getPrimaryTextStyle(
+            color: AppColors.greys87,
             fontSize: 14.sp,
             fontWeight: FontWeight.w500,
           ),
@@ -345,8 +349,8 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
         Expanded(
           child: Text(
             text,
-            style: GoogleFonts.notoSans(
-              color: Colors.black,
+            style: BrandingConfig.instance.getPrimaryTextStyle(
+              color: AppColors.greys87,
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,
               height: 1.4,
@@ -358,15 +362,16 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
   }
 
   Widget _buildCheckboxItem(
-      String text, bool value, ValueChanged<bool?> onChanged) {
-    return InkWell(
-      onTap: () => onChanged(!value),
-      borderRadius: BorderRadius.circular(4),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        child: Row(
-          children: [
-            AnimatedContainer(
+      String text, bool value, ValueChanged<bool?> onChanged,
+      {String? url}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          InkWell(
+            onTap: () => onChanged(!value),
+            borderRadius: BorderRadius.circular(4),
+            child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               width: 24,
               height: 24,
@@ -379,28 +384,47 @@ class _InformedConsentModalState extends State<InformedConsentModal> {
                 borderRadius: BorderRadius.circular(4),
               ),
               child: value
-                  ? const Icon(
+                  ? Icon(
                       Icons.check,
                       size: 16,
-                      color: Colors.white,
+                      color: AppColors.backgroundColor,
                     )
                   : null,
             ),
-            const SizedBox(width: 12),
-            Expanded(
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: InkWell(
+              onTap:
+                  url != null && url.isNotEmpty ? () => _launchUrl(url) : null,
               child: Text(
                 text,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFF047857),
+                  color: AppColors.darkGreen,
                   decoration: TextDecoration.underline,
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
+  }
+
+  Future<void> _launchUrl(String url) async {
+    try {
+      final Uri uri = Uri.parse(url);
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } catch (e) {
+      // Fallback: try without canLaunchUrl check
+      try {
+        final Uri uri = Uri.parse(url);
+        await launchUrl(uri);
+      } catch (e) {
+        // Silent fail - URL couldn't be opened
+      }
+    }
   }
 }

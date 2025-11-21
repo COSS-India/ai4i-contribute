@@ -1,5 +1,6 @@
 import 'package:VoiceGive/common_widgets/language_searchable_bottom_sheet/widgets/bottom_field_search_field.dart';
 import 'package:VoiceGive/common_widgets/language_searchable_bottom_sheet/widgets/bottom_sheet_items.dart';
+import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -138,6 +139,7 @@ class _SearchableBottomSheetContentState
   Widget build(BuildContext context) {
     return Container(
       height: 0.7.sh,
+      color: AppColors.backgroundColor,
       padding: EdgeInsets.all(16).r,
       child: Column(
         mainAxisSize: MainAxisSize.min,

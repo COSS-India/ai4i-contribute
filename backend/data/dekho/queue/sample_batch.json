@@ -1,0 +1,32 @@
+[
+  {
+    "item_id": "dekho-1",
+    "language": "en",
+    "image_url": "/dekho/static/sample1.jpg",
+    "metadata": { "description": "Sample object 1" }
+  },
+  {
+    "item_id": "dekho-2",
+    "language": "en",
+    "image_url": "/dekho/static/sample2.jpg",
+    "metadata": { "description": "Sample object 2" }
+  },
+  {
+    "item_id": "dekho-3",
+    "language": "en",
+    "image_url": "/dekho/static/sample3.jpg",
+    "metadata": { "description": "Sample object 3" }
+  },
+  {
+    "item_id": "dekho-4",
+    "language": "en",
+    "image_url": "/dekho/static/sample4.jpg",
+    "metadata": { "description": "Sample object 4" }
+  },
+  {
+    "item_id": "dekho-5",
+    "language": "en",
+    "image_url": "/dekho/static/sample5.jpg",
+    "metadata": { "description": "Sample object 5" }
+  }
+]

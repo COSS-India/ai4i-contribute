@@ -1,9 +1,8 @@
-import 'package:VoiceGive/common_widgets/image_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../../config/branding_config.dart';
 import '../../../constants/app_colors.dart';
 
 class HomeFooterSection extends StatelessWidget {
@@ -20,12 +19,7 @@ class HomeFooterSection extends StatelessWidget {
           color: AppColors.appBarBackground,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildLogo('assets/images/negd_logo.png'),
-              _buildLogo('assets/images/meity_logo.png'),
-              _buildLogo('assets/images/npi_logo.png'),
-              _buildLogo('assets/images/mygov_logo.png'),
-            ],
+            children: [],
           ),
         ),
         // Dark blue footer section
@@ -38,8 +32,8 @@ class HomeFooterSection extends StatelessWidget {
             children: [
               // Main heading
               Text(
-                AppLocalizations.of(context)!.digitalIndiaBhashiniDivision,
-                style: GoogleFonts.notoSans(
+                '',
+                style: BrandingConfig.instance.getPrimaryTextStyle(
                   color: AppColors.appBarBackground,
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w600,
@@ -49,7 +43,7 @@ class HomeFooterSection extends StatelessWidget {
               // Address
               Text(
                 AppLocalizations.of(context)!.electronicsNiketanAddress,
-                style: GoogleFonts.notoSans(
+                style: BrandingConfig.instance.getPrimaryTextStyle(
                   color: AppColors.appBarBackground,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w400,
@@ -61,25 +55,20 @@ class HomeFooterSection extends StatelessWidget {
                 children: [
                   Text(
                     AppLocalizations.of(context)!.poweredBy,
-                    style: GoogleFonts.notoSans(
+                    style: BrandingConfig.instance.getPrimaryTextStyle(
                       color: AppColors.appBarBackground,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
                   SizedBox(width: 8.w),
-                  ImageWidget(
-                    imageUrl: 'assets/images/digital_india_logo.png',
-                    height: 20.w,
-                    width: 80.w,
-                  ),
                 ],
               ),
               SizedBox(height: 16.w),
               // Additional information
               Text(
                 AppLocalizations.of(context)!.digitalIndiaCorporation,
-                style: GoogleFonts.notoSans(
+                style: BrandingConfig.instance.getPrimaryTextStyle(
                   color: AppColors.appBarBackground,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w400,
@@ -88,7 +77,7 @@ class HomeFooterSection extends StatelessWidget {
               SizedBox(height: 4.w),
               Text(
                 AppLocalizations.of(context)!.ministryOfElectronicsIt,
-                style: GoogleFonts.notoSans(
+                style: BrandingConfig.instance.getPrimaryTextStyle(
                   color: AppColors.appBarBackground,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w400,
@@ -97,7 +86,7 @@ class HomeFooterSection extends StatelessWidget {
               SizedBox(height: 4.w),
               Text(
                 AppLocalizations.of(context)!.governmentOfIndia,
-                style: GoogleFonts.notoSans(
+                style: BrandingConfig.instance.getPrimaryTextStyle(
                   color: AppColors.appBarBackground,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w400,
@@ -115,7 +104,7 @@ class HomeFooterSection extends StatelessWidget {
               Center(
                 child: Text(
                   AppLocalizations.of(context)!.copyrightNotice,
-                  style: GoogleFonts.notoSans(
+                  style: BrandingConfig.instance.getPrimaryTextStyle(
                     color: AppColors.appBarBackground,
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w600,
@@ -126,17 +115,6 @@ class HomeFooterSection extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildLogo(String imagePath) {
-    return SizedBox(
-      height: 50.w,
-      width: 60.w,
-      child: ImageWidget(
-        imageUrl: imagePath,
-        boxFit: BoxFit.contain,
-      ),
     );
   }
 }

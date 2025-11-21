@@ -47,7 +47,8 @@ dependencies:
   provider: 6.1.2
   encrypt: 5.0.3
   path: 1.9.0
-
+  yaml: ^3.1.2
+  url_launcher: ^6.3.2
 
 
   flutter_localizations:
@@ -90,10 +91,17 @@ flutter:
     - assets/icons/
     - assets/animations/
     - assets/launcher/
+    - assets/fonts/
     - .env.development
     - .env.staging
     - .env.production
+    - branding.yaml
   #   - images/a_dot_ham.jpeg\
+
+
+
+
+  # No custom fonts - using Google Fonts
 
 flutter_icons:
   ios: true
@@ -101,5 +109,3 @@ flutter_icons:
   image_path_android: "assets/launcher/bhashadaan.png"
   image_path_ios: "assets/launcher/bhashadaan.png"
   remove_alpha_ios: true
-
-
