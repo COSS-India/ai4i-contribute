@@ -3,14 +3,14 @@ import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AudioPlayerSkeleton extends StatefulWidget {
-  const AudioPlayerSkeleton({super.key});
+class ValidationAudioPlayerSkeleton extends StatefulWidget {
+  const ValidationAudioPlayerSkeleton({super.key});
 
   @override
-  State<AudioPlayerSkeleton> createState() => _AudioPlayerSkeletonState();
+  State<ValidationAudioPlayerSkeleton> createState() => _ValidationAudioPlayerSkeletonState();
 }
 
-class _AudioPlayerSkeletonState extends State<AudioPlayerSkeleton> {
+class _ValidationAudioPlayerSkeletonState extends State<ValidationAudioPlayerSkeleton> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -36,7 +36,16 @@ class _AudioPlayerSkeletonState extends State<AudioPlayerSkeleton> {
             ],
           ),
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: 30.w),
+        // Text input field skeleton
+        Container(
+          height: 120.h,
+          decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: BorderRadius.circular(8).r,
+          ),
+        ),
+        SizedBox(height: 30.w),
         // Play button skeleton
         ContainerSkeleton(width: 60, height: 60, radius: 30),
       ],

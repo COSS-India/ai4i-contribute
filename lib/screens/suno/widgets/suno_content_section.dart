@@ -5,6 +5,7 @@ import 'package:VoiceGive/constants/helper.dart';
 import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
 import 'package:VoiceGive/common_widgets/audio_player/suno_audio_player.dart';
 import 'package:VoiceGive/common_widgets/unicode_validation_text_field.dart';
+import 'package:VoiceGive/common_widgets/audio_player/widgets/audio_player_skeleton.dart';
 import '../models/suno_item_model.dart';
 import '../service/suno_service.dart';
 import 'package:flutter/material.dart';
@@ -124,14 +125,63 @@ class _SunoContentSectionState extends State<SunoContentSection> {
       valueListenable: isLoading,
       builder: (context, loading, child) {
         if (loading) {
-          return Container(
-            height: 500.h,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8).r,
-              border: Border.all(color: Colors.grey[700]!),
-            ),
-            child: Center(
-              child: CircularProgressIndicator(color: AppColors.darkGreen),
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(8).r,
+            child: Stack(
+              fit: StackFit.passthrough,
+              children: [
+                Image.asset(
+                  'assets/images/contribute_bg.png',
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  color: BrandingConfig.instance.primaryColor,
+                ),
+                Padding(
+                  padding: EdgeInsets.all(12).r,
+                  child: Column(
+                    children: [
+                      _progressHeader(
+                          progress: 0.0, total: 5, currentItem: 1),
+                      SizedBox(height: 24.w),
+                      _instructionText(),
+                      SizedBox(height: 30.w),
+                      const AudioPlayerSkeleton(),
+                      SizedBox(height: 30.w),
+                      Container(
+                        height: 120.h,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(8).r,
+                        ),
+                      ),
+                      SizedBox(height: 30.w),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 120.w,
+                            height: 40.h,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(6).r,
+                            ),
+                          ),
+                          SizedBox(width: 24.w),
+                          Container(
+                            width: 120.w,
+                            height: 40.h,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(6).r,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 50.w),
+                    ],
+                  ),
+                ),
+              ],
             ),
           );
         }

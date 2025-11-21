@@ -5,6 +5,7 @@ import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/actions_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/bolo_headers_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/language_selection.dart';
+import 'package:VoiceGive/screens/module_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
@@ -58,6 +59,10 @@ class _SunoValidationScreenState extends State<SunoValidationScreen>
                   BoloHeadersSection(
                     logoAsset: 'assets/images/suno.png',
                     title: 'Validation',
+                    onBackPressed: () => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => const ModuleSelectionScreen()),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(12.0).r,
@@ -79,6 +84,13 @@ class _SunoValidationScreenState extends State<SunoValidationScreen>
                           indexUpdate: (index) {
                             setState(() {
                               currentIndex = index;
+                            });
+                          },
+                          onBackPressed: () {
+                            setState(() {
+                              if (currentIndex > 0) {
+                                currentIndex = currentIndex - 1;
+                              }
                             });
                           },
                         )

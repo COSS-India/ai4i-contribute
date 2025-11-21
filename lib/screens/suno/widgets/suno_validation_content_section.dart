@@ -6,6 +6,7 @@ import 'package:VoiceGive/common_widgets/audio_player/custom_audio_player.dart';
 import 'package:VoiceGive/common_widgets/unicode_validation_text_field.dart';
 import 'package:VoiceGive/screens/suno/suno_congratulations_screen.dart';
 import '../../../common_widgets/audio_player/suno_validation_audio_player.dart';
+import '../../../common_widgets/audio_player/widgets/validation_audio_player_skeleton.dart';
 import '../models/suno_validation_model.dart';
 import '../service/suno_service.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class SunoValidationContentSection extends StatefulWidget {
   final IntCallback indexUpdate;
   final int currentIndex;
   final VoidCallback? onComplete;
+  final VoidCallback? onBackPressed;
 
   const SunoValidationContentSection({
     super.key,
@@ -30,6 +32,7 @@ class SunoValidationContentSection extends StatefulWidget {
     required this.indexUpdate,
     required this.currentIndex,
     this.onComplete,
+    this.onBackPressed,
   });
 
   @override
@@ -100,10 +103,16 @@ class _SunoValidationContentSectionState
   }
 
   void _onTextChanged(String value) {
-    enableSubmit.value = audioCompleted.value &&
-        ((!_needsChange) ||
-            (correctedTextController.text.trim().isNotEmpty &&
-                !_hasValidationError));
+    if (_needsChange) {
+      // When needs change is active, only enable if text is different from original and valid
+      final originalText = validationItems.isNotEmpty ? validationItems[currentBatchIndex].transcript : '';
+      enableSubmit.value = audioCompleted.value &&
+          correctedTextController.text.trim() != originalText.trim() &&
+          correctedTextController.text.trim().isNotEmpty &&
+          !_hasValidationError;
+    } else {
+      enableSubmit.value = audioCompleted.value;
+    }
   }
 
   void _onValidationChanged(bool hasError) {
@@ -177,14 +186,64 @@ class _SunoValidationContentSectionState
       valueListenable: isLoading,
       builder: (context, loading, child) {
         if (loading) {
-          return Container(
-            height: 400.h,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8).r,
-              border: Border.all(color: Colors.grey[700]!),
-            ),
-            child: Center(
-              child: CircularProgressIndicator(color: AppColors.darkGreen),
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(8).r,
+            child: Stack(
+              fit: StackFit.passthrough,
+              children: [
+                Image.asset(
+                  'assets/images/contribute_bg.png',
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  color: BrandingConfig.instance.primaryColor,
+                ),
+                Padding(
+                  padding: EdgeInsets.all(12).r,
+                  child: Column(
+                    children: [
+                      _progressHeader(
+                          progress: 0.0, total: 3, currentItem: 1),
+                      SizedBox(height: 24.w),
+                      _instructionText(),
+                      SizedBox(height: 22.w),
+                      const ValidationAudioPlayerSkeleton(),
+                      SizedBox(height: 22.w),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 180.w,
+                            height: 40.h,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(6).r,
+                            ),
+                          ),
+                          SizedBox(width: 24.w),
+                          Container(
+                            width: 140.w,
+                            height: 40.h,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(6).r,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20.w),
+                      Container(
+                        width: 120.w,
+                        height: 40.h,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(6).r,
+                        ),
+                      ),
+                      SizedBox(height: 50.w),
+                    ],
+                  ),
+                ),
+              ],
             ),
           );
         }
@@ -252,7 +311,7 @@ class _SunoValidationContentSectionState
                         SizedBox(height: 22.w),
                         _actionButtons(),
                         SizedBox(height: 20.w),
-                        _skipButton(),
+                        if (submittedCount < totalContributions) _skipButton(),
                         SizedBox(height: 50.w),
                       ],
                     ),
@@ -580,7 +639,7 @@ class _SunoValidationContentSectionState
                     }
                   }
                 : null,
-            textColor: AppColors.orange,
+            textColor: isAudioCompleted ? AppColors.orange : AppColors.grey16,
             decoration: BoxDecoration(
               color: AppColors.backgroundColor,
               border: Border.all(
