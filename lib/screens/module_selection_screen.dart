@@ -2,7 +2,7 @@ import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
 import 'package:VoiceGive/common_widgets/image_widget.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_get_started/bolo_get_started.dart';
-import 'package:VoiceGive/screens/suno/suno_demo_screen.dart';
+import 'package:VoiceGive/screens/suno/suno_get_started.dart';
 import 'package:VoiceGive/screens/likho/likho_demo_screen.dart';
 import 'package:VoiceGive/screens/dekho/dekho_demo_screen.dart';
 import 'package:VoiceGive/screens/home_screen/home_screen.dart';
@@ -43,7 +43,8 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
                         InkWell(
                           onTap: () => Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (_) => const HomeScreen()),
+                            MaterialPageRoute(
+                                builder: (_) => const HomeScreen()),
                           ),
                           child: Icon(
                             Icons.arrow_back,
@@ -62,7 +63,8 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
                           children: [
                             Text(
                               'Namaste ',
-                              style: BrandingConfig.instance.getPrimaryTextStyle(
+                              style:
+                                  BrandingConfig.instance.getPrimaryTextStyle(
                                 fontSize: 24.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.orange,
@@ -79,7 +81,7 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
                           'Contributor/Validator',
                           textAlign: TextAlign.center,
                           style: BrandingConfig.instance.getPrimaryTextStyle(
-                            fontSize: 24.sp,
+                            fontSize: 22.sp,
                             fontWeight: FontWeight.w600,
                             color: AppColors.orange,
                           ),
@@ -89,7 +91,7 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
                           'Welcome to BhashaDaan',
                           textAlign: TextAlign.center,
                           style: BrandingConfig.instance.getPrimaryTextStyle(
-                            fontSize: 28.sp,
+                            fontSize: 18.sp,
                             fontWeight: FontWeight.w700,
                             color: AppColors.darkGreen,
                           ),
@@ -99,8 +101,8 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
                           'A movement to strengthen India\'s languages. Your contributions help make technology truly multilingual.',
                           textAlign: TextAlign.center,
                           style: BrandingConfig.instance.getPrimaryTextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w400,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
                             color: AppColors.darkGreen,
                           ),
                         ),
@@ -122,8 +124,6 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
     );
   }
 
-
-
   Widget _buildGridView() {
     return GridView.count(
       crossAxisCount: 2,
@@ -132,23 +132,20 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
       childAspectRatio: 188 / 235,
       children: _getModuleData()
           .map((module) => _buildModuleTile(
-                title: module['title'],
-                subtitle: module['subtitle'],
-                icon: module['icon'],
-                onTap: module['onTap'],
-              ))
+              title: module['title'],
+              icon: module['icon'],
+              onTap: module['onTap'],
+              assetPath: module['assetPath']))
           .toList(),
     );
   }
 
-
-
   List<Map<String, dynamic>> _getModuleData() {
     return [
       {
-        'title': 'Bolo',
-        'subtitle': 'Voice Recording',
+        'title': 'Bolo India',
         'icon': Icons.mic,
+        'assetPath': 'assets/images/bolo.png',
         'color': AppColors.orange,
         'onTap': () => Navigator.push(
               context,
@@ -156,19 +153,19 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
             ),
       },
       {
-        'title': 'Suno',
-        'subtitle': 'Audio Listening',
+        'title': 'Suno India',
         'icon': Icons.headphones,
+        'assetPath': 'assets/images/suno.png',
         'color': AppColors.darkGreen,
         'onTap': () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => SunoDemoScreen()),
+              MaterialPageRoute(builder: (_) => SunoGetStarted()),
             ),
       },
       {
-        'title': 'Likho',
-        'subtitle': 'Text Writing',
+        'title': 'Likho India',
         'icon': Icons.edit,
+        'assetPath': 'assets/images/likho.png',
         'color': AppColors.lightGreen,
         'onTap': () => Navigator.push(
               context,
@@ -176,9 +173,9 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
             ),
       },
       {
-        'title': 'Dekho',
-        'subtitle': 'Visual Content',
+        'title': 'Dekho India',
         'icon': Icons.visibility,
+        'assetPath': 'assets/images/dekho.png',
         'color': AppColors.grey84,
         'onTap': () => Navigator.push(
               context,
@@ -200,12 +197,10 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
 
   Widget _buildModuleTile({
     required String title,
-    required String subtitle,
+    required String assetPath,
     required IconData icon,
     required VoidCallback onTap,
   }) {
-    String assetPath = 'assets/images/${title.toLowerCase()}.png';
-    
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -219,8 +214,8 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
           children: [
             Image.asset(
               assetPath,
-              width: 80.w,
-              height: 80.w,
+              width: 120.w,
+              height: 110.w,
               errorBuilder: (context, error, stackTrace) {
                 return Icon(
                   icon,
@@ -233,7 +228,7 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
             Text(
               title,
               style: BrandingConfig.instance.getPrimaryTextStyle(
-                fontSize: 24.sp,
+                fontSize: 22.sp,
                 fontWeight: FontWeight.w700,
                 color: AppColors.darkGreen,
               ),
@@ -243,6 +238,4 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
       ),
     );
   }
-
-
 }

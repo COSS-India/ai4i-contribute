@@ -7,7 +7,16 @@ import '../../../config/branding_config.dart';
 
 class BoloHeadersSection extends StatelessWidget {
   final VoidCallback? onBackPressed;
-  const BoloHeadersSection({super.key, this.onBackPressed});
+  final String? logoAsset;
+  final String? title;
+  final String? subtitle;
+  const BoloHeadersSection({
+    super.key, 
+    this.onBackPressed,
+    this.logoAsset,
+    this.title,
+    this.subtitle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,17 +42,52 @@ class BoloHeadersSection extends StatelessWidget {
             ),
           ),
           SizedBox(width: 24.w),
-          branding.bannerImage.isNotEmpty
-              ? ImageWidget(
-                  imageUrl: branding.bannerImage,
-                  height: 40.w,
-                  width: 40.w,
-                )
-              : SizedBox(
-                  height: 40.w,
-                  width: 40.w,
-                ),
-          SizedBox(width: 8.w),
+          if (logoAsset != null) ...[
+            Image.asset(
+              logoAsset!,
+              height: 40.w,
+              width: 40.w,
+            ),
+            SizedBox(width: 12.w),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: (subtitle == null || subtitle!.isEmpty) 
+                  ? MainAxisAlignment.center 
+                  : MainAxisAlignment.start,
+              children: [
+                if (title != null)
+                  Text(
+                    title!,
+                    style: BrandingConfig.instance.getPrimaryTextStyle(
+                      fontSize: (subtitle == null || subtitle!.isEmpty) ? 18.sp : 16.sp,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
+                  ),
+                if (subtitle != null && subtitle!.isNotEmpty)
+                  Text(
+                    subtitle!,
+                    style: BrandingConfig.instance.getPrimaryTextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                    ),
+                  ),
+              ],
+            ),
+          ] else ...[
+            branding.bannerImage.isNotEmpty
+                ? ImageWidget(
+                    imageUrl: branding.bannerImage,
+                    height: 40.w,
+                    width: 40.w,
+                  )
+                : SizedBox(
+                    height: 40.w,
+                    width: 40.w,
+                  ),
+            SizedBox(width: 8.w),
+          ]
         ],
       ),
     );

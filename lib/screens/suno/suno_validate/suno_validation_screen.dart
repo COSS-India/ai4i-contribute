@@ -1,6 +1,6 @@
 import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
-import 'package:VoiceGive/screens/suno/widgets/suno_validate_section.dart';
+import 'package:VoiceGive/screens/suno/widgets/suno_validation_content_section.dart';
 import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/actions_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/bolo_headers_section.dart';
@@ -21,6 +21,7 @@ class _SunoValidationScreenState extends State<SunoValidationScreen>
   late final AnimationController _controller;
 
   bool isCompleted = false;
+  int currentIndex = 0;
   LanguageModel selectedLanguage = LanguageModel(
       languageName: "Hindi",
       nativeName: "हिन्दी",
@@ -54,7 +55,10 @@ class _SunoValidationScreenState extends State<SunoValidationScreen>
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
-                  BoloHeadersSection(),
+                  BoloHeadersSection(
+                    logoAsset: 'assets/images/suno.png',
+                    title: 'Validation',
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(12.0).r,
                     child: Column(
@@ -62,18 +66,19 @@ class _SunoValidationScreenState extends State<SunoValidationScreen>
                         ActionsSection(),
                         SizedBox(height: 16.w),
                         LanguageSelection(
-                          description: "Select language for validation",
+                          description: "Select the language for validation",
                           onLanguageChanged: (value) {
                             selectedLanguage = value;
                             setState(() {});
                           },
                         ),
                         SizedBox(height: 24.w),
-                        SunoValidateSection(
-                          languageModel: selectedLanguage,
-                          onComplete: () {
+                        SunoValidationContentSection(
+                          language: selectedLanguage,
+                          currentIndex: currentIndex,
+                          indexUpdate: (index) {
                             setState(() {
-                              isCompleted = true;
+                              currentIndex = index;
                             });
                           },
                         )

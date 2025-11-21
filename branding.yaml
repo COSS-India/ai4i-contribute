@@ -4,8 +4,8 @@
 
 # App Name and Logo
 app:
-  display_name: ""
-  app_icon: ""
+  display_name: "Bhashadaan"
+  app_icon: "assets/launcher/bhashadaan.png"
 
 branding:
   # Primary brand colors (RGBA format: "23, 125, 86, 1")
@@ -19,7 +19,7 @@ branding:
   # Splash screen
   splash_logo: ""
   splash_name: ""
-  splash_animation: ""
+  splash_animation: "assets/animations/bhashadaan_splash_screen.json"
   
   # Header image
   header_primary_image: ""

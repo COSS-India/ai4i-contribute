@@ -8,7 +8,7 @@ import 'package:VoiceGive/screens/bolo_india/repository/bolo_validate_repository
 import 'package:VoiceGive/screens/bolo_india/widgets/bolo_content_skeleton.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_validation_screen/widgets/audio_player_buttons.dart';
-import 'package:VoiceGive/screens/congratulations_screen/congratulations_screen.dart';
+import 'package:VoiceGive/screens/bolo_india/bolo_congratulations_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -245,7 +245,7 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
       Future.delayed(const Duration(seconds: 3), () {
         if (mounted) {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CongratulationsScreen()));
+              MaterialPageRoute(builder: (context) => BoloCongratulationsScreen()));
         }
       });
     }

@@ -130,7 +130,7 @@ class _SunoValidateSectionState extends State<SunoValidateSection> {
   Widget _instructionText() => Padding(
         padding: EdgeInsets.symmetric(horizontal: 32).r,
         child: Text(
-          "Listen to the audio and verify if the text below is correct",
+          "Is the translation correct?",
           style: BrandingConfig.instance.getPrimaryTextStyle(
             fontSize: 16.sp,
             color: AppColors.greys87,

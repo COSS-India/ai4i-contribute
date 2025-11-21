@@ -7,6 +7,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../common_widgets/custom_app_bar.dart';
 import '../../../config/branding_config.dart';
 import '../../../constants/app_colors.dart';
+import '../../../constants/storage_constants.dart';
+import '../../../services/secure_storage_service.dart';
 import '../repository/login_auth_repository.dart';
 import 'widgets/gradient_header.dart';
 import 'widgets/otp_input_field.dart';
@@ -94,8 +96,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   Future<void> _verifyOtp() async {
     if (_otp.length == 6) {
       _isLoading.value = true;
+      final sessionId = await SecureStorageService.instance.storage
+          .read(key: StorageConstants.sessionId) ?? '';
       dynamic userAuthData = await LoginAuthRepository()
-          .verifyOtp(otp: _otp, mobileNo: widget.phoneNumber);
+          .verifyOtp(otp: _otp, sessionId: sessionId);
       _isLoading.value = false;
       // Navigate to Profile Screen
       if (userAuthData is String) {

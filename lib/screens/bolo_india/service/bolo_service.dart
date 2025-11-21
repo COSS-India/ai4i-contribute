@@ -17,8 +17,8 @@ class BoloService {
   Future<Response> getContributionSentances(
       {required String language, int? count}) async {
     Map data = {
-      //"language": language,
-      "languageCode": language,
+      "language": language,
+      // "languageCode": language,
       "count": count ?? 5,
     };
 

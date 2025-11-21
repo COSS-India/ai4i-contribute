@@ -106,6 +106,6 @@ flutter:
 flutter_icons:
   ios: true
   android: true
-  image_path_android: "assets/launcher/ai4i_logo.png"
-  image_path_ios: "assets/launcher/ai4i_logo.png"
+  image_path_android: "assets/launcher/bhashadaan.png"
+  image_path_ios: "assets/launcher/bhashadaan.png"
   remove_alpha_ios: true

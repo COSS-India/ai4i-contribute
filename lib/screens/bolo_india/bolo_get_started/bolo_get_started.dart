@@ -7,6 +7,7 @@ import 'package:VoiceGive/models/get_started_model.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_contribute/bolo_contribute.dart';
 import 'package:VoiceGive/screens/module_selection_screen.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_get_started/get_started_item.dart';
+import 'package:VoiceGive/screens/bolo_india/widgets/bolo_headers_section.dart';
 import 'package:VoiceGive/screens/home_screen/home_screen.dart';
 
 import 'package:flutter/material.dart';
@@ -97,36 +98,46 @@ class _BoloGetStartedState extends State<BoloGetStarted> {
         child: Column(
           children: [
             // BOLO India header with back button (full-bleed, edge-to-edge)
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(16).r,
-              decoration: BoxDecoration(color: AppColors.bannerColor),
-              child:
-                  Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => const ModuleSelectionScreen()),
-                    );
-                  },
-                  child: Icon(
-                    Icons.arrow_circle_left_outlined,
-                    color: Colors.white,
-                    size: 36.sp,
-                  ),
-                ),
-                SizedBox(width: 24.w),
-                branding.bannerImage.isNotEmpty
-                    ? ImageWidget(
-                        imageUrl: branding.bannerImage,
-                        height: 40.w,
-                        width: 40.w,
-                      )
-                    : SizedBox(width: 40.w, height: 40.w),
-                SizedBox(width: 8.w),
-              ]),
+            // Container(
+            //   width: double.infinity,
+            //   padding: EdgeInsets.all(16).r,
+            //   decoration: BoxDecoration(color: AppColors.bannerColor),
+            //   child:
+            //       Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            //     InkWell(
+            //       onTap: () {
+            //         Navigator.pushReplacement(
+            //           context,
+            //           MaterialPageRoute(
+            //               builder: (_) => const ModuleSelectionScreen()),
+            //         );
+            //       },
+            //       child: Icon(
+            //         Icons.arrow_circle_left_outlined,
+            //         color: Colors.white,
+            //         size: 36.sp,
+            //       ),
+            //     ),
+            //     SizedBox(width: 24.w),
+            //     branding.bannerImage.isNotEmpty
+            //         ? ImageWidget(
+            //             imageUrl: branding.bannerImage,
+            //             height: 40.w,
+            //             width: 40.w,
+            //           )
+            //         : SizedBox(width: 40.w, height: 40.w),
+            //     SizedBox(width: 8.w),
+            //   ]),
+            // ),
+            BoloHeadersSection(
+              logoAsset: 'assets/images/bolo.png',
+              title: 'BOLO India',
+              subtitle: 'Enrich your language by donating your voice',
+              onBackPressed: () => Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => const ModuleSelectionScreen()),
+              ),
             ),
             Expanded(
               child: Padding(

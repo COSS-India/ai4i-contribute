@@ -49,9 +49,9 @@ class _CustomAudioPlayerState extends State<CustomAudioPlayer> {
     try {
       debugPrint('Initializing audio player with file: ${widget.filePath}');
 
-      // Handle different file path types (blob URLs for web, file paths for mobile)
-      if (kIsWeb || widget.filePath.startsWith('blob:')) {
-        // For web blob URLs
+      // Handle different file path types
+      if (kIsWeb || widget.filePath.startsWith('blob:') || widget.filePath.startsWith('http')) {
+        // For web blob URLs and HTTP URLs
         await _player.setUrl(widget.filePath);
       } else {
         // For mobile file paths - verify file exists first

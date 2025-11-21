@@ -36,18 +36,20 @@ class _BoloContributeState extends State<BoloContribute> {
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              BoloHeadersSection(onBackPressed: (){
-                if(currentIndex.value > 0){
-                  currentIndex.value = currentIndex.value - 1;
-                  return;
-                }
-                else{
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (_) => const HomeScreen()),
-                    (Route<dynamic> route) => false
-                  );
-                }
-              },),
+              BoloHeadersSection(
+                logoAsset: 'assets/images/bolo.png',
+                title: 'Contribution',
+                onBackPressed: () {
+                  if (currentIndex.value > 0) {
+                    currentIndex.value = currentIndex.value - 1;
+                    return;
+                  } else {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (_) => const HomeScreen()),
+                        (Route<dynamic> route) => false);
+                  }
+                },
+              ),
               Padding(
                 padding: const EdgeInsets.all(12.0).r,
                 child: Column(
@@ -64,15 +66,16 @@ class _BoloContributeState extends State<BoloContribute> {
                     ),
                     SizedBox(height: 24.w),
                     ValueListenableBuilder<int>(
-                      valueListenable: currentIndex,
-                      builder: (context, index, child) {
-                        return BoloContentSection(
-                          language: selectedLanguage,
-                          currentIndex: index,
-                          indexUpdate: (value) => setState(() {currentIndex.value = value;}),
-                        );
-                      }
-                    ),
+                        valueListenable: currentIndex,
+                        builder: (context, index, child) {
+                          return BoloContentSection(
+                            language: selectedLanguage,
+                            currentIndex: index,
+                            indexUpdate: (value) => setState(() {
+                              currentIndex.value = value;
+                            }),
+                          );
+                        }),
                   ],
                 ),
               )
