@@ -56,7 +56,7 @@ class BoloContributeSentence {
   factory BoloContributeSentence.fromJson(Map<String, dynamic> json) {
     return BoloContributeSentence(
       sessionId: json['sessionId'] as String,
-      language: json['languageCode'] as String,
+      language: json['language'] as String,
       sentences: (json['sentences'] as List)
           .map((e) => Sentence.fromJson(e as Map<String, dynamic>))
           .toList(),

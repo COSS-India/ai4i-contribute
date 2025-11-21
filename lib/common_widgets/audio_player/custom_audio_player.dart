@@ -49,9 +49,9 @@ class _CustomAudioPlayerState extends State<CustomAudioPlayer> {
     try {
       debugPrint('Initializing audio player with file: ${widget.filePath}');
 
-      // Handle different file path types
-      if (kIsWeb || widget.filePath.startsWith('blob:') || widget.filePath.startsWith('http')) {
-        // For web blob URLs and HTTP URLs
+      // Handle different file path types (blob URLs for web, file paths for mobile)
+      if (kIsWeb || widget.filePath.startsWith('blob:')) {
+        // For web blob URLs
         await _player.setUrl(widget.filePath);
       } else {
         // For mobile file paths - verify file exists first
@@ -135,19 +135,17 @@ class _CustomAudioPlayerState extends State<CustomAudioPlayer> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.filePath != widget.filePath) {
       // If the file path changes, reinitialize the player
-      _initializeFlags();
+      _initilizeFlags();
     }
   }
 
-  Future<void> _initializeFlags() async {
+  Future<void> _initilizeFlags() async {
     await _player.dispose();
-    setState(() {
-      _isLoading = true;
-      _position = Duration.zero;
-      _duration = Duration.zero;
-      _isPlaying = false;
-      _hasEnded = false;
-    });
+    _isLoading = true;
+    _position = Duration.zero;
+    _duration = Duration.zero;
+    _isPlaying = false;
+    _hasEnded = false;
     _initializePlayer();
   }
 
@@ -255,10 +253,16 @@ class _CustomAudioPlayerState extends State<CustomAudioPlayer> {
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.backgroundColor,
-        borderRadius: BorderRadius.circular(40).r,
-        border: Border.all(color: AppColors.darkGreen),
-      ),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(40).r,
+          border: Border.all(color: AppColors.darkGreen),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ]),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -270,7 +274,7 @@ class _CustomAudioPlayerState extends State<CustomAudioPlayer> {
               fontSize: 12,
               color: _hasEnded
                   ? sliderColor.withValues(alpha: 0.7)
-                  : AppColors.greys87,
+                  : Colors.black87,
               fontWeight: _hasEnded ? FontWeight.w600 : FontWeight.normal,
             ),
           ),
@@ -307,9 +311,9 @@ class _CustomAudioPlayerState extends State<CustomAudioPlayer> {
           ),
           Text(
             _formatTime(_duration),
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 12,
-              color: AppColors.greys87,
+              color: Colors.black87,
             ),
           ),
           // Optional: Add a small indicator when audio has ended

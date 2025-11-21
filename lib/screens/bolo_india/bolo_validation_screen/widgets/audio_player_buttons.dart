@@ -98,15 +98,29 @@ class _AudioPlayerButtonsState extends State<AudioPlayerButtons>
   }
 
   Future<void> _startPlayback() async {
-    if (isMp3OrWavBase64(widget.audioUrl)) {
-      Uint8List audioBytes = base64Decode(widget.audioUrl);
-
-      await _audioPlayer.play(BytesSource(audioBytes));
-      _controller.repeat();
-    } else {
-      // Handle invalid audio data
+    try {
+      if (widget.audioUrl.startsWith('http')) {
+        // Handle URL
+        await _audioPlayer.play(UrlSource(widget.audioUrl));
+        _controller.repeat();
+      } else if (isMp3OrWavBase64(widget.audioUrl)) {
+        // Handle base64 data
+        Uint8List audioBytes = base64Decode(widget.audioUrl);
+        await _audioPlayer.play(BytesSource(audioBytes));
+        _controller.repeat();
+      } else {
+        // Handle invalid audio data
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Invalid audio data')),
+        );
+        setState(() {
+          _state = AudioPlayerButtonState.idle;
+        });
+      }
+    } catch (e) {
+      debugPrint('Audio playback error: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Invalid audio data')),
+        SnackBar(content: Text('Failed to play audio')),
       );
       setState(() {
         _state = AudioPlayerButtonState.idle;
