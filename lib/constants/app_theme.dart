@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
+import '../config/branding_config.dart';
 
 class AppTheme {
   static ThemeData get lightTheme {
@@ -11,22 +11,22 @@ class AppTheme {
         backgroundColor: Colors.white,
         elevation: 0,
         iconTheme: IconThemeData(color: AppColors.darkGreen),
-        titleTextStyle: GoogleFonts.notoSans(
+        titleTextStyle: BrandingConfig.instance.getPrimaryTextStyle(
           color: AppColors.darkGreen,
           fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
       ),
-      textTheme: GoogleFonts.notoSansTextTheme().copyWith(
-        bodyLarge: GoogleFonts.notoSans(
+      textTheme: TextTheme(
+        bodyLarge: BrandingConfig.instance.getPrimaryTextStyle(
           color: Colors.black,
           fontSize: 16,
         ),
-        bodyMedium: GoogleFonts.notoSans(
+        bodyMedium: BrandingConfig.instance.getPrimaryTextStyle(
           color: Colors.black,
           fontSize: 14,
         ),
-        titleLarge: GoogleFonts.notoSans(
+        titleLarge: BrandingConfig.instance.getPrimaryTextStyle(
           color: AppColors.darkGreen,
           fontSize: 20,
           fontWeight: FontWeight.bold,
@@ -48,7 +48,7 @@ class AppTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.darkGreen,
           foregroundColor: Colors.white,
-          textStyle: GoogleFonts.notoSans(fontWeight: FontWeight.w600),
+          textStyle: BrandingConfig.instance.getPrimaryTextStyle(fontWeight: FontWeight.w600),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
@@ -58,7 +58,7 @@ class AppTheme {
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.darkGreen,
           side: BorderSide(color: AppColors.darkGreen),
-          textStyle: GoogleFonts.notoSans(fontWeight: FontWeight.w600),
+          textStyle: BrandingConfig.instance.getPrimaryTextStyle(fontWeight: FontWeight.w600),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
@@ -73,7 +73,7 @@ class AppTheme {
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: AppColors.darkGreen),
         ),
-        labelStyle: GoogleFonts.notoSans(color: AppColors.darkGreen),
+        labelStyle: BrandingConfig.instance.getPrimaryTextStyle(color: AppColors.darkGreen),
       ),
     );
   }

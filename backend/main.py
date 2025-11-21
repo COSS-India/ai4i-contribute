@@ -2,11 +2,15 @@
 AgriDaan FastAPI Backend
 Complete implementation with Swagger interface
 """
-from fastapi import FastAPI, HTTPException, Depends, status
+from fastapi import FastAPI, HTTPException, Depends, status, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import Response
+from fastapi.responses import Response, JSONResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.exceptions import RequestValidationError
+from fastapi.staticfiles import StaticFiles
 from datetime import datetime, timedelta
+from pydantic import ValidationError as PydanticValidationError
+from starlette.exceptions import HTTPException as StarletteHTTPException
 import uuid
 import os
 from typing import Dict, Any, List
@@ -21,8 +25,258 @@ from database import get_db, init_database, get_user_by_mobile, get_session_by_i
 from logging_config import setup_logging, get_logger, log_api_call, log_authentication, log_contribution, log_validation, log_certificate, log_error
 from storage_service import storage_service
 
+# Import Phase 1 module routers
+from modules.suno.routes import router as suno_router
+from modules.likho.routes import router as likho_router
+from modules.dekho.routes import router as dekho_router
+
+
+logger = get_logger(__name__) if 'get_logger' in globals() else logging.getLogger(__name__)
+
 # Initialize FastAPI app
 app = FastAPI()
+
+"""
+Global unified error envelope for the backend.
+
+Ensures that all errors—regardless of source—are returned in a
+single consistent shape:
+
+{
+    "error": {
+        "code": "<ERROR_CODE>",
+        "message": "<HUMAN_READABLE_MESSAGE>",
+        "info": { ...optional context... },
+        "timestamp": "<UTC_ISO_TIMESTAMP>"
+    }
+}
+"""
+
+import datetime as datetime_module
+
+def make_error(code: str, message: str, info: dict = None, status_code=422):
+    """
+    Construct and return the unified error envelope.
+
+    Parameters:
+        code (str): Machine-friendly error code (e.g. INVALID_LANGUAGE)
+        message (str): Human-readable error message.
+        info (dict|None): Optional dictionary of additional context.
+        status_code (int): HTTP status code for the response.
+
+    Returns:
+        JSONResponse: Error envelope response.
+    """
+    return JSONResponse(
+        status_code=status_code,
+        content={
+            "error": {
+                "code": code,
+                "message": message,
+                "info": info or {},
+                "timestamp": datetime_module.datetime.utcnow().isoformat() + "Z"
+            }
+        }
+    )
+
+def sanitize_errors(errors):
+    """
+    Recursively convert non-serializable values (like Exception objects)
+    into strings so JSONResponse never fails.
+    """
+    if isinstance(errors, list):
+        return [sanitize_errors(e) for e in errors]
+
+    if isinstance(errors, dict):
+        clean = {}
+        for k, v in errors.items():
+            clean[k] = sanitize_errors(v)
+        return clean
+
+    # If value is an exception -> convert to str
+    if isinstance(errors, Exception):
+        return str(errors)
+
+    return errors
+
+@app.exception_handler(ValueError)
+async def value_error_handler(request, exc: ValueError):
+    """
+    Handle ValueError raised by our strict validators inside SubmitRequest.
+
+    Expected format: "ERROR_CODE: message"
+    Example: "INVALID_SCRIPT: field 'transcript' does not match language 'hi'"
+
+    If the format does not match the pattern, fallback to a default code.
+    """
+    text = str(exc)
+
+    # Split "CODE: message" into code + message
+    parts = text.split(":", 1)
+    if len(parts) == 2:
+        code, msg = parts[0].strip(), parts[1].strip()
+    else:
+        code, msg = "VALIDATION_ERROR", text
+
+    return make_error(code, msg, status_code=422)
+
+
+
+@app.exception_handler(RequestValidationError)
+async def request_validation_handler(request, exc: RequestValidationError):
+    """
+    Defensive RequestValidationError handler:
+    - Attempts to sanitize Pydantic errors
+    - If sanitization or JSONResponse construction fails for any reason,
+      falls back to a minimal, guaranteed-serializable envelope.
+    - Logs the full failure (safe to send to file/system) for debugging.
+    """
+    try:
+        # best-effort extract and sanitize
+        raw_errors = exc.errors() if hasattr(exc, "errors") else None
+        safe_errors = None
+        try:
+            # call your existing sanitizer if available
+            if raw_errors is not None and 'sanitize_errors' in globals():
+                safe_errors = sanitize_errors(raw_errors)
+            else:
+                safe_errors = raw_errors
+        except Exception as e:
+            # sanitizer itself failed — fall back to stringified raw errors
+            logger.exception("sanitize_errors failed while handling RequestValidationError")
+            safe_errors = str(raw_errors)
+
+        # Build full envelope content (still small and safe)
+        content = {
+            "error": {
+                "code": "INVALID_REQUEST",
+                "message": "Invalid request payload",
+                "info": safe_errors if safe_errors is not None else {},
+                "timestamp": datetime.utcnow().isoformat()
+            }
+        }
+
+        # Final safety: try to JSON-serialize the content (use json.dumps)
+        # This ensures JSONResponse won't blow up inside Starlette.
+        try:
+            import json as _json
+            _json.dumps(content)  # if this raises, we handle in outer except
+        except Exception:
+            # serialization failed — replace info with string fallback
+            logger.exception("Serialization of request-validation envelope failed; falling back to minimal envelope")
+            content = {
+                "error": {
+                    "code": "INVALID_REQUEST",
+                    "message": "Invalid request payload (serialization fallback)",
+                    "info": str(safe_errors),
+                    "timestamp": datetime.utcnow().isoformat()
+                }
+            }
+
+        return JSONResponse(status_code=400, content=content)
+
+    except Exception as top_exc:
+        # If anything at all goes wrong, do not crash — return a minimal, guaranteed-serializable response.
+        # Also log the full traceback to your logs for post-mortem.
+        tb = traceback.format_exc()
+        logger.error("Unhandled exception inside RequestValidationError handler:\n%s", tb)
+        fallback = {
+            "error": {
+                "code": "INVALID_REQUEST",
+                "message": "Invalid request payload (handler failure)",
+                "info": {"error_str": str(top_exc)},
+                "timestamp": datetime.utcnow().isoformat()
+            }
+        }
+        # At this point, returning the fallback should never raise.
+        return JSONResponse(status_code=400, content=fallback)
+
+@app.exception_handler(StarletteHTTPException)
+async def http_exception_handler(request, exc: StarletteHTTPException):
+    """
+    Handle HTTP-level exceptions (e.g., 404, 401, 403).
+
+    Instead of FastAPI default:
+        {"detail": "Not Found"}
+
+    We return:
+        {
+            "error": {
+                "code": "HTTP_ERROR",
+                "message": "Not Found",
+                ...
+            }
+        }
+    """
+    return make_error(
+        "HTTP_ERROR",
+        str(exc.detail),
+        {},
+        status_code=exc.status_code
+    )
+
+@app.exception_handler(ValueError)
+async def value_error_handler(request: Request, exc: ValueError):
+    """
+    Handles ValueError exceptions raised by Pydantic validators
+    or internal logic.
+
+    Format supported:
+        "CODE: message"
+
+    If prefix exists before the first ":", use it as `code`.
+    Otherwise fall back to VALIDATION_ERROR.
+    """
+
+    raw = str(exc).strip()
+
+    if ":" in raw:
+        prefix, msg = raw.split(":", 1)
+        code = prefix.strip()
+        message = msg.strip()
+    else:
+        code = "VALIDATION_ERROR"
+        message = raw
+
+    return make_error_envelope(
+        code=code,
+        message=message,
+        info={"path": request.url.path},
+        status_code=400,
+    )
+
+
+# Mount static files
+from modules.suno.routes import SUNO_STATIC_DIR
+from modules.dekho.routes import DEKHO_STATIC_DIR
+
+app.mount(
+    "/suno/static",
+    StaticFiles(directory=SUNO_STATIC_DIR),
+    name="suno_static"
+)
+
+app.mount(
+    "/dekho/static",
+    StaticFiles(directory=DEKHO_STATIC_DIR),
+    name="dekho_static"
+)
+
+# Register Phase 1 module routers
+app.include_router(suno_router, prefix="/suno")
+app.include_router(likho_router, prefix="/likho")
+app.include_router(dekho_router, prefix="/dekho")
+
+# Mount static files
+from modules.suno.routes import SUNO_STATIC_DIR
+
+app.mount(
+    "/suno/static",
+    StaticFiles(directory=SUNO_STATIC_DIR),
+    name="suno_static"
+)
+
+
 
 # Setup middleware
 from middleware import setup_middleware

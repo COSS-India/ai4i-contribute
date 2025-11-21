@@ -1,7 +1,7 @@
 import 'package:VoiceGive/screens/bolo_india/bolo_contribute/bolo_contribute.dart';
+import 'package:VoiceGive/config/branding_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common_widgets/custom_app_bar.dart';
@@ -207,9 +207,9 @@ class _LoginScreenState extends State<LoginScreen> {
           _navigateBackToHome();
         },
         child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.backgroundColor,
           resizeToAvoidBottomInset: true,
-          appBar: const CustomAppBar(),
+          appBar: const CustomAppBar(showThreeLogos: true,),
           body: SafeArea(
             child: Column(
               children: [
@@ -225,8 +225,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             Text(
                               AppLocalizations.of(context)!
-                                  .loginIntoYourBhashaDaanAccount,
-                              style: GoogleFonts.notoSans(
+                                  .loginIntoYourAccount,
+                              style: BrandingConfig.instance.getPrimaryTextStyle(
                                 color: AppColors.greys87,
                                 fontSize: 28.sp,
                                 fontWeight: FontWeight.w700,
@@ -240,7 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   TextSpan(
                                     text:
                                         AppLocalizations.of(context)!.enterYour,
-                                    style: GoogleFonts.notoSans(
+                                    style: BrandingConfig.instance.getPrimaryTextStyle(
                                       color: AppColors.greys60,
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w400,
@@ -249,7 +249,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   TextSpan(
                                     text: AppLocalizations.of(context)!
                                         .emailAndPassword,
-                                    style: GoogleFonts.notoSans(
+                                    style: BrandingConfig.instance.getPrimaryTextStyle(
                                       color: AppColors.greys60,
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w700,
@@ -258,7 +258,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   TextSpan(
                                     text: AppLocalizations.of(context)!
                                         .toAccessYourAccount,
-                                    style: GoogleFonts.notoSans(
+                                    style: BrandingConfig.instance.getPrimaryTextStyle(
                                       color: AppColors.greys60,
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w400,
@@ -325,7 +325,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Text(
                                     AppLocalizations.of(context)!
                                         .forgotPassword,
-                                    style: GoogleFonts.notoSans(
+                                    style: BrandingConfig.instance.getPrimaryTextStyle(
                                       color: AppColors.darkBlue,
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w500,
@@ -337,7 +337,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     Text(
                                       AppLocalizations.of(context)!
                                           .doesntHaveAccount,
-                                      style: GoogleFonts.notoSans(
+                                      style: BrandingConfig.instance.getPrimaryTextStyle(
                                         color: AppColors.greys60,
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w400,
@@ -347,7 +347,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       onTap: _navigateToSignup,
                                       child: Text(
                                         AppLocalizations.of(context)!.signUp,
-                                        style: GoogleFonts.notoSans(
+                                        style: BrandingConfig.instance.getPrimaryTextStyle(
                                           color: AppColors.darkBlue,
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w500,
@@ -388,15 +388,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
                                       valueColor: AlwaysStoppedAnimation<Color>(
-                                          Colors.white),
+                                          AppColors.backgroundColor),
                                     ),
                                   )
                                 : Text(
                                     AppLocalizations.of(context)!
                                         .login
                                         .toUpperCase(),
-                                    style: GoogleFonts.notoSans(
-                                      color: Colors.white,
+                                    style: BrandingConfig.instance.getPrimaryTextStyle(
+                                      color: AppColors.backgroundColor,
                                       fontSize: 16.sp,
                                       fontWeight: FontWeight.normal,
                                     ),

@@ -8,10 +8,11 @@ import 'package:VoiceGive/screens/bolo_india/repository/bolo_validate_repository
 import 'package:VoiceGive/screens/bolo_india/widgets/bolo_content_skeleton.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_validation_screen/widgets/audio_player_buttons.dart';
-import 'package:VoiceGive/screens/congratulations_screen/congratulations_screen.dart';
+import 'package:VoiceGive/screens/bolo_india/bolo_congratulations_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import '../../../../config/branding_config.dart';
 
 class BoloValidateSection extends StatefulWidget {
   final Function() onComplete;
@@ -34,7 +35,7 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
   @override
   void initState() {
     getValidationsQueue = BoloValidateRepository().getValidationsQueue(
-        language: widget.languageModel.languageCode, count: 25);
+        language: widget.languageModel.languageName, count: 25);
     super.initState();
   }
 
@@ -44,7 +45,7 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
     if (oldWidget.languageModel.languageCode !=
         widget.languageModel.languageCode) {
       getValidationsQueue = BoloValidateRepository().getValidationsQueue(
-          language: widget.languageModel.languageCode, count: 25);
+          language: widget.languageModel.languageName, count: 25);
       setState(() {});
     }
     super.didUpdateWidget(oldWidget);
@@ -72,77 +73,84 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
             recordedTexts = snapshot.data!.validationItems;
 
             return Container(
-              padding: EdgeInsets.all(12).r,
-              decoration: BoxDecoration(
-                image: const DecorationImage(
-                  image: AssetImage("assets/images/contribute_bg.png"),
-                  fit: BoxFit.cover,
-                ),
-                color: AppColors.lightGreen3,
-                borderRadius: BorderRadius.circular(8).r,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.5),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: const Offset(0, 3),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8).r,
+                  border: Border.all(
+                    color: Colors.grey[700]!,
                   ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  Row(
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8).r,
+                  child: Stack(
                     children: [
-                      const Spacer(),
-                      Text(
-                        "${currentIndex + 1}/${recordedTexts.length}",
-                        style: GoogleFonts.notoSans(
-                          fontSize: 12.sp,
-                          color: AppColors.darkGreen,
-                          fontWeight: FontWeight.w600,
+                      Image.asset(
+                        "assets/images/contribute_bg.png",
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        color: BrandingConfig.instance.primaryColor,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(12).r,
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                const Spacer(),
+                                Text(
+                                  "${currentIndex + 1}/${recordedTexts.length}",
+                                  style: BrandingConfig.instance
+                                      .getPrimaryTextStyle(
+                                    fontSize: 12.sp,
+                                    color: AppColors.darkGreen,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 12.w),
+                            SizedBox(
+                              height: 4.0,
+                              child: LinearProgressIndicator(
+                                value: progress,
+                                backgroundColor: AppColors.lightGreen4,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    AppColors.darkGreen),
+                              ),
+                            ),
+                            SizedBox(height: 40.w),
+                            Padding(
+                              padding: EdgeInsets.only(left: 32, right: 32).r,
+                              child: Text(
+                                recordedTexts[currentIndex].text,
+                                style:
+                                    BrandingConfig.instance.getPrimaryTextStyle(
+                                  fontSize: 16.sp,
+                                  color: AppColors.greys87,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            SizedBox(height: 30.w),
+                            AudioPlayerButtons(
+                              audioUrl:
+                                  recordedTexts[currentIndex].audioContent,
+                              playerStatus: (value) {
+                                if (value == AudioPlayerButtonState.completed ||
+                                    value == AudioPlayerButtonState.replay) {
+                                  enableActionButtons.value = true;
+                                }
+                              },
+                            ),
+                            SizedBox(height: 30.w),
+                            actionButtons(item: recordedTexts[currentIndex]),
+                            SizedBox(height: 30.w),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 12.w),
-                  SizedBox(
-                    height: 4.0,
-                    child: LinearProgressIndicator(
-                      value: progress,
-                      backgroundColor: AppColors.lightGreen4,
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(AppColors.darkGreen),
-                    ),
-                  ),
-                  SizedBox(height: 40.w),
-                  Padding(
-                    padding: EdgeInsets.only(left: 32, right: 32).r,
-                    child: Text(
-                      recordedTexts[currentIndex].text,
-                      style: GoogleFonts.notoSans(
-                        fontSize: 16.sp,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  SizedBox(height: 30.w),
-                  AudioPlayerButtons(
-                    audioUrl: recordedTexts[currentIndex].audioContent,
-                    playerStatus: (value) {
-                      if (value == AudioPlayerButtonState.completed ||
-                          value == AudioPlayerButtonState.replay) {
-                        enableActionButtons.value = true;
-                      }
-                    },
-                  ),
-                  SizedBox(height: 30.w),
-                  actionButtons(item: recordedTexts[currentIndex]),
-                  SizedBox(height: 30.w),
-                ],
-              ),
-            );
+                ));
           }
           return SizedBox();
         });
@@ -170,7 +178,7 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
                   },
                   textColor: value ? AppColors.orange : AppColors.grey24,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.backgroundColor,
                     border: Border.all(
                       color: value ? AppColors.orange : AppColors.grey24,
                     ),
@@ -192,7 +200,7 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
                             text:
                                 "Please listen to the audio completely before validating.");
                   },
-                  textColor: Colors.white,
+                  textColor: AppColors.backgroundColor,
                   decoration: BoxDecoration(
                     color: value ? AppColors.orange : AppColors.grey24,
                     border: Border.all(
@@ -237,7 +245,7 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
       Future.delayed(const Duration(seconds: 3), () {
         if (mounted) {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CongratulationsScreen()));
+              MaterialPageRoute(builder: (context) => BoloCongratulationsScreen()));
         }
       });
     }

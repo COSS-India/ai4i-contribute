@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../common_widgets/custom_app_bar.dart';
+import '../../../config/branding_config.dart';
 import '../../../constants/app_colors.dart';
 import '../../home_screen/home_screen.dart';
 import '../otp_login/widgets/gradient_header.dart';
@@ -139,16 +139,16 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      onPopInvokedWithResult: (didPop, result) {
-        if (didPop) {
-          return;
-        }
-        _navigateBackToHome();
-      },
+        onPopInvokedWithResult: (didPop, result) {
+          if (didPop) {
+            return;
+          }
+          _navigateBackToHome();
+        },
         child: Scaffold(
           backgroundColor: Colors.white,
           resizeToAvoidBottomInset: true,
-          appBar: const CustomAppBar(),
+          appBar: const CustomAppBar(showThreeLogos: true,),
           body: SafeArea(
             child: Column(
               children: [
@@ -169,7 +169,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                 Text(
                                   AppLocalizations.of(context)!
                                       .alreadyHaveAccount,
-                                  style: GoogleFonts.notoSans(
+                                  style: BrandingConfig.instance
+                                      .getPrimaryTextStyle(
                                     color: AppColors.greys60,
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w400,
@@ -179,7 +180,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                   onTap: _navigateToLogin,
                                   child: Text(
                                     AppLocalizations.of(context)!.signIn,
-                                    style: GoogleFonts.notoSans(
+                                    style: BrandingConfig.instance
+                                        .getPrimaryTextStyle(
                                       color: AppColors.darkBlue,
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w500,
@@ -192,9 +194,9 @@ class _SignupScreenState extends State<SignupScreen> {
 
                             // Title
                             Text(
-                              AppLocalizations.of(context)!
-                                  .createBhashaDaanAccount,
-                              style: GoogleFonts.notoSans(
+                              AppLocalizations.of(context)!.createAccount,
+                              style:
+                                  BrandingConfig.instance.getPrimaryTextStyle(
                                 color: AppColors.greys87,
                                 fontSize: 28.sp,
                                 fontWeight: FontWeight.w700,
@@ -208,7 +210,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                   TextSpan(
                                     text: AppLocalizations.of(context)!
                                         .fillInYour,
-                                    style: GoogleFonts.notoSans(
+                                    style: BrandingConfig.instance
+                                        .getPrimaryTextStyle(
                                       color: AppColors.greys60,
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w400,
@@ -217,7 +220,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                   TextSpan(
                                     text: AppLocalizations.of(context)!
                                         .personalDetails,
-                                    style: GoogleFonts.notoSans(
+                                    style: BrandingConfig.instance
+                                        .getPrimaryTextStyle(
                                       color: AppColors.greys60,
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w700,
@@ -226,7 +230,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                   TextSpan(
                                     text: AppLocalizations.of(context)!
                                         .toCreateYourAccount,
-                                    style: GoogleFonts.notoSans(
+                                    style: BrandingConfig.instance
+                                        .getPrimaryTextStyle(
                                       color: AppColors.greys60,
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w400,
@@ -325,7 +330,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                           children: [
                                             TextSpan(
                                               text: 'I agree with the ',
-                                              style: GoogleFonts.notoSans(
+                                              style: BrandingConfig.instance
+                                                  .getPrimaryTextStyle(
                                                 color: AppColors.greys60,
                                                 fontSize: 14.sp,
                                                 fontWeight: FontWeight.w400,
@@ -336,7 +342,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                                 onTap: _openTermsAndConditions,
                                                 child: Text(
                                                   'Terms & Conditions',
-                                                  style: GoogleFonts.notoSans(
+                                                  style: BrandingConfig.instance
+                                                      .getPrimaryTextStyle(
                                                     color: AppColors.darkBlue,
                                                     fontSize: 14.sp,
                                                     fontWeight: FontWeight.w500,
@@ -348,7 +355,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                             ),
                                             TextSpan(
                                               text: ' and the ',
-                                              style: GoogleFonts.notoSans(
+                                              style: BrandingConfig.instance
+                                                  .getPrimaryTextStyle(
                                                 color: AppColors.greys60,
                                                 fontSize: 14.sp,
                                                 fontWeight: FontWeight.w400,
@@ -360,7 +368,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                                 child: Text(
                                                   AppLocalizations.of(context)!
                                                       .privacyPolicyComingSoon,
-                                                  style: GoogleFonts.notoSans(
+                                                  style: BrandingConfig.instance
+                                                      .getPrimaryTextStyle(
                                                     color: AppColors.darkBlue,
                                                     fontSize: 14.sp,
                                                     fontWeight: FontWeight.w500,
@@ -414,7 +423,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                   )
                                 : Text(
                                     AppLocalizations.of(context)!.signUp,
-                                    style: GoogleFonts.notoSans(
+                                    style: BrandingConfig.instance
+                                        .getPrimaryTextStyle(
                                       color: Colors.white,
                                       fontSize: 16.sp,
                                       fontWeight: FontWeight.normal,

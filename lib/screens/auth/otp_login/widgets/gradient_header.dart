@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../config/branding_config.dart';
 import '../../../../constants/app_colors.dart';
 
 class GradientHeader extends StatelessWidget {
   final String title;
-  
+
   const GradientHeader({
     super.key,
     this.title = "Login",
@@ -22,7 +22,7 @@ class GradientHeader extends StatelessWidget {
           Center(
             child: Text(
               title,
-              style: GoogleFonts.notoSans(
+              style: BrandingConfig.instance.getPrimaryTextStyle(
                   color: Colors.white,
                   fontSize: 20.sp,
                   fontWeight: FontWeight.normal),

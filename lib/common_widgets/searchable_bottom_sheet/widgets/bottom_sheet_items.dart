@@ -1,7 +1,7 @@
+import 'package:VoiceGive/config/branding_config.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ItemsList extends StatelessWidget {
@@ -27,10 +27,10 @@ class ItemsList extends StatelessWidget {
           return Center(
             child: Text(
               AppLocalizations.of(context)!.mStaticNoSearchResultFound,
-              style: GoogleFonts.lato(
+              style: BrandingConfig.instance.getSecondaryTextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
-                color: AppColors.grey16,
+                color: AppColors.greys87,
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -52,7 +52,14 @@ class ItemsList extends StatelessWidget {
             return ListTile(
               dense: true,
               visualDensity: const VisualDensity(vertical: -2),
-              title: Text(filtered[index]),
+              title: Text(filtered[index],
+                  style: BrandingConfig.instance.getSecondaryTextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.greys87,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis),
               onTap: () {
                 onItemSelected(filtered[index]);
                 // Do not pop here; parent handles closing to avoid popping main route

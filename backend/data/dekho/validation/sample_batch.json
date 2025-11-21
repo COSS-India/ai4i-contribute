@@ -1,0 +1,37 @@
+[
+  {
+    "item_id": "dekho_v_1",
+    "language": "en",
+    "image_url": "/dekho/static/sample1.jpg",
+    "label": "India is my Country 1",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_2",
+    "language": "en",
+    "image_url": "/dekho/static/sample2.jpg",
+    "label": "India is my Country 2",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_3",
+    "language": "en",
+    "image_url": "/dekho/static/sample3.jpg",
+    "label": "India is my Country 3",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_4",
+    "language": "en",
+    "image_url": "/dekho/static/sample4.jpg",
+    "label": "India is my Country 4",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_5",
+    "language": "en",
+    "image_url": "/dekho/static/sample5.jpg",
+    "label": "India is my Country 5",
+    "metadata": {}
+  }
+]

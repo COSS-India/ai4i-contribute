@@ -2,11 +2,13 @@ import 'package:VoiceGive/screens/profile_screen/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../common_widgets/custom_app_bar.dart';
+import '../../../config/branding_config.dart';
 import '../../../constants/app_colors.dart';
+import '../../../constants/storage_constants.dart';
+import '../../../services/secure_storage_service.dart';
 import '../repository/login_auth_repository.dart';
 import 'widgets/gradient_header.dart';
 import 'widgets/otp_input_field.dart';
@@ -94,8 +96,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   Future<void> _verifyOtp() async {
     if (_otp.length == 6) {
       _isLoading.value = true;
+      final sessionId = await SecureStorageService.instance.storage
+              .read(key: StorageConstants.sessionId) ??
+          '';
       dynamic userAuthData = await LoginAuthRepository()
-          .verifyOtp(otp: _otp, mobileNo: widget.phoneNumber);
+          .verifyOtp(otp: _otp, sessionId: sessionId);
       _isLoading.value = false;
       // Navigate to Profile Screen
       if (userAuthData is String) {
@@ -150,9 +155,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundColor,
       resizeToAvoidBottomInset: true,
-      appBar: const CustomAppBar(),
+      appBar: const CustomAppBar(
+        showThreeLogos: true,
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -167,7 +174,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       SizedBox(height: 40.h),
                       Text(
                         AppLocalizations.of(context)!.otpVerification,
-                        style: GoogleFonts.notoSans(
+                        style: BrandingConfig.instance.getPrimaryTextStyle(
                           color: AppColors.greys87,
                           fontSize: 28.sp,
                           fontWeight: FontWeight.w700,
@@ -175,22 +182,47 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         ),
                       ),
                       SizedBox(height: 16.h),
-                      Text(
-                        "${AppLocalizations.of(context)!.enterOtpFromSms} ${widget.phoneNumber}",
-                        style: GoogleFonts.notoSans(
-                          color: AppColors.greys60,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                        ),
+                      RichText(
                         textAlign: TextAlign.center,
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Enter the OTP from the sms we sent\n to ",
+                              style:
+                                  BrandingConfig.instance.getPrimaryTextStyle(
+                                color: AppColors.greys60,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            TextSpan(
+                              text: "+91 ",
+                              style:
+                                  BrandingConfig.instance.getPrimaryTextStyle(
+                                color: AppColors.greys60,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            TextSpan(
+                              text: widget.phoneNumber,
+                              style:
+                                  BrandingConfig.instance.getPrimaryTextStyle(
+                                color: AppColors.greys60,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       SizedBox(height: 32.h),
                       // OTP Timer and resend UI
                       if (!_canResendOtp) ...[
                         Text(
                           _formatOtpTime(_otpSeconds),
-                          style: GoogleFonts.notoSans(
-                            color: AppColors.lightGreen,
+                          style: BrandingConfig.instance.getPrimaryTextStyle(
+                            color: AppColors.darkGreen,
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w600,
                           ),
@@ -215,7 +247,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                               children: [
                                 TextSpan(
                                   text: "I didn't receive any OTP. ",
-                                  style: GoogleFonts.notoSans(
+                                  style: BrandingConfig.instance
+                                      .getPrimaryTextStyle(
                                     color: AppColors.greys60,
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w500,
@@ -223,8 +256,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                 ),
                                 TextSpan(
                                   text: "RESEND",
-                                  style: GoogleFonts.notoSans(
-                                    color: AppColors.lightGreen,
+                                  style: BrandingConfig.instance
+                                      .getPrimaryTextStyle(
+                                    color: AppColors.darkGreen,
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -276,8 +310,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             }
                             return Text(
                               AppLocalizations.of(context)!.submit,
-                              style: GoogleFonts.notoSans(
-                                color: Colors.white,
+                              style:
+                                  BrandingConfig.instance.getPrimaryTextStyle(
+                                color: isOtpValid
+                                    ? AppColors.backgroundColor
+                                    : AppColors.grey40,
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.normal,
                               ),

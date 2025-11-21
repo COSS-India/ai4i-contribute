@@ -1,13 +1,14 @@
 import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
 import 'package:VoiceGive/common_widgets/searchable_bottom_sheet/searchable_boottosheet_content.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
+import 'package:VoiceGive/screens/module_selection_screen.dart';
 import 'package:VoiceGive/screens/profile_screen/model/country_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_get_started/bolo_get_started.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../../config/branding_config.dart';
 import '../model/district_model.dart';
 import '../model/language_model.dart';
 import '../model/state_model.dart';
@@ -76,6 +77,7 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
     await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      backgroundColor: AppColors.backgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
       ),
@@ -108,8 +110,10 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
         Navigator.of(context).pop();
       },
       child: Scaffold(
-        appBar: const CustomAppBar(),
-        backgroundColor: Colors.white,
+        appBar: const CustomAppBar(
+          showThreeLogos: true,
+        ),
+        backgroundColor: AppColors.backgroundColor,
         body: SafeArea(
           child: Column(
             children: [
@@ -135,7 +139,7 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                     ),
                     Text(
                       AppLocalizations.of(context)!.completeYourProfile,
-                      style: GoogleFonts.notoSans(
+                      style: BrandingConfig.instance.getPrimaryTextStyle(
                         color: Colors.white,
                         fontSize: 20.sp,
                         fontWeight: FontWeight.normal,
@@ -153,7 +157,7 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                       children: [
                         Text(
                           AppLocalizations.of(context)!.otherInformation,
-                          style: GoogleFonts.notoSans(
+                          style: BrandingConfig.instance.getPrimaryTextStyle(
                             color: AppColors.greys87,
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w700,
@@ -169,7 +173,7 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                 // Check if country actually changed
                                 if (_country != v) {
                                   _country = v;
-                                  
+
                                   // Clear dependent fields
                                   _state = '';
                                   _district = null;
@@ -179,14 +183,15 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                   stateList = [];
                                   districtList = [];
                                   _showDistrictError = false;
-                                  
+
                                   // Fetch states for new country
                                   String countryId = getCountryId(_country);
                                   stateList = await ProfileRepository()
                                       .getState(countryId);
-                                  _states =
-                                      stateList.map((e) => e.stateName).toList();
-                                  
+                                  _states = stateList
+                                      .map((e) => e.stateName)
+                                      .toList();
+
                                   if (mounted) {
                                     setState(() {});
                                   }
@@ -198,20 +203,22 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                 text: TextSpan(children: [
                                   TextSpan(
                                       text: '*',
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.negativeLight,
-                                          fontSize: 14.sp)),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.negativeLight,
+                                              fontSize: 14.sp)),
                                   TextSpan(
                                       text:
                                           AppLocalizations.of(context)!.country,
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.greys60,
-                                          fontSize: 14.sp)),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.greys60,
+                                              fontSize: 14.sp)),
                                 ]),
                               ),
-                              border: _outline(AppColors.darkGrey),
-                              enabledBorder: _outline(AppColors.darkGrey),
-                              focusedBorder: _outline(AppColors.darkGrey),
+                              border: _outline(AppColors.grey40),
+                              enabledBorder: _outline(AppColors.grey40),
+                              focusedBorder: _outline(AppColors.grey40),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 12.w, vertical: 16.w),
                               suffixIcon: Icon(Icons.keyboard_arrow_down,
@@ -219,10 +226,11 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                             ),
                             child: Text(
                               _country,
-                              style: GoogleFonts.notoSans(
-                                  color: AppColors.greys87,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500),
+                              style: BrandingConfig.instance
+                                  .getPrimaryTextStyle(
+                                      color: AppColors.greys87,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500),
                             ),
                           ),
                         ),
@@ -238,14 +246,14 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                       // Check if state actually changed
                                       if (_state != v) {
                                         _state = v;
-                                        
+
                                         // Clear dependent fields
                                         _district = null;
                                         _districtController.clear();
                                         _districts = [];
                                         districtList = [];
                                         _showDistrictError = false;
-                                        
+
                                         // Fetch districts for new state
                                         String stateId = getStateId(_state);
                                         districtList = await ProfileRepository()
@@ -253,7 +261,7 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                         _districts = districtList
                                             .map((e) => e.districtName)
                                             .toList();
-                                        
+
                                         if (mounted) {
                                           setState(() {});
                                         }
@@ -266,19 +274,21 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                 text: TextSpan(children: [
                                   TextSpan(
                                       text: '*',
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.negativeLight,
-                                          fontSize: 14.sp)),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.negativeLight,
+                                              fontSize: 14.sp)),
                                   TextSpan(
                                       text: AppLocalizations.of(context)!.state,
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.greys60,
-                                          fontSize: 14.sp)),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.greys60,
+                                              fontSize: 14.sp)),
                                 ]),
                               ),
-                              border: _outline(AppColors.darkGrey),
-                              enabledBorder: _outline(AppColors.darkGrey),
-                              focusedBorder: _outline(AppColors.darkGrey),
+                              border: _outline(AppColors.grey40),
+                              enabledBorder: _outline(AppColors.grey40),
+                              focusedBorder: _outline(AppColors.grey40),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 12.w, vertical: 16.w),
                               suffixIcon: Icon(Icons.keyboard_arrow_down,
@@ -286,10 +296,11 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                             ),
                             child: Text(
                               _state,
-                              style: GoogleFonts.notoSans(
-                                  color: AppColors.greys87,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500),
+                              style: BrandingConfig.instance
+                                  .getPrimaryTextStyle(
+                                      color: AppColors.greys87,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500),
                             ),
                           ),
                         ),
@@ -316,26 +327,28 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                 text: TextSpan(children: [
                                   TextSpan(
                                       text: '*',
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.negativeLight,
-                                          fontSize: 14.sp)),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.negativeLight,
+                                              fontSize: 14.sp)),
                                   TextSpan(
                                       text: AppLocalizations.of(context)!
                                           .district,
-                                      style: GoogleFonts.notoSans(
-                                          color: AppColors.greys60,
-                                          fontSize: 14.sp)),
+                                      style: BrandingConfig.instance
+                                          .getPrimaryTextStyle(
+                                              color: AppColors.greys60,
+                                              fontSize: 14.sp)),
                                 ]),
                               ),
-                              border: _outline(AppColors.darkGrey),
-                              enabledBorder: _outline(AppColors.darkGrey),
-                              focusedBorder: _outline(AppColors.darkGrey),
+                              border: _outline(AppColors.grey40),
+                              enabledBorder: _outline(AppColors.grey40),
+                              focusedBorder: _outline(AppColors.grey40),
                               suffixIcon: Icon(Icons.keyboard_arrow_down,
                                   color: AppColors.greys87, size: 20.w),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 12.w, vertical: 16.w),
                             ),
-                            style: GoogleFonts.notoSans(
+                            style: BrandingConfig.instance.getPrimaryTextStyle(
                                 color: AppColors.greys87,
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w500),
@@ -347,7 +360,8 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .thisFieldIsRequiredToContinue,
-                              style: GoogleFonts.notoSans(
+                              style:
+                                  BrandingConfig.instance.getPrimaryTextStyle(
                                 color: AppColors.negativeLight,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w400,
@@ -370,17 +384,18 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                           decoration: InputDecoration(
                             labelText:
                                 AppLocalizations.of(context)!.preferredLanguage,
-                            labelStyle: GoogleFonts.notoSans(
-                                color: AppColors.greys60, fontSize: 14.sp),
-                            border: _outline(AppColors.darkGrey),
-                            enabledBorder: _outline(AppColors.darkGrey),
-                            focusedBorder: _outline(AppColors.darkGrey),
+                            labelStyle: BrandingConfig.instance
+                                .getPrimaryTextStyle(
+                                    color: AppColors.greys60, fontSize: 14.sp),
+                            border: _outline(AppColors.grey40),
+                            enabledBorder: _outline(AppColors.grey40),
+                            focusedBorder: _outline(AppColors.grey40),
                             suffixIcon: Icon(Icons.keyboard_arrow_down,
                                 color: AppColors.greys87, size: 20.w),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 12.w, vertical: 16.w),
                           ),
-                          style: GoogleFonts.notoSans(
+                          style: BrandingConfig.instance.getPrimaryTextStyle(
                               color: AppColors.greys87,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w500),
@@ -428,7 +443,8 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                 }
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                    builder: (_) => const BoloGetStarted(),
+                                    builder: (_) =>
+                                        const ModuleSelectionScreen(),
                                   ),
                                 );
                               },
@@ -441,7 +457,8 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                               ),
                               child: Text(
                                 AppLocalizations.of(context)!.saveAndContinue,
-                                style: GoogleFonts.notoSans(
+                                style:
+                                    BrandingConfig.instance.getPrimaryTextStyle(
                                   color: Colors.white,
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w600,

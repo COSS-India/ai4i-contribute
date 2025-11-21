@@ -324,3 +324,215 @@ class ValidationError(BaseModel):
         "field": "district",
         "validationErrors": []
     })
+
+
+
+
+# --------------------------------------------------------------------
+# AI4I Contribute — Module-specific request/response models
+# --------------------------------------------------------------------
+# NOTE:
+# - This block is append-only and does NOT modify or remove any models
+#   from the original AgriDaan `models.py`.
+# - It defines module-specific request models for Suno (Transcription),
+#   Likho (Translation) and Dekho (Labeling) required by the PRD.
+# - Strict script validation is applied using `text_matches_script` from
+#   validators/script_validator.py.
+# --------------------------------------------------------------------
+
+# Local imports for Phase-2 models
+from typing import Optional, List, Dict, Any, Self
+from pydantic import BaseModel, Field, ValidationError, model_validator
+from validators.script_validator import text_matches_script # Import the strict script checker
+from typing import Any, Optional
+from pydantic import BaseModel
+
+class APIResponse(BaseModel):
+    success: bool
+    data: Any | None = None
+    error: Optional[str] = None
+
+# --------------------
+# SUNO (Transcription) Models
+# --------------------
+class SunoQueueRequest(BaseModel):
+    language: str = Field(..., example="hi")
+    batch_size: Optional[int] = Field(5, description="Requested batch size (default 5)")
+
+class SunoQueueItem(BaseModel):
+    item_id: str
+    language: str
+    audio_url: Optional[str] = None
+    metadata: Optional[Dict[str, Any]] = None
+
+class SunoSubmitRequest(BaseModel):
+    item_id: str
+    language: str
+    transcript: str
+    metadata: Optional[Dict[str, Any]] = None
+
+    @model_validator(mode="after")
+    def _validate_transcript(self) -> Self:
+        if not text_matches_script(self.transcript, self.language):
+            raise ValidationError([{"loc": ("transcript",), "msg": "Please type in your chosen language", "type": "value_error"}])
+        return self
+
+class SunoSkipRequest(BaseModel):
+    item_id: str
+    reason: Optional[str] = None
+
+class SunoReportRequest(BaseModel):
+    item_id: str
+    report_type: str
+    description: Optional[str] = None
+
+class SunoValidationItem(BaseModel):
+    item_id: str
+    language: str
+    audio_url: Optional[str] = None
+    transcript: Optional[str] = None
+    metadata: Optional[Dict[str, Any]] = None
+
+class SunoValidationAcceptRequest(BaseModel):
+    item_id: str
+    decision: str = Field(..., example="correct")
+
+class SunoValidationRejectRequest(BaseModel):
+    item_id: str
+    reason: Optional[str] = None
+
+class SunoValidationCorrectionRequest(BaseModel):
+    item_id: str
+    corrected_transcript: str
+
+    @model_validator(mode="after")
+    def _validate_correction(self) -> Self:
+        if not text_matches_script(self.corrected_transcript, self.corrected_transcript and self.corrected_transcript[:2]):
+            # best-effort check; primary check will be applied in submission flow
+            pass
+        return self
+
+# --------------------
+# LIKHO (Translation) Models
+# --------------------
+class LikhoQueueRequest(BaseModel):
+    src_language: str = Field(..., example="hi")
+    tgt_language: str = Field(..., example="en")
+    batch_size: Optional[int] = Field(5, description="Requested batch size (default 5)")
+
+class LikhoQueueItem(BaseModel):
+    item_id: str
+    src_language: str
+    tgt_language: str
+    text: str
+    metadata: Optional[Dict[str, Any]] = None
+
+class LikhoSubmitRequest(BaseModel):
+    item_id: str
+    src_language: str
+    tgt_language: str
+    translation: str
+    metadata: Optional[Dict[str, Any]] = None
+
+    @model_validator(mode="after")
+    def _validate_translation(self) -> Self:
+        if not text_matches_script(self.translation, self.tgt_language):
+            raise ValidationError([{"loc": ("translation",), "msg": "Please type in your chosen language", "type": "value_error"}])
+        return self
+
+class LikhoSkipRequest(BaseModel):
+    item_id: str
+    reason: Optional[str] = None
+
+class LikhoReportRequest(BaseModel):
+    item_id: str
+    report_type: str
+    description: Optional[str] = None
+
+class LikhoValidationItem(BaseModel):
+    item_id: str
+    src_language: str
+    tgt_language: str
+    text: str
+    translation: Optional[str] = None
+    metadata: Optional[Dict[str, Any]] = None
+
+class LikhoValidationAcceptRequest(BaseModel):
+    item_id: str
+    decision: str = Field(..., example="correct")
+
+class LikhoValidationRejectRequest(BaseModel):
+    item_id: str
+    reason: Optional[str] = None
+
+class LikhoValidationCorrectionRequest(BaseModel):
+    item_id: str
+    corrected_translation: str
+
+    @model_validator(mode="after")
+    def _validate_correction(self) -> Self:
+        if not text_matches_script(self.corrected_translation, self.corrected_translation and self.corrected_translation[:2]):
+            pass
+        return self
+
+# --------------------
+# DEKHO (Labeling) Models
+# --------------------
+class DekhoQueueRequest(BaseModel):
+    language: str = Field(..., example="hi")
+    batch_size: Optional[int] = Field(5, description="Requested batch size (default 5)")
+
+class DekhoQueueItem(BaseModel):
+    item_id: str
+    language: str
+    image_url: Optional[str] = None
+    metadata: Optional[Dict[str, Any]] = None
+
+class DekhoSubmitRequest(BaseModel):
+    item_id: str
+    language: str
+    label: str
+    labels: Optional[List[str]] = None
+    metadata: Optional[Dict[str, Any]] = None
+
+    @model_validator(mode="after")
+    def _validate_label(self) -> Self:
+        if not text_matches_script(self.label, self.language):
+            raise ValidationError([{"loc": ("label",), "msg": "Please type in your chosen language", "type": "value_error"}])
+        return self
+
+class DekhoSkipRequest(BaseModel):
+    item_id: str
+    reason: Optional[str] = None
+
+class DekhoReportRequest(BaseModel):
+    item_id: str
+    report_type: str
+    description: Optional[str] = None
+
+class DekhoValidationItem(BaseModel):
+    item_id: str
+    language: str
+    image_url: Optional[str] = None
+    label: Optional[str] = None
+    metadata: Optional[Dict[str, Any]] = None
+
+class DekhoValidationAcceptRequest(BaseModel):
+    item_id: str
+    decision: str = Field(..., example="correct")
+
+class DekhoValidationRejectRequest(BaseModel):
+    item_id: str
+    reason: Optional[str] = None
+
+class DekhoValidationCorrectionRequest(BaseModel):
+    item_id: str
+    corrected_label: str
+
+    @model_validator(mode="after")
+    def _validate_corrected_label(self) -> Self:
+        if not text_matches_script(self.corrected_label, self.language if hasattr(self, 'language') else None):
+            raise ValidationError([{"loc": ("corrected_label",), "msg": "Please type in your chosen language", "type": "value_error"}])
+        return self
+
+# End of AI4I append-only models

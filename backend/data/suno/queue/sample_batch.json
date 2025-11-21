@@ -1,0 +1,32 @@
+[
+  {
+    "item_id": "suno-1",
+    "language": "en",
+    "audio_url": "/suno/static/sample1.mp3",
+    "metadata": { "duration": 2.5 }
+  },
+  {
+    "item_id": "suno-2",
+    "language": "en",
+    "audio_url": "/suno/static/sample2.mp3",
+    "metadata": { "duration": 3.1 }
+  },
+  {
+    "item_id": "suno-3",
+    "language": "en",
+    "audio_url": "/suno/static/sample3.mp3",
+    "metadata": { "duration": 1.9 }
+  },
+  {
+    "item_id": "suno-4",
+    "language": "en",
+    "audio_url": "/suno/static/sample4.mp3",
+    "metadata": { "duration": 2.8 }
+  },
+  {
+    "item_id": "suno-5",
+    "language": "en",
+    "audio_url": "/suno/static/sample5.mp3",
+    "metadata": { "duration": 2.2 }
+  }
+]

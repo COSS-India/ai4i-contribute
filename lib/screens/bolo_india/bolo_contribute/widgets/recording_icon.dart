@@ -1,17 +1,18 @@
 import 'dart:io';
 
 import 'package:VoiceGive/common_widgets/audio_player/custom_audio_player.dart';
-import 'package:VoiceGive/common_widgets/image_widget.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/constants/helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+// ignore: depend_on_referenced_packages
 import 'package:path_provider/path_provider.dart';
+
+import '../../../../config/branding_config.dart';
 
 enum RecordingState { idle, recording, stopped }
 
@@ -19,12 +20,11 @@ class RecordingButton extends StatefulWidget {
   final String text;
   final Function(File?) getRecordedFile;
   final Function(RecordingState?) isRecording;
-  const RecordingButton({
-    super.key,
-    required this.text,
-    required this.getRecordedFile,
-    required this.isRecording
-  });
+  const RecordingButton(
+      {super.key,
+      required this.text,
+      required this.getRecordedFile,
+      required this.isRecording});
 
   @override
   State<RecordingButton> createState() => _RecordingButtonState();
@@ -158,12 +158,14 @@ class _RecordingButtonState extends State<RecordingButton>
   Widget _buildIcon() {
     switch (_state) {
       case RecordingState.idle:
-        return ImageWidget(
-            imageUrl: "assets/images/record.png",
-            height: 150,
-            width: 240,
-            boxFit: BoxFit.contain);
-
+        return SizedBox(
+          height: 150,
+          child: CircleAvatar(
+              radius: 36.r,
+              backgroundColor: AppColors.darkGreen,
+              child:
+                  Icon(Icons.mic_outlined, size: 45.sp, color: Colors.white)),
+        );
       case RecordingState.recording:
         return SizedBox(
           height: 150,
@@ -174,11 +176,14 @@ class _RecordingButtonState extends State<RecordingButton>
                   Icon(Icons.stop_rounded, size: 45.sp, color: Colors.white)),
         );
       case RecordingState.stopped:
-        return ImageWidget(
-            imageUrl: "assets/images/record.png",
-            height: 150,
-            width: 240,
-            boxFit: BoxFit.contain);
+        return SizedBox(
+          height: 150,
+          child: CircleAvatar(
+              radius: 36.r,
+              backgroundColor: AppColors.darkGreen,
+              child:
+                  Icon(Icons.mic_outlined, size: 45.sp, color: Colors.white)),
+        );
     }
   }
 
@@ -186,13 +191,13 @@ class _RecordingButtonState extends State<RecordingButton>
     switch (_state) {
       case RecordingState.idle:
         return Text(AppLocalizations.of(context)!.startRecording,
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w600,
                 color: AppColors.darkGreen));
       case RecordingState.recording:
         return Text(AppLocalizations.of(context)!.stopRecording,
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w600,
                 color: AppColors.darkGreen));
@@ -208,7 +213,7 @@ class _RecordingButtonState extends State<RecordingButton>
             ] else ...[
               Text(
                 "No recording available",
-                style: GoogleFonts.notoSans(
+                style: BrandingConfig.instance.getPrimaryTextStyle(
                   fontSize: 12.sp,
                   color: Colors.red,
                 ),
@@ -217,7 +222,7 @@ class _RecordingButtonState extends State<RecordingButton>
             ],
             SizedBox(height: 16.w),
             Text(AppLocalizations.of(context)!.reRecord,
-                style: GoogleFonts.notoSans(
+                style: BrandingConfig.instance.getPrimaryTextStyle(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w600,
                     color: AppColors.darkGreen)),

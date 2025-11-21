@@ -1,4 +1,3 @@
-import 'package:VoiceGive/common_widgets/branding_alignment_widget.dart';
 import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
 import 'package:VoiceGive/common_widgets/image_widget.dart';
 import 'package:VoiceGive/common_widgets/primary_button_widget.dart';
@@ -8,9 +7,10 @@ import 'package:VoiceGive/screens/bolo_india/bolo_validation_screen/bolo_validat
 import 'package:VoiceGive/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../config/branding_config.dart';
 
 class CongratulationsScreen extends StatefulWidget {
   const CongratulationsScreen({
@@ -59,6 +59,8 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
 
   @override
   Widget build(BuildContext context) {
+    final branding = BrandingConfig.instance;
+
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) {
@@ -67,7 +69,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
         _navigateBackToHome();
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.backgroundColor,
         appBar: CustomAppBar(),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -76,7 +78,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
               // Header Section
               Container(
                 padding: EdgeInsets.all(16).r,
-                decoration: BoxDecoration(color: AppColors.orange),
+                decoration: BoxDecoration(color: AppColors.bannerColor),
                 child: Row(
                   children: [
                     InkWell(
@@ -88,34 +90,13 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                       ),
                     ),
                     SizedBox(width: 24.w),
-                    ImageWidget(
-                      height: 40.w,
-                      width: 40.w,
-                      imageUrl: "assets/images/bolo_icon_white.svg",
-                    ),
-                    SizedBox(width: 8.w),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.boloIndia,
-                          style: GoogleFonts.notoSans(
-                            color: Colors.white,
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!
-                              .enrichYourLanguageByDonatingVoice,
-                          style: GoogleFonts.notoSans(
-                            color: Colors.white,
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
+                    branding.bannerImage.isNotEmpty
+                        ? ImageWidget(
+                            imageUrl: branding.bannerImage,
+                            height: 40.w,
+                            width: 40.w,
+                          )
+                        : SizedBox(width: 40.w, height: 40.w),
                   ],
                 ),
               ),
@@ -153,6 +134,8 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
   }
 
   Widget _buildCongratulationsSection() {
+    final branding = BrandingConfig.instance;
+
     return AnimatedBuilder(
       animation: _scaleAnimation,
       builder: (context, child) {
@@ -161,19 +144,26 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
           child: Column(
             children: [
               // Badge
-              ImageWidget(
-                height: 120.w,
-                width: 120.w,
-                imageUrl: 'assets/images/bolo_logo.png',
-                boxFit: BoxFit.contain,
-              ),
+              branding.badgeImage.isNotEmpty
+                  ? ImageWidget(
+                      imageUrl: branding.badgeImage,
+                      height: 120.w,
+                      width: 120.w,
+                      boxFit: BoxFit.contain,
+                    )
+                  : ImageWidget(
+                      imageUrl: 'assets/images/bolo_logo.png',
+                      height: 120.w,
+                      width: 120.w,
+                      boxFit: BoxFit.contain,
+                    ),
               SizedBox(height: 24.w),
               // Congratulations Text
               Text(
                 '${AppLocalizations.of(context)!.congratulations}!',
-                style: GoogleFonts.notoSans(
+                style: BrandingConfig.instance.getPrimaryTextStyle(
                   fontSize: 28.sp,
-                  color: Colors.black,
+                  color: AppColors.greys87,
                   fontWeight: FontWeight.w700,
                 ),
                 textAlign: TextAlign.center,
@@ -183,16 +173,16 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                  style: GoogleFonts.notoSans(
+                  style: BrandingConfig.instance.getPrimaryTextStyle(
                     fontSize: 16.sp,
-                    color: Colors.black87,
+                    color: AppColors.greys87,
                     height: 1.4,
                   ),
                   children: [
                     const TextSpan(text: "You've "),
                     TextSpan(
                       text: "contributed 5 sentences",
-                      style: GoogleFonts.notoSans(
+                      style: BrandingConfig.instance.getPrimaryTextStyle(
                         color: AppColors.darkGreen,
                         fontWeight: FontWeight.w700,
                       ),
@@ -200,7 +190,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                     const TextSpan(text: " and "),
                     TextSpan(
                       text: "validated 25",
-                      style: GoogleFonts.notoSans(
+                      style: BrandingConfig.instance.getPrimaryTextStyle(
                         color: AppColors.darkGreen,
                         fontWeight: FontWeight.w700,
                       ),
@@ -243,8 +233,8 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
             // Certificate Header
             Text(
               AppLocalizations.of(context)!.tapToPreviewCertificate,
-              style: GoogleFonts.notoSans(
-                  color: AppColors.greys,
+              style: BrandingConfig.instance.getPrimaryTextStyle(
+                  color: AppColors.greys87,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w500),
             ),
@@ -264,10 +254,16 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8).r,
-                        child: Image.asset(
-                          'assets/images/certificate.jpg',
-                          fit: BoxFit.contain,
-                        ),
+                        child: BrandingConfig
+                                .instance.certificateImage.isNotEmpty
+                            ? ImageWidget(
+                                imageUrl:
+                                    BrandingConfig.instance.certificateImage,
+                              )
+                            : Image.asset(
+                                'assets/images/certificate.jpg',
+                                fit: BoxFit.contain,
+                              ),
                       ),
                     ),
                   ),
@@ -316,7 +312,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
       children: [
         Text(
           "PDF (print-ready, includes your name & achievement)",
-          style: GoogleFonts.notoSans(
+          style: BrandingConfig.instance.getPrimaryTextStyle(
               fontSize: 10.sp,
               fontWeight: FontWeight.w400,
               color: AppColors.disabledTextGrey),
@@ -325,7 +321,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
         SizedBox(height: 2.w),
         Text(
           "Issued on: 17 Sep 2025. Certificate ID: DIC-20250917-0123",
-          style: GoogleFonts.notoSans(
+          style: BrandingConfig.instance.getPrimaryTextStyle(
               fontSize: 10.sp,
               fontWeight: FontWeight.w400,
               color: AppColors.disabledTextGrey),
@@ -353,7 +349,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
               },
               textColor: AppColors.orange,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.backgroundColor,
                 border: Border.all(color: AppColors.orange, width: 1.5),
                 borderRadius: BorderRadius.circular(6).r,
               ),
@@ -373,7 +369,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                   MaterialPageRoute(builder: (context) => BoloContribute()),
                 );
               },
-              textColor: Colors.white,
+              textColor: AppColors.backgroundColor,
               decoration: BoxDecoration(
                 color: AppColors.orange,
                 border: Border.all(color: AppColors.orange, width: 1.5),
@@ -391,12 +387,12 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          backgroundColor: Colors.transparent,
+          backgroundColor: AppColors.backgroundColor,
           child: Container(
             width: MediaQuery.of(context).size.width * 0.9,
             height: MediaQuery.of(context).size.height * 0.8,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.backgroundColor,
               borderRadius: BorderRadius.circular(12).r,
               boxShadow: [
                 BoxShadow(
@@ -424,7 +420,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                     children: [
                       Text(
                         "Certificate Preview",
-                        style: GoogleFonts.notoSans(
+                        style: BrandingConfig.instance.getPrimaryTextStyle(
                           color: Colors.white,
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w600,
@@ -481,103 +477,26 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
     return Container(
       padding: EdgeInsets.all(32).r,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.backgroundColor,
         border: Border.all(color: Colors.grey.shade300, width: 2),
         borderRadius: BorderRadius.circular(8).r,
       ),
       child: Column(
         children: [
           // Government Logo and Ministry
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "इलेक्ट्रॉनिकी एवं सूचना प्रौद्योगिकी मंत्रालय",
-                      style: GoogleFonts.notoSans(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(height: 4.w),
-                    Text(
-                      "MINISTRY OF ELECTRONICS AND INFORMATION TECHNOLOGY",
-                      style: GoogleFonts.notoSans(
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey[600],
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(height: 8.w),
-                    Text(
-                      "Digital India",
-                      style: GoogleFonts.notoSans(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.orange,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              // BHASHINI Logo
-              Flexible(
-                flex: 1,
-                child: Container(
-                  padding: EdgeInsets.all(8).r,
-                  decoration: BoxDecoration(
-                    color: AppColors.lightGreen3,
-                    borderRadius: BorderRadius.circular(8).r,
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        "BHASHINI",
-                        style: GoogleFonts.notoSans(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.darkGreen,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      Text(
-                        "भाषिणी",
-                        style: GoogleFonts.notoSans(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.orange,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 32.w),
 
           // Certificate Title
           Text(
             "CERTIFICATE",
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
               fontSize: 28.sp,
               fontWeight: FontWeight.w700,
-              color: Colors.black87,
+              color: AppColors.greys87,
             ),
           ),
           Text(
             "OF APPRECIATION",
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
               fontSize: 20.sp,
               fontWeight: FontWeight.w600,
               color: AppColors.orange,
@@ -588,10 +507,10 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
           // Presentation Text
           Text(
             "PROUDLY PRESENTED TO",
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w600,
-              color: Colors.black87,
+              color: AppColors.greys87,
             ),
           ),
           SizedBox(height: 16.w),
@@ -599,10 +518,10 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
           // Recipient Name
           Text(
             "Animesh Patil",
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
               fontSize: 24.sp,
               fontWeight: FontWeight.w700,
-              color: Colors.black87,
+              color: AppColors.greys87,
               letterSpacing: 1.2,
             ),
           ),
@@ -639,15 +558,15 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
           RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-              style: GoogleFonts.notoSans(
+              style: BrandingConfig.instance.getPrimaryTextStyle(
                 fontSize: 14.sp,
-                color: Colors.black87,
+                color: AppColors.greys87,
               ),
               children: [
                 const TextSpan(text: "Recognized as a "),
                 TextSpan(
-                  text: "Agri Bhasha Samarthak",
-                  style: GoogleFonts.notoSans(
+                  text: "Contributor",
+                  style: BrandingConfig.instance.getPrimaryTextStyle(
                     color: AppColors.darkGreen,
                     fontWeight: FontWeight.w700,
                   ),
@@ -662,41 +581,26 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
             children: [
               Text(
                 "For contributing to",
-                style: GoogleFonts.notoSans(
+                style: BrandingConfig.instance.getPrimaryTextStyle(
                   fontSize: 12.sp,
-                  color: Colors.black87,
+                  color: AppColors.greys87,
                   height: 1.5,
                 ),
                 textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 8.w),
-              BrandingAlignmentWidget(
-                fontSize: 12.sp,
-                textColor: Colors.black87,
               ),
               SizedBox(height: 8.w),
               Text(
-                "strengthening agricultural knowledge in Indian languages and advancing the vision of an inclusive, self-reliant Bharat.",
-                style: GoogleFonts.notoSans(
-                  fontSize: 12.sp,
-                  color: Colors.black87,
-                  height: 1.5,
+                'AI4I - Contribute',
+                style: BrandingConfig.instance.getPrimaryTextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.greys87,
                 ),
-                textAlign: TextAlign.center,
               ),
+              SizedBox(height: 8.w),
             ],
           ),
           SizedBox(height: 32.w),
-
-          // Signatory
-          Text(
-            "CEO, BHASHINI",
-            style: GoogleFonts.notoSans(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w600,
-              color: Colors.black87,
-            ),
-          ),
           Container(
             width: 100.w,
             height: 2.w,

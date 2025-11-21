@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:VoiceGive/config/app_config.dart';
+import 'package:VoiceGive/config/branding_config.dart';
 import 'package:VoiceGive/services/auth_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:VoiceGive/providers/auth_provider.dart';
@@ -15,6 +16,9 @@ void main() async {
 
   // Initialize environment configuration
   await AppConfig.initialize(environment: Environment.development);
+
+  // Initialize branding configuration
+  await BrandingConfig.initialize();
 
   // Validate configuration
   AppConfig.instance.validateConfig();

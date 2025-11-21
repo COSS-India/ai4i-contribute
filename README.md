@@ -1,7 +1,7 @@
 
-# AI4I-Contribute Flutter Application - Setup & Authentication Guide
+# AI4I - Contribute Flutter Application - Setup & Authentication Guide
 
-This document provides a unified guide for setting up your environment, configuring authentication, and following best practices for the VoiceGive Flutter application.
+This document provides a unified guide for setting up your environment, configuring authentication, and following best practices for the AI4I - Contribute Flutter application.
 
 ---
 
@@ -29,23 +29,33 @@ Java HotSpot(TM) 64-Bit Server VM (build 17.0.13+10-LTS-268, mixed mode, sharing
 **Steps to run the app:**
 - flutter clean
 - flutter pub get
+- dart run build_scripts/generate_fonts.dart
 - flutter pub run build_runner build --delete-conflicting-outputs
 - flutter run
 
-## 2. API Specification Document
+**Production build:**
+- ./build_scripts/build.sh production
 
-Ref Backend installation guide : https://github.com/COSS-India/VoiceGive/blob/master/backend/README.md
+## App Customization
 
-API Contracts : https://github.com/COSS-India/VoiceGive/blob/master/contracts/voicegive_backend_api_contracts.yaml
+For organizations wanting to customize the app with their own branding, see the [**Branding Guide**](BRANDING_GUIDE.md) for complete instructions on:
+- App name and icon customization
+- Color schemes and themes
+- Images and animations
+- Consent form configuration
+- Build process
 
-Swagger UI : http://43.205.235.156:9000/docs
+# API Specification Document
+
+Ref Backend installation guide : https://github.com/COSS-India/ai4i-contribute/blob/release/v0.2/backend/README.md
+Swagger UI : http://3.7.77.1:9000/docs
 
 ## Code Structure
 
 ### Key Directories
 
 ```
-VoiceGive/
+AI4I - Contribute/
 ├── android/                 # Android-specific configuration
 ├── ios/                     # iOS-specific configuration
 ├── lib/                     # Main Dart code
@@ -58,6 +68,7 @@ VoiceGive/
 │   ├── screens/            # App screens
 │   ├── services/           # API and business logic
 │   └── util/               # Utility functions
+├── backend/                # Mock Backend
 ├── assets/                 # Images, icons, animations
 ├── build_scripts/          # Build automation scripts
 ├── documentation/          # Project documentation

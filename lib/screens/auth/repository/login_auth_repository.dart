@@ -40,11 +40,11 @@ class LoginAuthRepository {
   }
 
   Future<dynamic> verifyOtp(
-      {required String otp, required String mobileNo}) async {
+      {required String otp, required String sessionId}) async {
     // Call the LoginAuthService to verify the OTP
     try {
       var response =
-          await LoginAuthService.verifyOtp(otp: otp, mobileNo: mobileNo);
+          await LoginAuthService.verifyOtp(otp: otp, sessionId: sessionId);
       if (response['data'] == null) {
         return response['detail'] ?? 'Error occurred while verifying OTP';
       }

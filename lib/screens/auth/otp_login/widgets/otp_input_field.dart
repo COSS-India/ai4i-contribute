@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../config/branding_config.dart';
 import '../../../../constants/app_colors.dart';
 
 class OtpInputField extends StatefulWidget {
@@ -87,23 +87,27 @@ class _OtpInputFieldState extends State<OtpInputField> {
               width: 40.w,
               height: 40.w,
               decoration: BoxDecoration(
-                boxShadow: _focusNodes[index].hasFocus || _controllers[index].text.isNotEmpty?[
-                  BoxShadow(
-                    color: AppColors.saffron.withValues(alpha: 0.15),
-                    blurRadius: 6.r,
-                    offset: Offset(0, 3.h),
-                  ),
-                ]:null,
+                boxShadow: _focusNodes[index].hasFocus ||
+                        _controllers[index].text.isNotEmpty
+                    ? [
+                        BoxShadow(
+                          color: AppColors.saffron.withValues(alpha: 0.15),
+                          blurRadius: 6.r,
+                          offset: Offset(0, 3.h),
+                        ),
+                      ]
+                    : null,
                 border: Border.all(
                   color: widget.errorText != null
                       ? AppColors.negativeLight
-                      : _focusNodes[index].hasFocus || _controllers[index].text.isNotEmpty
+                      : _focusNodes[index].hasFocus ||
+                              _controllers[index].text.isNotEmpty
                           ? AppColors.lightGreen
                           : AppColors.grey24,
                   width: 0.5,
                 ),
                 borderRadius: BorderRadius.circular(6.r),
-                color: Colors.white,
+                color: AppColors.backgroundColor,
               ),
               child: Center(
                 child: TextFormField(
@@ -114,7 +118,7 @@ class _OtpInputFieldState extends State<OtpInputField> {
                   textAlignVertical: TextAlignVertical.center,
                   keyboardType: TextInputType.number,
                   maxLength: 1,
-                  style: GoogleFonts.notoSans(
+                  style: BrandingConfig.instance.getPrimaryTextStyle(
                     fontSize: 24.sp,
                     fontWeight: FontWeight.w600,
                     color: AppColors.greys87,
@@ -148,7 +152,7 @@ class _OtpInputFieldState extends State<OtpInputField> {
           SizedBox(height: 8.h),
           Text(
             widget.errorText!,
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
               color: AppColors.negativeLight,
               fontSize: 12.sp,
               fontWeight: FontWeight.w400,

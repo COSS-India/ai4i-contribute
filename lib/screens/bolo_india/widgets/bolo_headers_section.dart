@@ -2,17 +2,29 @@ import 'package:VoiceGive/common_widgets/image_widget.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import '../../../config/branding_config.dart';
 
 class BoloHeadersSection extends StatelessWidget {
   final VoidCallback? onBackPressed;
-  const BoloHeadersSection({super.key, this.onBackPressed});
+  final String? logoAsset;
+  final String? title;
+  final String? subtitle;
+  const BoloHeadersSection({
+    super.key, 
+    this.onBackPressed,
+    this.logoAsset,
+    this.title,
+    this.subtitle,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final branding = BrandingConfig.instance;
+
     return Container(
       padding: EdgeInsets.all(16).r,
-      decoration: BoxDecoration(color: AppColors.orange),
+      decoration: BoxDecoration(color: AppColors.bannerColor),
       child: Row(
         children: [
           InkWell(
@@ -29,31 +41,58 @@ class BoloHeadersSection extends StatelessWidget {
               size: 36.sp,
             ),
           ),
-          SizedBox(width: 24.w),
-          ImageWidget(
-              height: 40.w,
-              width: 40.w,
-              imageUrl: "assets/images/bolo_icon_white.svg"),
-          SizedBox(width: 8.w),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "BOLO India",
-                style: GoogleFonts.notoSans(
-                    color: Colors.white,
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w600),
-              ),
-              Text(
-                "Enrich your language by donating your voice. ",
-                style: GoogleFonts.notoSans(
-                    color: Colors.white,
-                    fontSize: 10.sp,
-                    fontWeight: FontWeight.w600),
-              ),
-            ],
-          )
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (logoAsset != null) ...[
+                  Image.asset(
+                    logoAsset!,
+                    height: 40.w,
+                    width: 40.w,
+                  ),
+                  SizedBox(width: 12.w),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: (subtitle == null || subtitle!.isEmpty) 
+                        ? MainAxisAlignment.center 
+                        : MainAxisAlignment.start,
+                    children: [
+                      if (title != null)
+                        Text(
+                          title!,
+                          style: BrandingConfig.instance.getPrimaryTextStyle(
+                            fontSize: (subtitle == null || subtitle!.isEmpty) ? 18.sp : 16.sp,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                        ),
+                      if (subtitle != null && subtitle!.isNotEmpty)
+                        Text(
+                          subtitle!,
+                          style: BrandingConfig.instance.getPrimaryTextStyle(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
+                        ),
+                    ],
+                  ),
+                ] else ...[
+                  branding.bannerImage.isNotEmpty
+                      ? ImageWidget(
+                          imageUrl: branding.bannerImage,
+                          height: 40.w,
+                          width: 40.w,
+                        )
+                      : SizedBox(
+                          height: 40.w,
+                          width: 40.w,
+                        ),
+                ]
+              ],
+            ),
+          ),
         ],
       ),
     );

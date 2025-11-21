@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:VoiceGive/screens/bolo_india/models/bolo_contribute_sentence.dart';
 import 'package:VoiceGive/screens/bolo_india/models/session_completed_model.dart';
 import 'package:VoiceGive/screens/bolo_india/service/bolo_service.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:http/http.dart';
 
@@ -17,11 +18,31 @@ class BoloContributeRepository {
           language: language, count: count);
       if (response.statusCode == 200) {
         var content = jsonDecode(utf8.decode(response.bodyBytes));
-        // var content = jsonDecode(MockApiResponse.contributeSentencesResponse);
-
+        
         var data = content['data'];
         if (data != null) {
-          return BoloContributeSentence.fromJson(data);
+          var result = BoloContributeSentence.fromJson(data);
+          
+          // Loop sentences to reach count of 5
+          final targetCount = count ?? 5;
+          if (result.sentences.length < targetCount) {
+            final originalSentences = List<Sentence>.from(result.sentences);
+            final loopedSentences = <Sentence>[];
+            
+            for (int i = 0; i < targetCount; i++) {
+              loopedSentences.add(originalSentences[i % originalSentences.length]);
+            }
+            
+            result = BoloContributeSentence(
+              sessionId: result.sessionId,
+              language: result.language,
+              sentences: loopedSentences,
+              totalCount: targetCount,
+            );
+          }
+          
+          return result;
+        } else {
         }
       } else {
         throw Exception('Failed to load sentences');

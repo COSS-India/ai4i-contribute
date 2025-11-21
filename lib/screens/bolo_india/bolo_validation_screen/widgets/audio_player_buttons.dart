@@ -5,7 +5,8 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import '../../../../config/branding_config.dart';
 
 enum AudioPlayerButtonState { idle, playing, paused, replay, completed }
 
@@ -97,15 +98,29 @@ class _AudioPlayerButtonsState extends State<AudioPlayerButtons>
   }
 
   Future<void> _startPlayback() async {
-    if (isMp3OrWavBase64(widget.audioUrl)) {
-      Uint8List audioBytes = base64Decode(widget.audioUrl);
-
-      await _audioPlayer.play(BytesSource(audioBytes));
-      _controller.repeat();
-    } else {
-      // Handle invalid audio data
+    try {
+      if (widget.audioUrl.startsWith('http')) {
+        // Handle URL
+        await _audioPlayer.play(UrlSource(widget.audioUrl));
+        _controller.repeat();
+      } else if (isMp3OrWavBase64(widget.audioUrl)) {
+        // Handle base64 data
+        Uint8List audioBytes = base64Decode(widget.audioUrl);
+        await _audioPlayer.play(BytesSource(audioBytes));
+        _controller.repeat();
+      } else {
+        // Handle invalid audio data
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Invalid audio data')),
+        );
+        setState(() {
+          _state = AudioPlayerButtonState.idle;
+        });
+      }
+    } catch (e) {
+      debugPrint('Audio playback error: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Invalid audio data')),
+        SnackBar(content: Text('Failed to play audio')),
       );
       setState(() {
         _state = AudioPlayerButtonState.idle;
@@ -146,7 +161,7 @@ class _AudioPlayerButtonsState extends State<AudioPlayerButtons>
     widget.playerStatus.call(_state);
   }
 
-  TextStyle get _textStyle => GoogleFonts.notoSans(
+  TextStyle get _textStyle => BrandingConfig.instance.getPrimaryTextStyle(
         fontSize: 20.sp,
         fontWeight: FontWeight.w600,
         color: AppColors.darkGreen,
