@@ -30,47 +30,47 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cached_network_image: ^3.4.1
-  flutter_svg: ^2.2.0
-  google_fonts: ^6.2.1
-  flutter_screenutil: ^5.9.3
-  smooth_page_indicator: ^1.2.1
-  animations: ^2.0.11
-  just_audio: ^0.10.5
-  record: ^6.1.1
-  permission_handler: ^12.0.1
-  lottie: ^3.3.1
-  animated_splash_screen: ^1.3.0
-  http: ^1.2.2
-  flutter_dotenv: ^5.1.0
-  flutter_secure_storage: ^9.2.2
-  provider: ^6.1.2
-  encrypt: ^5.0.3
-  path: ^1.8.3
+  cached_network_image: 3.4.1
+  flutter_svg: 2.2.0
+  google_fonts: 6.2.1
+  flutter_screenutil: 5.9.3
+  smooth_page_indicator: 1.2.1
+  animations: 2.0.11
+  just_audio: 0.10.5
+  record: 6.1.1
+  permission_handler: 12.0.1
+  lottie: 3.3.1
+  animated_splash_screen: 1.3.0
+  http: 1.2.2
+  flutter_dotenv: 5.1.0
+  flutter_secure_storage: 9.2.2
+  provider: 6.1.2
+  encrypt: 5.0.3
+  path: 1.9.0
 
 
 
   flutter_localizations:
     sdk: flutter
-  intl: ^0.19.0
+  intl: 0.19.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.8
-  audioplayers: ^6.5.1
+  cupertino_icons: 1.0.8
+  audioplayers: 6.5.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^2.4.15
+  build_runner: 2.4.15
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^5.0.0
-  flutter_launcher_icons: ^0.14.4
+  flutter_lints: 5.0.0
+  flutter_launcher_icons: 0.14.4
 
 
 # For information on the generic Dart part of this file, see the

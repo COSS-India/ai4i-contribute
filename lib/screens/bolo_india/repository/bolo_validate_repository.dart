@@ -16,7 +16,7 @@ class BoloValidateRepository {
       Response response = await boloService.getValidationsQueue(
           count: count, language: language);
       if (response.statusCode == 200) {
-        var content = jsonDecode(response.body);
+        var content = jsonDecode(utf8.decode(response.bodyBytes));
         if (content['success'] == true) {
           return ValidationQueueModel.fromJson(content['data']);
         }

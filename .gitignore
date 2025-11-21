@@ -66,17 +66,6 @@ ios/build/ios/XCBuildData/PIFCache/
 # Local files
 *.jks
 
-# Environment files (exclude sensitive data but keep templates)
-.env
-.env.development
-.env.staging
-.env.production
-.env.example
-.env.local
-.env.production.local
-.env.staging.local
-.env.development.local
-
 # IMPORTANT: Do NOT include .env files when pushing to git!
 # .env files contain sensitive configuration data and should not be committed to version control.
 # .env.example files are also ignored to prevent accidental commits of example configurations.

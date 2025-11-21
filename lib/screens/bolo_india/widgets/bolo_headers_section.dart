@@ -1,12 +1,12 @@
 import 'package:VoiceGive/common_widgets/image_widget.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
-import 'package:VoiceGive/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BoloHeadersSection extends StatelessWidget {
-  const BoloHeadersSection({super.key});
+  final VoidCallback? onBackPressed;
+  const BoloHeadersSection({super.key, this.onBackPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +17,11 @@ class BoloHeadersSection extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (_) => const HomeScreen()),
-              );
+              if (onBackPressed != null) {
+                onBackPressed!();
+                return;
+              }
+              Navigator.of(context).pop();
             },
             child: Icon(
               Icons.arrow_circle_left_outlined,

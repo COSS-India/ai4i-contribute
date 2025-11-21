@@ -5,6 +5,7 @@ import 'package:VoiceGive/screens/bolo_india/models/bolo_validate_model.dart';
 import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
 import 'package:VoiceGive/screens/bolo_india/models/validation_submit_model.dart';
 import 'package:VoiceGive/screens/bolo_india/repository/bolo_validate_repository.dart';
+import 'package:VoiceGive/screens/bolo_india/widgets/bolo_content_skeleton.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_validation_screen/widgets/audio_player_buttons.dart';
 import 'package:VoiceGive/screens/congratulations_screen/congratulations_screen.dart';
@@ -55,10 +56,7 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
         future: getValidationsQueue,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 150.0),
-              child: Center(child: CircularProgressIndicator()),
-            );
+            return BoloContentSkeleton();
           } else if (!snapshot.hasData ||
               snapshot.data == null ||
               snapshot.data!.validationItems.isEmpty) {
@@ -162,9 +160,14 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
                 child: PrimaryButtonWidget(
                   title: AppLocalizations.of(context)!.incorrect,
                   textFontSize: 16.sp,
-                  onTap: value
-                      ? () => onValidate(isCorrect: false, item: item)
-                      : null,
+                  onTap: () {
+                    value
+                        ? onValidate(isCorrect: false, item: item)
+                        : Helper.showSnackBarMessage(
+                            context: context,
+                            text:
+                                "Please listen to the audio completely before validating.");
+                  },
                   textColor: value ? AppColors.orange : AppColors.grey24,
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -181,9 +184,14 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
                 child: PrimaryButtonWidget(
                   title: AppLocalizations.of(context)!.correct,
                   textFontSize: 16.sp,
-                  onTap: value
-                      ? () => onValidate(isCorrect: true, item: item)
-                      : null,
+                  onTap: () {
+                    value
+                        ? onValidate(isCorrect: true, item: item)
+                        : Helper.showSnackBarMessage(
+                            context: context,
+                            text:
+                                "Please listen to the audio completely before validating.");
+                  },
                   textColor: Colors.white,
                   decoration: BoxDecoration(
                     color: value ? AppColors.orange : AppColors.grey24,

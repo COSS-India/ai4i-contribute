@@ -12,7 +12,7 @@ class ApiUrl {
   static final String sendOTPUrl = '$baseUrl/auth/send-otp';
   static final String resendOTPUrl = '$baseUrl/auth/resend-otp';
   static final String verifyOTPUrl = '$baseUrl/auth/verify-otp';
-  static final String skipContributionUrl = '$baseUrl/v1/contributions/skip';
+  static final String skipContributionUrl = '$baseUrl/contributions/skip';
   static final String getValidationsQueUrl = '$baseUrl/validations/get-queue';
   static final String submitValidationUrl = '$baseUrl/validations/submit';
   static final String validationSessionCompleteUrl =

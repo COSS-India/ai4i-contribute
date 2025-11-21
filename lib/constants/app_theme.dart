@@ -35,11 +35,11 @@ class AppTheme {
       colorScheme: ColorScheme.fromSwatch().copyWith(
         primary: AppColors.darkGreen,
         secondary: AppColors.orange,
-        background: Colors.black,
+        surface: Colors.black,
         error: Colors.red,
       ),
       checkboxTheme: CheckboxThemeData(
-        fillColor: MaterialStateProperty.all(AppColors.darkGreen),
+        fillColor: WidgetStateProperty.all(AppColors.darkGreen),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4),
         ),

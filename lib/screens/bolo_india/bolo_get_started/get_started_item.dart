@@ -9,7 +9,7 @@ class GetStartedItem extends StatelessWidget {
   final String title;
   final String description;
 
-  const GetStartedItem({
+  const GetStartedItem({super.key, 
     required this.iconPath,
     required this.title,
     required this.description,

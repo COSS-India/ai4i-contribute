@@ -17,7 +17,7 @@ class LoginAuthRepository {
       if (response['data'] != null && response['data']['sessionId'] != null) {
         _storage.write(
             key: StorageConstants.sessionId,
-            value: response['sessionId'] ?? '');
+            value: response['data']['sessionId'] ?? '');
       }
       return response['message'];
     } catch (e) {

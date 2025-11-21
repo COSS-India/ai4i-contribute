@@ -16,16 +16,18 @@ import 'package:path_provider/path_provider.dart';
 enum RecordingState { idle, recording, stopped }
 
 class RecordingButton extends StatefulWidget {
+  final String text;
   final Function(File?) getRecordedFile;
-  final Function(bool?) isRecording;
+  final Function(RecordingState?) isRecording;
   const RecordingButton({
     super.key,
+    required this.text,
     required this.getRecordedFile,
-    required this.isRecording,
+    required this.isRecording
   });
 
   @override
-  _RecordingButtonState createState() => _RecordingButtonState();
+  State<RecordingButton> createState() => _RecordingButtonState();
 }
 
 class _RecordingButtonState extends State<RecordingButton>
@@ -42,6 +44,19 @@ class _RecordingButtonState extends State<RecordingButton>
       vsync: this,
       duration: const Duration(seconds: 2),
     );
+  }
+
+  @override
+  void didUpdateWidget(covariant RecordingButton oldWidget) {
+    if (oldWidget.text != widget.text) {
+      setState(() {
+        _state = RecordingState.idle;
+        recordedFilePath = null;
+        widget.getRecordedFile(null);
+        _controller.stop();
+      });
+    }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -116,10 +131,10 @@ class _RecordingButtonState extends State<RecordingButton>
       }
     } catch (e) {
       debugPrint('Error stopping recording: $e');
-      Helper.showSnackBarMessage(
-          // ignore: use_build_context_synchronously
-          context: context,
-          text: "Failed to stop recording: $e");
+      if (mounted) {
+        Helper.showSnackBarMessage(
+            context: context, text: "Failed to stop recording: $e");
+      }
     }
   }
 
@@ -137,6 +152,7 @@ class _RecordingButtonState extends State<RecordingButton>
         _controller.stop();
       }
     }
+    widget.isRecording(_state);
   }
 
   Widget _buildIcon() {

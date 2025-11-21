@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:VoiceGive/constants/api_url.dart';
 import 'package:VoiceGive/constants/network_headers.dart';
 import 'package:VoiceGive/constants/storage_constants.dart';
@@ -12,7 +11,8 @@ class BoloService {
   static final _storage = SecureStorageService.instance.storage;
 
   static Future<String> get sessionId async {
-    return await _storage.read(key: StorageConstants.sessionId) ?? "";
+    return await _storage.read(key: StorageConstants.sessionId) ??
+        "3fa85f64-5717-4562-b3fc-2c963f66afa6";
   }
 
   Future<Response> getContributionSentances(

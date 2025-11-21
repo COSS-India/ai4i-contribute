@@ -16,7 +16,7 @@ class BoloContributeRepository {
       Response response = await boloService.getContributionSentances(
           language: language, count: count);
       if (response.statusCode == 200) {
-        var content = jsonDecode(response.body);
+        var content = jsonDecode(utf8.decode(response.bodyBytes));
         // var content = jsonDecode(MockApiResponse.contributeSentencesResponse);
 
         var data = content['data'];

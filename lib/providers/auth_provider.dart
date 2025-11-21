@@ -218,9 +218,4 @@ class AuthProvider extends ChangeNotifier {
   bool get hasCompleteProfile {
     return _user?.hasCompleteProfile ?? false;
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 }

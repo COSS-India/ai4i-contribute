@@ -9,14 +9,18 @@ import 'package:VoiceGive/screens/bolo_india/models/session_completed_model.dart
 import 'package:VoiceGive/screens/bolo_india/repository/bolo_contribute_repository.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_contribute/bolo_contribute.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_validation_screen/bolo_validation_screen.dart';
+import 'package:VoiceGive/screens/bolo_india/widgets/bolo_content_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+typedef IntCallback = void Function(int value);
 class BoloContentSection extends StatefulWidget {
   final LanguageModel language;
-  const BoloContentSection({super.key, required this.language});
+  final IntCallback indexUpdate;
+  final int currentIndex;
+  const BoloContentSection({super.key, required this.language, required this.indexUpdate, required this.currentIndex});
 
   @override
   State<BoloContentSection> createState() => _BoloContentSectionState();
@@ -32,6 +36,8 @@ class _BoloContentSectionState extends State<BoloContentSection> {
 
   File? recordedFile;
   int currentIndex = 0;
+
+  List<File?> recordedFiles = [];
 
   @override
   void initState() {
@@ -49,8 +55,16 @@ class _BoloContentSectionState extends State<BoloContentSection> {
       recordedFile = null;
       boloContributeFuture = BoloContributeRepository()
           .getContributionSentances(language: widget.language.languageCode);
-      setState(() {});
     }
+    if(currentIndex != widget.currentIndex){
+      currentIndex = widget.currentIndex;
+    }
+    if(recordedFiles.isNotEmpty && recordedFiles.length > currentIndex + 1){
+      recordedFiles.removeLast();
+    }
+    if(mounted){
+      setState(() {});
+      }
   }
 
   @override
@@ -59,10 +73,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
       future: boloContributeFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Padding(
-            padding: const EdgeInsets.only(top: 158.0),
-            child: const Center(child: CircularProgressIndicator()),
-          );
+          return BoloContentSkeleton();
         }
         if (snapshot.hasError || snapshot.data == null) {
           return Center(
@@ -111,16 +122,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
               SizedBox(height: 24.w),
               _sentenceText(contributeSentences[currentIndex].text),
               SizedBox(height: 50.w),
-              RecordingButton(
-                isRecording: (bool? recording) {
-                  debugPrint("Recording state changed: $recording");
-                },
-                getRecordedFile: (File? file) {
-                  debugPrint("Received recorded file: ${file?.path}");
-                  enableSubmit.value = file != null;
-                  recordedFile = file;
-                },
-              ),
+              recordingButton(sentence: contributeSentences[currentIndex]),
               SizedBox(height: 30.w),
               _actionButtons(
                   length: sentencesLength,
@@ -174,6 +176,62 @@ class _BoloContentSectionState extends State<BoloContentSection> {
         ),
       );
 
+  Widget recordingButton({required Sentence sentence}) {
+    return ValueListenableBuilder(
+        valueListenable: skipLoading,
+        builder: (context, skipvalue, child) {
+          return ValueListenableBuilder(
+              valueListenable: submitLoading,
+              builder: (context, submitValue, child) {
+                return submitValue || skipvalue
+                    ? Column(
+                        children: [
+                          Text(skipvalue ? "Skipping..." : "Submitting...",
+                              style: GoogleFonts.notoSans(
+                                  fontSize: 20.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.darkGreen)),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          CircleAvatar(
+                              radius: 36.r,
+                              backgroundColor: AppColors.lightGreen,
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              )),
+                          SizedBox(
+                            height: 50,
+                          ),
+                        ],
+                      )
+                    : RecordingButton(
+                        text: sentence.text,
+                        isRecording: (RecordingState? state) {
+                          debugPrint("Recording state changed: $state");
+                          if (state != null &&
+                              state == RecordingState.recording) {
+                            enableSubmit.value = false;
+                            enableSkip.value = false;
+                          } else if (state != null &&
+                              state == RecordingState.stopped) {
+                            enableSkip.value = true;
+                            enableSubmit.value = true;
+                          }
+                        },
+                        getRecordedFile: (File? file) {
+                          debugPrint("Received recorded file: ${file?.path}");
+                          enableSubmit.value = file != null;
+                          recordedFile = file;
+                        },
+                      );
+              });
+        });
+  }
+
   Widget _actionButtons(
       {required Sentence currentSentence, required int length}) {
     final bool isSessionComplete = currentIndex >= length - 1;
@@ -206,17 +264,21 @@ class _BoloContentSectionState extends State<BoloContentSection> {
           textFontSize: 16.sp,
           onTap: () async {
             if (await onSessionComplete()) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BoloContribute(),
-                ),
-              );
+              if (mounted) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BoloContribute(),
+                  ),
+                );
+              }
             } else {
-              Helper.showSnackBarMessage(
-                context: context,
-                text: "Failed to complete session. Please try again.",
-              );
+              if (mounted) {
+                Helper.showSnackBarMessage(
+                  context: context,
+                  text: "Failed to complete session. Please try again.",
+                );
+              }
             }
           },
           textColor: AppColors.orange,
@@ -235,17 +297,21 @@ class _BoloContentSectionState extends State<BoloContentSection> {
           textFontSize: 16.sp,
           onTap: () async {
             if (await onSessionComplete()) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BoloValidationScreen(),
-                ),
-              );
+              if (mounted) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BoloValidationScreen(),
+                  ),
+                );
+              }
             } else {
-              Helper.showSnackBarMessage(
-                context: context,
-                text: "Failed to complete session. Please try again.",
-              );
+              if (mounted) {
+                Helper.showSnackBarMessage(
+                  context: context,
+                  text: "Failed to complete session. Please try again.",
+                );
+              }
             }
           },
           textColor: Colors.white,
@@ -356,7 +422,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
     required Sentence currentSentence,
   }) async {
     if (submitLoading.value) return;
-    if (!submitEnabled && recordedFile != null) {
+    if (!enableSubmit.value || recordedFile == null) {
       Helper.showSnackBarMessage(
         context: context,
         text: "Please record your voice before submitting.",
@@ -366,8 +432,10 @@ class _BoloContentSectionState extends State<BoloContentSection> {
 
     submitLoading.value = true;
     enableSkip.value = false;
+    bool isSubmitted = false;
 
-    bool isSubmitted = await BoloContributeRepository().submitContributeAudio(
+    if(recordedFile!=null){
+      isSubmitted = await BoloContributeRepository().submitContributeAudio(
       duration: 10,
       sentenceId: currentSentence.sentenceId,
       sequenceNumber: currentSentence.sequenceNumber,
@@ -375,6 +443,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
       languageCode: widget.language.languageCode,
     );
 
+    }
     if (isSubmitted) {
       enableSubmit.value = true;
       recordedFile = null;
@@ -401,9 +470,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
     List<Sentence> contributeSentences =
         (await boloContributeFuture)?.sentences ?? [];
     if (currentIndex < contributeSentences.length - 1) {
-      setState(() {
-        currentIndex++;
-      });
+      widget.indexUpdate(currentIndex + 1);
     } else {
       Navigator.push(
         context,

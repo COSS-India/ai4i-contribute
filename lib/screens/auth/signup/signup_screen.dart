@@ -138,8 +138,13 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-        onWillPop: _navigateBackToHome,
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          return;
+        }
+        _navigateBackToHome();
+      },
         child: Scaffold(
           backgroundColor: Colors.white,
           resizeToAvoidBottomInset: true,

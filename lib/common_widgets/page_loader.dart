@@ -8,12 +8,11 @@ class PageLoader extends StatelessWidget {
   final bool isLightTheme;
 
   const PageLoader(
-      {Key? key,
+      {super.key,
       this.top = 0,
       this.bottom = 0,
       this.isLightTheme = true,
-      this.strokeWidth = 4.0})
-      : super(key: key);
+      this.strokeWidth = 4.0});
   @override
   Widget build(BuildContext context) {
     return Container(

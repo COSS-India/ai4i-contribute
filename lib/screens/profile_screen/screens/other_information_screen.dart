@@ -100,10 +100,12 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        Navigator.pop(context);
-        return false;
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          return;
+        }
+        Navigator.of(context).pop();
       },
       child: Scaffold(
         appBar: const CustomAppBar(),
@@ -164,14 +166,30 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                               items: _countries,
                               defaultItem: _country,
                               onPicked: (v) async {
-                                _country = v;
-                                String countryId = getCountryId(_country);
-                                stateList = await ProfileRepository()
-                                    .getState(countryId);
-                                _states =
-                                    stateList.map((e) => e.stateName).toList();
-                                if (mounted) {
-                                  setState(() {});
+                                // Check if country actually changed
+                                if (_country != v) {
+                                  _country = v;
+                                  
+                                  // Clear dependent fields
+                                  _state = '';
+                                  _district = null;
+                                  _districtController.clear();
+                                  _states = [];
+                                  _districts = [];
+                                  stateList = [];
+                                  districtList = [];
+                                  _showDistrictError = false;
+                                  
+                                  // Fetch states for new country
+                                  String countryId = getCountryId(_country);
+                                  stateList = await ProfileRepository()
+                                      .getState(countryId);
+                                  _states =
+                                      stateList.map((e) => e.stateName).toList();
+                                  
+                                  if (mounted) {
+                                    setState(() {});
+                                  }
                                 }
                               }),
                           child: InputDecorator(
@@ -217,15 +235,28 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                                     items: _states,
                                     defaultItem: _state,
                                     onPicked: (v) async {
-                                      _state = v;
-                                      String stateId = getStateId(_state);
-                                      districtList = await ProfileRepository()
-                                          .getDistrict(stateId);
-                                      _districts = districtList
-                                          .map((e) => e.districtName)
-                                          .toList();
-                                      if (mounted) {
-                                        setState(() {});
+                                      // Check if state actually changed
+                                      if (_state != v) {
+                                        _state = v;
+                                        
+                                        // Clear dependent fields
+                                        _district = null;
+                                        _districtController.clear();
+                                        _districts = [];
+                                        districtList = [];
+                                        _showDistrictError = false;
+                                        
+                                        // Fetch districts for new state
+                                        String stateId = getStateId(_state);
+                                        districtList = await ProfileRepository()
+                                            .getDistrict(stateId);
+                                        _districts = districtList
+                                            .map((e) => e.districtName)
+                                            .toList();
+                                        
+                                        if (mounted) {
+                                          setState(() {});
+                                        }
                                       }
                                     },
                                   ),
@@ -269,15 +300,17 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                           child: TextFormField(
                             controller: _districtController,
                             readOnly: true,
-                            onTap: () => _pickFromList(
-                              items: _districts,
-                              defaultItem: _district,
-                              onPicked: (v) => setState(() {
-                                _district = v;
-                                _districtController.text = v;
-                                _showDistrictError = false;
-                              }),
-                            ),
+                            onTap: _districts.isEmpty
+                                ? null
+                                : () => _pickFromList(
+                                      items: _districts,
+                                      defaultItem: _district,
+                                      onPicked: (v) => setState(() {
+                                        _district = v;
+                                        _districtController.text = v;
+                                        _showDistrictError = false;
+                                      }),
+                                    ),
                             decoration: InputDecoration(
                               label: RichText(
                                 text: TextSpan(children: [
