@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../module_selection_screen.dart';
+
 class BoloValidationScreen extends StatefulWidget {
   const BoloValidationScreen({
     super.key,
@@ -60,7 +62,15 @@ class _BoloValidationScreenState extends State<BoloValidationScreen>
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
-                  BoloHeadersSection(),
+                  BoloHeadersSection(
+                    logoAsset: 'assets/images/bolo.png',
+                    title: 'Validation',
+                    onBackPressed: () => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const ModuleSelectionScreen()),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(12.0).r,
                     child: Column(
