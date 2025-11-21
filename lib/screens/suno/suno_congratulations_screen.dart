@@ -68,7 +68,9 @@ class _SunoCongratulationsScreenState extends State<SunoCongratulationsScreen>
       },
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
-        appBar: CustomAppBar(),
+        appBar: CustomAppBar(
+          showThreeLogos: true,
+        ),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -157,13 +159,13 @@ class _SunoCongratulationsScreenState extends State<SunoCongratulationsScreen>
                     ),
                     const TextSpan(text: " and "),
                     TextSpan(
-                      text: "validated 5",
+                      text: "validated 25",
                       style: BrandingConfig.instance.getPrimaryTextStyle(
                         color: AppColors.darkGreen,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const TextSpan(text: " for SUNO India"),
+                    const TextSpan(text: " in your language"),
                   ],
                 ),
               ),
@@ -197,7 +199,7 @@ class _SunoCongratulationsScreenState extends State<SunoCongratulationsScreen>
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12).r,
             child: Image.asset(
-              'assets/images/certificate.png',
+              'assets/images/certificate.jpg',
               fit: BoxFit.cover,
             ),
           ),
@@ -278,7 +280,7 @@ class _SunoCongratulationsScreenState extends State<SunoCongratulationsScreen>
           child: SizedBox(
             height: 40.w,
             child: PrimaryButtonWidget(
-              title: "Contribute More",
+              title: " Continue Contributing",
               textFontSize: 14.sp,
               onTap: () {
                 Navigator.pushReplacement(

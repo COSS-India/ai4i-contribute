@@ -96,7 +96,7 @@
     "emailId": "Email ID",
     "gender": "Gender",
     "saveAndContinue": "Save & Continue",
-    "pleaseSelectAgeGroupAndGender": "Please select age group and gender",
+    "pleaseSelectAgeGroupAndGender": "Please enter all required details",
     "thisFieldIsRequiredToContinue": "This field is required to continue.",
     
     "under18Years": "Under 18 years",

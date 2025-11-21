@@ -110,7 +110,9 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
         Navigator.of(context).pop();
       },
       child: Scaffold(
-        appBar: const CustomAppBar(),
+        appBar: const CustomAppBar(
+          showThreeLogos: true,
+        ),
         backgroundColor: AppColors.backgroundColor,
         body: SafeArea(
           child: Column(

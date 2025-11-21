@@ -261,7 +261,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                                     BrandingConfig.instance.certificateImage,
                               )
                             : Image.asset(
-                                'assets/images/certificate.png',
+                                'assets/images/certificate.jpg',
                                 fit: BoxFit.contain,
                               ),
                       ),

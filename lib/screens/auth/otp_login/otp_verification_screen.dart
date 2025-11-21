@@ -258,7 +258,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                   text: "RESEND",
                                   style: BrandingConfig.instance
                                       .getPrimaryTextStyle(
-                                    color: AppColors.lightGreen,
+                                    color: AppColors.darkGreen,
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w600,
                                   ),

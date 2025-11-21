@@ -9,10 +9,15 @@ class AppColors {
   static Color get appBarBackground => BrandingConfig.instance.bgColor;
   static Color get orange => BrandingConfig.instance.secondaryColor;
   static Color get darkGreen => BrandingConfig.instance.primaryColor;
-  static Color get lightGreen => BrandingConfig.instance.primaryColor.withOpacity(0.3);
-  static Color get lightGreen2 => BrandingConfig.instance.primaryColor.withOpacity(0.1);
-  static Color get lightGreen3 => BrandingConfig.instance.primaryColor.withOpacity(0.05);
-  static Color get lightGreen4 => BrandingConfig.instance.primaryColor.withOpacity(0.15);
+  static Color get green => Color(0xFF27C854);
+  static Color get lightGreen =>
+      BrandingConfig.instance.primaryColor.withOpacity(0.3);
+  static Color get lightGreen2 =>
+      BrandingConfig.instance.primaryColor.withOpacity(0.1);
+  static Color get lightGreen3 =>
+      BrandingConfig.instance.primaryColor.withOpacity(0.05);
+  static Color get lightGreen4 =>
+      BrandingConfig.instance.primaryColor.withOpacity(0.15);
   static Color get bannerColor {
     final branding = BrandingConfig.instance;
     if (branding.bannerColor != const Color.fromRGBO(33, 150, 243, 1.0)) {
@@ -30,7 +35,9 @@ class AppColors {
   static Color _inverseThemeColor(double opacity) {
     final textColor = BrandingConfig.instance.textColor;
     final isLight = textColor.computeLuminance() < 0.5;
-    return isLight ? Colors.white.withOpacity(opacity) : Colors.black.withOpacity(opacity);
+    return isLight
+        ? Colors.white.withOpacity(opacity)
+        : Colors.black.withOpacity(opacity);
   }
 
   static Color get grey => _themeColor(0.62);

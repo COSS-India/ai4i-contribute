@@ -205,7 +205,7 @@ class _BoloCongratulationsScreenState extends State<BoloCongratulationsScreen>
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12).r,
             child: Image.asset(
-              'assets/images/certificate.png',
+              'assets/images/certificate.jpg',
               fit: BoxFit.cover,
             ),
           ),

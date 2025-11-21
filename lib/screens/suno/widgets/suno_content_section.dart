@@ -3,7 +3,7 @@ import 'package:VoiceGive/screens/suno/suno_validate/suno_validation_screen.dart
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/constants/helper.dart';
 import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
-import 'package:VoiceGive/common_widgets/audio_player/custom_audio_player.dart';
+import 'package:VoiceGive/common_widgets/audio_player/suno_audio_player.dart';
 import 'package:VoiceGive/common_widgets/unicode_validation_text_field.dart';
 import '../models/suno_item_model.dart';
 import '../service/suno_service.dart';
@@ -33,6 +33,7 @@ class _SunoContentSectionState extends State<SunoContentSection> {
   final ValueNotifier<bool> enableSubmit = ValueNotifier<bool>(false);
   final ValueNotifier<bool> submitLoading = ValueNotifier<bool>(false);
   final ValueNotifier<bool> audioCompleted = ValueNotifier<bool>(false);
+  final ValueNotifier<bool> audioStarted = ValueNotifier<bool>(false);
   final ValueNotifier<bool> isLoading = ValueNotifier<bool>(true);
   final TextEditingController textController = TextEditingController();
   bool _hasValidationError = false;
@@ -65,6 +66,7 @@ class _SunoContentSectionState extends State<SunoContentSection> {
 
   void _resetAudioState() {
     audioCompleted.value = false;
+    audioStarted.value = false;
     textController.clear();
     enableSubmit.value = false;
     _hasValidationError = false;
@@ -123,7 +125,7 @@ class _SunoContentSectionState extends State<SunoContentSection> {
       builder: (context, loading, child) {
         if (loading) {
           return Container(
-            height: 400.h,
+            height: 500.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8).r,
               border: Border.all(color: Colors.grey[700]!),
@@ -136,7 +138,7 @@ class _SunoContentSectionState extends State<SunoContentSection> {
 
         if (sunoItems.isEmpty) {
           return Container(
-            height: 400.h,
+            height: 500.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8).r,
               border: Border.all(color: Colors.grey[700]!),
@@ -153,7 +155,8 @@ class _SunoContentSectionState extends State<SunoContentSection> {
           );
         }
 
-        final double progress = submittedCount / totalContributions;
+        final int currentItemNumber = currentIndex + 1;
+        final double progress = currentItemNumber / totalContributions;
         return ClipRRect(
           borderRadius: BorderRadius.circular(8).r,
           child: Stack(
@@ -170,15 +173,17 @@ class _SunoContentSectionState extends State<SunoContentSection> {
                 child: Column(
                   children: [
                     _progressHeader(
-                        progress: progress, total: totalContributions),
+                        progress: progress, total: totalContributions, currentItem: currentItemNumber),
                     SizedBox(height: 24.w),
                     _instructionText(),
                     SizedBox(height: 30.w),
-                    CustomAudioPlayer(
-                      key: ValueKey('${sunoItems[currentIndex].itemId}_$_audioPlayerKey'),
+                    SunoAudioPlayer(
+                      key: ValueKey(
+                          '${sunoItems[currentIndex].itemId}_$_audioPlayerKey'),
                       filePath: _sunoService
                           .getFullAudioUrl(sunoItems[currentIndex].audioUrl),
                       onAudioEnded: _onAudioEnded,
+                      onAudioStarted: () => audioStarted.value = true,
                     ),
                     SizedBox(height: 30.w),
                     _textInputField(),
@@ -195,14 +200,14 @@ class _SunoContentSectionState extends State<SunoContentSection> {
     );
   }
 
-  Widget _progressHeader({required int total, required double progress}) =>
+  Widget _progressHeader({required int total, required double progress, required int currentItem}) =>
       Column(
         children: [
           Row(
             children: [
               const Spacer(),
               Text(
-                "$submittedCount/$totalContributions",
+                "$currentItem/$total",
                 style: BrandingConfig.instance.getPrimaryTextStyle(
                   fontSize: 12.sp,
                   color: AppColors.darkGreen,
@@ -236,15 +241,21 @@ class _SunoContentSectionState extends State<SunoContentSection> {
         ),
       );
 
-  Widget _textInputField() => UnicodeValidationTextField(
-        controller: textController,
-        enabled: true,
-        maxLines: 4,
-        languageCode: widget.language.languageCode,
-        hintText: "Start typing here...",
-        onChanged: (value) {
-          final hasError = _validateUnicodeText(value);
-          _onValidationChanged(hasError);
+  Widget _textInputField() => ValueListenableBuilder<bool>(
+        valueListenable: audioStarted,
+        builder: (context, hasStarted, child) {
+          final bool isSessionComplete = submittedCount >= totalContributions;
+          return UnicodeValidationTextField(
+            controller: textController,
+            enabled: hasStarted && !isSessionComplete,
+            maxLines: 4,
+            languageCode: widget.language.languageCode,
+            hintText: "Start typing here...",
+            onChanged: (value) {
+              final hasError = _validateUnicodeText(value);
+              _onValidationChanged(hasError);
+            },
+          );
         },
       );
 
@@ -447,7 +458,7 @@ class _SunoContentSectionState extends State<SunoContentSection> {
         sunoItems[currentIndex] = response.data.first;
         _audioPlayerKey++; // Force audio player rebuild
         setState(() {});
-        
+
         // Small delay to ensure widget rebuilds properly
         await Future.delayed(const Duration(milliseconds: 100));
       }

@@ -5,6 +5,7 @@ import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
 import 'package:VoiceGive/common_widgets/audio_player/custom_audio_player.dart';
 import 'package:VoiceGive/common_widgets/unicode_validation_text_field.dart';
 import 'package:VoiceGive/screens/suno/suno_congratulations_screen.dart';
+import '../../../common_widgets/audio_player/suno_validation_audio_player.dart';
 import '../models/suno_validation_model.dart';
 import '../service/suno_service.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lottie/lottie.dart';
 import '../../../config/branding_config.dart';
+import 'package:just_audio/just_audio.dart';
 
 typedef IntCallback = void Function(int value);
 typedef VoidCallback = void Function();
@@ -49,14 +51,20 @@ class _SunoValidationContentSectionState
 
   int currentIndex = 0;
   int submittedCount = 0;
-  int totalContributions = 5;
+  int totalContributions = 25;
+  int currentBatchIndex = 0;
+  int batchSize = 5;
   List<SunoValidationModel> validationItems = [];
   final SunoService _sunoService = SunoService();
   int _audioPlayerKey = 0;
+  bool _isPlaying = false;
+  bool _hasEnded = false;
+  late AudioPlayer _player;
 
   @override
   void initState() {
     super.initState();
+    _player = AudioPlayer();
     _confettiController = AnimationController(vsync: this);
     correctedTextController
         .addListener(() => _onTextChanged(correctedTextController.text));
@@ -71,6 +79,7 @@ class _SunoValidationContentSectionState
     }
     if (currentIndex != widget.currentIndex) {
       currentIndex = widget.currentIndex;
+      currentBatchIndex = widget.currentIndex;
       _resetAudioState();
     }
   }
@@ -82,6 +91,12 @@ class _SunoValidationContentSectionState
     _hasValidationError = false;
     _needsChange = false;
     _audioPlayerKey++; // Force audio player rebuild
+    _player.stop();
+    setState(() {
+      _isPlaying = false;
+      _hasEnded = false;
+    });
+    _setupPlayerListeners();
   }
 
   void _onTextChanged(String value) {
@@ -100,24 +115,50 @@ class _SunoValidationContentSectionState
 
   void _onAudioEnded() {
     audioCompleted.value = true;
+    setState(() {
+      _hasEnded = true;
+      _isPlaying = false;
+    });
     _onTextChanged(correctedTextController.text);
   }
 
   @override
   void dispose() {
+    _player.dispose();
     _confettiController.dispose();
     correctedTextController.dispose();
     super.dispose();
   }
 
+  void _setupPlayerListeners() {
+    _player.playerStateStream.listen((state) {
+      if (mounted) {
+        if (state.processingState == ProcessingState.completed) {
+          setState(() {
+            _isPlaying = false;
+            _hasEnded = true;
+          });
+          _onAudioEnded();
+        } else {
+          setState(() {
+            _isPlaying = state.playing;
+            if (state.playing) {
+              _hasEnded = false;
+            }
+          });
+        }
+      }
+    });
+  }
+
   Future<void> _loadValidationData() async {
     try {
       isLoading.value = true;
-      final response = await _sunoService.getValidationQueue(batchSize: 5);
+      final response = await _sunoService.getValidationQueue(batchSize: 25);
 
       if (response.success && response.data.isNotEmpty) {
         validationItems = response.data;
-        totalContributions = validationItems.length;
+        _setupPlayerListeners();
         setState(() {});
       }
     } catch (e) {
@@ -167,7 +208,8 @@ class _SunoValidationContentSectionState
           );
         }
 
-        final double progress = submittedCount / totalContributions;
+        final int currentItemNumber = submittedCount + 1;
+        final double progress = currentItemNumber / totalContributions;
         return Stack(
           children: [
             ClipRRect(
@@ -186,20 +228,28 @@ class _SunoValidationContentSectionState
                     child: Column(
                       children: [
                         _progressHeader(
-                            progress: progress, total: totalContributions),
+                            progress: progress, total: totalContributions, currentItem: currentItemNumber),
                         SizedBox(height: 24.w),
                         _instructionText(),
-                        SizedBox(height: 30.w),
-                        CustomAudioPlayer(
+                        SizedBox(height: 22.w),
+                        SunoValidationAudioPlayer(
                           key: ValueKey(
-                              '${validationItems[currentIndex].itemId}_$_audioPlayerKey'),
+                              '${validationItems[currentBatchIndex].itemId}_$_audioPlayerKey'),
                           filePath: _sunoService.getFullAudioUrl(
-                              validationItems[currentIndex].audioUrl),
+                              validationItems[currentBatchIndex].audioUrl),
                           onAudioEnded: _onAudioEnded,
+                          originalText:
+                              validationItems[currentBatchIndex].transcript,
+                          correctedTextController: correctedTextController,
+                          languageCode: widget.language.languageCode,
+                          needsChange: _needsChange,
+                          audioCompleted: audioCompleted.value,
+                          onTextChanged: (value) {
+                            final hasError = _validateUnicodeText(value);
+                            _onValidationChanged(hasError);
+                          },
                         ),
-                        SizedBox(height: 30.w),
-                        _textInputField(),
-                        SizedBox(height: 30.w),
+                        SizedBox(height: 22.w),
                         _actionButtons(),
                         SizedBox(height: 20.w),
                         _skipButton(),
@@ -235,14 +285,14 @@ class _SunoValidationContentSectionState
     );
   }
 
-  Widget _progressHeader({required int total, required double progress}) =>
+  Widget _progressHeader({required int total, required double progress, required int currentItem}) =>
       Column(
         children: [
           Row(
             children: [
               const Spacer(),
               Text(
-                "$submittedCount/$totalContributions",
+                "$currentItem/$total",
                 style: BrandingConfig.instance.getPrimaryTextStyle(
                   fontSize: 12.sp,
                   color: AppColors.darkGreen,
@@ -298,7 +348,7 @@ class _SunoValidationContentSectionState
                   padding: EdgeInsets.all(12).r,
                   child: TextField(
                     controller: TextEditingController(
-                        text: validationItems[currentIndex].transcript),
+                        text: validationItems[currentBatchIndex].transcript),
                     enabled: false,
                     maxLines: 4,
                     decoration: InputDecoration(
@@ -343,7 +393,7 @@ class _SunoValidationContentSectionState
                         padding: EdgeInsets.all(12).r,
                         child: TextField(
                           controller: TextEditingController(
-                              text: validationItems[currentIndex].transcript),
+                              text: validationItems[currentBatchIndex].transcript),
                           enabled: false,
                           maxLines: 4,
                           decoration: InputDecoration(
@@ -510,7 +560,7 @@ class _SunoValidationContentSectionState
         builder: (context, isAudioCompleted, child) => SizedBox(
           width: 180.w,
           child: PrimaryButtonWidget(
-            title: _needsChange ? "Cancel" : "Needs Change",
+            title: _needsChange ? "Cancel" : "Needs Changes",
             textFontSize: 16.sp,
             onTap: isAudioCompleted
                 ? () {
@@ -518,7 +568,7 @@ class _SunoValidationContentSectionState
                       setState(() {
                         _needsChange = true;
                         correctedTextController.text =
-                            validationItems[currentIndex].transcript;
+                            validationItems[currentBatchIndex].transcript;
                       });
                       _onTextChanged(correctedTextController.text);
                     } else {
@@ -566,6 +616,9 @@ class _SunoValidationContentSectionState
             _loadValidationData();
             widget.indexUpdate(0);
             submittedCount = 0;
+            currentBatchIndex = 0;
+            validationItems.clear();
+            _loadValidationData();
             _resetAudioState();
           },
           textColor: AppColors.orange,
@@ -599,7 +652,7 @@ class _SunoValidationContentSectionState
       final response = await _sunoService.getValidationQueue(batchSize: 1);
 
       if (response.success && response.data.isNotEmpty) {
-        validationItems[currentIndex] = response.data.first;
+        validationItems[currentBatchIndex] = response.data.first;
         setState(() {});
 
         // Small delay to ensure widget rebuilds properly
@@ -651,14 +704,14 @@ class _SunoValidationContentSectionState
       if (_needsChange) {
         // Submit corrected transcript
         success = await _sunoService.submitTranscript(
-          itemId: validationItems[currentIndex].itemId,
+          itemId: validationItems[currentBatchIndex].itemId,
           language: widget.language.languageCode,
           transcript: correctedTextController.text.trim(),
         );
       } else {
         // Submit validation decision as correct
         success = await _sunoService.submitValidationDecision(
-          itemId: validationItems[currentIndex].itemId,
+          itemId: validationItems[currentBatchIndex].itemId,
           decision: "correct",
         );
       }
@@ -676,7 +729,7 @@ class _SunoValidationContentSectionState
           enableSubmit.value = false;
           _hasValidationError = false;
           _needsChange = false;
-          _moveToNext();
+          await _moveToNext();
         } else {
           setState(() {
             _showConfetti = true;
@@ -698,9 +751,83 @@ class _SunoValidationContentSectionState
     }
   }
 
-  void _moveToNext() {
-    if (currentIndex < totalContributions - 1) {
-      widget.indexUpdate(currentIndex + 1);
+  Future<void> _moveToNext() async {
+    currentBatchIndex++;
+    
+    // Check if we need to load next batch
+    if (currentBatchIndex >= validationItems.length) {
+      try {
+        final response = await _sunoService.getValidationQueue(batchSize: 5);
+        if (response.success && response.data.isNotEmpty) {
+          validationItems.addAll(response.data);
+          setState(() {});
+        }
+      } catch (e) {
+        Helper.showSnackBarMessage(
+          context: context,
+          text: "Failed to load next batch: $e",
+        );
+      }
+    }
+    
+    if (currentBatchIndex < validationItems.length) {
+      widget.indexUpdate(currentBatchIndex);
+    }
+  }
+
+  Future<void> _handlePlayPause() async {
+    try {
+      if (_isPlaying) {
+        await _player.pause();
+      } else {
+        if (_hasEnded) {
+          await _player.seek(Duration.zero);
+          setState(() {
+            _hasEnded = false;
+          });
+        }
+        await _player.setUrl(_sunoService
+            .getFullAudioUrl(validationItems[currentBatchIndex].audioUrl));
+        await _player.play();
+      }
+    } catch (e) {
+      debugPrint('Error in play/pause: $e');
+    }
+  }
+
+  Future<void> _handleReplay() async {
+    try {
+      await _player.seek(Duration.zero);
+      setState(() {
+        _hasEnded = false;
+      });
+      await _player.play();
+    } catch (e) {
+      debugPrint('Error in replay: $e');
+    }
+  }
+
+  Widget _buildPlayButton() {
+    if (_hasEnded) {
+      return IconButton(
+        icon: Icon(
+          Icons.replay_circle_filled_outlined,
+          size: 60,
+          color: AppColors.green,
+        ),
+        onPressed: _handleReplay,
+        tooltip: 'Replay',
+      );
+    } else {
+      return IconButton(
+        icon: Icon(
+          _isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
+          size: 60,
+          color: AppColors.green,
+        ),
+        onPressed: _handlePlayPause,
+        tooltip: _isPlaying ? 'Pause' : 'Play',
+      );
     }
   }
 }

@@ -222,7 +222,7 @@ class _UnicodeValidationTextFieldState
     if (invalidChars.isNotEmpty) {
       final languageName = _languageNames[widget.languageCode] ??
           widget.languageCode.toUpperCase();
-      return 'Invalid characters for $languageName: ${invalidChars.join(', ')}';
+      return 'Please type in your chosen language';
     }
     return null;
   }
