@@ -1,7 +1,7 @@
 
-# VoiceGive Flutter Application - Setup & Authentication Guide
+# AI4I - Contribute Flutter Application - Setup & Authentication Guide
 
-This document provides a unified guide for setting up your environment, configuring authentication, and following best practices for the VoiceGive Flutter application.
+This document provides a unified guide for setting up your environment, configuring authentication, and following best practices for the AI4I - Contribute Flutter application.
 
 ---
 
@@ -47,15 +47,15 @@ For organizations wanting to customize the app with their own branding, see the 
 
 # API Specification Document
 
-Ref Backend installation guide : https://github.com/COSS-India/VoiceGive/blob/dev_api_spec/backend/README.md
-Swagger UI : http://52.66.71.106:9000/docs
+Ref Backend installation guide : https://github.com/COSS-India/ai4i-contribute/blob/release/v0.2/backend/README.md
+Swagger UI : http://3.7.77.1:9000/docs
 
 ## Code Structure
 
 ### Key Directories
 
 ```
-VoiceGive/
+AI4I - Contribute/
 ├── android/                 # Android-specific configuration
 ├── ios/                     # iOS-specific configuration
 ├── lib/                     # Main Dart code
@@ -68,6 +68,7 @@ VoiceGive/
 │   ├── screens/            # App screens
 │   ├── services/           # API and business logic
 │   └── util/               # Utility functions
+├── backend/                # Mock Backend
 ├── assets/                 # Images, icons, animations
 ├── build_scripts/          # Build automation scripts
 ├── documentation/          # Project documentation
