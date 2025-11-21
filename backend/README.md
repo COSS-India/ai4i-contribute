@@ -1,4 +1,4 @@
-# VoiceGive FastAPI Backend - Production Ready
+# VoiceGive FastAPI - Sample Backend (For understanding of API usage)
 
 Complete FastAPI backend implementation with **enhanced logging**, **database integration**, and **zero hardcoded values**.
 

@@ -1,5 +1,5 @@
 
-# VoiceGive Flutter Application - Setup & Authentication Guide
+# AI4I-Contribute Flutter Application - Setup & Authentication Guide
 
 This document provides a unified guide for setting up your environment, configuring authentication, and following best practices for the VoiceGive Flutter application.
 
@@ -32,9 +32,12 @@ Java HotSpot(TM) 64-Bit Server VM (build 17.0.13+10-LTS-268, mixed mode, sharing
 - flutter pub run build_runner build --delete-conflicting-outputs
 - flutter run
 
-# API Specification Document
+## 2. API Specification Document
 
-Ref Backend installation guide : https://github.com/COSS-India/VoiceGive/blob/dev_api_spec/backend/README.md
+Ref Backend installation guide : https://github.com/COSS-India/VoiceGive/blob/master/backend/README.md
+
+API Contracts : https://github.com/COSS-India/VoiceGive/blob/master/contracts/voicegive_backend_api_contracts.yaml
+
 Swagger UI : http://43.205.235.156:9000/docs
 
 ## Code Structure
