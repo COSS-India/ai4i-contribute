@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(showThreeLogos: true),
       body: SafeArea(
         child: Column(
           children: [

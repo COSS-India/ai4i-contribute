@@ -41,53 +41,58 @@ class BoloHeadersSection extends StatelessWidget {
               size: 36.sp,
             ),
           ),
-          SizedBox(width: 24.w),
-          if (logoAsset != null) ...[
-            Image.asset(
-              logoAsset!,
-              height: 40.w,
-              width: 40.w,
-            ),
-            SizedBox(width: 12.w),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: (subtitle == null || subtitle!.isEmpty) 
-                  ? MainAxisAlignment.center 
-                  : MainAxisAlignment.start,
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (title != null)
-                  Text(
-                    title!,
-                    style: BrandingConfig.instance.getPrimaryTextStyle(
-                      fontSize: (subtitle == null || subtitle!.isEmpty) ? 18.sp : 16.sp,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
+                if (logoAsset != null) ...[
+                  Image.asset(
+                    logoAsset!,
+                    height: 40.w,
+                    width: 40.w,
                   ),
-                if (subtitle != null && subtitle!.isNotEmpty)
-                  Text(
-                    subtitle!,
-                    style: BrandingConfig.instance.getPrimaryTextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
+                  SizedBox(width: 12.w),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: (subtitle == null || subtitle!.isEmpty) 
+                        ? MainAxisAlignment.center 
+                        : MainAxisAlignment.start,
+                    children: [
+                      if (title != null)
+                        Text(
+                          title!,
+                          style: BrandingConfig.instance.getPrimaryTextStyle(
+                            fontSize: (subtitle == null || subtitle!.isEmpty) ? 18.sp : 16.sp,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                        ),
+                      if (subtitle != null && subtitle!.isNotEmpty)
+                        Text(
+                          subtitle!,
+                          style: BrandingConfig.instance.getPrimaryTextStyle(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
+                        ),
+                    ],
                   ),
+                ] else ...[
+                  branding.bannerImage.isNotEmpty
+                      ? ImageWidget(
+                          imageUrl: branding.bannerImage,
+                          height: 40.w,
+                          width: 40.w,
+                        )
+                      : SizedBox(
+                          height: 40.w,
+                          width: 40.w,
+                        ),
+                ]
               ],
             ),
-          ] else ...[
-            branding.bannerImage.isNotEmpty
-                ? ImageWidget(
-                    imageUrl: branding.bannerImage,
-                    height: 40.w,
-                    width: 40.w,
-                  )
-                : SizedBox(
-                    height: 40.w,
-                    width: 40.w,
-                  ),
-            SizedBox(width: 8.w),
-          ]
+          ),
         ],
       ),
     );

@@ -103,12 +103,12 @@ class _HomeHeaderSectionState extends State<HomeHeaderSection> {
                 ],
               ),
               Positioned(
-                top: 0,
-                right: -20,
+                top: 20,
+                right: -5,
                 child: ImageWidget(
                   imageUrl: "assets/images/home_header_image.png",
-                  width: 180.w,
-                  height: 180.h,
+                  width: 168.w,
+                  height: 139.h,
                 ),
               ),
             ],

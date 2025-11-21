@@ -135,17 +135,19 @@ class _CustomAudioPlayerState extends State<CustomAudioPlayer> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.filePath != widget.filePath) {
       // If the file path changes, reinitialize the player
-      _initilizeFlags();
+      _initializeFlags();
     }
   }
 
-  Future<void> _initilizeFlags() async {
+  Future<void> _initializeFlags() async {
     await _player.dispose();
-    _isLoading = true;
-    _position = Duration.zero;
-    _duration = Duration.zero;
-    _isPlaying = false;
-    _hasEnded = false;
+    setState(() {
+      _isLoading = true;
+      _position = Duration.zero;
+      _duration = Duration.zero;
+      _isPlaying = false;
+      _hasEnded = false;
+    });
     _initializePlayer();
   }
 

@@ -97,7 +97,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     if (_otp.length == 6) {
       _isLoading.value = true;
       final sessionId = await SecureStorageService.instance.storage
-          .read(key: StorageConstants.sessionId) ?? '';
+              .read(key: StorageConstants.sessionId) ??
+          '';
       dynamic userAuthData = await LoginAuthRepository()
           .verifyOtp(otp: _otp, sessionId: sessionId);
       _isLoading.value = false;
@@ -156,7 +157,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       resizeToAvoidBottomInset: true,
-      appBar: const CustomAppBar(),
+      appBar: const CustomAppBar(
+        showThreeLogos: true,
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -179,14 +182,39 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         ),
                       ),
                       SizedBox(height: 16.h),
-                      Text(
-                        "${AppLocalizations.of(context)!.enterOtpFromSms} ${widget.phoneNumber}",
-                        style: BrandingConfig.instance.getPrimaryTextStyle(
-                          color: AppColors.greys60,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                        ),
+                      RichText(
                         textAlign: TextAlign.center,
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Enter the OTP from the sms we sent\n to ",
+                              style:
+                                  BrandingConfig.instance.getPrimaryTextStyle(
+                                color: AppColors.greys60,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            TextSpan(
+                              text: "+91 ",
+                              style:
+                                  BrandingConfig.instance.getPrimaryTextStyle(
+                                color: AppColors.greys60,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            TextSpan(
+                              text: widget.phoneNumber,
+                              style:
+                                  BrandingConfig.instance.getPrimaryTextStyle(
+                                color: AppColors.greys60,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       SizedBox(height: 32.h),
                       // OTP Timer and resend UI
@@ -194,7 +222,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         Text(
                           _formatOtpTime(_otpSeconds),
                           style: BrandingConfig.instance.getPrimaryTextStyle(
-                            color: AppColors.lightGreen,
+                            color: AppColors.darkGreen,
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w600,
                           ),

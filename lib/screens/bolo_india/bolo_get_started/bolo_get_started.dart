@@ -93,7 +93,9 @@ class _BoloGetStartedState extends State<BoloGetStarted> {
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: const CustomAppBar(),
+      appBar: const CustomAppBar(
+        showThreeLogos: true,
+      ),
       body: SafeArea(
         child: Column(
           children: [

@@ -8,7 +8,10 @@ import 'package:VoiceGive/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'dart:ui';
 import '../../config/branding_config.dart';
+import '../bolo_india/widgets/bolo_headers_section.dart';
+import '../module_selection_screen.dart';
 
 class SunoCongratulationsScreen extends StatefulWidget {
   const SunoCongratulationsScreen({super.key});
@@ -71,35 +74,14 @@ class _SunoCongratulationsScreenState extends State<SunoCongratulationsScreen>
           child: Column(
             children: [
               // Suno India Header
-              Container(
-                padding: EdgeInsets.all(16).r,
-                decoration: BoxDecoration(color: AppColors.bannerColor),
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap: _navigateBackToHome,
-                      child: Icon(
-                        Icons.arrow_circle_left_outlined,
-                        color: Colors.white,
-                        size: 36.sp,
-                      ),
-                    ),
-                    SizedBox(width: 24.w),
-                    ImageWidget(
-                      imageUrl: 'assets/images/suno.png',
-                      height: 40.w,
-                      width: 40.w,
-                    ),
-                    SizedBox(width: 8.w),
-                    Text(
-                      'SUNO India',
-                      style: BrandingConfig.instance.getPrimaryTextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
+              BoloHeadersSection(
+                logoAsset: 'assets/images/suno.png',
+                title: 'SUNO India',
+                subtitle: 'Enrich your language by listening to audio',
+                onBackPressed: () => Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const ModuleSelectionScreen()),
                 ),
               ),
               // Content Section
@@ -167,7 +149,15 @@ class _SunoCongratulationsScreenState extends State<SunoCongratulationsScreen>
                   children: [
                     const TextSpan(text: "You've "),
                     TextSpan(
-                      text: "validated 5 audio transcripts",
+                      text: "contributed 5 sentences",
+                      style: BrandingConfig.instance.getPrimaryTextStyle(
+                        color: AppColors.darkGreen,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const TextSpan(text: " and "),
+                    TextSpan(
+                      text: "validated 5",
                       style: BrandingConfig.instance.getPrimaryTextStyle(
                         color: AppColors.darkGreen,
                         fontWeight: FontWeight.w700,
@@ -190,7 +180,7 @@ class _SunoCongratulationsScreenState extends State<SunoCongratulationsScreen>
         // Certificate Background
         Container(
           width: double.infinity,
-          height: 200.w,
+          height: 330.w,
           decoration: BoxDecoration(
             color: AppColors.lightGreen3,
             borderRadius: BorderRadius.circular(12).r,
@@ -209,6 +199,18 @@ class _SunoCongratulationsScreenState extends State<SunoCongratulationsScreen>
             child: Image.asset(
               'assets/images/certificate.png',
               fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        // Blur Effect
+        Positioned.fill(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12).r,
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
+              child: Container(
+                color: Colors.black.withValues(alpha: 0.1),
+              ),
             ),
           ),
         ),
@@ -272,29 +274,6 @@ class _SunoCongratulationsScreenState extends State<SunoCongratulationsScreen>
   Widget _buildActionButtons() {
     return Row(
       children: [
-        Expanded(
-          child: SizedBox(
-            height: 40.w,
-            child: PrimaryButtonWidget(
-              title: "Validate More",
-              textFontSize: 14.sp,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SunoValidationScreen()),
-                );
-              },
-              textColor: AppColors.orange,
-              decoration: BoxDecoration(
-                color: AppColors.backgroundColor,
-                border: Border.all(color: AppColors.orange, width: 1.5),
-                borderRadius: BorderRadius.circular(6).r,
-              ),
-            ),
-          ),
-        ),
-        SizedBox(width: 16.w),
         Expanded(
           child: SizedBox(
             height: 40.w,

@@ -123,7 +123,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _navigateBackToOtp();
       },
       child: Scaffold(
-        appBar: const CustomAppBar(),
+        appBar: const CustomAppBar(
+          showThreeLogos: true,
+        ),
         backgroundColor: AppColors.backgroundColor,
         body: SafeArea(
           child: Column(
@@ -326,7 +328,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               initialValue: '+91 ${widget.phoneNumber}',
                               readOnly: true,
                               decoration: InputDecoration(
-                                enabled: false,
                                 enabledBorder: _outline(AppColors.grey40),
                                 fillColor: AppColors.lightGrey2,
                                 filled: true,

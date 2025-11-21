@@ -42,6 +42,7 @@ class _SunoContentSectionState extends State<SunoContentSection> {
   int totalContributions = 5;
   List<SunoItemModel> sunoItems = [];
   final SunoService _sunoService = SunoService();
+  int _audioPlayerKey = 0;
 
   @override
   void initState() {
@@ -67,11 +68,12 @@ class _SunoContentSectionState extends State<SunoContentSection> {
     textController.clear();
     enableSubmit.value = false;
     _hasValidationError = false;
+    _audioPlayerKey++; // Force audio player rebuild
   }
 
   void _onTextChanged(String value) {
-    enableSubmit.value = textController.text.trim().isNotEmpty && 
-        audioCompleted.value && !_hasValidationError;
+    enableSubmit.value =
+        textController.text.trim().isNotEmpty && !_hasValidationError;
   }
 
   void _onValidationChanged(bool hasError) {
@@ -83,7 +85,6 @@ class _SunoContentSectionState extends State<SunoContentSection> {
 
   void _onAudioEnded() {
     audioCompleted.value = true;
-    _onTextChanged(textController.text);
   }
 
   @override
@@ -154,42 +155,42 @@ class _SunoContentSectionState extends State<SunoContentSection> {
 
         final double progress = submittedCount / totalContributions;
         return ClipRRect(
-              borderRadius: BorderRadius.circular(8).r,
-              child: Stack(
-                fit: StackFit.passthrough,
-                children: [
-                  Image.asset(
-                    'assets/images/contribute_bg.png',
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    color: BrandingConfig.instance.primaryColor,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(12).r,
-                    child: Column(
-                      children: [
-                        _progressHeader(
-                            progress: progress, total: totalContributions),
-                        SizedBox(height: 24.w),
-                        _instructionText(),
-                        SizedBox(height: 30.w),
-                        CustomAudioPlayer(
-                          key: ValueKey(sunoItems[currentIndex].itemId),
-                          filePath: _sunoService.getFullAudioUrl(
-                              sunoItems[currentIndex].audioUrl),
-                          onAudioEnded: _onAudioEnded,
-                        ),
-                        SizedBox(height: 30.w),
-                        _textInputField(),
-                        SizedBox(height: 30.w),
-                        _actionButtons(),
-                        SizedBox(height: 50.w),
-                      ],
-                    ),
-                  ),
-                ],
+          borderRadius: BorderRadius.circular(8).r,
+          child: Stack(
+            fit: StackFit.passthrough,
+            children: [
+              Image.asset(
+                'assets/images/contribute_bg.png',
+                fit: BoxFit.cover,
+                width: double.infinity,
+                color: BrandingConfig.instance.primaryColor,
               ),
-            );
+              Padding(
+                padding: EdgeInsets.all(12).r,
+                child: Column(
+                  children: [
+                    _progressHeader(
+                        progress: progress, total: totalContributions),
+                    SizedBox(height: 24.w),
+                    _instructionText(),
+                    SizedBox(height: 30.w),
+                    CustomAudioPlayer(
+                      key: ValueKey('${sunoItems[currentIndex].itemId}_$_audioPlayerKey'),
+                      filePath: _sunoService
+                          .getFullAudioUrl(sunoItems[currentIndex].audioUrl),
+                      onAudioEnded: _onAudioEnded,
+                    ),
+                    SizedBox(height: 30.w),
+                    _textInputField(),
+                    SizedBox(height: 30.w),
+                    _actionButtons(),
+                    SizedBox(height: 50.w),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
       },
     );
   }
@@ -227,34 +228,29 @@ class _SunoContentSectionState extends State<SunoContentSection> {
         child: Text(
           "Transcribe the provided audio to text.",
           style: BrandingConfig.instance.getPrimaryTextStyle(
-            fontSize: 16.sp,
-            color: AppColors.greys87,
-            fontWeight: FontWeight.w500,
+            fontSize: 14.sp,
+            color: AppColors.darkGreen,
+            fontWeight: FontWeight.w600,
           ),
           textAlign: TextAlign.center,
         ),
       );
 
-  Widget _textInputField() => ValueListenableBuilder<bool>(
-        valueListenable: audioCompleted,
-        builder: (context, isEnabled, child) => UnicodeValidationTextField(
-          controller: textController,
-          enabled: isEnabled,
-          maxLines: 4,
-          languageCode: widget.language.languageCode,
-          hintText: isEnabled
-              ? "Start typing here..."
-              : "Please listen to the complete audio first...",
-          onChanged: (value) {
-            final hasError = _validateUnicodeText(value);
-            _onValidationChanged(hasError);
-          },
-        ),
+  Widget _textInputField() => UnicodeValidationTextField(
+        controller: textController,
+        enabled: true,
+        maxLines: 4,
+        languageCode: widget.language.languageCode,
+        hintText: "Start typing here...",
+        onChanged: (value) {
+          final hasError = _validateUnicodeText(value);
+          _onValidationChanged(hasError);
+        },
       );
 
   bool _validateUnicodeText(String text) {
     if (text.isEmpty) return false;
-    
+
     final ranges = _getLanguageUnicodeRanges(widget.language.languageCode);
     if (ranges == null) return false;
 
@@ -268,19 +264,49 @@ class _SunoContentSectionState extends State<SunoContentSection> {
 
   List<List<int>>? _getLanguageUnicodeRanges(String languageCode) {
     const ranges = {
-      'hi': [[0x0900, 0x097F], [0xA8E0, 0xA8FF]],
-      'bn': [[0x0980, 0x09FF]],
-      'te': [[0x0C00, 0x0C7F]],
-      'mr': [[0x0900, 0x097F], [0xA8E0, 0xA8FF]],
-      'ta': [[0x0B80, 0x0BFF]],
-      'gu': [[0x0A80, 0x0AFF]],
-      'kn': [[0x0C80, 0x0CFF]],
-      'ml': [[0x0D00, 0x0D7F]],
-      'pa': [[0x0A00, 0x0A7F]],
-      'or': [[0x0B00, 0x0B7F]],
-      'as': [[0x0980, 0x09FF]],
-      'ur': [[0x0600, 0x06FF], [0x0750, 0x077F]],
-      'en': [[0x0041, 0x005A], [0x0061, 0x007A]],
+      'hi': [
+        [0x0900, 0x097F],
+        [0xA8E0, 0xA8FF]
+      ],
+      'bn': [
+        [0x0980, 0x09FF]
+      ],
+      'te': [
+        [0x0C00, 0x0C7F]
+      ],
+      'mr': [
+        [0x0900, 0x097F],
+        [0xA8E0, 0xA8FF]
+      ],
+      'ta': [
+        [0x0B80, 0x0BFF]
+      ],
+      'gu': [
+        [0x0A80, 0x0AFF]
+      ],
+      'kn': [
+        [0x0C80, 0x0CFF]
+      ],
+      'ml': [
+        [0x0D00, 0x0D7F]
+      ],
+      'pa': [
+        [0x0A00, 0x0A7F]
+      ],
+      'or': [
+        [0x0B00, 0x0B7F]
+      ],
+      'as': [
+        [0x0980, 0x09FF]
+      ],
+      'ur': [
+        [0x0600, 0x06FF],
+        [0x0750, 0x077F]
+      ],
+      'en': [
+        [0x0041, 0x005A],
+        [0x0061, 0x007A]
+      ],
     };
     return ranges[languageCode];
   }
@@ -289,8 +315,11 @@ class _SunoContentSectionState extends State<SunoContentSection> {
     // Allow common characters
     if (codePoint == 0x0020 || // Space
         (codePoint >= 0x0030 && codePoint <= 0x0039) || // Numbers
-        codePoint == 0x002E || codePoint == 0x002C || // Period, comma
-        codePoint == 0x003F || codePoint == 0x0021) { // Question, exclamation
+        codePoint == 0x002E ||
+        codePoint == 0x002C || // Period, comma
+        codePoint == 0x003F ||
+        codePoint == 0x0021) {
+      // Question, exclamation
       return true;
     }
 
@@ -406,17 +435,21 @@ class _SunoContentSectionState extends State<SunoContentSection> {
 
   void _onSkip() async {
     _resetAudioState();
-    
+
     // Load new audio instead of moving to next
     try {
       final response = await _sunoService.getSunoQueue(
         language: widget.language.languageCode,
         batchSize: 1,
       );
-      
+
       if (response.success && response.data.isNotEmpty) {
         sunoItems[currentIndex] = response.data.first;
+        _audioPlayerKey++; // Force audio player rebuild
         setState(() {});
+        
+        // Small delay to ensure widget rebuilds properly
+        await Future.delayed(const Duration(milliseconds: 100));
       }
     } catch (e) {
       Helper.showSnackBarMessage(
@@ -449,7 +482,7 @@ class _SunoContentSectionState extends State<SunoContentSection> {
     }
 
     submitLoading.value = true;
-    
+
     try {
       final success = await _sunoService.submitTranscript(
         itemId: sunoItems[currentIndex].itemId,
@@ -463,9 +496,8 @@ class _SunoContentSectionState extends State<SunoContentSection> {
           context: context,
           text: "Your contribution submitted successfully",
         );
-        
+
         if (submittedCount < totalContributions) {
-          audioCompleted.value = false;
           textController.clear();
           enableSubmit.value = false;
           _hasValidationError = false;

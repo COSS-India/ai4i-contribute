@@ -82,7 +82,7 @@ class _OtpLoginScreenState extends State<OtpLoginScreen> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       resizeToAvoidBottomInset: true,
-      appBar: const CustomAppBar(),
+      appBar: const CustomAppBar(showThreeLogos: true,),
       body: SafeArea(
         child: Column(
           children: [

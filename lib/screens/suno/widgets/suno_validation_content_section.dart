@@ -31,11 +31,12 @@ class SunoValidationContentSection extends StatefulWidget {
   });
 
   @override
-  State<SunoValidationContentSection> createState() => _SunoValidationContentSectionState();
+  State<SunoValidationContentSection> createState() =>
+      _SunoValidationContentSectionState();
 }
 
-class _SunoValidationContentSectionState extends State<SunoValidationContentSection>
-    with TickerProviderStateMixin {
+class _SunoValidationContentSectionState
+    extends State<SunoValidationContentSection> with TickerProviderStateMixin {
   final ValueNotifier<bool> enableSubmit = ValueNotifier<bool>(false);
   final ValueNotifier<bool> submitLoading = ValueNotifier<bool>(false);
   final ValueNotifier<bool> audioCompleted = ValueNotifier<bool>(false);
@@ -51,12 +52,14 @@ class _SunoValidationContentSectionState extends State<SunoValidationContentSect
   int totalContributions = 5;
   List<SunoValidationModel> validationItems = [];
   final SunoService _sunoService = SunoService();
+  int _audioPlayerKey = 0;
 
   @override
   void initState() {
     super.initState();
     _confettiController = AnimationController(vsync: this);
-    correctedTextController.addListener(() => _onTextChanged(correctedTextController.text));
+    correctedTextController
+        .addListener(() => _onTextChanged(correctedTextController.text));
     _loadValidationData();
   }
 
@@ -78,11 +81,14 @@ class _SunoValidationContentSectionState extends State<SunoValidationContentSect
     enableSubmit.value = false;
     _hasValidationError = false;
     _needsChange = false;
+    _audioPlayerKey++; // Force audio player rebuild
   }
 
   void _onTextChanged(String value) {
-    enableSubmit.value = audioCompleted.value && 
-        ((!_needsChange) || (correctedTextController.text.trim().isNotEmpty && !_hasValidationError));
+    enableSubmit.value = audioCompleted.value &&
+        ((!_needsChange) ||
+            (correctedTextController.text.trim().isNotEmpty &&
+                !_hasValidationError));
   }
 
   void _onValidationChanged(bool hasError) {
@@ -179,12 +185,14 @@ class _SunoValidationContentSectionState extends State<SunoValidationContentSect
                     padding: EdgeInsets.all(12).r,
                     child: Column(
                       children: [
-                        _progressHeader(progress: progress, total: totalContributions),
+                        _progressHeader(
+                            progress: progress, total: totalContributions),
                         SizedBox(height: 24.w),
                         _instructionText(),
                         SizedBox(height: 30.w),
                         CustomAudioPlayer(
-                          key: ValueKey(validationItems[currentIndex].itemId),
+                          key: ValueKey(
+                              '${validationItems[currentIndex].itemId}_$_audioPlayerKey'),
                           filePath: _sunoService.getFullAudioUrl(
                               validationItems[currentIndex].audioUrl),
                           onAudioEnded: _onAudioEnded,
@@ -258,11 +266,11 @@ class _SunoValidationContentSectionState extends State<SunoValidationContentSect
   Widget _instructionText() => Padding(
         padding: EdgeInsets.symmetric(horizontal: 32).r,
         child: Text(
-          "Validate the transcript against the audio.",
+          "Is the translation correct?",
           style: BrandingConfig.instance.getPrimaryTextStyle(
-            fontSize: 16.sp,
-            color: AppColors.greys87,
-            fontWeight: FontWeight.w500,
+            fontSize: 14.sp,
+            color: AppColors.darkGreen,
+            fontWeight: FontWeight.w600,
           ),
           textAlign: TextAlign.center,
         ),
@@ -274,32 +282,41 @@ class _SunoValidationContentSectionState extends State<SunoValidationContentSect
           if (!_needsChange) {
             return Container(
               decoration: BoxDecoration(
-                color: isEnabled ? AppColors.lightGreen4 : Colors.grey[100],
                 borderRadius: BorderRadius.circular(8).r,
-                border: Border.all(
-                  color: isEnabled ? AppColors.darkGreen : AppColors.grey16,
-                  width: 1.5,
-                ),
+                color: Colors.white,
               ),
-              child: Padding(
-                padding: EdgeInsets.all(12).r,
-                child: TextField(
-                  controller: TextEditingController(text: validationItems[currentIndex].transcript),
-                  enabled: false,
-                  maxLines: 4,
-                  decoration: InputDecoration(
-                    hintText: isEnabled
-                        ? "Original transcript"
-                        : "Please listen to the complete audio first...",
-                    border: InputBorder.none,
-                    hintStyle: TextStyle(
-                      color: AppColors.grey16,
-                      fontSize: 14.sp,
-                    ),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColors.lightGreen4,
+                  borderRadius: BorderRadius.circular(8).r,
+                  border: Border.all(
+                    color: AppColors.darkGreen,
+                    width: 1.5,
                   ),
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    color: AppColors.greys87,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(12).r,
+                  child: TextField(
+                    controller: TextEditingController(
+                        text: validationItems[currentIndex].transcript),
+                    enabled: false,
+                    maxLines: 4,
+                    decoration: InputDecoration(
+                      hintText: isEnabled
+                          ? "Original transcript"
+                          : "Please listen to the complete audio first...",
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(
+                        color: AppColors.darkGreen,
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    style: TextStyle(
+                      fontSize: 20.sp,
+                      color: AppColors.darkGreen,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),
@@ -309,31 +326,40 @@ class _SunoValidationContentSectionState extends State<SunoValidationContentSect
               children: [
                 Expanded(
                   child: Container(
+                    height: 125.h,
                     decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: BorderRadius.circular(8).r,
-                      border: Border.all(
-                        color: AppColors.grey16,
-                        width: 1.5,
-                      ),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(12).r,
-                      child: TextField(
-                        controller: TextEditingController(text: validationItems[currentIndex].transcript),
-                        enabled: false,
-                        maxLines: 4,
-                        decoration: InputDecoration(
-                          hintText: "Original",
-                          border: InputBorder.none,
-                          hintStyle: TextStyle(
-                            color: AppColors.grey16,
-                            fontSize: 14.sp,
-                          ),
+                        borderRadius: BorderRadius.circular(8).r,
+                        color: Colors.white),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.lightGreen4,
+                        borderRadius: BorderRadius.circular(8).r,
+                        border: Border.all(
+                          color: AppColors.grey16,
+                          width: 1.5,
                         ),
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: AppColors.greys87,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(12).r,
+                        child: TextField(
+                          controller: TextEditingController(
+                              text: validationItems[currentIndex].transcript),
+                          enabled: false,
+                          maxLines: 4,
+                          decoration: InputDecoration(
+                            hintText: "Original",
+                            border: InputBorder.none,
+                            hintStyle: TextStyle(
+                              color: AppColors.darkGreen,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            color: AppColors.darkGreen,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
@@ -361,7 +387,7 @@ class _SunoValidationContentSectionState extends State<SunoValidationContentSect
 
   bool _validateUnicodeText(String text) {
     if (text.isEmpty) return false;
-    
+
     final ranges = _getLanguageUnicodeRanges(widget.language.languageCode);
     if (ranges == null) return false;
 
@@ -375,28 +401,60 @@ class _SunoValidationContentSectionState extends State<SunoValidationContentSect
 
   List<List<int>>? _getLanguageUnicodeRanges(String languageCode) {
     const ranges = {
-      'hi': [[0x0900, 0x097F], [0xA8E0, 0xA8FF]],
-      'bn': [[0x0980, 0x09FF]],
-      'te': [[0x0C00, 0x0C7F]],
-      'mr': [[0x0900, 0x097F], [0xA8E0, 0xA8FF]],
-      'ta': [[0x0B80, 0x0BFF]],
-      'gu': [[0x0A80, 0x0AFF]],
-      'kn': [[0x0C80, 0x0CFF]],
-      'ml': [[0x0D00, 0x0D7F]],
-      'pa': [[0x0A00, 0x0A7F]],
-      'or': [[0x0B00, 0x0B7F]],
-      'as': [[0x0980, 0x09FF]],
-      'ur': [[0x0600, 0x06FF], [0x0750, 0x077F]],
-      'en': [[0x0041, 0x005A], [0x0061, 0x007A]],
+      'hi': [
+        [0x0900, 0x097F],
+        [0xA8E0, 0xA8FF]
+      ],
+      'bn': [
+        [0x0980, 0x09FF]
+      ],
+      'te': [
+        [0x0C00, 0x0C7F]
+      ],
+      'mr': [
+        [0x0900, 0x097F],
+        [0xA8E0, 0xA8FF]
+      ],
+      'ta': [
+        [0x0B80, 0x0BFF]
+      ],
+      'gu': [
+        [0x0A80, 0x0AFF]
+      ],
+      'kn': [
+        [0x0C80, 0x0CFF]
+      ],
+      'ml': [
+        [0x0D00, 0x0D7F]
+      ],
+      'pa': [
+        [0x0A00, 0x0A7F]
+      ],
+      'or': [
+        [0x0B00, 0x0B7F]
+      ],
+      'as': [
+        [0x0980, 0x09FF]
+      ],
+      'ur': [
+        [0x0600, 0x06FF],
+        [0x0750, 0x077F]
+      ],
+      'en': [
+        [0x0041, 0x005A],
+        [0x0061, 0x007A]
+      ],
     };
     return ranges[languageCode];
   }
 
   bool _isValidCharacter(int codePoint, List<List<int>> ranges) {
-    if (codePoint == 0x0020 || 
-        (codePoint >= 0x0030 && codePoint <= 0x0039) || 
-        codePoint == 0x002E || codePoint == 0x002C || 
-        codePoint == 0x003F || codePoint == 0x0021) {
+    if (codePoint == 0x0020 ||
+        (codePoint >= 0x0030 && codePoint <= 0x0039) ||
+        codePoint == 0x002E ||
+        codePoint == 0x002C ||
+        codePoint == 0x003F ||
+        codePoint == 0x0021) {
       return true;
     }
 
@@ -412,7 +470,8 @@ class _SunoValidationContentSectionState extends State<SunoValidationContentSect
     final bool isSessionComplete = submittedCount >= totalContributions;
 
     if (isSessionComplete) {
-      return SizedBox.shrink(); // Hide buttons when complete, confetti will show
+      return SizedBox
+          .shrink(); // Hide buttons when complete, confetti will show
     } else {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -453,21 +512,24 @@ class _SunoValidationContentSectionState extends State<SunoValidationContentSect
           child: PrimaryButtonWidget(
             title: _needsChange ? "Cancel" : "Needs Change",
             textFontSize: 16.sp,
-            onTap: isAudioCompleted ? () {
-              if (!_needsChange) {
-                setState(() {
-                  _needsChange = true;
-                  correctedTextController.text = validationItems[currentIndex].transcript;
-                });
-                _onTextChanged(correctedTextController.text);
-              } else {
-                setState(() {
-                  _needsChange = false;
-                  correctedTextController.clear();
-                });
-                _onTextChanged(correctedTextController.text);
-              }
-            } : null,
+            onTap: isAudioCompleted
+                ? () {
+                    if (!_needsChange) {
+                      setState(() {
+                        _needsChange = true;
+                        correctedTextController.text =
+                            validationItems[currentIndex].transcript;
+                      });
+                      _onTextChanged(correctedTextController.text);
+                    } else {
+                      setState(() {
+                        _needsChange = false;
+                        correctedTextController.clear();
+                      });
+                      _onTextChanged(correctedTextController.text);
+                    }
+                  }
+                : null,
             textColor: AppColors.orange,
             decoration: BoxDecoration(
               color: AppColors.backgroundColor,
@@ -532,13 +594,16 @@ class _SunoValidationContentSectionState extends State<SunoValidationContentSect
 
   void _onSkip() async {
     _resetAudioState();
-    
+
     try {
       final response = await _sunoService.getValidationQueue(batchSize: 1);
-      
+
       if (response.success && response.data.isNotEmpty) {
         validationItems[currentIndex] = response.data.first;
         setState(() {});
+
+        // Small delay to ensure widget rebuilds properly
+        await Future.delayed(const Duration(milliseconds: 100));
       }
     } catch (e) {
       Helper.showSnackBarMessage(
@@ -579,10 +644,10 @@ class _SunoValidationContentSectionState extends State<SunoValidationContentSect
     }
 
     submitLoading.value = true;
-    
+
     try {
       bool success;
-      
+
       if (_needsChange) {
         // Submit corrected transcript
         success = await _sunoService.submitTranscript(
@@ -604,7 +669,7 @@ class _SunoValidationContentSectionState extends State<SunoValidationContentSect
           context: context,
           text: "Validation submitted successfully",
         );
-        
+
         if (submittedCount < totalContributions) {
           audioCompleted.value = false;
           correctedTextController.clear();

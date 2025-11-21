@@ -209,7 +209,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Scaffold(
           backgroundColor: AppColors.backgroundColor,
           resizeToAvoidBottomInset: true,
-          appBar: const CustomAppBar(),
+          appBar: const CustomAppBar(showThreeLogos: true,),
           body: SafeArea(
             child: Column(
               children: [
