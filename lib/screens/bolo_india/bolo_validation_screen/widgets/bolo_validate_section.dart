@@ -35,7 +35,7 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
   @override
   void initState() {
     getValidationsQueue = BoloValidateRepository().getValidationsQueue(
-        language: widget.languageModel.languageCode, count: 2);
+        language: widget.languageModel.languageName, count: 25);
     super.initState();
   }
 
@@ -45,7 +45,7 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
     if (oldWidget.languageModel.languageCode !=
         widget.languageModel.languageCode) {
       getValidationsQueue = BoloValidateRepository().getValidationsQueue(
-          language: widget.languageModel.languageCode, count: 25);
+          language: widget.languageModel.languageName, count: 25);
       setState(() {});
     }
     super.didUpdateWidget(oldWidget);

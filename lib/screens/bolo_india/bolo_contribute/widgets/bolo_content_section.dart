@@ -47,7 +47,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
   @override
   void initState() {
     boloContributeFuture = BoloContributeRepository()
-        .getContributionSentances(language: widget.language.languageCode);
+        .getContributionSentances(language: widget.language.languageName);
     super.initState();
   }
 
@@ -59,7 +59,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
       enableSubmit.value = false;
       recordedFile = null;
       boloContributeFuture = BoloContributeRepository()
-          .getContributionSentances(language: widget.language.languageCode);
+          .getContributionSentances(language: widget.language.languageName);
     }
     if (currentIndex != widget.currentIndex) {
       currentIndex = widget.currentIndex;

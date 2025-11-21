@@ -162,26 +162,27 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
               MaterialPageRoute(builder: (_) => SunoGetStarted()),
             ),
       },
-      {
-        'title': 'Likho India',
-        'icon': Icons.edit,
-        'assetPath': 'assets/images/likho.png',
-        'color': AppColors.lightGreen,
-        'onTap': () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => LikhoDemoScreen()),
-            ),
-      },
-      {
-        'title': 'Dekho India',
-        'icon': Icons.visibility,
-        'assetPath': 'assets/images/dekho.png',
-        'color': AppColors.grey84,
-        'onTap': () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => DekhoDemoScreen()),
-            ),
-      },
+      // this will be released in future
+      // {
+      //   'title': 'Likho India',
+      //   'icon': Icons.edit,
+      //   'assetPath': 'assets/images/likho.png',
+      //   'color': AppColors.lightGreen,
+      //   'onTap': () => Navigator.push(
+      //         context,
+      //         MaterialPageRoute(builder: (_) => LikhoDemoScreen()),
+      //       ),
+      // },
+      // {
+      //   'title': 'Dekho India',
+      //   'icon': Icons.visibility,
+      //   'assetPath': 'assets/images/dekho.png',
+      //   'color': AppColors.grey84,
+      //   'onTap': () => Navigator.push(
+      //         context,
+      //         MaterialPageRoute(builder: (_) => DekhoDemoScreen()),
+      //       ),
+      // },
       // {
       //   'title': 'Unicode Demo',
       //   'subtitle': 'Text Validation',
