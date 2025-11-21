@@ -2,8 +2,9 @@ import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../config/branding_config.dart';
 
 class ItemsList extends StatelessWidget {
   final ValueNotifier<List<LanguageModel>> filteredItems;
@@ -28,7 +29,7 @@ class ItemsList extends StatelessWidget {
           return Center(
             child: Text(
               AppLocalizations.of(context)!.mStaticNoSearchResultFound,
-              style: GoogleFonts.lato(
+              style: BrandingConfig.instance.getSecondaryTextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
                 color: AppColors.grey16,
@@ -54,6 +55,7 @@ class ItemsList extends StatelessWidget {
               dense: true,
               visualDensity: const VisualDensity(vertical: -2),
               title: Text(filtered[index].languageName),
+              textColor: AppColors.greys87,
               onTap: () {
                 onItemSelected(filtered[index]);
                 // Do not pop here; parent handles closing to avoid popping main route

@@ -1,8 +1,8 @@
 import 'package:VoiceGive/common_widgets/page_loader.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
+import 'package:VoiceGive/config/branding_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class PrimaryButtonWidget extends StatelessWidget {
   final String title;
@@ -90,7 +90,7 @@ class PrimaryButtonWidget extends StatelessWidget {
             ),
           Text(
             title,
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
               color: textColor ?? AppColors.grey40,
               fontWeight: fontWeight ?? FontWeight.w700,
               fontSize: textFontSize ?? 12.0.sp,

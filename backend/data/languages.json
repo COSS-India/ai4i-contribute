@@ -1,66 +1,178 @@
 [
   {
-    "languageCode": "mr",
-    "languageName": "Marathi",
-    "nativeName": "मराठी",
-    "isActive": true,
-    "region": "Maharashtra",
-    "speakers": "83 million"
+    "languageCode":"as",
+    "languageName":"Assamese",
+    "nativeName":"অসমীয়া",
+    "isActive":true, 
+    "region":"Assam",
+    "speakers":"15 million"
   },
   {
-    "languageCode": "hi",
-    "languageName": "Hindi",
-    "nativeName": "हिन्दी",
-    "isActive": true,
-    "region": "North India",
-    "speakers": "600 million"
+    "languageCode":"bn",
+    "languageName":"Bengali",
+    "nativeName":"বাংলা",
+    "isActive":true,
+    "region":"West Bengal, Bangladesh",
+    "speakers":"230 million"
   },
   {
-    "languageCode": "en",
-    "languageName": "English",
-    "nativeName": "English",
-    "isActive": true,
-    "region": "Global",
-    "speakers": "1.5 billion"
+    "languageCode":"brx",
+    "languageName":"Bodo",
+    "nativeName":"बराहो",
+    "isActive":true,
+    "region":"Assam",
+    "speakers":"1.5 million"
   },
   {
-    "languageCode": "te",
-    "languageName": "Telugu",
-    "nativeName": "తెలుగు",
-    "isActive": true,
-    "region": "Andhra Pradesh, Telangana",
-    "speakers": "75 million"
+    "languageCode":"doi",
+    "languageName":"Dogri",
+    "nativeName":"डोगरी",
+    "isActive":true,
+    "region":"Jammu",
+    "speakers":"2.3 million"
   },
   {
-    "languageCode": "ta",
-    "languageName": "Tamil",
-    "nativeName": "தமிழ்",
-    "isActive": true,
-    "region": "Tamil Nadu",
-    "speakers": "70 million"
+    "languageCode":"gu",
+    "languageName":"Gujarati",
+    "nativeName":"ગુજરાતી",
+    "isActive":true,
+    "region":"Gujarat",
+    "speakers":"55 million"
   },
   {
-    "languageCode": "gu",
-    "languageName": "Gujarati",
-    "nativeName": "ગુજરાતી",
-    "isActive": true,
-    "region": "Gujarat",
-    "speakers": "55 million"
+    "languageCode":"hi",
+    "languageName":"Hindi",
+    "nativeName":"हिन्दी",
+    "isActive":true,
+    "region":"North India",
+    "speakers":"600 million"
   },
   {
-    "languageCode": "bn",
-    "languageName": "Bengali",
-    "nativeName": "বাংলা",
-    "isActive": true,
-    "region": "West Bengal",
-    "speakers": "230 million"
+    "languageCode":"kn",
+    "languageName":"Kannada",
+    "nativeName":"ಕನ್ನಡ",
+    "isActive":true,
+    "region":"Karnataka",
+    "speakers":"44 million"
   },
   {
-    "languageCode": "kn",
-    "languageName": "Kannada",
-    "nativeName": "ಕನ್ನಡ",
-    "isActive": true,
-    "region": "Karnataka",
-    "speakers": "44 million"
+    "languageCode":"ks",
+    "languageName":"Kashmiri",
+    "nativeName":"کٲشُر / कॉशुर",
+    "isActive":true,
+    "region":"Jammu & Kashmir",
+    "speakers":"7 million"
+  },
+  {
+    "languageCode":"kok",
+    "languageName":"Konkani",
+    "nativeName":"कोंकणी",
+    "isActive":true,
+    "region":"Goa, Konkan",
+    "speakers":"3 million"
+  },
+  {
+    "languageCode":"mai",
+    "languageName":"Maithili",
+    "nativeName":"मैथिली",
+    "isActive":true,
+    "region":"Bihar",
+    "speakers":"34 million"
+  },
+  {
+    "languageCode":"ml",
+    "languageName":"Malayalam",
+    "nativeName":"മലയാളം",
+    "isActive":true,
+    "region":"Kerala",
+    "speakers":"38 million"
+  },
+  {
+    "languageCode":"mni",
+    "languageName":"Manipuri (Meitei)",
+    "nativeName":"ꯃꯤꯇꯩ ꯂꯣꯟ",
+    "isActive":true,
+    "region":"Manipur",
+    "speakers":"1.5 million"
+  },
+  {
+    "languageCode":"mr",
+    "languageName":"Marathi",
+    "nativeName":"मराठी",
+    "isActive":true,
+    "region":"Maharashtra",
+    "speakers":"83 million"
+  },
+  {
+    "languageCode":"ne",
+    "languageName":"Nepali",
+    "nativeName":"नेपाली",
+    "isActive":true,
+    "region":"Nepal & Sikkim",
+    "speakers":"16 million"
+  },
+  {
+    "languageCode":"or",
+    "languageName":"Odia",
+    "nativeName":"ଓଡ଼ିଆ",
+    "isActive":true,
+    "region":"Odisha",
+    "speakers":"40 million"
+  },
+  {
+    "languageCode":"pa",
+    "languageName":"Punjabi",
+    "nativeName":"ਪੰਜਾਬੀ",
+    "isActive":true,
+    "region":"Punjab",
+    "speakers":"125 million"
+  },
+  {
+    "languageCode":"sa",
+    "languageName":"Sanskrit",
+    "nativeName":"संस्कृतम्",
+    "isActive":true,
+    "region":"Scholarly / liturgical",
+    "speakers":"Classical"
+  },
+  {
+    "languageCode":"sat",
+    "languageName":"Santali",
+    "nativeName":"ᱥᱟᱱᱛᱟᱲᱤ",
+    "isActive":true,
+    "region":"Jharkhand/Odisha",
+    "speakers":"7 million"
+  },
+  {
+    "languageCode":"sd",
+    "languageName":"Sindhi",
+    "nativeName":"سنڌي",
+    "isActive":true,
+    "region":"Sindh / India",
+    "speakers":"30 million"
+  },
+  {
+    "languageCode":"ta",
+    "languageName":"Tamil",
+    "nativeName":"தமிழ்",
+    "isActive":true,
+    "region":"Tamil Nadu",
+    "speakers":"70 million"
+  },
+  {
+    "languageCode":"te",
+    "languageName":"Telugu",
+    "nativeName":"తెలుగు",
+    "isActive":true,
+    "region":"Andhra Pradesh, Telangana",
+    "speakers":"75 million"
+  },
+  {
+    "languageCode":"ur",
+    "languageName":"Urdu",
+    "nativeName":"اردو",
+    "isActive":true,
+    "region":"Pan-India / Pakistan",
+    "speakers":"170 million"
   }
 ]

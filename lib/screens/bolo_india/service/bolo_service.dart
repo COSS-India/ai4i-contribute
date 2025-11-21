@@ -11,15 +11,14 @@ class BoloService {
   static final _storage = SecureStorageService.instance.storage;
 
   static Future<String> get sessionId async {
-    return await _storage.read(key: StorageConstants.sessionId) ??
-        "3fa85f64-5717-4562-b3fc-2c963f66afa6";
+    return await _storage.read(key: StorageConstants.sessionId) ?? "";
   }
 
   Future<Response> getContributionSentances(
       {required String language, int? count}) async {
     Map data = {
-      //"language": language,
-      "languageCode": language,
+      "language": language,
+      // "languageCode": language,
       "count": count ?? 5,
     };
 

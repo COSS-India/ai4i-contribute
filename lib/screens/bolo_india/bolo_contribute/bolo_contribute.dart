@@ -1,6 +1,7 @@
 import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
+import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
-import 'package:VoiceGive/screens/home_screen/home_screen.dart';
+import 'package:VoiceGive/screens/module_selection_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/actions_section.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_contribute/widgets/bolo_content_section.dart';
@@ -29,24 +30,20 @@ class _BoloContributeState extends State<BoloContribute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundColor,
       appBar: CustomAppBar(),
       body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              BoloHeadersSection(onBackPressed: (){
-                if(currentIndex.value > 0){
-                  currentIndex.value = currentIndex.value - 1;
-                  return;
-                }
-                else{
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (_) => const HomeScreen()),
-                    (Route<dynamic> route) => false
-                  );
-                }
-              },),
+              BoloHeadersSection(
+                logoAsset: 'assets/images/bolo.png',
+                title: 'Contribution',
+                onBackPressed: () => Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => const ModuleSelectionScreen()),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(12.0).r,
                 child: Column(
@@ -63,15 +60,16 @@ class _BoloContributeState extends State<BoloContribute> {
                     ),
                     SizedBox(height: 24.w),
                     ValueListenableBuilder<int>(
-                      valueListenable: currentIndex,
-                      builder: (context, index, child) {
-                        return BoloContentSection(
-                          language: selectedLanguage,
-                          currentIndex: index,
-                          indexUpdate: (value) => setState(() {currentIndex.value = value;}),
-                        );
-                      }
-                    ),
+                        valueListenable: currentIndex,
+                        builder: (context, index, child) {
+                          return BoloContentSection(
+                            language: selectedLanguage,
+                            currentIndex: index,
+                            indexUpdate: (value) => setState(() {
+                              currentIndex.value = value;
+                            }),
+                          );
+                        }),
                   ],
                 ),
               )

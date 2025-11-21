@@ -1,0 +1,7 @@
+{
+  "_comment": "Phase 1 mock data for module validation. Replace in Phase 2/3/4.",
+  "module": "likho",
+  "sample_items": [
+    { "id": "l1", "text": "Likho sample item 1" }
+  ]
+}

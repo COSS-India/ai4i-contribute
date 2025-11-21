@@ -2,7 +2,8 @@ import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import '../../../config/branding_config.dart';
 
 class HowItWorksSection extends StatelessWidget {
   const HowItWorksSection({super.key});
@@ -14,7 +15,7 @@ class HowItWorksSection extends StatelessWidget {
       children: [
         Text(
           AppLocalizations.of(context)!.howItWorks,
-          style: GoogleFonts.notoSans(
+          style: BrandingConfig.instance.getPrimaryTextStyle(
             color: AppColors.darkGreen,
             fontSize: 18.sp,
             fontWeight: FontWeight.bold,
@@ -28,16 +29,16 @@ class HowItWorksSection extends StatelessWidget {
                 title: AppLocalizations.of(context)!.contribute,
                 description:
                     AppLocalizations.of(context)!.speakClearlyAndRecord,
-                iconPath: 'assets/icons/contribute_icon.png'),
+                iconPath: 'assets/icons/speaking.png'),
             cardWidget(
                 title: AppLocalizations.of(context)!.validate,
                 description: AppLocalizations.of(context)!.listenAndValidate,
-                iconPath: 'assets/icons/validate_icon.png'),
+                iconPath: 'assets/icons/deaf.png'),
             cardWidget(
                 title: AppLocalizations.of(context)!.earnCertificate,
                 description:
                     AppLocalizations.of(context)!.earnCertificateDescription,
-                iconPath: 'assets/icons/certificate_icon.png')
+                iconPath: 'assets/icons/certificate.png')
           ],
         ),
       ],
@@ -71,18 +72,19 @@ class HowItWorksSection extends StatelessWidget {
           SizedBox(height: 4.w),
           Text(
             title,
-            style: GoogleFonts.notoSans(
-              fontSize: 10.sp,
-              fontWeight: FontWeight.w600,
-            ),
+            style: BrandingConfig.instance.getPrimaryTextStyle(
+                fontSize: 10.sp,
+                fontWeight: FontWeight.w600,
+                color: AppColors.greys87),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 2.w),
           Text(
             description,
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
               fontSize: 8.sp,
               fontWeight: FontWeight.w400,
+              color: AppColors.greys87,
             ),
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,

@@ -1,12 +1,15 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:VoiceGive/common_widgets/consent_modal.dart';
-import 'package:VoiceGive/common_widgets/image_widget.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/constants/app_routes.dart';
+import 'package:VoiceGive/config/branding_config.dart';
+import 'package:VoiceGive/screens/module_selection_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../../common_widgets/image_widget.dart';
 import '../../bolo_india/bolo_get_started/bolo_get_started.dart';
 import '../../bolo_india/service/bolo_service.dart';
 
@@ -76,7 +79,8 @@ class _HomeHeaderSectionState extends State<HomeHeaderSection> {
                             ).createShader(Rect.fromLTWH(
                                 0, 0, bounds.width, bounds.height)),
                             child: Text(
-                              AppLocalizations.of(context)!.agriDaan,
+                              'AgriDaan',
+                              // AppLocalizations.of(context)!.contribute,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20.sp,
@@ -87,7 +91,7 @@ class _HomeHeaderSectionState extends State<HomeHeaderSection> {
                           Text(
                             AppLocalizations.of(context)!
                                 .empowerIndiasLinguisticDiversity,
-                            style: GoogleFonts.notoSans(
+                            style: BrandingConfig.instance.getPrimaryTextStyle(
                                 color: AppColors.darkBlue,
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w500),
@@ -99,12 +103,12 @@ class _HomeHeaderSectionState extends State<HomeHeaderSection> {
                 ],
               ),
               Positioned(
-                top: 0,
-                right: -20,
+                top: 20,
+                right: -5,
                 child: ImageWidget(
                   imageUrl: "assets/images/home_header_image.png",
-                  width: 180.w,
-                  height: 180.h,
+                  width: 168.w,
+                  height: 139.h,
                 ),
               ),
             ],
@@ -112,7 +116,7 @@ class _HomeHeaderSectionState extends State<HomeHeaderSection> {
           SizedBox(height: 12.w),
           Text(
             AppLocalizations.of(context)!.joinTheMovementDescription,
-            style: GoogleFonts.notoSans(
+            style: BrandingConfig.instance.getPrimaryTextStyle(
                 color: Colors.black,
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w500),
@@ -123,14 +127,13 @@ class _HomeHeaderSectionState extends State<HomeHeaderSection> {
             child: ElevatedButton(
               onPressed: () async {
                 String sessionId = await BoloService.sessionId;
-                if(sessionId.isNotEmpty){
+                if (sessionId.isNotEmpty) {
                   Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) => const BoloGetStarted(),
-                                  ),
-                                );
-                }
-                else{
+                    MaterialPageRoute(
+                      builder: (_) => const ModuleSelectionScreen(),
+                    ),
+                  );
+                } else {
                   _showConsentModal(context);
                 }
               },
@@ -142,8 +145,8 @@ class _HomeHeaderSectionState extends State<HomeHeaderSection> {
               ),
               child: Text(
                 AppLocalizations.of(context)!.letsGetStarted,
-                style: GoogleFonts.notoSans(
-                    color: Colors.white,
+                style: BrandingConfig.instance.getPrimaryTextStyle(
+                    color: AppColors.backgroundColor,
                     fontSize: 16.sp,
                     fontWeight: FontWeight.normal),
               ),

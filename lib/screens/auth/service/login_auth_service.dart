@@ -40,11 +40,11 @@ class LoginAuthService {
     return convertedResponse;
   }
 
-  static Future<dynamic> verifyOtp({required String otp, required String mobileNo}) async {
+  static Future<dynamic> verifyOtp({required String otp, required String sessionId}) async {
     
     Map body = {
       'otp': otp,
-      'mobileNo': mobileNo
+      'sessionId': sessionId
     };
 
     final response = await http.post(

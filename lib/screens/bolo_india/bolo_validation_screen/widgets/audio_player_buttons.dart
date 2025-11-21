@@ -5,7 +5,8 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import '../../../../config/branding_config.dart';
 
 enum AudioPlayerButtonState { idle, playing, paused, replay, completed }
 
@@ -146,7 +147,7 @@ class _AudioPlayerButtonsState extends State<AudioPlayerButtons>
     widget.playerStatus.call(_state);
   }
 
-  TextStyle get _textStyle => GoogleFonts.notoSans(
+  TextStyle get _textStyle => BrandingConfig.instance.getPrimaryTextStyle(
         fontSize: 20.sp,
         fontWeight: FontWeight.w600,
         color: AppColors.darkGreen,
