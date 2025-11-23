@@ -182,11 +182,8 @@ class _UnicodeValidationTextFieldState
 
   bool _isCommonCharacter(int codePoint) {
     return (
-            // Whitespace characters
+            // Whitespace characters (excluding newlines for sentence input)
             codePoint == 0x0020 || // Space
-                codePoint == 0x0009 || // Tab
-                codePoint == 0x000A || // Line Feed
-                codePoint == 0x000D || // Carriage Return
                 // Numbers
                 (codePoint >= 0x0030 && codePoint <= 0x0039) || // 0-9
                 // Common punctuation
@@ -209,6 +206,8 @@ class _UnicodeValidationTextFieldState
 
     final invalidChars = <String>[];
     final runes = text.runes.toList();
+    bool hasControlChars = false;
+    bool hasOtherLanguage = false;
 
     for (final rune in runes) {
       final char = String.fromCharCode(rune);
@@ -216,13 +215,24 @@ class _UnicodeValidationTextFieldState
         if (!invalidChars.contains(char)) {
           invalidChars.add(char);
         }
+        
+        // Check if it's a control character (like Enter, Tab, etc.)
+        if (rune < 0x0020 && rune != 0x0009 && rune != 0x000A && rune != 0x000D) {
+          hasControlChars = true;
+        } else if (rune >= 0x0020) {
+          hasOtherLanguage = true;
+        }
       }
     }
 
     if (invalidChars.isNotEmpty) {
-      final languageName = _languageNames[widget.languageCode] ??
-          widget.languageCode.toUpperCase();
-      return 'Please type in your chosen language';
+      if (hasControlChars) {
+        return 'Special characters not allowed';
+      } else if (hasOtherLanguage) {
+        return 'Please type in your chosen language';
+      } else {
+        return 'Invalid characters entered';
+      }
     }
     return null;
   }

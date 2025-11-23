@@ -1,0 +1,128 @@
+import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
+import 'package:VoiceGive/constants/app_colors.dart';
+import 'package:VoiceGive/screens/likho/likho_validation_content_section.dart';
+import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
+import 'package:VoiceGive/screens/bolo_india/widgets/actions_section.dart';
+import 'package:VoiceGive/screens/bolo_india/widgets/bolo_headers_section.dart';
+import 'package:VoiceGive/screens/bolo_india/widgets/language_selection.dart';
+import 'package:VoiceGive/screens/module_selection_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
+
+class LikhoValidationScreen extends StatefulWidget {
+  const LikhoValidationScreen({super.key});
+
+  @override
+  State<LikhoValidationScreen> createState() => _LikhoValidationScreenState();
+}
+
+class _LikhoValidationScreenState extends State<LikhoValidationScreen>
+    with TickerProviderStateMixin {
+  late final AnimationController _controller;
+  
+  bool isCompleted = false;
+  int currentIndex = 0;
+  LanguageModel selectedLanguage = LanguageModel(
+      languageName: "Hindi",
+      nativeName: "हिन्दी",
+      isActive: true,
+      languageCode: "hi",
+      region: "India",
+      speakers: "");
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        appBar: CustomAppBar(),
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  BoloHeadersSection(
+                    logoAsset: 'assets/images/likho.png',
+                    title: 'Validation',
+                    onBackPressed: () => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => const ModuleSelectionScreen()),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0).r,
+                    child: Column(
+                      children: [
+                        ActionsSection(),
+                        SizedBox(height: 16.w),
+                        LanguageSelection(
+                          description: "Select the language for validation",
+                          onLanguageChanged: (value) {
+                            selectedLanguage = value;
+                            setState(() {});
+                          },
+                        ),
+                        SizedBox(height: 24.w),
+                        LikhoValidationContentSection(
+                          language: selectedLanguage,
+                          currentIndex: currentIndex,
+                          indexUpdate: (index) {
+                            setState(() {
+                              currentIndex = index;
+                            });
+                          },
+                          onComplete: () {
+                            setState(() {
+                              isCompleted = true;
+                            });
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            if (isCompleted)
+              Positioned(
+                child: _buildConfetti(),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildConfetti() {
+    return Center(
+      child: Lottie.asset(
+        'assets/animations/confetti.json',
+        controller: _controller,
+        fit: BoxFit.fill,
+        alignment: Alignment.center,
+        onLoaded: (composition) {
+          _controller.duration = composition.duration;
+          _controller.forward();
+        },
+      ),
+    );
+  }
+}

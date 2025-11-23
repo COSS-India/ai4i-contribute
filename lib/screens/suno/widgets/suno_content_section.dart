@@ -373,14 +373,23 @@ class _SunoContentSectionState extends State<SunoContentSection> {
   }
 
   bool _isValidCharacter(int codePoint, List<List<int>> ranges) {
-    // Allow common characters
+    // Allow common characters (same as UnicodeValidationTextField)
     if (codePoint == 0x0020 || // Space
+        codePoint == 0x0009 || // Tab
+        codePoint == 0x000A || // Line Feed (Enter)
+        codePoint == 0x000D || // Carriage Return
         (codePoint >= 0x0030 && codePoint <= 0x0039) || // Numbers
-        codePoint == 0x002E ||
-        codePoint == 0x002C || // Period, comma
-        codePoint == 0x003F ||
-        codePoint == 0x0021) {
-      // Question, exclamation
+        codePoint == 0x002E || // Period
+        codePoint == 0x002C || // Comma
+        codePoint == 0x003F || // Question mark
+        codePoint == 0x0021 || // Exclamation mark
+        codePoint == 0x003A || // Colon
+        codePoint == 0x003B || // Semicolon
+        codePoint == 0x0027 || // Apostrophe
+        codePoint == 0x0022 || // Quotation mark
+        codePoint == 0x0028 || // Left parenthesis
+        codePoint == 0x0029 || // Right parenthesis
+        codePoint == 0x002D) { // Hyphen-minus
       return true;
     }
 
