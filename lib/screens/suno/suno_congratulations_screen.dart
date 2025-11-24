@@ -77,7 +77,7 @@ class _SunoCongratulationsScreenState extends State<SunoCongratulationsScreen>
             children: [
               // Suno India Header
               BoloHeadersSection(
-                logoAsset: 'assets/images/suno.png',
+                logoAsset: 'assets/images/suno_header.png',
                 title: 'SUNO India',
                 subtitle: 'Enrich your language by listening to audio',
                 onBackPressed: () => Navigator.pushReplacement(
@@ -278,7 +278,7 @@ class _SunoCongratulationsScreenState extends State<SunoCongratulationsScreen>
       children: [
         Expanded(
           child: SizedBox(
-            height: 40.w,
+            height: 48.w,
             child: PrimaryButtonWidget(
               title: " Continue Contributing",
               textFontSize: 14.sp,

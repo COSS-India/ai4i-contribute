@@ -20,7 +20,7 @@ class LikhoValidationScreen extends StatefulWidget {
 class _LikhoValidationScreenState extends State<LikhoValidationScreen>
     with TickerProviderStateMixin {
   late final AnimationController _controller;
-  
+
   bool isCompleted = false;
   int currentIndex = 0;
   LanguageModel selectedSourceLanguage = LanguageModel(
@@ -67,11 +67,12 @@ class _LikhoValidationScreenState extends State<LikhoValidationScreen>
               child: Column(
                 children: [
                   BoloHeadersSection(
-                    logoAsset: 'assets/images/likho.png',
+                    logoAsset: 'assets/images/likho_header.png',
                     title: 'Validation',
                     onBackPressed: () => Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (_) => const ModuleSelectionScreen()),
+                      MaterialPageRoute(
+                          builder: (_) => const ModuleSelectionScreen()),
                     ),
                   ),
                   Padding(
@@ -81,7 +82,7 @@ class _LikhoValidationScreenState extends State<LikhoValidationScreen>
                         ActionsSection(),
                         SizedBox(height: 16.w),
                         DualLanguageSelectionWidget(
-                          description: "Select the languages for validation",
+                          description: "Select the language for validation",
                           onLanguageChanged: (sourceLanguage, targetLanguage) {
                             selectedSourceLanguage = sourceLanguage;
                             selectedTargetLanguage = targetLanguage;

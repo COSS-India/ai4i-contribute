@@ -132,7 +132,7 @@ class _BoloGetStartedState extends State<BoloGetStarted> {
             //   ]),
             // ),
             BoloHeadersSection(
-              logoAsset: 'assets/images/bolo.png',
+                logoAsset: 'assets/images/bolo_header.png',
               title: 'BOLO India',
               subtitle: 'Enrich your language by donating your voice',
               onBackPressed: () => Navigator.pushReplacement(

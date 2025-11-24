@@ -65,13 +65,12 @@ class _LikhoValidationContentSectionState
   @override
   void didUpdateWidget(covariant LikhoValidationContentSection oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.sourceLanguage.languageCode != widget.sourceLanguage.languageCode ||
-        oldWidget.targetLanguage.languageCode != widget.targetLanguage.languageCode) {
+    if (oldWidget.targetLanguage.languageCode !=
+        widget.targetLanguage.languageCode) {
       _loadValidationData();
     }
     if (currentIndex != widget.currentIndex) {
       currentIndex = widget.currentIndex;
-      _resetState();
     }
   }
 
@@ -139,47 +138,56 @@ class _LikhoValidationContentSectionState
           return _buildEmptyState();
         }
 
-        final int currentItemNumber = (submittedCount + 1).clamp(1, totalContributions);
+        final int currentItemNumber =
+            (submittedCount + 1).clamp(1, totalContributions);
         final double progress = currentItemNumber / totalContributions;
 
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(8).r,
-          child: Stack(
-            fit: StackFit.passthrough,
-            children: [
-              // Image.asset(
-              //   'assets/images/contribute_bg.png',
-              //   fit: BoxFit.cover,
-              //   width: double.infinity,
-              //   color: BrandingConfig.instance.primaryColor,
-              // ),
-              Padding(
-                padding: EdgeInsets.all(12).r,
-                child: Column(
-                  children: [
-                    _progressHeader(
-                        progress: progress,
-                        total: totalContributions,
-                        currentItem: currentItemNumber),
-                    SizedBox(height: 24.w),
-                    _instructionText(),
-                    SizedBox(height: 22.w),
-                    _textDisplaySection(),
-                    if (_needsChange) ...[
-                      SizedBox(height: 22.w),
-                      _correctionTextField(),
-                    ],
-                    SizedBox(height: 22.w),
-                    _actionButtons(),
-                    SizedBox(height: 20.w),
-                    if (submittedCount < totalContributions) _skipButton(),
-                    SizedBox(height: 50.w),
-                  ],
-                ),
+        return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8).r,
+              border: Border.all(
+                color: Colors.grey[400]!,
+                width: 1.0,
               ),
-            ],
-          ),
-        );
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8).r,
+              child: Stack(
+                fit: StackFit.passthrough,
+                children: [
+                  // Image.asset(
+                  //   'assets/images/contribute_bg.png',
+                  //   fit: BoxFit.cover,
+                  //   width: double.infinity,
+                  //   color: BrandingConfig.instance.primaryColor,
+                  // ),
+                  Padding(
+                    padding: EdgeInsets.all(12).r,
+                    child: Column(
+                      children: [
+                        _progressHeader(
+                            progress: progress,
+                            total: totalContributions,
+                            currentItem: currentItemNumber),
+                        SizedBox(height: 24.w),
+                        _instructionText(),
+                        SizedBox(height: 22.w),
+                        _textDisplaySection(),
+                        if (_needsChange) ...[
+                          SizedBox(height: 4.w),
+                          _correctionTextField(),
+                        ],
+                        SizedBox(height: 22.w),
+                        _actionButtons(),
+                        SizedBox(height: 20.w),
+                        if (submittedCount < totalContributions) _skipButton(),
+                        SizedBox(height: 50.w),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ));
       },
     );
   }
@@ -272,7 +280,7 @@ class _LikhoValidationContentSectionState
               isEnglish: true,
             ),
           ),
-          SizedBox(width: 12.w),
+          SizedBox(width: 4.w),
           Expanded(
             child: _buildTextBox(
               text: hindiText,
@@ -290,7 +298,7 @@ class _LikhoValidationContentSectionState
             isEditable: false,
             isEnglish: true,
           ),
-          SizedBox(height: 16.w),
+          SizedBox(height: 4.w),
           _buildTextBox(
             text: hindiText,
             isEditable: false,
@@ -326,11 +334,11 @@ class _LikhoValidationContentSectionState
           borderRadius: BorderRadius.circular(8).r,
           border: Border.all(
             color: AppColors.darkGreen,
-            width: 1.5,
+            width: 0.5,
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.all(12).r,
+          padding: EdgeInsets.all(8).r,
           child: TextField(
             controller: TextEditingController(text: text),
             enabled: false,
@@ -523,9 +531,9 @@ class _LikhoValidationContentSectionState
           if (widget.onComplete != null) {
             widget.onComplete!();
           }
-          
+
           await Future.delayed(const Duration(seconds: 2));
-          
+
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(

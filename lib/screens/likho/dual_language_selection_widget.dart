@@ -10,19 +10,19 @@ import '../../config/branding_config.dart';
 
 class DualLanguageSelectionWidget extends StatefulWidget {
   final String description;
-  final Function(LanguageModel sourceLanguage, LanguageModel targetLanguage) onLanguageChanged;
-  
-  const DualLanguageSelectionWidget({
-    super.key, 
-    required this.description, 
-    required this.onLanguageChanged
-  });
+  final Function(LanguageModel sourceLanguage, LanguageModel targetLanguage)
+      onLanguageChanged;
+
+  const DualLanguageSelectionWidget(
+      {super.key, required this.description, required this.onLanguageChanged});
 
   @override
-  State<DualLanguageSelectionWidget> createState() => _DualLanguageSelectionWidgetState();
+  State<DualLanguageSelectionWidget> createState() =>
+      _DualLanguageSelectionWidgetState();
 }
 
-class _DualLanguageSelectionWidgetState extends State<DualLanguageSelectionWidget> {
+class _DualLanguageSelectionWidgetState
+    extends State<DualLanguageSelectionWidget> {
   LanguageModel selectedSourceLanguage = LanguageModel(
       languageName: "Hindi",
       nativeName: "हिन्दी",
@@ -30,7 +30,7 @@ class _DualLanguageSelectionWidgetState extends State<DualLanguageSelectionWidge
       languageCode: "hi",
       region: "India",
       speakers: "");
-      
+
   LanguageModel selectedTargetLanguage = LanguageModel(
       languageName: "Marathi",
       nativeName: "मराठी",
@@ -38,7 +38,7 @@ class _DualLanguageSelectionWidgetState extends State<DualLanguageSelectionWidge
       languageCode: "mr",
       region: "India",
       speakers: "");
-      
+
   Future<List<LanguageModel>>? languagesFuture;
 
   @override
@@ -51,8 +51,12 @@ class _DualLanguageSelectionWidgetState extends State<DualLanguageSelectionWidge
     });
   }
 
-  List<LanguageModel> _getAvailableTargetLanguages(List<LanguageModel> allLanguages) {
-    return allLanguages.where((lang) => lang.languageCode != selectedSourceLanguage.languageCode).toList();
+  List<LanguageModel> _getAvailableTargetLanguages(
+      List<LanguageModel> allLanguages) {
+    return allLanguages
+        .where(
+            (lang) => lang.languageCode != selectedSourceLanguage.languageCode)
+        .toList();
   }
 
   @override
@@ -61,7 +65,7 @@ class _DualLanguageSelectionWidgetState extends State<DualLanguageSelectionWidge
         future: languagesFuture,
         builder: (context, snapshot) {
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 widget.description,
@@ -72,176 +76,166 @@ class _DualLanguageSelectionWidgetState extends State<DualLanguageSelectionWidge
               ),
               SizedBox(height: 16.h),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "From",
-                          style: BrandingConfig.instance.getPrimaryTextStyle(
-                              fontSize: 10.sp,
-                              color: AppColors.greys87,
-                              fontWeight: FontWeight.w400),
+                  SizedBox(
+                    width: 150.w,
+                    child: InkWell(
+                      onTap: () {
+                        showBottomSheet(
+                            context: context,
+                            backgroundColor: AppColors.backgroundColor,
+                            builder: (context) {
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: IconButton(
+                                      icon: Icon(Icons.close,
+                                          color: AppColors.darkGreen),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ),
+                                  LanguageSearchableBottomSheetContent(
+                                    items: snapshot.data ?? [],
+                                    onItemSelected: (value) {
+                                      setState(() {
+                                        selectedSourceLanguage = value;
+                                        // If target language is same as source, change target
+                                        if (selectedTargetLanguage
+                                                .languageCode ==
+                                            value.languageCode) {
+                                          final availableTargets =
+                                              _getAvailableTargetLanguages(
+                                                  snapshot.data ?? []);
+                                          if (availableTargets.isNotEmpty) {
+                                            selectedTargetLanguage =
+                                                availableTargets.first;
+                                          }
+                                        }
+                                      });
+                                      widget.onLanguageChanged(
+                                          selectedSourceLanguage,
+                                          selectedTargetLanguage);
+                                      Navigator.pop(context);
+                                    },
+                                    hasMore: false,
+                                    initialQuery: "",
+                                  ),
+                                ],
+                              );
+                            });
+                      },
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 12)
+                                .r,
+                        decoration: BoxDecoration(
+                          color: AppColors.orange,
+                          borderRadius: BorderRadius.circular(5).r,
                         ),
-                        SizedBox(height: 8.h),
-                        InkWell(
-                          onTap: () {
-                            showBottomSheet(
-                                context: context,
-                                backgroundColor: AppColors.backgroundColor,
-                                builder: (context) {
-                                  return Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: IconButton(
-                                          icon: Icon(Icons.close,
-                                              color: AppColors.darkGreen),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                      ),
-                                      LanguageSearchableBottomSheetContent(
-                                        items: snapshot.data ?? [],
-                                        onItemSelected: (value) {
-                                          setState(() {
-                                            selectedSourceLanguage = value;
-                                            // If target language is same as source, change target
-                                            if (selectedTargetLanguage.languageCode == value.languageCode) {
-                                              final availableTargets = _getAvailableTargetLanguages(snapshot.data ?? []);
-                                              if (availableTargets.isNotEmpty) {
-                                                selectedTargetLanguage = availableTargets.first;
-                                              }
-                                            }
-                                          });
-                                          widget.onLanguageChanged(selectedSourceLanguage, selectedTargetLanguage);
-                                          Navigator.pop(context);
-                                        },
-                                        hasMore: false,
-                                        initialQuery: "",
-                                      ),
-                                    ],
-                                  );
-                                });
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8).r,
-                            decoration: BoxDecoration(
-                              color: AppColors.orange,
-                              borderRadius: BorderRadius.circular(5).r,
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    selectedSourceLanguage.languageName,
-                                    style: BrandingConfig.instance.getPrimaryTextStyle(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                selectedSourceLanguage.languageName,
+                                style: BrandingConfig.instance
+                                    .getPrimaryTextStyle(
                                         fontSize: 12.sp,
                                         color: AppColors.backgroundColor,
                                         fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            SizedBox(width: 8.w),
+                            Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              color: AppColors.backgroundColor,
+                              size: 16.sp,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 16.w),
+                  Icon(
+                    Icons.arrow_forward,
+                    color: AppColors.darkGreen,
+                    size: 20.sp,
+                  ),
+                  SizedBox(width: 16.w),
+                  SizedBox(
+                    width: 150.w,
+                    child: InkWell(
+                      onTap: () {
+                        final availableTargets =
+                            _getAvailableTargetLanguages(snapshot.data ?? []);
+                        showBottomSheet(
+                            context: context,
+                            backgroundColor: AppColors.backgroundColor,
+                            builder: (context) {
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: IconButton(
+                                      icon: Icon(Icons.close,
+                                          color: AppColors.darkGreen),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
                                   ),
-                                ),
-                                SizedBox(width: 8.w),
-                                Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  color: AppColors.backgroundColor,
-                                  size: 16.sp,
-                                )
-                              ],
-                            ),
-                          ),
+                                  LanguageSearchableBottomSheetContent(
+                                    items: availableTargets,
+                                    onItemSelected: (value) {
+                                      selectedTargetLanguage = value;
+                                      widget.onLanguageChanged(
+                                          selectedSourceLanguage,
+                                          selectedTargetLanguage);
+                                      setState(() {});
+                                      Navigator.pop(context);
+                                    },
+                                    hasMore: false,
+                                    initialQuery: "",
+                                  ),
+                                ],
+                              );
+                            });
+                      },
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 12)
+                                .r,
+                        decoration: BoxDecoration(
+                          color: AppColors.orange,
+                          borderRadius: BorderRadius.circular(5).r,
                         ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(width: 16.w),
-                  Padding(
-                    padding: EdgeInsets.only(top: 20.h),
-                    child: Icon(
-                      Icons.arrow_forward,
-                      color: AppColors.darkGreen,
-                      size: 20.sp,
-                    ),
-                  ),
-                  SizedBox(width: 16.w),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "To",
-                          style: BrandingConfig.instance.getPrimaryTextStyle(
-                              fontSize: 10.sp,
-                              color: AppColors.greys87,
-                              fontWeight: FontWeight.w400),
-                        ),
-                        SizedBox(height: 8.h),
-                        InkWell(
-                          onTap: () {
-                            final availableTargets = _getAvailableTargetLanguages(snapshot.data ?? []);
-                            showBottomSheet(
-                                context: context,
-                                backgroundColor: AppColors.backgroundColor,
-                                builder: (context) {
-                                  return Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: IconButton(
-                                          icon: Icon(Icons.close,
-                                              color: AppColors.darkGreen),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                      ),
-                                      LanguageSearchableBottomSheetContent(
-                                        items: availableTargets,
-                                        onItemSelected: (value) {
-                                          selectedTargetLanguage = value;
-                                          widget.onLanguageChanged(selectedSourceLanguage, selectedTargetLanguage);
-                                          setState(() {});
-                                          Navigator.pop(context);
-                                        },
-                                        hasMore: false,
-                                        initialQuery: "",
-                                      ),
-                                    ],
-                                  );
-                                });
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8).r,
-                            decoration: BoxDecoration(
-                              color: AppColors.orange,
-                              borderRadius: BorderRadius.circular(5).r,
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    selectedTargetLanguage.languageName,
-                                    style: BrandingConfig.instance.getPrimaryTextStyle(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                selectedTargetLanguage.languageName,
+                                style: BrandingConfig.instance
+                                    .getPrimaryTextStyle(
                                         fontSize: 12.sp,
                                         color: AppColors.backgroundColor,
                                         fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                                SizedBox(width: 8.w),
-                                Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  color: AppColors.backgroundColor,
-                                  size: 16.sp,
-                                )
-                              ],
+                              ),
                             ),
-                          ),
+                            SizedBox(width: 8.w),
+                            Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              color: AppColors.backgroundColor,
+                              size: 16.sp,
+                            )
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ],

@@ -57,11 +57,12 @@ class _SunoValidationScreenState extends State<SunoValidationScreen>
               child: Column(
                 children: [
                   BoloHeadersSection(
-                    logoAsset: 'assets/images/suno.png',
+                    logoAsset: 'assets/images/suno_header.png',
                     title: 'Validation',
                     onBackPressed: () => Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (_) => const ModuleSelectionScreen()),
+                      MaterialPageRoute(
+                          builder: (_) => const ModuleSelectionScreen()),
                     ),
                   ),
                   Padding(

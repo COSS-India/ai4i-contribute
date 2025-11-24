@@ -31,17 +31,20 @@ class _BoloContributeState extends State<BoloContribute> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(
+        showThreeLogos: true,
+      ),
       body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
               BoloHeadersSection(
-                logoAsset: 'assets/images/bolo.png',
+                logoAsset: 'assets/images/bolo_header.png',
                 title: 'Contribution',
                 onBackPressed: () => Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (_) => const ModuleSelectionScreen()),
+                  MaterialPageRoute(
+                      builder: (_) => const ModuleSelectionScreen()),
                 ),
               ),
               Padding(

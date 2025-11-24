@@ -44,11 +44,12 @@ class _LikhoContributeState extends State<LikhoContribute> {
           child: Column(
             children: [
               BoloHeadersSection(
-                logoAsset: 'assets/images/likho.png',
+                logoAsset: 'assets/images/likho_header.png',
                 title: 'Contribution',
                 onBackPressed: () => Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (_) => const ModuleSelectionScreen()),
+                  MaterialPageRoute(
+                      builder: (_) => const ModuleSelectionScreen()),
                 ),
               ),
               Padding(
@@ -58,7 +59,7 @@ class _LikhoContributeState extends State<LikhoContribute> {
                     ActionsSection(),
                     SizedBox(height: 16.w),
                     DualLanguageSelectionWidget(
-                      description: "Please choose the languages for translation",
+                      description: "Select the language for contribution",
                       onLanguageChanged: (source, target) {
                         sourceLanguage = source;
                         targetLanguage = target;

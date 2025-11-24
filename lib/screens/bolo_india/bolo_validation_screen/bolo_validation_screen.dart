@@ -55,7 +55,9 @@ class _BoloValidationScreenState extends State<BoloValidationScreen>
       },
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
-        appBar: CustomAppBar(),
+        appBar: CustomAppBar(
+          showThreeLogos: true,
+        ),
         body: Stack(
           children: [
             SingleChildScrollView(
@@ -63,7 +65,7 @@ class _BoloValidationScreenState extends State<BoloValidationScreen>
               child: Column(
                 children: [
                   BoloHeadersSection(
-                    logoAsset: 'assets/images/bolo.png',
+                    logoAsset: 'assets/images/bolo_header.png',
                     title: 'Validation',
                     onBackPressed: () => Navigator.pushReplacement(
                       context,

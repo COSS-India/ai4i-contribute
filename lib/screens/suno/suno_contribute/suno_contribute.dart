@@ -32,17 +32,19 @@ class _SunoContributeState extends State<SunoContribute> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(
+      ),
       body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
               BoloHeadersSection(
-                logoAsset: 'assets/images/suno.png',
+                logoAsset: 'assets/images/suno_header.png',
                 title: 'Contribution',
                 onBackPressed: () => Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (_) => const ModuleSelectionScreen()),
+                  MaterialPageRoute(
+                      builder: (_) => const ModuleSelectionScreen()),
                 ),
               ),
               Padding(

@@ -76,7 +76,7 @@ class _LikhoCongratulationsScreenState extends State<LikhoCongratulationsScreen>
             children: [
               // Likho India Header
               BoloHeadersSection(
-                logoAsset: 'assets/images/likho.png',
+                logoAsset: 'assets/images/likho_header.png',
                 title: 'LIKHO India',
                 subtitle: 'Enrich your language by translating text',
                 onBackPressed: () => Navigator.pushReplacement(
@@ -156,7 +156,7 @@ class _LikhoCongratulationsScreenState extends State<LikhoCongratulationsScreen>
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const TextSpan(text: " and "),
+                    const TextSpan(text: " and \n"),
                     TextSpan(
                       text: "validated 25",
                       style: BrandingConfig.instance.getPrimaryTextStyle(
@@ -219,8 +219,8 @@ class _LikhoCongratulationsScreenState extends State<LikhoCongratulationsScreen>
         Positioned.fill(
           child: Center(
             child: Container(
-              margin: EdgeInsets.all(20).r,
-              padding: EdgeInsets.all(20).r,
+              margin: EdgeInsets.all(22).r,
+              padding: EdgeInsets.all(22).r,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12).r,
@@ -255,10 +255,11 @@ class _LikhoCongratulationsScreenState extends State<LikhoCongratulationsScreen>
                   SizedBox(height: 4.w),
                   // Sub Message
                   Text(
-                    'Your progress has been saved. Thank you for contributing to India\'s language strengthening campaign',
+                    'Your progress has been saved.\n Thank you for contributing to India\'s \n language strengthening campaign',
                     style: BrandingConfig.instance.getPrimaryTextStyle(
-                      fontSize: 12.sp,
+                      fontSize: 10.sp,
                       color: AppColors.darkGreen,
+                      fontWeight: FontWeight.w500,
                       height: 1.3,
                     ),
                     textAlign: TextAlign.center,
@@ -277,7 +278,7 @@ class _LikhoCongratulationsScreenState extends State<LikhoCongratulationsScreen>
       children: [
         Expanded(
           child: SizedBox(
-            height: 40.w,
+            height: 48.w,
             child: PrimaryButtonWidget(
               title: " Continue Contributing",
               textFontSize: 14.sp,
