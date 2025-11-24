@@ -1,12 +1,8 @@
-import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
-import 'package:VoiceGive/common_widgets/image_widget.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_get_started/bolo_get_started.dart';
 import 'package:VoiceGive/screens/suno/suno_get_started.dart';
-import 'package:VoiceGive/screens/likho/likho_demo_screen.dart';
-import 'package:VoiceGive/screens/dekho/dekho_demo_screen.dart';
+import 'package:VoiceGive/screens/likho/likho_get_started.dart';
 import 'package:VoiceGive/screens/home_screen/home_screen.dart';
-import 'package:VoiceGive/screens/unicode_validation_demo_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../config/branding_config.dart';
@@ -162,17 +158,18 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
               MaterialPageRoute(builder: (_) => SunoGetStarted()),
             ),
       },
+      {
+        'title': 'Likho India',
+        'icon': Icons.edit,
+        'assetPath': 'assets/images/likho.png',
+        'color': AppColors.lightGreen,
+        'onTap': () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => LikhoGetStarted()),
+            ),
+      },
       // this will be released in future
-      // {
-      //   'title': 'Likho India',
-      //   'icon': Icons.edit,
-      //   'assetPath': 'assets/images/likho.png',
-      //   'color': AppColors.lightGreen,
-      //   'onTap': () => Navigator.push(
-      //         context,
-      //         MaterialPageRoute(builder: (_) => LikhoDemoScreen()),
-      //       ),
-      // },
+
       // {
       //   'title': 'Dekho India',
       //   'icon': Icons.visibility,

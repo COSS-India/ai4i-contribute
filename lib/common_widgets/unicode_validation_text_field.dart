@@ -9,6 +9,7 @@ class UnicodeValidationTextField extends StatefulWidget {
   final String languageCode;
   final TextEditingController? controller;
   final Function(String)? onChanged;
+  final Function(bool)? onValidationChanged;
   final int? maxLines;
   final bool enabled;
 
@@ -19,6 +20,7 @@ class UnicodeValidationTextField extends StatefulWidget {
     required this.languageCode,
     this.controller,
     this.onChanged,
+    this.onValidationChanged,
     this.maxLines = 1,
     this.enabled = true,
   });
@@ -182,11 +184,8 @@ class _UnicodeValidationTextFieldState
 
   bool _isCommonCharacter(int codePoint) {
     return (
-            // Whitespace characters
+            // Whitespace characters (excluding newlines for sentence input)
             codePoint == 0x0020 || // Space
-                codePoint == 0x0009 || // Tab
-                codePoint == 0x000A || // Line Feed
-                codePoint == 0x000D || // Carriage Return
                 // Numbers
                 (codePoint >= 0x0030 && codePoint <= 0x0039) || // 0-9
                 // Common punctuation
@@ -209,6 +208,8 @@ class _UnicodeValidationTextFieldState
 
     final invalidChars = <String>[];
     final runes = text.runes.toList();
+    bool hasControlChars = false;
+    bool hasOtherLanguage = false;
 
     for (final rune in runes) {
       final char = String.fromCharCode(rune);
@@ -216,22 +217,41 @@ class _UnicodeValidationTextFieldState
         if (!invalidChars.contains(char)) {
           invalidChars.add(char);
         }
+
+        // Check if it's a control character (like Enter, Tab, etc.)
+        if (rune < 0x0020 &&
+            rune != 0x0009 &&
+            rune != 0x000A &&
+            rune != 0x000D) {
+          hasControlChars = true;
+        } else if (rune >= 0x0020) {
+          hasOtherLanguage = true;
+        }
       }
     }
 
     if (invalidChars.isNotEmpty) {
-      final languageName = _languageNames[widget.languageCode] ??
-          widget.languageCode.toUpperCase();
-      return 'Please type in your chosen language';
+      if (hasControlChars) {
+        return 'Special characters not allowed';
+      } else if (hasOtherLanguage) {
+        return 'Please type in your chosen language';
+      } else {
+        return 'Invalid characters entered';
+      }
     }
     return null;
   }
 
   void _onTextChanged(String value) {
+    final newErrorMessage = _validateText(value);
+    final hasError = newErrorMessage != null;
+
     setState(() {
-      _errorMessage = _validateText(value);
+      _errorMessage = newErrorMessage;
     });
+
     widget.onChanged?.call(value);
+    widget.onValidationChanged?.call(hasError);
   }
 
   @override
@@ -245,6 +265,7 @@ class _UnicodeValidationTextFieldState
             color: Colors.white,
           ),
           child: TextField(
+            
             controller: _controller,
             enabled: widget.enabled,
             maxLines: widget.maxLines,
@@ -255,6 +276,7 @@ class _UnicodeValidationTextFieldState
               fontWeight: FontWeight.w600,
             ),
             decoration: InputDecoration(
+              
               hintText: widget.hintText,
               labelText: widget.labelText,
               hintStyle: BrandingConfig.instance.getPrimaryTextStyle(

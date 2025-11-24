@@ -25,4 +25,11 @@ class ApiUrl {
   static final String stateUrl = '$baseUrl/admin/data/states/';
   static final String districtUrl = '$baseUrl/admin/data/districts/';
   static final String languageUrl = '$baseUrl/admin/data/languages';
+  
+  // Likho URLs
+  static final String likhoQueueUrl = '$baseUrl/likho/queue';
+  static final String likhoSubmitUrl = '$baseUrl/likho/submit';
+  static final String likhoValidationUrl = '$baseUrl/likho/validation';
+  static final String likhoValidationCorrectUrl = '$baseUrl/likho/validation/correct';
+  static final String likhoValidationCorrectionUrl = '$baseUrl/likho/validation/submit-correction';
 }

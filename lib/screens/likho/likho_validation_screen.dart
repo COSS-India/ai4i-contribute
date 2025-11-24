@@ -1,44 +1,50 @@
 import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
-import 'package:VoiceGive/screens/bolo_india/bolo_validation_screen/widgets/bolo_validate_section.dart';
+import 'package:VoiceGive/screens/likho/likho_validation_content_section.dart';
 import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/actions_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/bolo_headers_section.dart';
-import 'package:VoiceGive/screens/bolo_india/widgets/language_selection.dart';
+import 'package:VoiceGive/screens/likho/dual_language_selection_widget.dart';
+import 'package:VoiceGive/screens/module_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../module_selection_screen.dart';
-
-class BoloValidationScreen extends StatefulWidget {
-  const BoloValidationScreen({
-    super.key,
-  });
+class LikhoValidationScreen extends StatefulWidget {
+  const LikhoValidationScreen({super.key});
 
   @override
-  State<BoloValidationScreen> createState() => _BoloValidationScreenState();
+  State<LikhoValidationScreen> createState() => _LikhoValidationScreenState();
 }
 
-class _BoloValidationScreenState extends State<BoloValidationScreen>
+class _LikhoValidationScreenState extends State<LikhoValidationScreen>
     with TickerProviderStateMixin {
   late final AnimationController _controller;
-
+  
   bool isCompleted = false;
-  LanguageModel selectedLanguage = LanguageModel(
-      languageName: "Marathi",
-      nativeName: "मराठी",
+  int currentIndex = 0;
+  LanguageModel selectedSourceLanguage = LanguageModel(
+      languageName: "Hindi",
+      nativeName: "हिन्दी",
       isActive: true,
-      languageCode: "mr",
+      languageCode: "hi",
       region: "India",
+      speakers: "");
+  LanguageModel selectedTargetLanguage = LanguageModel(
+      languageName: "English",
+      nativeName: "English",
+      isActive: true,
+      languageCode: "en",
+      region: "Global",
       speakers: "");
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this);
-
-    // Start animations
+    _controller = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    );
   }
 
   @override
@@ -50,9 +56,7 @@ class _BoloValidationScreenState extends State<BoloValidationScreen>
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
-        return Future.value(false);
-      },
+      onWillPop: () => Future.value(false),
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
         appBar: CustomAppBar(),
@@ -63,12 +67,11 @@ class _BoloValidationScreenState extends State<BoloValidationScreen>
               child: Column(
                 children: [
                   BoloHeadersSection(
-                    logoAsset: 'assets/images/bolo.png',
+                    logoAsset: 'assets/images/likho.png',
                     title: 'Validation',
                     onBackPressed: () => Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(
-                          builder: (_) => const ModuleSelectionScreen()),
+                      MaterialPageRoute(builder: (_) => const ModuleSelectionScreen()),
                     ),
                   ),
                   Padding(
@@ -77,16 +80,24 @@ class _BoloValidationScreenState extends State<BoloValidationScreen>
                       children: [
                         ActionsSection(),
                         SizedBox(height: 16.w),
-                        LanguageSelection(
-                          description: "Select language for validation",
-                          onLanguageChanged: (value) {
-                            selectedLanguage = value;
+                        DualLanguageSelectionWidget(
+                          description: "Select the languages for validation",
+                          onLanguageChanged: (sourceLanguage, targetLanguage) {
+                            selectedSourceLanguage = sourceLanguage;
+                            selectedTargetLanguage = targetLanguage;
                             setState(() {});
                           },
                         ),
                         SizedBox(height: 24.w),
-                        BoloValidateSection(
-                          languageModel: selectedLanguage,
+                        LikhoValidationContentSection(
+                          sourceLanguage: selectedSourceLanguage,
+                          targetLanguage: selectedTargetLanguage,
+                          currentIndex: currentIndex,
+                          indexUpdate: (index) {
+                            setState(() {
+                              currentIndex = index;
+                            });
+                          },
                           onComplete: () {
                             setState(() {
                               isCompleted = true;
@@ -99,11 +110,10 @@ class _BoloValidationScreenState extends State<BoloValidationScreen>
                 ],
               ),
             ),
-            isCompleted
-                ? Positioned(
-                    child: _buildConfetti(),
-                  )
-                : SizedBox()
+            if (isCompleted)
+              Positioned(
+                child: _buildConfetti(),
+              ),
           ],
         ),
       ),
