@@ -374,7 +374,7 @@ class SunoSubmitRequest(BaseModel):
     @model_validator(mode="after")
     def _validate_transcript(self) -> Self:
         if not text_matches_script(self.transcript, self.language):
-            raise ValidationError([{"loc": ("transcript",), "msg": "Please type in your chosen language", "type": "value_error"}])
+            raise ValueError("Please type in your chosen language")
         return self
 
 class SunoSkipRequest(BaseModel):
@@ -437,7 +437,7 @@ class LikhoSubmitRequest(BaseModel):
     @model_validator(mode="after")
     def _validate_translation(self) -> Self:
         if not text_matches_script(self.translation, self.tgt_language):
-            raise ValidationError([{"loc": ("translation",), "msg": "Please type in your chosen language", "type": "value_error"}])
+            raise ValueError("Please type in your chosen language")
         return self
 
 class LikhoSkipRequest(BaseModel):
@@ -498,7 +498,7 @@ class DekhoSubmitRequest(BaseModel):
     @model_validator(mode="after")
     def _validate_label(self) -> Self:
         if not text_matches_script(self.label, self.language):
-            raise ValidationError([{"loc": ("label",), "msg": "Please type in your chosen language", "type": "value_error"}])
+            raise ValueError("Please type in your chosen language")
         return self
 
 class DekhoSkipRequest(BaseModel):
