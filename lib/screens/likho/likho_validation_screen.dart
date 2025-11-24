@@ -4,7 +4,7 @@ import 'package:VoiceGive/screens/likho/likho_validation_content_section.dart';
 import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/actions_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/bolo_headers_section.dart';
-import 'package:VoiceGive/screens/bolo_india/widgets/language_selection.dart';
+import 'package:VoiceGive/screens/likho/dual_language_selection_widget.dart';
 import 'package:VoiceGive/screens/module_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,12 +23,19 @@ class _LikhoValidationScreenState extends State<LikhoValidationScreen>
   
   bool isCompleted = false;
   int currentIndex = 0;
-  LanguageModel selectedLanguage = LanguageModel(
+  LanguageModel selectedSourceLanguage = LanguageModel(
       languageName: "Hindi",
       nativeName: "हिन्दी",
       isActive: true,
       languageCode: "hi",
       region: "India",
+      speakers: "");
+  LanguageModel selectedTargetLanguage = LanguageModel(
+      languageName: "English",
+      nativeName: "English",
+      isActive: true,
+      languageCode: "en",
+      region: "Global",
       speakers: "");
 
   @override
@@ -73,16 +80,18 @@ class _LikhoValidationScreenState extends State<LikhoValidationScreen>
                       children: [
                         ActionsSection(),
                         SizedBox(height: 16.w),
-                        LanguageSelection(
-                          description: "Select the language for validation",
-                          onLanguageChanged: (value) {
-                            selectedLanguage = value;
+                        DualLanguageSelectionWidget(
+                          description: "Select the languages for validation",
+                          onLanguageChanged: (sourceLanguage, targetLanguage) {
+                            selectedSourceLanguage = sourceLanguage;
+                            selectedTargetLanguage = targetLanguage;
                             setState(() {});
                           },
                         ),
                         SizedBox(height: 24.w),
                         LikhoValidationContentSection(
-                          language: selectedLanguage,
+                          sourceLanguage: selectedSourceLanguage,
+                          targetLanguage: selectedTargetLanguage,
                           currentIndex: currentIndex,
                           indexUpdate: (index) {
                             setState(() {

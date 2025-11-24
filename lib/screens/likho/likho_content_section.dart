@@ -59,6 +59,8 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
     if (oldWidget.sourceLanguage.languageCode != widget.sourceLanguage.languageCode ||
         oldWidget.targetLanguage.languageCode != widget.targetLanguage.languageCode) {
       _loadLikhoData();
+      textController.clear();
+      enableSubmit.value = false;
     }
     if (currentIndex != widget.currentIndex) {
       currentIndex = widget.currentIndex;
@@ -421,9 +423,16 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
     submitLoading.value = true;
 
     try {
+      print('=== LIKHO SUBMIT DEBUG ===');
+      print('Item ID: ${likhoItems[currentIndex].itemId}');
+      print('Source Language: ${widget.sourceLanguage.languageCode}');
+      print('Translation: ${textController.text.trim()}');
+      print('========================');
+      
       final success = await _likhoService.submitTranslation(
         itemId: likhoItems[currentIndex].itemId,
         srcLanguage: widget.sourceLanguage.languageCode,
+        tgtLanguage: widget.targetLanguage.languageCode,
         translation: textController.text.trim(),
       );
 

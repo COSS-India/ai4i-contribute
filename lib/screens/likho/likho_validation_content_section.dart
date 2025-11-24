@@ -11,20 +11,23 @@ import 'likho_validation_model.dart';
 import 'likho_service.dart';
 import 'likho_congratulations_screen.dart';
 import 'likho_validation_content_skeleton.dart';
+import 'dual_language_selection_widget.dart';
 import 'dart:convert';
 
 typedef IntCallback = void Function(int value);
 typedef VoidCallback = void Function();
 
 class LikhoValidationContentSection extends StatefulWidget {
-  final LanguageModel language;
+  final LanguageModel sourceLanguage;
+  final LanguageModel targetLanguage;
   final IntCallback indexUpdate;
   final int currentIndex;
   final VoidCallback? onComplete;
 
   const LikhoValidationContentSection({
     super.key,
-    required this.language,
+    required this.sourceLanguage,
+    required this.targetLanguage,
     required this.indexUpdate,
     required this.currentIndex,
     this.onComplete,
@@ -62,7 +65,8 @@ class _LikhoValidationContentSectionState
   @override
   void didUpdateWidget(covariant LikhoValidationContentSection oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.language.languageCode != widget.language.languageCode) {
+    if (oldWidget.sourceLanguage.languageCode != widget.sourceLanguage.languageCode ||
+        oldWidget.targetLanguage.languageCode != widget.targetLanguage.languageCode) {
       _loadValidationData();
     }
     if (currentIndex != widget.currentIndex) {
@@ -349,7 +353,7 @@ class _LikhoValidationContentSectionState
         controller: correctedTextController,
         enabled: true,
         maxLines: 4,
-        languageCode: 'en',
+        languageCode: widget.targetLanguage.languageCode,
         hintText: "Start typing here...",
         onChanged: (value) {
           _onTextChanged(value);
