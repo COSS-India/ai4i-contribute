@@ -84,7 +84,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
           return Center(
               child: Padding(
             padding: const EdgeInsets.only(top: 150.0),
-            child: Text("Something went wrong! Please try again."),
+            child: Text("Selected language is not supported"),
           ));
         }
         if (snapshot.data!.sentences.isEmpty) {

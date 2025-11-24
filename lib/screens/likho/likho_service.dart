@@ -49,19 +49,37 @@ class LikhoService {
     required String translation,
   }) async {
     try {
+      final url = '$baseUrl/likho/submit';
+      final headers = {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+      };
+      final payload = {
+        'item_id': itemId,
+        'src_language': srcLanguage,
+        'tgt_language': 'en',
+        'translation': translation,
+        'metadata': {},
+      };
+      final body = jsonEncode(payload);
+      
+      // Debug print curl command
+      print('=== LIKHO SUBMIT API DEBUG ===');
+      print('URL: $url');
+      print('Headers: $headers');
+      print('Payload: $payload');
+      print('Body: $body');
+      print('CURL Command:');
+      print('curl -X POST "$url" \\');
+      print('  -H "accept: application/json" \\');
+      print('  -H "Content-Type: application/json" \\');
+      print('  -d \'$body\'');
+      print('===============================');
+      
       final response = await http.post(
-        Uri.parse('$baseUrl/likho/submit'),
-        headers: {
-          'accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'item_id': itemId,
-          'src_language': srcLanguage,
-          'tgt_language': 'en',
-          'translation': translation,
-          'metadata': {},
-        }),
+        Uri.parse(url),
+        headers: headers,
+        body: body,
       );
 
       print('Submit Response Status: ${response.statusCode}');

@@ -217,9 +217,12 @@ class _UnicodeValidationTextFieldState
         if (!invalidChars.contains(char)) {
           invalidChars.add(char);
         }
-        
+
         // Check if it's a control character (like Enter, Tab, etc.)
-        if (rune < 0x0020 && rune != 0x0009 && rune != 0x000A && rune != 0x000D) {
+        if (rune < 0x0020 &&
+            rune != 0x0009 &&
+            rune != 0x000A &&
+            rune != 0x000D) {
           hasControlChars = true;
         } else if (rune >= 0x0020) {
           hasOtherLanguage = true;
@@ -242,11 +245,11 @@ class _UnicodeValidationTextFieldState
   void _onTextChanged(String value) {
     final newErrorMessage = _validateText(value);
     final hasError = newErrorMessage != null;
-    
+
     setState(() {
       _errorMessage = newErrorMessage;
     });
-    
+
     widget.onChanged?.call(value);
     widget.onValidationChanged?.call(hasError);
   }
@@ -262,6 +265,7 @@ class _UnicodeValidationTextFieldState
             color: Colors.white,
           ),
           child: TextField(
+            
             controller: _controller,
             enabled: widget.enabled,
             maxLines: widget.maxLines,
@@ -272,6 +276,7 @@ class _UnicodeValidationTextFieldState
               fontWeight: FontWeight.w600,
             ),
             decoration: InputDecoration(
+              
               hintText: widget.hintText,
               labelText: widget.labelText,
               hintStyle: BrandingConfig.instance.getPrimaryTextStyle(

@@ -6,7 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/actions_section.dart';
 import 'package:VoiceGive/screens/likho/likho_content_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/bolo_headers_section.dart';
-import 'package:VoiceGive/screens/bolo_india/widgets/language_selection.dart';
+import 'package:VoiceGive/screens/likho/dual_language_selection_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,11 +18,18 @@ class LikhoContribute extends StatefulWidget {
 }
 
 class _LikhoContributeState extends State<LikhoContribute> {
-  LanguageModel selectedLanguage = LanguageModel(
+  LanguageModel sourceLanguage = LanguageModel(
       languageName: "Hindi",
       nativeName: "हिन्दी",
       isActive: true,
       languageCode: "hi",
+      region: "India",
+      speakers: "");
+  LanguageModel targetLanguage = LanguageModel(
+      languageName: "Marathi",
+      nativeName: "मराठी",
+      isActive: true,
+      languageCode: "mr",
       region: "India",
       speakers: "");
   final ValueNotifier<int> currentIndex = ValueNotifier<int>(0);
@@ -50,11 +57,11 @@ class _LikhoContributeState extends State<LikhoContribute> {
                   children: [
                     ActionsSection(),
                     SizedBox(height: 16.w),
-                    LanguageSelection(
-                      description: AppLocalizations.of(context)!
-                          .selectLanguageForContribution,
-                      onLanguageChanged: (value) {
-                        selectedLanguage = value;
+                    DualLanguageSelectionWidget(
+                      description: "Please choose the languages for translation",
+                      onLanguageChanged: (source, target) {
+                        sourceLanguage = source;
+                        targetLanguage = target;
                         currentIndex.value = 0;
                         setState(() {});
                       },
@@ -64,7 +71,8 @@ class _LikhoContributeState extends State<LikhoContribute> {
                         valueListenable: currentIndex,
                         builder: (context, index, child) {
                           return LikhoContentSection(
-                            language: selectedLanguage,
+                            sourceLanguage: sourceLanguage,
+                            targetLanguage: targetLanguage,
                             currentIndex: index,
                             indexUpdate: (value) => setState(() {
                               currentIndex.value = value;

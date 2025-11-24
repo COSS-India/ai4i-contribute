@@ -80,9 +80,7 @@ class _SunoContentSectionState extends State<SunoContentSection> {
   }
 
   void _onValidationChanged(bool hasError) {
-    setState(() {
-      _hasValidationError = hasError;
-    });
+    _hasValidationError = hasError;
     _onTextChanged(textController.text);
   }
 
@@ -302,104 +300,16 @@ class _SunoContentSectionState extends State<SunoContentSection> {
             languageCode: widget.language.languageCode,
             hintText: "Start typing here...",
             onChanged: (value) {
-              final hasError = _validateUnicodeText(value);
+              _onTextChanged(value);
+            },
+            onValidationChanged: (hasError) {
               _onValidationChanged(hasError);
             },
           );
         },
       );
 
-  bool _validateUnicodeText(String text) {
-    if (text.isEmpty) return false;
 
-    final ranges = _getLanguageUnicodeRanges(widget.language.languageCode);
-    if (ranges == null) return false;
-
-    for (final rune in text.runes) {
-      if (!_isValidCharacter(rune, ranges)) {
-        return true; // Has error
-      }
-    }
-    return false; // No error
-  }
-
-  List<List<int>>? _getLanguageUnicodeRanges(String languageCode) {
-    const ranges = {
-      'hi': [
-        [0x0900, 0x097F],
-        [0xA8E0, 0xA8FF]
-      ],
-      'bn': [
-        [0x0980, 0x09FF]
-      ],
-      'te': [
-        [0x0C00, 0x0C7F]
-      ],
-      'mr': [
-        [0x0900, 0x097F],
-        [0xA8E0, 0xA8FF]
-      ],
-      'ta': [
-        [0x0B80, 0x0BFF]
-      ],
-      'gu': [
-        [0x0A80, 0x0AFF]
-      ],
-      'kn': [
-        [0x0C80, 0x0CFF]
-      ],
-      'ml': [
-        [0x0D00, 0x0D7F]
-      ],
-      'pa': [
-        [0x0A00, 0x0A7F]
-      ],
-      'or': [
-        [0x0B00, 0x0B7F]
-      ],
-      'as': [
-        [0x0980, 0x09FF]
-      ],
-      'ur': [
-        [0x0600, 0x06FF],
-        [0x0750, 0x077F]
-      ],
-      'en': [
-        [0x0041, 0x005A],
-        [0x0061, 0x007A]
-      ],
-    };
-    return ranges[languageCode];
-  }
-
-  bool _isValidCharacter(int codePoint, List<List<int>> ranges) {
-    // Allow common characters (same as UnicodeValidationTextField)
-    if (codePoint == 0x0020 || // Space
-        codePoint == 0x0009 || // Tab
-        codePoint == 0x000A || // Line Feed (Enter)
-        codePoint == 0x000D || // Carriage Return
-        (codePoint >= 0x0030 && codePoint <= 0x0039) || // Numbers
-        codePoint == 0x002E || // Period
-        codePoint == 0x002C || // Comma
-        codePoint == 0x003F || // Question mark
-        codePoint == 0x0021 || // Exclamation mark
-        codePoint == 0x003A || // Colon
-        codePoint == 0x003B || // Semicolon
-        codePoint == 0x0027 || // Apostrophe
-        codePoint == 0x0022 || // Quotation mark
-        codePoint == 0x0028 || // Left parenthesis
-        codePoint == 0x0029 || // Right parenthesis
-        codePoint == 0x002D) { // Hyphen-minus
-      return true;
-    }
-
-    for (final range in ranges) {
-      if (codePoint >= range[0] && codePoint <= range[1]) {
-        return true;
-      }
-    }
-    return false;
-  }
 
   Widget _actionButtons() {
     final bool isSessionComplete = submittedCount >= totalContributions;

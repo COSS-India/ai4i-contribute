@@ -105,7 +105,9 @@ class _SunoValidationContentSectionState
   void _onTextChanged(String value) {
     if (_needsChange) {
       // When needs change is active, only enable if text is different from original and valid
-      final originalText = validationItems.isNotEmpty ? validationItems[currentBatchIndex].transcript : '';
+      final originalText = validationItems.isNotEmpty
+          ? validationItems[currentBatchIndex].transcript
+          : '';
       enableSubmit.value = audioCompleted.value &&
           correctedTextController.text.trim() != originalText.trim() &&
           correctedTextController.text.trim().isNotEmpty &&
@@ -201,8 +203,7 @@ class _SunoValidationContentSectionState
                   padding: EdgeInsets.all(12).r,
                   child: Column(
                     children: [
-                      _progressHeader(
-                          progress: 0.0, total: 3, currentItem: 1),
+                      _progressHeader(progress: 0.0, total: 3, currentItem: 1),
                       SizedBox(height: 24.w),
                       _instructionText(),
                       SizedBox(height: 22.w),
@@ -267,7 +268,8 @@ class _SunoValidationContentSectionState
           );
         }
 
-        final int currentItemNumber = (submittedCount + 1).clamp(1, totalContributions);
+        final int currentItemNumber =
+            (submittedCount + 1).clamp(1, totalContributions);
         final double progress = currentItemNumber / totalContributions;
         return Stack(
           children: [
@@ -287,7 +289,9 @@ class _SunoValidationContentSectionState
                     child: Column(
                       children: [
                         _progressHeader(
-                            progress: progress, total: totalContributions, currentItem: currentItemNumber),
+                            progress: progress,
+                            total: totalContributions,
+                            currentItem: currentItemNumber),
                         SizedBox(height: 24.w),
                         _instructionText(),
                         SizedBox(height: 22.w),
@@ -344,7 +348,10 @@ class _SunoValidationContentSectionState
     );
   }
 
-  Widget _progressHeader({required int total, required double progress, required int currentItem}) =>
+  Widget _progressHeader(
+          {required int total,
+          required double progress,
+          required int currentItem}) =>
       Column(
         children: [
           Row(
@@ -452,9 +459,10 @@ class _SunoValidationContentSectionState
                         padding: EdgeInsets.all(12).r,
                         child: TextField(
                           controller: TextEditingController(
-                              text: validationItems[currentBatchIndex].transcript),
+                              text: validationItems[currentBatchIndex]
+                                  .transcript),
                           enabled: false,
-                          maxLines: 4,
+                          maxLines: 5,
                           decoration: InputDecoration(
                             hintText: "Original",
                             border: InputBorder.none,
@@ -812,7 +820,7 @@ class _SunoValidationContentSectionState
 
   Future<void> _moveToNext() async {
     currentBatchIndex++;
-    
+
     // Check if we need to load next batch
     if (currentBatchIndex >= validationItems.length) {
       try {
@@ -828,7 +836,7 @@ class _SunoValidationContentSectionState
         );
       }
     }
-    
+
     if (currentBatchIndex < validationItems.length) {
       widget.indexUpdate(currentBatchIndex);
     }

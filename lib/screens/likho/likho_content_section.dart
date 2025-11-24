@@ -16,13 +16,15 @@ import 'dart:convert';
 typedef IntCallback = void Function(int value);
 
 class LikhoContentSection extends StatefulWidget {
-  final LanguageModel language;
+  final LanguageModel sourceLanguage;
+  final LanguageModel targetLanguage;
   final IntCallback indexUpdate;
   final int currentIndex;
 
   const LikhoContentSection(
       {super.key,
-      required this.language,
+      required this.sourceLanguage,
+      required this.targetLanguage,
       required this.indexUpdate,
       required this.currentIndex});
 
@@ -54,7 +56,8 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
   @override
   void didUpdateWidget(covariant LikhoContentSection oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.language.languageCode != widget.language.languageCode) {
+    if (oldWidget.sourceLanguage.languageCode != widget.sourceLanguage.languageCode ||
+        oldWidget.targetLanguage.languageCode != widget.targetLanguage.languageCode) {
       _loadLikhoData();
     }
     if (currentIndex != widget.currentIndex) {
@@ -73,7 +76,7 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
     try {
       isLoading.value = true;
       final response = await _likhoService.getLikhoQueue(
-        srcLanguage: widget.language.languageCode,
+        srcLanguage: widget.sourceLanguage.languageCode,
         batchSize: 5,
       );
 
@@ -236,7 +239,7 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
       controller: textController,
       enabled: !isSessionComplete,
       maxLines: 4,
-      languageCode: 'en', // Users translate TO English
+      languageCode: widget.targetLanguage.languageCode, // Users translate TO target language
       hintText: "Start typing here...",
       onChanged: (value) {
         // UnicodeValidationTextField handles its own validation and error display
@@ -420,7 +423,7 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
     try {
       final success = await _likhoService.submitTranslation(
         itemId: likhoItems[currentIndex].itemId,
-        srcLanguage: widget.language.languageCode,
+        srcLanguage: widget.sourceLanguage.languageCode,
         translation: textController.text.trim(),
       );
 
@@ -459,7 +462,7 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
   Future<void> _loadMoreSentences() async {
     try {
       final response = await _likhoService.getLikhoQueue(
-        srcLanguage: widget.language.languageCode,
+        srcLanguage: widget.sourceLanguage.languageCode,
         batchSize: 5,
       );
 
