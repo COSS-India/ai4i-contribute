@@ -135,7 +135,7 @@ class _LikhoValidationContentSectionState
           return _buildEmptyState();
         }
 
-        final int currentItemNumber = submittedCount + 1;
+        final int currentItemNumber = (submittedCount + 1).clamp(1, totalContributions);
         final double progress = currentItemNumber / totalContributions;
 
         return ClipRRect(
@@ -143,12 +143,12 @@ class _LikhoValidationContentSectionState
           child: Stack(
             fit: StackFit.passthrough,
             children: [
-              Image.asset(
-                'assets/images/contribute_bg.png',
-                fit: BoxFit.cover,
-                width: double.infinity,
-                color: BrandingConfig.instance.primaryColor,
-              ),
+              // Image.asset(
+              //   'assets/images/contribute_bg.png',
+              //   fit: BoxFit.cover,
+              //   width: double.infinity,
+              //   color: BrandingConfig.instance.primaryColor,
+              // ),
               Padding(
                 padding: EdgeInsets.all(12).r,
                 child: Column(
@@ -352,7 +352,10 @@ class _LikhoValidationContentSectionState
         languageCode: 'en',
         hintText: "Start typing here...",
         onChanged: (value) {
-          _onValidationChanged(false);
+          _onTextChanged(value);
+        },
+        onValidationChanged: (hasError) {
+          _onValidationChanged(hasError);
         },
       );
 

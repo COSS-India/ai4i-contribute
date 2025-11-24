@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
-import '../../config/branding_config.dart';
 
 class LikhoValidationContentSkeleton extends StatelessWidget {
   const LikhoValidationContentSkeleton({super.key});
@@ -13,12 +12,12 @@ class LikhoValidationContentSkeleton extends StatelessWidget {
       child: Stack(
         fit: StackFit.passthrough,
         children: [
-          Image.asset(
-            'assets/images/contribute_bg.png',
-            fit: BoxFit.cover,
-            width: double.infinity,
-            color: BrandingConfig.instance.primaryColor,
-          ),
+          // Image.asset(
+          //   'assets/images/contribute_bg.png',
+          //   fit: BoxFit.cover,
+          //   width: double.infinity,
+          //   color: BrandingConfig.instance.primaryColor,
+          // ),
           Padding(
             padding: EdgeInsets.all(12).r,
             child: Column(

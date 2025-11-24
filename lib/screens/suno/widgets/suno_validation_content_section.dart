@@ -267,7 +267,7 @@ class _SunoValidationContentSectionState
           );
         }
 
-        final int currentItemNumber = submittedCount + 1;
+        final int currentItemNumber = (submittedCount + 1).clamp(1, totalContributions);
         final double progress = currentItemNumber / totalContributions;
         return Stack(
           children: [

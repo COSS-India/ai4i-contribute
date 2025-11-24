@@ -12,12 +12,12 @@ class LikhoContentSkeleton extends StatelessWidget {
       child: Stack(
         fit: StackFit.passthrough,
         children: [
-          Image.asset(
-            'assets/images/contribute_bg.png',
-            fit: BoxFit.cover,
-            width: double.infinity,
-            color: BrandingConfig.instance.primaryColor,
-          ),
+          // Image.asset(
+          //   'assets/images/contribute_bg.png',
+          //   fit: BoxFit.cover,
+          //   width: double.infinity,
+          //   color: BrandingConfig.instance.primaryColor,
+          // ),
           Padding(
             padding: EdgeInsets.all(12).r,
             child: Column(

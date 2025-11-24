@@ -36,6 +36,7 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
   final ValueNotifier<bool> isLoading = ValueNotifier<bool>(true);
   final TextEditingController textController = TextEditingController();
   final LikhoService _likhoService = LikhoService();
+  bool _hasValidationError = false;
 
   int currentIndex = 0;
   int submittedCount = 0;
@@ -92,10 +93,14 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
   }
 
   void _onTextChanged(String value) {
-    enableSubmit.value = textController.text.trim().isNotEmpty;
+    enableSubmit.value =
+        textController.text.trim().isNotEmpty && !_hasValidationError;
   }
 
-
+  void _onValidationChanged(bool hasError) {
+    _hasValidationError = hasError;
+    _onTextChanged(textController.text);
+  }
 
   @override
   void dispose() {
@@ -119,8 +124,9 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
         final int currentItemNumber = currentIndex + 1;
         final double progress = currentItemNumber / totalContributions;
         // Ensure proper UTF-8 text display
-        final String currentSentence = _decodeText(likhoItems[displayIndex].text);
-        
+        final String currentSentence =
+            _decodeText(likhoItems[displayIndex].text);
+
         return Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8).r,
@@ -133,18 +139,20 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
             child: Stack(
               fit: StackFit.passthrough,
               children: [
-                Image.asset(
-                  'assets/images/contribute_bg.png',
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  color: BrandingConfig.instance.primaryColor,
-                ),
+                // Image.asset(
+                //   'assets/images/contribute_bg.png',
+                //   fit: BoxFit.cover,
+                //   width: double.infinity,
+                //   color: BrandingConfig.instance.primaryColor,
+                // ),
                 Padding(
                   padding: EdgeInsets.all(12).r,
                   child: Column(
                     children: [
                       _progressHeader(
-                          progress: progress, total: totalContributions, currentItem: currentItemNumber),
+                          progress: progress,
+                          total: totalContributions,
+                          currentItem: currentItemNumber),
                       SizedBox(height: 24.w),
                       _sentenceText(currentSentence),
                       SizedBox(height: 16.w),
@@ -165,7 +173,10 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
     );
   }
 
-  Widget _progressHeader({required int total, required double progress, required int currentItem}) =>
+  Widget _progressHeader(
+          {required int total,
+          required double progress,
+          required int currentItem}) =>
       Column(
         children: [
           Row(
@@ -231,10 +242,11 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
         // UnicodeValidationTextField handles its own validation and error display
         _onTextChanged(value);
       },
+      onValidationChanged: (hasError) {
+        _onValidationChanged(hasError);
+      },
     );
   }
-
-
 
   Widget _actionButtons() {
     final bool isSessionComplete = submittedCount >= totalContributions;
@@ -379,13 +391,13 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
   void _onSkip() async {
     textController.clear();
     enableSubmit.value = false;
-    
+
     displayIndex = (displayIndex + 1) % likhoItems.length;
-    
+
     if (displayIndex == 0 && likhoItems.length < 10) {
       await _loadMoreSentences();
     }
-    
+
     setState(() {});
 
     Helper.showSnackBarMessage(
@@ -450,7 +462,7 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
         srcLanguage: widget.language.languageCode,
         batchSize: 5,
       );
-      
+
       if (response.success && response.data.isNotEmpty) {
         likhoItems.addAll(response.data);
       }

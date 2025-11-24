@@ -9,6 +9,7 @@ class UnicodeValidationTextField extends StatefulWidget {
   final String languageCode;
   final TextEditingController? controller;
   final Function(String)? onChanged;
+  final Function(bool)? onValidationChanged;
   final int? maxLines;
   final bool enabled;
 
@@ -19,6 +20,7 @@ class UnicodeValidationTextField extends StatefulWidget {
     required this.languageCode,
     this.controller,
     this.onChanged,
+    this.onValidationChanged,
     this.maxLines = 1,
     this.enabled = true,
   });
@@ -238,10 +240,15 @@ class _UnicodeValidationTextFieldState
   }
 
   void _onTextChanged(String value) {
+    final newErrorMessage = _validateText(value);
+    final hasError = newErrorMessage != null;
+    
     setState(() {
-      _errorMessage = _validateText(value);
+      _errorMessage = newErrorMessage;
     });
+    
     widget.onChanged?.call(value);
+    widget.onValidationChanged?.call(hasError);
   }
 
   @override
