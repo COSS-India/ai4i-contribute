@@ -97,7 +97,7 @@ class _SunoGetStartedState extends State<SunoGetStarted> {
         child: Column(
           children: [
             BoloHeadersSection(
-              logoAsset: 'assets/images/suno.png',
+                logoAsset: 'assets/images/suno_header.png',
               title: 'SUNO India',
               subtitle: 'Enrich your language by listening to audio',
               onBackPressed: () => Navigator.pushReplacement(

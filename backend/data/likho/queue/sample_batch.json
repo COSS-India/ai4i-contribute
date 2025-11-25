@@ -2,36 +2,36 @@
   {
     "item_id": "likho-1",
     "src_language": "hi",
-    "tgt_language": "en",
-    "text": "यह एक उदाहरण वाक्य है।",
+    "tgt_language": "mr",
+    "text": "किसान खेत में गेहूँ की फसल की सिंचाई कर रहा है।",
     "metadata": {}
   },
   {
     "item_id": "likho-2",
     "src_language": "hi",
-    "tgt_language": "en",
-    "text": "कृपया इस संदेश का अनुवाद करें।",
+    "tgt_language": "mr",
+    "text": "इस साल मानसून समय पर आने से खेती में मदद मिली है।",
     "metadata": {}
   },
   {
     "item_id": "likho-3",
     "src_language": "hi",
-    "tgt_language": "en",
-    "text": "आज मौसम बहुत अच्छा है।",
+    "tgt_language": "mr",
+    "text": "खेत की मिट्टी को उपजाऊ बनाने के लिए जैविक खाद का उपयोग किया जाता है।",
     "metadata": {}
   },
   {
     "item_id": "likho-4",
     "src_language": "hi",
-    "tgt_language": "en",
-    "text": "मैं बाज़ार जा रहा हूँ।",
+    "tgt_language": "mr",
+    "text": "ट्रैक्टर की मदद से किसान जमीन को जोत रहा है।",
     "metadata": {}
   },
   {
     "item_id": "likho-5",
     "src_language": "hi",
-    "tgt_language": "en",
-    "text": "आप कैसे हैं?",
+    "tgt_language": "mr",
+    "text": "सब्जियों की अच्छी पैदावार के लिए समय पर पानी देना ज़रूरी है।",
     "metadata": {}
   }
 ]

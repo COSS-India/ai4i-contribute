@@ -1,34 +1,30 @@
 import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
-import 'package:VoiceGive/screens/home_screen/home_screen.dart';
 import 'package:VoiceGive/screens/module_selection_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/actions_section.dart';
-import 'package:VoiceGive/screens/suno/widgets/suno_content_section.dart';
+import 'package:VoiceGive/screens/likho/likho_content_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/bolo_headers_section.dart';
-import 'package:VoiceGive/screens/bolo_india/widgets/language_selection.dart';
-import 'package:VoiceGive/providers/language_provider.dart';
+import 'package:VoiceGive/screens/likho/dual_language_selection_widget.dart';
+import 'package:VoiceGive/providers/likho_language_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SunoContribute extends StatefulWidget {
-  const SunoContribute({super.key});
+class LikhoContribute extends StatefulWidget {
+  const LikhoContribute({super.key});
 
   @override
-  State<SunoContribute> createState() => _SunoContributeState();
+  State<LikhoContribute> createState() => _LikhoContributeState();
 }
 
-class _SunoContributeState extends State<SunoContribute> {
-  final LanguageProvider _languageProvider = LanguageProvider();
+class _LikhoContributeState extends State<LikhoContribute> {
+  final LikhoLanguageProvider _languageProvider = LikhoLanguageProvider();
   final ValueNotifier<int> currentIndex = ValueNotifier<int>(0);
-  final GlobalKey _contentKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    // Reset to first item when screen is initialized
-    currentIndex.value = 0;
     _languageProvider.addListener(() {
       setState(() {});
     });
@@ -44,14 +40,13 @@ class _SunoContributeState extends State<SunoContribute> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: CustomAppBar(
-      ),
+      appBar: CustomAppBar(),
       body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
               BoloHeadersSection(
-                logoAsset: 'assets/images/suno_header.png',
+                logoAsset: 'assets/images/likho_header.png',
                 title: 'Contribution',
                 onBackPressed: () => Navigator.pushReplacement(
                   context,
@@ -65,12 +60,12 @@ class _SunoContributeState extends State<SunoContribute> {
                   children: [
                     ActionsSection(),
                     SizedBox(height: 16.w),
-                    LanguageSelection(
-                      description: AppLocalizations.of(context)!
-                          .selectLanguageForContribution,
-                      initialLanguage: _languageProvider.selectedLanguage,
-                      onLanguageChanged: (value) {
-                        _languageProvider.updateLanguage(value);
+                    DualLanguageSelectionWidget(
+                      description: "Select the language for contribution",
+                      initialSourceLanguage: _languageProvider.sourceLanguage,
+                      initialTargetLanguage: _languageProvider.targetLanguage,
+                      onLanguageChanged: (source, target) {
+                        _languageProvider.updateLanguages(source, target);
                         currentIndex.value = 0;
                         setState(() {});
                       },
@@ -79,9 +74,9 @@ class _SunoContributeState extends State<SunoContribute> {
                     ValueListenableBuilder<int>(
                         valueListenable: currentIndex,
                         builder: (context, index, child) {
-                          return SunoContentSection(
-                            key: _contentKey,
-                            language: _languageProvider.selectedLanguage,
+                          return LikhoContentSection(
+                            sourceLanguage: _languageProvider.sourceLanguage,
+                            targetLanguage: _languageProvider.targetLanguage,
                             currentIndex: index,
                             indexUpdate: (value) => setState(() {
                               currentIndex.value = value;

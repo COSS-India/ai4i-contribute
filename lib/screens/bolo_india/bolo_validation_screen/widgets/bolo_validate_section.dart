@@ -41,9 +41,10 @@ class _BoloValidateSectionState extends State<BoloValidateSection> {
 
   @override
   void didUpdateWidget(covariant BoloValidateSection oldWidget) {
-    // TODO: implement
     if (oldWidget.languageModel.languageCode !=
         widget.languageModel.languageCode) {
+      currentIndex = 0;
+      enableActionButtons.value = false;
       getValidationsQueue = BoloValidateRepository().getValidationsQueue(
           language: widget.languageModel.languageName, count: 25);
       setState(() {});

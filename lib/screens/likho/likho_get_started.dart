@@ -4,25 +4,24 @@ import 'package:VoiceGive/common_widgets/primary_button_widget.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:VoiceGive/models/get_started_model.dart';
-import 'package:VoiceGive/screens/bolo_india/bolo_contribute/bolo_contribute.dart';
+import 'package:VoiceGive/screens/likho/likho_contribute.dart';
 import 'package:VoiceGive/screens/module_selection_screen.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_get_started/get_started_item.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/bolo_headers_section.dart';
-import 'package:VoiceGive/screens/home_screen/home_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../config/branding_config.dart';
+import '../../config/branding_config.dart';
 
-class BoloGetStarted extends StatefulWidget {
-  const BoloGetStarted({super.key});
+class LikhoGetStarted extends StatefulWidget {
+  const LikhoGetStarted({super.key});
 
   @override
-  State<BoloGetStarted> createState() => _BoloGetStartedState();
+  State<LikhoGetStarted> createState() => _LikhoGetStartedState();
 }
 
-class _BoloGetStartedState extends State<BoloGetStarted> {
+class _LikhoGetStartedState extends State<LikhoGetStarted> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
@@ -89,8 +88,6 @@ class _BoloGetStartedState extends State<BoloGetStarted> {
 
   @override
   Widget build(BuildContext context) {
-    final branding = BrandingConfig.instance;
-
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: const CustomAppBar(
@@ -99,42 +96,10 @@ class _BoloGetStartedState extends State<BoloGetStarted> {
       body: SafeArea(
         child: Column(
           children: [
-            // BOLO India header with back button (full-bleed, edge-to-edge)
-            // Container(
-            //   width: double.infinity,
-            //   padding: EdgeInsets.all(16).r,
-            //   decoration: BoxDecoration(color: AppColors.bannerColor),
-            //   child:
-            //       Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            //     InkWell(
-            //       onTap: () {
-            //         Navigator.pushReplacement(
-            //           context,
-            //           MaterialPageRoute(
-            //               builder: (_) => const ModuleSelectionScreen()),
-            //         );
-            //       },
-            //       child: Icon(
-            //         Icons.arrow_circle_left_outlined,
-            //         color: Colors.white,
-            //         size: 36.sp,
-            //       ),
-            //     ),
-            //     SizedBox(width: 24.w),
-            //     branding.bannerImage.isNotEmpty
-            //         ? ImageWidget(
-            //             imageUrl: branding.bannerImage,
-            //             height: 40.w,
-            //             width: 40.w,
-            //           )
-            //         : SizedBox(width: 40.w, height: 40.w),
-            //     SizedBox(width: 8.w),
-            //   ]),
-            // ),
             BoloHeadersSection(
-                logoAsset: 'assets/images/bolo_header.png',
-              title: 'BOLO India',
-              subtitle: 'Enrich your language by donating your voice',
+                logoAsset: 'assets/images/likho_header.png',
+              title: 'LIKHO India',
+              subtitle: 'Enrich your language by donating your translations',
               onBackPressed: () => Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
@@ -203,7 +168,6 @@ class _BoloGetStartedState extends State<BoloGetStarted> {
               padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.h),
               child: Row(
                 children: [
-                  // Indicators (left)
                   Row(
                     children: List.generate(
                       getStartedData.length,
@@ -222,7 +186,6 @@ class _BoloGetStartedState extends State<BoloGetStarted> {
                     ),
                   ),
                   Spacer(),
-                  // Skip button (right)
                   SizedBox(
                     width: 130.w,
                     child: PrimaryButtonWidget(
@@ -246,7 +209,7 @@ class _BoloGetStartedState extends State<BoloGetStarted> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const BoloContribute(),
+                              builder: (context) => const LikhoContribute(),
                             ),
                           );
                         }
@@ -260,95 +223,5 @@ class _BoloGetStartedState extends State<BoloGetStarted> {
         ),
       ),
     );
-  }
-
-  Widget actionButtons() {
-    return _currentPage == 0
-        ? Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 110.w,
-                child: PrimaryButtonWidget(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8).r,
-                    border: Border.all(color: AppColors.darkGreen),
-                  ),
-                  title: AppLocalizations.of(context)!.skip,
-                  textColor: AppColors.darkGreen,
-                  onTap: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const BoloContribute(),
-                        ));
-                  },
-                ),
-              ),
-              SizedBox(width: 50.w),
-              SizedBox(
-                width: 110.w,
-                child: PrimaryButtonWidget(
-                  decoration: BoxDecoration(
-                    color: AppColors.darkGreen,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: AppColors.darkGreen),
-                  ),
-                  title: AppLocalizations.of(context)!.next,
-                  textColor: Colors.white,
-                  onTap: () {
-                    _pageController.nextPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.ease,
-                    );
-                  },
-                ),
-              ),
-            ],
-          )
-        : Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 110.w,
-                child: PrimaryButtonWidget(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8).r,
-                    border: Border.all(color: AppColors.darkGreen),
-                  ),
-                  title: AppLocalizations.of(context)!.previous,
-                  textColor: AppColors.darkGreen,
-                  onTap: () {
-                    _pageController.previousPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.ease,
-                    );
-                  },
-                ),
-              ),
-              SizedBox(width: 50.w),
-              SizedBox(
-                width: 110.w,
-                child: PrimaryButtonWidget(
-                  decoration: BoxDecoration(
-                    color: AppColors.darkGreen,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: AppColors.darkGreen),
-                  ),
-                  title: AppLocalizations.of(context)!.finish,
-                  textColor: Colors.white,
-                  onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BoloContribute()),
-                    );
-                  },
-                ),
-              ),
-            ],
-          );
   }
 }
