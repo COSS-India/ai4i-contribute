@@ -99,7 +99,7 @@ class _LikhoGetStartedState extends State<LikhoGetStarted> {
             BoloHeadersSection(
                 logoAsset: 'assets/images/likho_header.png',
               title: 'LIKHO India',
-              subtitle: 'Enrich your language by donating your text',
+              subtitle: 'Enrich your language by donating your translations',
               onBackPressed: () => Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(

@@ -58,22 +58,23 @@ class _BoloContentSectionState extends State<BoloContentSection> {
   void didUpdateWidget(covariant BoloContentSection oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.language.languageCode != widget.language.languageCode) {
+      // Reset ALL counters and state when language changes
       currentIndex = 0;
       submittedCount = 0;
+      totalContributions = 5;
       enableSubmit.value = false;
+      enableSkip.value = true;
       recordedFile = null;
       recordedFiles.clear();
       boloContributeFuture = BoloContributeRepository()
           .getContributionSentances(language: widget.language.languageName);
+      setState(() {});
     }
     if (currentIndex != widget.currentIndex) {
       currentIndex = widget.currentIndex;
     }
     if (recordedFiles.isNotEmpty && recordedFiles.length > currentIndex + 1) {
       recordedFiles.removeLast();
-    }
-    if (mounted) {
-      setState(() {});
     }
   }
 

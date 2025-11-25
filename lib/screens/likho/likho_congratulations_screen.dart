@@ -78,7 +78,7 @@ class _LikhoCongratulationsScreenState extends State<LikhoCongratulationsScreen>
               BoloHeadersSection(
                 logoAsset: 'assets/images/likho_header.png',
                 title: 'LIKHO India',
-                subtitle: 'Enrich your language by translating text',
+                subtitle: 'Enrich your language by donating your translations',
                 onBackPressed: () => Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
