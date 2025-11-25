@@ -8,7 +8,7 @@ import 'package:VoiceGive/screens/bolo_india/widgets/actions_section.dart';
 import 'package:VoiceGive/screens/suno/widgets/suno_content_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/bolo_headers_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/language_selection.dart';
-import 'package:VoiceGive/providers/suno_language_provider.dart';
+import 'package:VoiceGive/providers/language_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -20,7 +20,7 @@ class SunoContribute extends StatefulWidget {
 }
 
 class _SunoContributeState extends State<SunoContribute> {
-  final SunoLanguageProvider _languageProvider = SunoLanguageProvider();
+  final LanguageProvider _languageProvider = LanguageProvider();
   final ValueNotifier<int> currentIndex = ValueNotifier<int>(0);
 
   @override

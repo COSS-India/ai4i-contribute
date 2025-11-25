@@ -296,7 +296,9 @@ class _SunoValidationAudioPlayerState extends State<SunoValidationAudioPlayer> {
               ),
             ),
             Icon(
-              _showSpeedDropdown ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+              _showSpeedDropdown
+                  ? Icons.keyboard_arrow_up
+                  : Icons.keyboard_arrow_down,
               size: 16,
               color: AppColors.darkGreen,
             ),
@@ -402,7 +404,7 @@ class _SunoValidationAudioPlayerState extends State<SunoValidationAudioPlayer> {
         children: [
           Expanded(
             child: Container(
-              height: 125.h,
+              height: 123.h,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8).r,
                   color: Colors.white),
@@ -496,7 +498,8 @@ class _SunoValidationAudioPlayerState extends State<SunoValidationAudioPlayer> {
                       color: _hasEnded
                           ? sliderColor.withValues(alpha: 0.7)
                           : AppColors.greys87,
-                      fontWeight: _hasEnded ? FontWeight.w600 : FontWeight.normal,
+                      fontWeight:
+                          _hasEnded ? FontWeight.w600 : FontWeight.normal,
                     ),
                   ),
                   SizedBox(width: 8.w),

@@ -7,7 +7,7 @@ import 'package:VoiceGive/screens/bolo_india/widgets/actions_section.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_contribute/widgets/bolo_content_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/bolo_headers_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/language_selection.dart';
-import 'package:VoiceGive/providers/bolo_language_provider.dart';
+import 'package:VoiceGive/providers/language_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,7 +19,7 @@ class BoloContribute extends StatefulWidget {
 }
 
 class _BoloContributeState extends State<BoloContribute> {
-  final BoloLanguageProvider _languageProvider = BoloLanguageProvider();
+  final LanguageProvider _languageProvider = LanguageProvider();
   final ValueNotifier<int> currentIndex = ValueNotifier<int>(0);
 
   @override

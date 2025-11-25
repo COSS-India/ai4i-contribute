@@ -72,7 +72,7 @@ class _LikhoValidationContentSectionState
       currentIndex = 0;
       submittedCount = 0;
       displayIndex = 0;
-      totalContributions = 3;
+      totalContributions = 25;
       validationItems.clear();
       _resetState();
       _loadValidationData();

@@ -6,7 +6,7 @@ import 'package:VoiceGive/screens/bolo_india/widgets/actions_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/bolo_headers_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/language_selection.dart';
 import 'package:VoiceGive/screens/module_selection_screen.dart';
-import 'package:VoiceGive/providers/suno_language_provider.dart';
+import 'package:VoiceGive/providers/language_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
@@ -21,7 +21,7 @@ class SunoValidationScreen extends StatefulWidget {
 class _SunoValidationScreenState extends State<SunoValidationScreen>
     with TickerProviderStateMixin {
   late final AnimationController _controller;
-  final SunoLanguageProvider _languageProvider = SunoLanguageProvider();
+  final LanguageProvider _languageProvider = LanguageProvider();
 
   bool isCompleted = false;
   int currentIndex = 0;
