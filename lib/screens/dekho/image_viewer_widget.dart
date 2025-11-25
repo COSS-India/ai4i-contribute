@@ -20,6 +20,7 @@ class _ImageViewerWidgetState extends State<ImageViewerWidget> {
   final double _minZoom = 0.5;
   final double _maxZoom = 3.0;
   final double _zoomStep = 0.2;
+  final TransformationController _transformationController = TransformationController();
 
   void _zoomIn() {
     setState(() {
@@ -36,7 +37,7 @@ class _ImageViewerWidgetState extends State<ImageViewerWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300.h,
+      height: 135.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12).r,
         border: Border.all(color: AppColors.darkGreen, width: 2),
@@ -56,56 +57,53 @@ class _ImageViewerWidgetState extends State<ImageViewerWidget> {
                 child: InteractiveViewer(
                   minScale: _minZoom,
                   maxScale: _maxZoom,
-                  child: Transform.scale(
-                    scale: _zoomLevel,
-                    child: Center(
-                      child: Image.network(
-                        widget.imageUrl,
-                        fit: BoxFit.contain,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Container(
-                            width: double.infinity,
-                            height: double.infinity,
-                            color: Colors.grey[200],
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.image_not_supported,
-                                  size: 48.sp,
-                                  color: Colors.grey[400],
-                                ),
-                                SizedBox(height: 8.h),
-                                Text(
-                                  'Image not available',
-                                  style: BrandingConfig.instance.getPrimaryTextStyle(
-                                    fontSize: 14.sp,
-                                    color: Colors.grey[600]!,
-                                  ),
-                                ),
-                              ],
+                  panEnabled: true,
+                  scaleEnabled: true,
+                  child: Image.network(
+                    widget.imageUrl,
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        color: Colors.grey[200],
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.image_not_supported,
+                              size: 24.sp,
+                              color: Colors.grey[400],
                             ),
-                          );
-                        },
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return Container(
-                            width: double.infinity,
-                            height: double.infinity,
-                            color: Colors.grey[100],
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                color: AppColors.darkGreen,
-                                value: loadingProgress.expectedTotalBytes != null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!
-                                    : null,
+                            SizedBox(height: 4.h),
+                            Text(
+                              'Image not available',
+                              style: BrandingConfig.instance.getPrimaryTextStyle(
+                                fontSize: 10.sp,
+                                color: Colors.grey[600]!,
                               ),
                             ),
-                          );
-                        },
-                      ),
-                    ),
+                          ],
+                        ),
+                      );
+                    },
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        color: Colors.grey[100],
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.darkGreen,
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
@@ -113,7 +111,7 @@ class _ImageViewerWidgetState extends State<ImageViewerWidget> {
           ),
           // Zoom controls
           Container(
-            width: 60.w,
+            width: 50.w,
             margin: EdgeInsets.only(right: 8.w),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -122,28 +120,29 @@ class _ImageViewerWidgetState extends State<ImageViewerWidget> {
                 GestureDetector(
                   onTap: _zoomIn,
                   child: Container(
-                    width: 40.w,
-                    height: 40.w,
+                    width: 35.w,
+                    height: 30.w,
                     decoration: BoxDecoration(
-                      color: AppColors.darkGreen,
+                      color: Colors.white,
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20).r,
-                        topRight: Radius.circular(20).r,
+                        topLeft: Radius.circular(15).r,
+                        topRight: Radius.circular(15).r,
                       ),
+                      border: Border.all(color: AppColors.darkGreen),
                     ),
                     child: Icon(
                       Icons.add,
-                      color: Colors.white,
-                      size: 20.sp,
+                      color: Colors.black,
+                      size: 16.sp,
                     ),
                   ),
                 ),
                 // Zoom percentage
                 Container(
-                  width: 40.w,
-                  height: 50.w,
+                  width: 35.w,
+                  height: 25.w,
                   decoration: BoxDecoration(
-                    color: AppColors.lightGreen4,
+                    color: Colors.white,
                     border: Border.symmetric(
                       horizontal: BorderSide(color: AppColors.darkGreen, width: 1),
                     ),
@@ -152,9 +151,9 @@ class _ImageViewerWidgetState extends State<ImageViewerWidget> {
                     child: Text(
                       '${(_zoomLevel * 100).round()}%',
                       style: BrandingConfig.instance.getPrimaryTextStyle(
-                        fontSize: 10.sp,
+                        fontSize: 8.sp,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.darkGreen,
+                        color: Colors.black,
                       ),
                     ),
                   ),
@@ -163,19 +162,20 @@ class _ImageViewerWidgetState extends State<ImageViewerWidget> {
                 GestureDetector(
                   onTap: _zoomOut,
                   child: Container(
-                    width: 40.w,
-                    height: 40.w,
+                    width: 35.w,
+                    height: 30.w,
                     decoration: BoxDecoration(
-                      color: AppColors.darkGreen,
+                      color: Colors.white,
                       borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20).r,
-                        bottomRight: Radius.circular(20).r,
+                        bottomLeft: Radius.circular(15).r,
+                        bottomRight: Radius.circular(15).r,
                       ),
+                      border: Border.all(color: AppColors.darkGreen),
                     ),
                     child: Icon(
                       Icons.remove,
-                      color: Colors.white,
-                      size: 20.sp,
+                      color: Colors.black,
+                      size: 16.sp,
                     ),
                   ),
                 ),

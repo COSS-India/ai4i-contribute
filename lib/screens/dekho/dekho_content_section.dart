@@ -114,10 +114,18 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
                 currentItem: currentItemNumber,
               ),
               SizedBox(height: 24.w),
+              Text(
+                "Type the text from the image",
+                style: BrandingConfig.instance.getPrimaryTextStyle(
+                  fontSize: 16.sp,
+                  color: AppColors.darkGreen,
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 16.w),
               ImageViewerWidget(imageUrl: currentImageUrl),
-              SizedBox(height: 20.w),
-              _instructionText(),
-              SizedBox(height: 30.w),
+              SizedBox(height: 16.w),
               _textInputField(),
               SizedBox(height: 30.w),
               _actionButtons(),
@@ -161,18 +169,7 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
         ],
       );
 
-  Widget _instructionText() => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 32).r,
-        child: Text(
-          "Describe what you see in the image above",
-          style: BrandingConfig.instance.getPrimaryTextStyle(
-            fontSize: 14.sp,
-            color: AppColors.darkGreen,
-            fontWeight: FontWeight.w600,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      );
+
 
   Widget _textInputField() {
     final bool isSessionComplete = submittedCount >= totalContributions;
@@ -181,7 +178,7 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
       enabled: !isSessionComplete,
       maxLines: 4,
       languageCode: widget.selectedLanguage.languageCode,
-      hintText: "Start describing the image here...",
+      hintText: "Start typing here...",
       onChanged: (value) {
         _onTextChanged(value);
       },
@@ -298,7 +295,7 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
 
     Helper.showSnackBarMessage(
       context: context,
-      text: "Image skipped. Please describe the new image.",
+      text: "Image skipped. Please type text from the new image.",
     );
   }
 
@@ -306,7 +303,7 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
     if (!submitEnabled || textController.text.trim().isEmpty) {
       Helper.showSnackBarMessage(
         context: context,
-        text: "Please enter a description before submitting.",
+        text: "Please enter text before submitting.",
       );
       return;
     }
@@ -320,7 +317,7 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
       submittedCount++;
       Helper.showSnackBarMessage(
         context: context,
-        text: "Your description submitted successfully",
+        text: "Your text submitted successfully",
       );
 
       if (submittedCount < totalContributions) {
@@ -334,7 +331,7 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
     } catch (e) {
       Helper.showSnackBarMessage(
         context: context,
-        text: "Error submitting description: $e",
+        text: "Error submitting text: $e",
       );
     } finally {
       submitLoading.value = false;
