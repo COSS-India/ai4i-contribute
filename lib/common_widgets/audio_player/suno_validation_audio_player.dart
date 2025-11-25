@@ -445,13 +445,16 @@ class _SunoValidationAudioPlayerState extends State<SunoValidationAudioPlayer> {
           ),
           SizedBox(width: 8.w),
           Expanded(
-            child: UnicodeValidationTextField(
-              controller: widget.correctedTextController,
-              enabled: widget.audioCompleted,
-              maxLines: 4,
-              languageCode: widget.languageCode,
-              hintText: "Corrected transcript",
-              onChanged: widget.onTextChanged,
+            child: Container(
+              height: 123.h,
+              child: UnicodeValidationTextField(
+                controller: widget.correctedTextController,
+                enabled: widget.audioCompleted,
+                maxLines: 4,
+                languageCode: widget.languageCode,
+                hintText: "Corrected transcript",
+                onChanged: widget.onTextChanged,
+              ),
             ),
           ),
         ],
