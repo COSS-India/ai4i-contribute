@@ -6,6 +6,7 @@ import 'package:VoiceGive/screens/bolo_india/widgets/actions_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/bolo_headers_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/language_selection.dart';
 import 'package:VoiceGive/screens/module_selection_screen.dart';
+import 'package:VoiceGive/providers/suno_language_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
@@ -20,26 +21,24 @@ class SunoValidationScreen extends StatefulWidget {
 class _SunoValidationScreenState extends State<SunoValidationScreen>
     with TickerProviderStateMixin {
   late final AnimationController _controller;
+  final SunoLanguageProvider _languageProvider = SunoLanguageProvider();
 
   bool isCompleted = false;
   int currentIndex = 0;
-  LanguageModel selectedLanguage = LanguageModel(
-      languageName: "Hindi",
-      nativeName: "हिन्दी",
-      isActive: true,
-      languageCode: "hi",
-      region: "India",
-      speakers: "");
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this);
+    _languageProvider.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _languageProvider.removeListener(() {});
     super.dispose();
   }
 
@@ -73,14 +72,15 @@ class _SunoValidationScreenState extends State<SunoValidationScreen>
                         SizedBox(height: 16.w),
                         LanguageSelection(
                           description: "Select the language for validation",
+                          initialLanguage: _languageProvider.selectedLanguage,
                           onLanguageChanged: (value) {
-                            selectedLanguage = value;
+                            _languageProvider.updateLanguage(value);
                             setState(() {});
                           },
                         ),
                         SizedBox(height: 24.w),
                         SunoValidationContentSection(
-                          language: selectedLanguage,
+                          language: _languageProvider.selectedLanguage,
                           currentIndex: currentIndex,
                           indexUpdate: (index) {
                             setState(() {

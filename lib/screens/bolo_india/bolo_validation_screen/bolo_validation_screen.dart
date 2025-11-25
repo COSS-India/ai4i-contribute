@@ -5,6 +5,7 @@ import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/actions_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/bolo_headers_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/language_selection.dart';
+import 'package:VoiceGive/providers/bolo_language_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
@@ -23,27 +24,23 @@ class BoloValidationScreen extends StatefulWidget {
 class _BoloValidationScreenState extends State<BoloValidationScreen>
     with TickerProviderStateMixin {
   late final AnimationController _controller;
+  final BoloLanguageProvider _languageProvider = BoloLanguageProvider();
 
   bool isCompleted = false;
-  LanguageModel selectedLanguage = LanguageModel(
-      languageName: "Marathi",
-      nativeName: "मराठी",
-      isActive: true,
-      languageCode: "mr",
-      region: "India",
-      speakers: "");
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this);
-
-    // Start animations
+    _languageProvider.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _languageProvider.removeListener(() {});
     super.dispose();
   }
 
@@ -81,14 +78,15 @@ class _BoloValidationScreenState extends State<BoloValidationScreen>
                         SizedBox(height: 16.w),
                         LanguageSelection(
                           description: "Select language for validation",
+                          initialLanguage: _languageProvider.selectedLanguage,
                           onLanguageChanged: (value) {
-                            selectedLanguage = value;
+                            _languageProvider.updateLanguage(value);
                             setState(() {});
                           },
                         ),
                         SizedBox(height: 24.w),
                         BoloValidateSection(
-                          languageModel: selectedLanguage,
+                          languageModel: _languageProvider.selectedLanguage,
                           onComplete: () {
                             setState(() {
                               isCompleted = true;

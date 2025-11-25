@@ -7,6 +7,7 @@ import 'package:VoiceGive/screens/bolo_india/widgets/actions_section.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_contribute/widgets/bolo_content_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/bolo_headers_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/language_selection.dart';
+import 'package:VoiceGive/providers/bolo_language_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,14 +19,22 @@ class BoloContribute extends StatefulWidget {
 }
 
 class _BoloContributeState extends State<BoloContribute> {
-  LanguageModel selectedLanguage = LanguageModel(
-      languageName: "Hindi",
-      nativeName: "हिन्दी",
-      isActive: true,
-      languageCode: "hi",
-      region: "India",
-      speakers: "");
+  final BoloLanguageProvider _languageProvider = BoloLanguageProvider();
   final ValueNotifier<int> currentIndex = ValueNotifier<int>(0);
+
+  @override
+  void initState() {
+    super.initState();
+    _languageProvider.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _languageProvider.removeListener(() {});
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +65,9 @@ class _BoloContributeState extends State<BoloContribute> {
                     LanguageSelection(
                       description: AppLocalizations.of(context)!
                           .selectLanguageForContribution,
+                      initialLanguage: _languageProvider.selectedLanguage,
                       onLanguageChanged: (value) {
-                        selectedLanguage = value;
+                        _languageProvider.updateLanguage(value);
                         setState(() {});
                       },
                     ),
@@ -66,7 +76,7 @@ class _BoloContributeState extends State<BoloContribute> {
                         valueListenable: currentIndex,
                         builder: (context, index, child) {
                           return BoloContentSection(
-                            language: selectedLanguage,
+                            language: _languageProvider.selectedLanguage,
                             currentIndex: index,
                             indexUpdate: (value) => setState(() {
                               currentIndex.value = value;
