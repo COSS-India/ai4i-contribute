@@ -299,11 +299,22 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
 
   String _decodeText(String text) {
     try {
-      // Handle potential encoding issues
-      final bytes = text.codeUnits;
-      return utf8.decode(bytes, allowMalformed: true);
+      // Check if text is already properly encoded
+      if (text.contains('\\u')) {
+        // Handle Unicode escape sequences
+        return text.replaceAllMapped(
+          RegExp(r'\\u([0-9a-fA-F]{4})'),
+          (match) => String.fromCharCode(int.parse(match.group(1)!, radix: 16)),
+        );
+      }
+      // If text contains Latin-1 encoded UTF-8, decode it
+      if (text.runes.any((rune) => rune > 127 && rune < 256)) {
+        final bytes = text.codeUnits.map((unit) => unit & 0xFF).toList();
+        return utf8.decode(bytes, allowMalformed: true);
+      }
+      // Return text as-is if it's already properly encoded
+      return text;
     } catch (e) {
-      // If decoding fails, return original text
       return text;
     }
   }
