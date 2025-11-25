@@ -20,18 +20,33 @@ class _ImageViewerWidgetState extends State<ImageViewerWidget> {
   final double _minZoom = 0.5;
   final double _maxZoom = 3.0;
   final double _zoomStep = 0.2;
-  final TransformationController _transformationController = TransformationController();
+  final TransformationController _transformationController =
+      TransformationController();
+  final GlobalKey _imageKey = GlobalKey();
 
   void _zoomIn() {
     setState(() {
       _zoomLevel = (_zoomLevel + _zoomStep).clamp(_minZoom, _maxZoom);
+      _applyZoom();
     });
   }
 
   void _zoomOut() {
     setState(() {
       _zoomLevel = (_zoomLevel - _zoomStep).clamp(_minZoom, _maxZoom);
+      _applyZoom();
     });
+  }
+
+  void _applyZoom() {
+    final currentMatrix = _transformationController.value;
+    final currentScale = currentMatrix.getMaxScaleOnAxis();
+    final scaleRatio = _zoomLevel / currentScale;
+    
+    final newMatrix = currentMatrix.clone()
+      ..scale(scaleRatio);
+    
+    _transformationController.value = newMatrix;
   }
 
   @override
@@ -55,11 +70,14 @@ class _ImageViewerWidgetState extends State<ImageViewerWidget> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8).r,
                 child: InteractiveViewer(
+                  transformationController: _transformationController,
                   minScale: _minZoom,
                   maxScale: _maxZoom,
                   panEnabled: true,
                   scaleEnabled: true,
-                  child: Image.network(
+                  child: Container(
+                    key: _imageKey,
+                    child: Image.network(
                     widget.imageUrl,
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) {
@@ -78,7 +96,8 @@ class _ImageViewerWidgetState extends State<ImageViewerWidget> {
                             SizedBox(height: 4.h),
                             Text(
                               'Image not available',
-                              style: BrandingConfig.instance.getPrimaryTextStyle(
+                              style:
+                                  BrandingConfig.instance.getPrimaryTextStyle(
                                 fontSize: 10.sp,
                                 color: Colors.grey[600]!,
                               ),
@@ -104,6 +123,7 @@ class _ImageViewerWidgetState extends State<ImageViewerWidget> {
                         ),
                       );
                     },
+                  ),
                   ),
                 ),
               ),
@@ -144,7 +164,8 @@ class _ImageViewerWidgetState extends State<ImageViewerWidget> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border.symmetric(
-                      horizontal: BorderSide(color: AppColors.darkGreen, width: 1),
+                      horizontal:
+                          BorderSide(color: AppColors.darkGreen, width: 1),
                     ),
                   ),
                   child: Center(

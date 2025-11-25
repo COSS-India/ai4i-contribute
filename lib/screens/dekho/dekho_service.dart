@@ -1,0 +1,108 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'dekho_item_model.dart';
+import 'dekho_validation_model.dart';
+
+class DekhoService {
+  static const String baseUrl = 'http://3.7.77.1:9000';
+
+  Future<DekhoQueueResponse> getDekhoQueue({
+    required String language,
+    required int batchSize,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/dekho/queue'),
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'language': language,
+          'batch_size': batchSize,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body);
+        return DekhoQueueResponse.fromJson(jsonData);
+      } else {
+        return DekhoQueueResponse(
+          success: false,
+          data: [],
+          error: 'Failed to load images: ${response.statusCode}',
+        );
+      }
+    } catch (e) {
+      return DekhoQueueResponse(
+        success: false,
+        data: [],
+        error: 'Network error: $e',
+      );
+    }
+  }
+
+  Future<bool> submitLabel({
+    required String itemId,
+    required String language,
+    required String label,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/dekho/submit'),
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'item_id': itemId,
+          'language': language,
+          'label': label,
+          'labels': [label],
+          'metadata': {},
+        }),
+      );
+
+      return response.statusCode == 200;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<DekhoValidationResponse> getValidationQueue({
+    required int batchSize,
+  }) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/dekho/validation?batch_size=$batchSize'),
+        headers: {
+          'accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body);
+        return DekhoValidationResponse.fromJson(jsonData);
+      } else {
+        return DekhoValidationResponse(
+          success: false,
+          data: [],
+          error: 'Failed to load validation data: ${response.statusCode}',
+        );
+      }
+    } catch (e) {
+      return DekhoValidationResponse(
+        success: false,
+        data: [],
+        error: 'Network error: $e',
+      );
+    }
+  }
+
+  String getFullImageUrl(String imageUrl) {
+    if (imageUrl.startsWith('http')) {
+      return imageUrl;
+    }
+    return '$baseUrl$imageUrl';
+  }
+}

@@ -4,6 +4,9 @@ import 'package:VoiceGive/constants/helper.dart';
 import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
 import 'package:VoiceGive/common_widgets/unicode_validation_text_field.dart';
 import 'package:VoiceGive/screens/dekho/image_viewer_widget.dart';
+import 'package:VoiceGive/screens/dekho/dekho_item_model.dart';
+import 'package:VoiceGive/screens/dekho/dekho_service.dart';
+import 'package:VoiceGive/screens/dekho/dekho_validation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -30,26 +33,21 @@ class DekhoContentSection extends StatefulWidget {
 class _DekhoContentSectionState extends State<DekhoContentSection> {
   final ValueNotifier<bool> enableSubmit = ValueNotifier<bool>(false);
   final ValueNotifier<bool> submitLoading = ValueNotifier<bool>(false);
+  final ValueNotifier<bool> isLoading = ValueNotifier<bool>(true);
   final TextEditingController textController = TextEditingController();
   bool _hasValidationError = false;
 
   int currentIndex = 0;
   int submittedCount = 0;
   int totalContributions = 5;
-  
-  // Mock image URLs for demonstration
-  List<String> imageUrls = [
-    'https://picsum.photos/400/300?random=1',
-    'https://picsum.photos/400/300?random=2',
-    'https://picsum.photos/400/300?random=3',
-    'https://picsum.photos/400/300?random=4',
-    'https://picsum.photos/400/300?random=5',
-  ];
+  List<DekhoItemModel> dekhoItems = [];
+  final DekhoService _dekhoService = DekhoService();
 
   @override
   void initState() {
     super.initState();
     textController.addListener(() => _onTextChanged(textController.text));
+    _loadDekhoData();
   }
 
   @override
@@ -62,6 +60,7 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
       textController.clear();
       enableSubmit.value = false;
       _hasValidationError = false;
+      _loadDekhoData();
       setState(() {});
     }
     if (currentIndex != widget.currentIndex) {
@@ -74,6 +73,29 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
     enableSubmit.value = false;
     submittedCount = 0;
     currentIndex = 0;
+  }
+
+  Future<void> _loadDekhoData() async {
+    try {
+      isLoading.value = true;
+      final response = await _dekhoService.getDekhoQueue(
+        language: widget.selectedLanguage.languageCode,
+        batchSize: 5,
+      );
+
+      if (response.success && response.data.isNotEmpty) {
+        dekhoItems = response.data;
+        totalContributions = dekhoItems.length;
+        setState(() {});
+      }
+    } catch (e) {
+      Helper.showSnackBarMessage(
+        context: context,
+        text: "Failed to load image data: $e",
+      );
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   void _onTextChanged(String value) {
@@ -93,44 +115,92 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
 
   @override
   Widget build(BuildContext context) {
-    final int currentItemNumber = currentIndex + 1;
-    final double progress = currentItemNumber / totalContributions;
-    final String currentImageUrl = imageUrls[currentIndex % imageUrls.length];
+    return ValueListenableBuilder<bool>(
+      valueListenable: isLoading,
+      builder: (context, loading, child) {
+        if (loading) {
+          return _buildLoadingState();
+        }
 
+        if (dekhoItems.isEmpty) {
+          return _buildEmptyState();
+        }
+
+        final int currentItemNumber = currentIndex + 1;
+        final double progress = currentItemNumber / totalContributions;
+        final String currentImageUrl = _dekhoService.getFullImageUrl(dekhoItems[currentIndex].imageUrl);
+        print('DEBUG: Image URL: $currentImageUrl');
+
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8).r,
+            border: Border.all(color: Colors.grey[700]!),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8).r,
+            child: Padding(
+              padding: EdgeInsets.all(12).r,
+              child: Column(
+                children: [
+                  _progressHeader(
+                    progress: progress,
+                    total: totalContributions,
+                    currentItem: currentItemNumber,
+                  ),
+                  SizedBox(height: 24.w),
+                  Text(
+                    "Describe what you see in the image",
+                    style: BrandingConfig.instance.getPrimaryTextStyle(
+                      fontSize: 16.sp,
+                      color: AppColors.darkGreen,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 16.w),
+                  ImageViewerWidget(imageUrl: currentImageUrl),
+                  SizedBox(height: 16.w),
+                  _textInputField(),
+                  SizedBox(height: 30.w),
+                  _actionButtons(),
+                  SizedBox(height: 50.w),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildLoadingState() {
     return Container(
+      height: 500.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8).r,
         border: Border.all(color: Colors.grey[700]!),
       ),
-      child: ClipRRect(
+      child: Center(
+        child: CircularProgressIndicator(
+          color: AppColors.darkGreen,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return Container(
+      height: 500.h,
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8).r,
-        child: Padding(
-          padding: EdgeInsets.all(12).r,
-          child: Column(
-            children: [
-              _progressHeader(
-                progress: progress,
-                total: totalContributions,
-                currentItem: currentItemNumber,
-              ),
-              SizedBox(height: 24.w),
-              Text(
-                "Type the text from the image",
-                style: BrandingConfig.instance.getPrimaryTextStyle(
-                  fontSize: 16.sp,
-                  color: AppColors.darkGreen,
-                  fontWeight: FontWeight.w600,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 16.w),
-              ImageViewerWidget(imageUrl: currentImageUrl),
-              SizedBox(height: 16.w),
-              _textInputField(),
-              SizedBox(height: 30.w),
-              _actionButtons(),
-              SizedBox(height: 50.w),
-            ],
+        border: Border.all(color: Colors.grey[700]!),
+      ),
+      child: Center(
+        child: Text(
+          "No image data available",
+          style: BrandingConfig.instance.getPrimaryTextStyle(
+            fontSize: 16.sp,
+            color: AppColors.greys87,
           ),
         ),
       ),
@@ -218,8 +288,10 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
           title: "Contribute More",
           textFontSize: 16.sp,
           onTap: () {
+            _loadDekhoData();
+            widget.indexUpdate(0);
+            submittedCount = 0;
             _resetState();
-            setState(() {});
           },
           textColor: AppColors.orange,
           decoration: BoxDecoration(
@@ -236,9 +308,11 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
           title: "Validate",
           textFontSize: 16.sp,
           onTap: () {
-            Helper.showSnackBarMessage(
-              context: context,
-              text: "Validation feature coming soon!",
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DekhoValidationScreen(),
+              ),
             );
           },
           textColor: AppColors.backgroundColor,
@@ -290,12 +364,26 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
     textController.clear();
     enableSubmit.value = false;
 
-    currentIndex = (currentIndex + 1) % totalContributions;
-    setState(() {});
+    try {
+      final response = await _dekhoService.getDekhoQueue(
+        language: widget.selectedLanguage.languageCode,
+        batchSize: 1,
+      );
+
+      if (response.success && response.data.isNotEmpty) {
+        dekhoItems[currentIndex] = response.data.first;
+        setState(() {});
+      }
+    } catch (e) {
+      Helper.showSnackBarMessage(
+        context: context,
+        text: "Failed to load new image: $e",
+      );
+    }
 
     Helper.showSnackBarMessage(
       context: context,
-      text: "Image skipped. Please type text from the new image.",
+      text: "Image skipped, new image loaded.",
     );
   }
 
@@ -303,7 +391,15 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
     if (!submitEnabled || textController.text.trim().isEmpty) {
       Helper.showSnackBarMessage(
         context: context,
-        text: "Please enter text before submitting.",
+        text: "Please enter description before submitting.",
+      );
+      return;
+    }
+
+    if (_hasValidationError) {
+      Helper.showSnackBarMessage(
+        context: context,
+        text: "Please fix the validation errors before submitting.",
       );
       return;
     }
@@ -311,30 +407,46 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
     submitLoading.value = true;
 
     try {
-      // Simulate API call
-      await Future.delayed(Duration(seconds: 1));
-
-      submittedCount++;
-      Helper.showSnackBarMessage(
-        context: context,
-        text: "Your text submitted successfully",
+      final success = await _dekhoService.submitLabel(
+        itemId: dekhoItems[currentIndex].itemId,
+        language: widget.selectedLanguage.languageCode,
+        label: textController.text.trim(),
       );
 
-      if (submittedCount < totalContributions) {
-        textController.clear();
-        enableSubmit.value = false;
-        currentIndex++;
-        widget.indexUpdate(currentIndex);
+      if (success) {
+        submittedCount++;
+        Helper.showSnackBarMessage(
+          context: context,
+          text: "Your description submitted successfully",
+        );
+
+        if (submittedCount < totalContributions) {
+          textController.clear();
+          enableSubmit.value = false;
+          _hasValidationError = false;
+          _moveToNext();
+        } else {
+          setState(() {});
+        }
       } else {
-        setState(() {});
+        Helper.showSnackBarMessage(
+          context: context,
+          text: "Failed to submit description. Please try again.",
+        );
       }
     } catch (e) {
       Helper.showSnackBarMessage(
         context: context,
-        text: "Error submitting text: $e",
+        text: "Error submitting description: $e",
       );
     } finally {
       submitLoading.value = false;
+    }
+  }
+
+  void _moveToNext() {
+    if (currentIndex < totalContributions - 1) {
+      widget.indexUpdate(currentIndex + 1);
     }
   }
 }

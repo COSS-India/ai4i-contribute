@@ -5,6 +5,7 @@ import 'package:VoiceGive/screens/bolo_india/widgets/bolo_headers_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/language_selection.dart';
 import 'package:VoiceGive/screens/dekho/dekho_content_section.dart';
 import 'package:VoiceGive/screens/module_selection_screen.dart';
+import 'package:VoiceGive/config/branding_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -51,7 +52,7 @@ class _DekhoContributeState extends State<DekhoContribute> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: LanguageSelection(
-                description: 'Select Language:',
+                description: 'Select the language for contribution',
                 initialLanguage: selectedLanguage,
                 onLanguageChanged: (language) {
                   setState(() {
