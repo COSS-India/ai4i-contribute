@@ -49,6 +49,11 @@ class _SunoContentSectionState extends State<SunoContentSection> {
   @override
   void initState() {
     super.initState();
+    // Reset all state when widget is created
+    currentIndex = 0;
+    submittedCount = 0;
+    totalContributions = 5;
+    _resetAudioState();
     textController.addListener(() => _onTextChanged(textController.text));
     _loadSunoData();
   }
@@ -346,10 +351,13 @@ class _SunoContentSectionState extends State<SunoContentSection> {
           title: "Contribute More",
           textFontSize: 16.sp,
           onTap: () {
-            _loadSunoData();
-            widget.indexUpdate(0);
+            // Reset all state for new session
+            currentIndex = 0;
             submittedCount = 0;
+            totalContributions = 5;
             _resetAudioState();
+            widget.indexUpdate(0);
+            _loadSunoData();
           },
           textColor: AppColors.orange,
           decoration: BoxDecoration(

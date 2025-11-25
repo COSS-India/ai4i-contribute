@@ -38,12 +38,29 @@ class _ValidationAudioPlayerSkeletonState extends State<ValidationAudioPlayerSke
         ),
         SizedBox(height: 30.w),
         // Text input field skeleton
-        Container(
-          height: 120.h,
-          decoration: BoxDecoration(
-            color: Colors.grey[300],
-            borderRadius: BorderRadius.circular(8).r,
-          ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Container(
+                height: 123.h,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(8).r,
+                ),
+              ),
+            ),
+            SizedBox(width: 8.w),
+            Expanded(
+              child: Container(
+                height: 123.h,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(8).r,
+                ),
+              ),
+            ),
+          ],
         ),
         SizedBox(height: 30.w),
         // Play button skeleton

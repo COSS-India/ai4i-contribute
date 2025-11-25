@@ -68,6 +68,7 @@ class _BoloContributeState extends State<BoloContribute> {
                       initialLanguage: _languageProvider.selectedLanguage,
                       onLanguageChanged: (value) {
                         _languageProvider.updateLanguage(value);
+                        currentIndex.value = 0;
                         setState(() {});
                       },
                     ),
