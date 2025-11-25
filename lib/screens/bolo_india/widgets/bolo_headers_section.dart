@@ -11,7 +11,7 @@ class BoloHeadersSection extends StatelessWidget {
   final String? title;
   final String? subtitle;
   const BoloHeadersSection({
-    super.key, 
+    super.key,
     this.onBackPressed,
     this.logoAsset,
     this.title,
@@ -54,15 +54,17 @@ class BoloHeadersSection extends StatelessWidget {
                   SizedBox(width: 12.w),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: (subtitle == null || subtitle!.isEmpty) 
-                        ? MainAxisAlignment.center 
+                    mainAxisAlignment: (subtitle == null || subtitle!.isEmpty)
+                        ? MainAxisAlignment.center
                         : MainAxisAlignment.start,
                     children: [
                       if (title != null)
                         Text(
                           title!,
                           style: BrandingConfig.instance.getPrimaryTextStyle(
-                            fontSize: (subtitle == null || subtitle!.isEmpty) ? 18.sp : 16.sp,
+                            fontSize: (subtitle == null || subtitle!.isEmpty)
+                                ? 18.sp
+                                : 16.sp,
                             fontWeight: FontWeight.w700,
                             color: Colors.white,
                           ),
@@ -71,8 +73,8 @@ class BoloHeadersSection extends StatelessWidget {
                         Text(
                           subtitle!,
                           style: BrandingConfig.instance.getPrimaryTextStyle(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w400,
+                            fontSize: 8.sp,
+                            fontWeight: FontWeight.w700,
                             color: Colors.white,
                           ),
                         ),
