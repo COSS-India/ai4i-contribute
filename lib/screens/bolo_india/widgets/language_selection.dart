@@ -11,27 +11,34 @@ import '../../../config/branding_config.dart';
 class LanguageSelection extends StatefulWidget {
   final String description;
   final Function(LanguageModel) onLanguageChanged;
+  final LanguageModel? initialLanguage;
   const LanguageSelection(
-      {super.key, required this.description, required this.onLanguageChanged});
+      {super.key, required this.description, required this.onLanguageChanged, this.initialLanguage});
 
   @override
   State<LanguageSelection> createState() => _LanguageSelectionState();
 }
 
 class _LanguageSelectionState extends State<LanguageSelection> {
-  LanguageModel selectedLanguage = LanguageModel(
+  late LanguageModel selectedLanguage;
+  Future<List<LanguageModel>>? languagesFuture;
+
+  @override
+  void initState() {
+    selectedLanguage = widget.initialLanguage ?? LanguageModel(
       languageName: "Hindi",
       nativeName: "हिन्दी",
       isActive: true,
       languageCode: "hi",
       region: "India",
-      speakers: "");
-  Future<List<LanguageModel>>? languagesFuture;
-
-  @override
-  void initState() {
+      speakers: "",
+    );
     languagesFuture = BoloService().getLanguages();
     super.initState();
+    // Notify initial selection
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.onLanguageChanged(selectedLanguage);
+    });
   }
 
   @override

@@ -2,41 +2,201 @@
   {
     "item_id": "likho_v_1",
     "src_language": "hi",
-    "tgt_language": "en",
-    "text": "नमस्ते 1",
-    "translation": "Hello 1",
+    "tgt_language": "mr",
+    "text": "किसान सुबह जल्दी खेत में काम शुरू करता है।",
+    "translation": "शेतकरी सकाळी लवकर शेतात काम सुरू करतो.",
     "metadata": {}
   },
   {
     "item_id": "likho_v_2",
     "src_language": "hi",
-    "tgt_language": "en",
-    "text": "नमस्ते 2",
-    "translation": "Hello 2",
+    "tgt_language": "mr",
+    "text": "धान की रोपाई के लिए पर्याप्त पानी की आवश्यकता होती है।",
+    "translation": "भात रोपण्यासाठी पुरेसे पाणी आवश्यक असते.",
     "metadata": {}
   },
   {
     "item_id": "likho_v_3",
     "src_language": "hi",
-    "tgt_language": "en",
-    "text": "नमस्ते 3",
-    "translation": "Hello 3",
+    "tgt_language": "mr",
+    "text": "अच्छी पैदावार के लिए मौसम का अनुकूल होना जरूरी है।",
+    "translation": "चांगल्या उत्पादनासाठी हवामान अनुकूल असणे आवश्यक आहे.",
     "metadata": {}
   },
   {
     "item_id": "likho_v_4",
     "src_language": "hi",
-    "tgt_language": "en",
-    "text": "नमस्ते 4",
-    "translation": "Hello 4",
+    "tgt_language": "mr",
+    "text": "किसान बाजार से बीज और खाद खरीदकर लाता है।",
+    "translation": "शेतकरी बाजारातून बियाणे आणि खत खरेदी करून आणतो.",
     "metadata": {}
   },
   {
     "item_id": "likho_v_5",
     "src_language": "hi",
-    "tgt_language": "en",
-    "text": "नमस्ते 5",
-    "translation": "Hello 5",
+    "tgt_language": "mr",
+    "text": "पशुओं की देखभाल करना खेती का महत्वपूर्ण हिस्सा है।",
+    "translation": "जनावरांची देखभाल करणे शेतीचा महत्त्वाचा भाग आहे.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_6",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "खेत में नहर बनाकर सिंचाई की जाती है।",
+    "translation": "शेतात कालवा करून सिंचन केले जाते.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_7",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "किसान की आय का मुख्य स्रोत खेती है।",
+    "translation": "शेतकऱ्याच्या उत्पन्नाचा मुख्य स्रोत शेती आहे.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_8",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "कीटनाशकों का सही उपयोग फसल को सुरक्षित रखता है।",
+    "translation": "कीटकनाशकांचा योग्य वापर पीक सुरक्षित ठेवतो.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_9",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "फलों और सब्जियों को बाजार में बेचने के लिए पैक किया जाता है।",
+    "translation": "फळे आणि भाज्या बाजारात विकण्यासाठी पॅक केल्या जातात.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_10",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "आधुनिक तकनीक से खेती करना अब आसान हो गया है।",
+    "translation": "आधुनिक तंत्रज्ञानामुळे शेती करणे आता सोपे झाले आहे.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_11",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "मिट्टी की जांच से पता चलता है कि कौन सी फसल उपयुक्त है।",
+    "translation": "मातीची चाचणी केल्याने कोणते पीक योग्य आहे हे समजते.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_12",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "किसान वर्षा पर निर्भर होकर खेती करता है।",
+    "translation": "शेतकरी पावसावर अवलंबून शेती करतो.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_13",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "खेत में काम करते समय सुरक्षा का ध्यान रखना जरूरी है।",
+    "translation": "शेतात काम करताना सुरक्षिततेची काळजी घेणे आवश्यक आहे.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_14",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "सरकार किसानों को कई योजनाओं के माध्यम से सहायता देती है।",
+    "translation": "सरकार शेतकऱ्यांना अनेक योजनांद्वारे मदत करते.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_15",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "ट्रैक्टर की मदद से बड़े खेत कम समय में तैयार हो जाते हैं।",
+    "translation": "ट्रॅक्टरच्या मदतीने मोठी शेते कमी वेळात तयार होतात.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_16",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "किसान फसल काटने के बाद उसे भंडार में संग्रहित करता है।",
+    "translation": "शेतकरी पीक कापल्यानंतर ते गोदामात साठवतो.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_17",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "पशुओं को समय पर चारा देना आवश्यक है।",
+    "translation": "जनावरांना वेळेवर चार देणे आवश्यक आहे.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_18",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "फसल की कटाई के समय मजदूरों की आवश्यकता बढ़ जाती है।",
+    "translation": "पीक कापणीच्या वेळी मजुरांची गरज वाढते.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_19",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "किसान मौसम के अनुसार फसल का चयन करता है।",
+    "translation": "शेतकरी हवामानानुसार पिकांची निवड करतो.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_20",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "खेत को बाढ़ से बचाने के लिए मेड़ बनाई जाती है।",
+    "translation": "शेताला पूरापासून वाचवण्यासाठी बांध बांधले जातात.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_21",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "धूप तेज होने पर किसान सिर पर टोपी पहनता है।",
+    "translation": "उन्हं जास्त असल्यास शेतकरी डोक्यावर टोपी घालतो.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_22",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "बीज बोने से पहले खेत को अच्छी तरह साफ किया जाता है।",
+    "translation": "बियाणे पेरण्यापूर्वी शेत नीट स्वच्छ केले जाते.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_23",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "किसानों को कृषि मेले से नई जानकारी मिलती है।",
+    "translation": "शेतकऱ्यांना कृषि प्रदर्शनातून नवी माहिती मिळते.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_24",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "सब्जियों को ताजा रखने के लिए ठंडे स्थान में रखा जाता है।",
+    "translation": "भाज्या ताज्या ठेवण्यासाठी थंड ठिकाणी ठेवतात.",
+    "metadata": {}
+  },
+  {
+    "item_id": "likho_v_25",
+    "src_language": "hi",
+    "tgt_language": "mr",
+    "text": "फसल अच्छी होने पर किसान खुशी मनाते हैं।",
+    "translation": "पीक चांगले आल्यावर शेतकरी आनंद साजरा करतात.",
     "metadata": {}
   }
 ]

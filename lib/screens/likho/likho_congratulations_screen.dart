@@ -2,8 +2,7 @@ import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
 import 'package:VoiceGive/common_widgets/image_widget.dart';
 import 'package:VoiceGive/common_widgets/primary_button_widget.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
-import 'package:VoiceGive/screens/suno/suno_contribute/suno_contribute.dart';
-import 'package:VoiceGive/screens/suno/suno_validate/suno_validation_screen.dart';
+import 'package:VoiceGive/screens/likho/likho_contribute.dart';
 import 'package:VoiceGive/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,15 +12,15 @@ import '../../config/branding_config.dart';
 import '../bolo_india/widgets/bolo_headers_section.dart';
 import '../module_selection_screen.dart';
 
-class SunoCongratulationsScreen extends StatefulWidget {
-  const SunoCongratulationsScreen({super.key});
+class LikhoCongratulationsScreen extends StatefulWidget {
+  const LikhoCongratulationsScreen({super.key});
 
   @override
-  State<SunoCongratulationsScreen> createState() =>
-      _SunoCongratulationsScreenState();
+  State<LikhoCongratulationsScreen> createState() =>
+      _LikhoCongratulationsScreenState();
 }
 
-class _SunoCongratulationsScreenState extends State<SunoCongratulationsScreen>
+class _LikhoCongratulationsScreenState extends State<LikhoCongratulationsScreen>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
@@ -75,11 +74,11 @@ class _SunoCongratulationsScreenState extends State<SunoCongratulationsScreen>
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              // Suno India Header
+              // Likho India Header
               BoloHeadersSection(
-                logoAsset: 'assets/images/suno_header.png',
-                title: 'SUNO India',
-                subtitle: 'Enrich your language by listening to audio',
+                logoAsset: 'assets/images/likho_header.png',
+                title: 'LIKHO India',
+                subtitle: 'Enrich your language by donating your translations',
                 onBackPressed: () => Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -157,7 +156,7 @@ class _SunoCongratulationsScreenState extends State<SunoCongratulationsScreen>
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const TextSpan(text: " and "),
+                    const TextSpan(text: " and \n"),
                     TextSpan(
                       text: "validated 25",
                       style: BrandingConfig.instance.getPrimaryTextStyle(
@@ -220,8 +219,8 @@ class _SunoCongratulationsScreenState extends State<SunoCongratulationsScreen>
         Positioned.fill(
           child: Center(
             child: Container(
-              margin: EdgeInsets.all(20).r,
-              padding: EdgeInsets.all(20).r,
+              margin: EdgeInsets.all(22).r,
+              padding: EdgeInsets.all(22).r,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12).r,
@@ -256,10 +255,11 @@ class _SunoCongratulationsScreenState extends State<SunoCongratulationsScreen>
                   SizedBox(height: 4.w),
                   // Sub Message
                   Text(
-                    'Your progress has been saved. Thank you for contributing to India\'s language strengthening campaign',
+                    'Your progress has been saved.\n Thank you for contributing to India\'s \n language strengthening campaign',
                     style: BrandingConfig.instance.getPrimaryTextStyle(
-                      fontSize: 12.sp,
+                      fontSize: 10.sp,
                       color: AppColors.darkGreen,
+                      fontWeight: FontWeight.w500,
                       height: 1.3,
                     ),
                     textAlign: TextAlign.center,
@@ -285,7 +285,7 @@ class _SunoCongratulationsScreenState extends State<SunoCongratulationsScreen>
               onTap: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => SunoContribute()),
+                  MaterialPageRoute(builder: (context) => LikhoContribute()),
                 );
               },
               textColor: AppColors.backgroundColor,

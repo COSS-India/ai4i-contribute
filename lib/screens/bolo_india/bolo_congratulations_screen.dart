@@ -76,7 +76,7 @@ class _BoloCongratulationsScreenState extends State<BoloCongratulationsScreen>
             children: [
               // Bolo India Header
               BoloHeadersSection(
-                logoAsset: 'assets/images/bolo.png',
+                logoAsset: 'assets/images/bolo_header.png',
                 title: 'BOLO India',
                 subtitle: 'Enrich your language by speaking',
                 onBackPressed: () => Navigator.pushReplacement(
@@ -276,7 +276,7 @@ class _BoloCongratulationsScreenState extends State<BoloCongratulationsScreen>
       children: [
         Expanded(
           child: SizedBox(
-            height: 40.w,
+            height: 48.w,
             child: PrimaryButtonWidget(
               title: " Continue Contributing",
               textFontSize: 14.sp,
