@@ -6,6 +6,7 @@ import 'package:VoiceGive/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../config/branding_config.dart';
+import 'dekho/dekho_get_started.dart';
 
 class ModuleSelectionScreen extends StatefulWidget {
   const ModuleSelectionScreen({super.key});
@@ -168,18 +169,17 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
               MaterialPageRoute(builder: (_) => LikhoGetStarted()),
             ),
       },
-      // this will be released in future
 
-      // {
-      //   'title': 'Dekho India',
-      //   'icon': Icons.visibility,
-      //   'assetPath': 'assets/images/dekho.png',
-      //   'color': AppColors.grey84,
-      //   'onTap': () => Navigator.push(
-      //         context,
-      //         MaterialPageRoute(builder: (_) => DekhoDemoScreen()),
-      //       ),
-      // },
+      {
+        'title': 'Dekho India',
+        'icon': Icons.visibility,
+        'assetPath': 'assets/images/dekho.png',
+        'color': AppColors.grey84,
+        'onTap': () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => DekhoGetStarted()),
+            ),
+      },
       // {
       //   'title': 'Unicode Demo',
       //   'subtitle': 'Text Validation',
