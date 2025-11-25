@@ -49,7 +49,7 @@ class _LikhoValidationContentSectionState
 
   int currentIndex = 0;
   int submittedCount = 0;
-  int totalContributions = 3;
+  int totalContributions = 25;
   List<LikhoValidationModel> validationItems = [];
   int displayIndex = 0;
   final LikhoService _likhoService = LikhoService();
