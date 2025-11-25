@@ -66,8 +66,17 @@ class _LikhoValidationContentSectionState
   void didUpdateWidget(covariant LikhoValidationContentSection oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.targetLanguage.languageCode !=
-        widget.targetLanguage.languageCode) {
+            widget.targetLanguage.languageCode ||
+        oldWidget.sourceLanguage.languageCode !=
+            widget.sourceLanguage.languageCode) {
+      currentIndex = 0;
+      submittedCount = 0;
+      displayIndex = 0;
+      totalContributions = 3;
+      validationItems.clear();
+      _resetState();
       _loadValidationData();
+      setState(() {});
     }
     if (currentIndex != widget.currentIndex) {
       currentIndex = widget.currentIndex;

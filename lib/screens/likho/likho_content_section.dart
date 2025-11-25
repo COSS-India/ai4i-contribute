@@ -57,9 +57,18 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
   void didUpdateWidget(covariant LikhoContentSection oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.targetLanguage.languageCode !=
-            widget.targetLanguage.languageCode) {
+            widget.targetLanguage.languageCode ||
+        oldWidget.sourceLanguage.languageCode !=
+            widget.sourceLanguage.languageCode) {
+      currentIndex = 0;
+      submittedCount = 0;
+      displayIndex = 0;
+      totalContributions = 5;
       textController.clear();
       enableSubmit.value = false;
+      _hasValidationError = false;
+      _loadLikhoData();
+      setState(() {});
     }
     if (currentIndex != widget.currentIndex) {
       currentIndex = widget.currentIndex;

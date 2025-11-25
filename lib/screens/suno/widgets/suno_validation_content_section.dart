@@ -78,7 +78,14 @@ class _SunoValidationContentSectionState
   void didUpdateWidget(covariant SunoValidationContentSection oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.language.languageCode != widget.language.languageCode) {
+      currentIndex = 0;
+      submittedCount = 0;
+      currentBatchIndex = 0;
+      totalContributions = 25;
+      validationItems.clear();
+      _resetAudioState();
       _loadValidationData();
+      setState(() {});
     }
     if (currentIndex != widget.currentIndex) {
       currentIndex = widget.currentIndex;

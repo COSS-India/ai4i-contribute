@@ -59,8 +59,10 @@ class _BoloContentSectionState extends State<BoloContentSection> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.language.languageCode != widget.language.languageCode) {
       currentIndex = 0;
+      submittedCount = 0;
       enableSubmit.value = false;
       recordedFile = null;
+      recordedFiles.clear();
       boloContributeFuture = BoloContributeRepository()
           .getContributionSentances(language: widget.language.languageName);
     }

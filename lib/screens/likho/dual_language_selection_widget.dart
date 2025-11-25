@@ -2,6 +2,7 @@ import 'package:VoiceGive/common_widgets/language_searchable_bottom_sheet/search
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
 import 'package:VoiceGive/screens/bolo_india/service/bolo_service.dart';
+import 'package:VoiceGive/providers/likho_language_provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,9 +13,15 @@ class DualLanguageSelectionWidget extends StatefulWidget {
   final String description;
   final Function(LanguageModel sourceLanguage, LanguageModel targetLanguage)
       onLanguageChanged;
+  final LanguageModel? initialSourceLanguage;
+  final LanguageModel? initialTargetLanguage;
 
   const DualLanguageSelectionWidget(
-      {super.key, required this.description, required this.onLanguageChanged});
+      {super.key, 
+       required this.description, 
+       required this.onLanguageChanged,
+       this.initialSourceLanguage,
+       this.initialTargetLanguage});
 
   @override
   State<DualLanguageSelectionWidget> createState() =>
@@ -23,26 +30,15 @@ class DualLanguageSelectionWidget extends StatefulWidget {
 
 class _DualLanguageSelectionWidgetState
     extends State<DualLanguageSelectionWidget> {
-  LanguageModel selectedSourceLanguage = LanguageModel(
-      languageName: "Hindi",
-      nativeName: "हिन्दी",
-      isActive: true,
-      languageCode: "hi",
-      region: "India",
-      speakers: "");
-
-  LanguageModel selectedTargetLanguage = LanguageModel(
-      languageName: "Marathi",
-      nativeName: "मराठी",
-      isActive: true,
-      languageCode: "mr",
-      region: "India",
-      speakers: "");
-
+  final LikhoLanguageProvider _languageProvider = LikhoLanguageProvider();
+  late LanguageModel selectedSourceLanguage;
+  late LanguageModel selectedTargetLanguage;
   Future<List<LanguageModel>>? languagesFuture;
 
   @override
   void initState() {
+    selectedSourceLanguage = widget.initialSourceLanguage ?? _languageProvider.sourceLanguage;
+    selectedTargetLanguage = widget.initialTargetLanguage ?? _languageProvider.targetLanguage;
     languagesFuture = BoloService().getLanguages();
     super.initState();
     // Notify initial selection
