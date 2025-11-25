@@ -22,10 +22,13 @@ class SunoContribute extends StatefulWidget {
 class _SunoContributeState extends State<SunoContribute> {
   final LanguageProvider _languageProvider = LanguageProvider();
   final ValueNotifier<int> currentIndex = ValueNotifier<int>(0);
+  final GlobalKey _contentKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
+    // Reset to first item when screen is initialized
+    currentIndex.value = 0;
     _languageProvider.addListener(() {
       setState(() {});
     });
@@ -77,6 +80,7 @@ class _SunoContributeState extends State<SunoContribute> {
                         valueListenable: currentIndex,
                         builder: (context, index, child) {
                           return SunoContentSection(
+                            key: _contentKey,
                             language: _languageProvider.selectedLanguage,
                             currentIndex: index,
                             indexUpdate: (value) => setState(() {
