@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:VoiceGive/common_widgets/primary_button_widget.dart';
+import 'package:VoiceGive/common_widgets/audio_player/custom_audio_player.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/constants/helper.dart';
 import 'package:VoiceGive/screens/bolo_india/bolo_contribute/widgets/recording_icon.dart';
@@ -41,6 +42,8 @@ class _BoloContentSectionState extends State<BoloContentSection> {
 
   File? recordedFile;
   int currentIndex = 0;
+  int submittedCount = 0;
+  int totalContributions = 5;
 
   List<File?> recordedFiles = [];
 
@@ -56,8 +59,10 @@ class _BoloContentSectionState extends State<BoloContentSection> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.language.languageCode != widget.language.languageCode) {
       currentIndex = 0;
+      submittedCount = 0;
       enableSubmit.value = false;
       recordedFile = null;
+      recordedFiles.clear();
       boloContributeFuture = BoloContributeRepository()
           .getContributionSentances(language: widget.language.languageName);
     }
@@ -101,7 +106,10 @@ class _BoloContentSectionState extends State<BoloContentSection> {
 
         final List<Sentence> contributeSentences = snapshot.data!.sentences;
         final int sentencesLength = contributeSentences.length;
-        final double progress = (currentIndex + 1) / sentencesLength;
+        final int currentItemNumber = submittedCount >= totalContributions
+            ? totalContributions
+            : submittedCount + 1;
+        final double progress = currentItemNumber / totalContributions;
 
         return Container(
           decoration: BoxDecoration(
@@ -126,10 +134,15 @@ class _BoloContentSectionState extends State<BoloContentSection> {
                   child: Column(
                     children: [
                       _progressHeader(
-                          progress: progress, total: sentencesLength),
+                          progress: progress,
+                          total: totalContributions,
+                          currentItem: currentItemNumber),
                       SizedBox(height: 24.w),
-                      _sentenceText(contributeSentences[currentIndex].text),
-                      SizedBox(height: 50.w),
+                      if (submittedCount < totalContributions) ...[
+                        _sentenceText(contributeSentences[currentIndex].text),
+                        SizedBox(height: 50.w),
+                      ] else
+                        SizedBox(height: 24.w),
                       recordingButton(
                           sentence: contributeSentences[currentIndex]),
                       SizedBox(height: 30.w),
@@ -148,14 +161,17 @@ class _BoloContentSectionState extends State<BoloContentSection> {
     );
   }
 
-  Widget _progressHeader({required int total, required double progress}) =>
+  Widget _progressHeader(
+          {required int total,
+          required double progress,
+          required int currentItem}) =>
       Column(
         children: [
           Row(
             children: [
               const Spacer(),
               Text(
-                "${currentIndex + 1}/$total",
+                "$currentItem/$total",
                 style: BrandingConfig.instance.getPrimaryTextStyle(
                   fontSize: 12.sp,
                   color: AppColors.darkGreen,
@@ -190,65 +206,74 @@ class _BoloContentSectionState extends State<BoloContentSection> {
       );
 
   Widget recordingButton({required Sentence sentence}) {
+    final bool isSessionComplete = submittedCount >= totalContributions;
+
     return ValueListenableBuilder(
         valueListenable: skipLoading,
         builder: (context, skipvalue, child) {
           return ValueListenableBuilder(
               valueListenable: submitLoading,
               builder: (context, submitValue, child) {
-                return submitValue || skipvalue
-                    ? Column(
-                        children: [
-                          Text(skipvalue ? "Skipping..." : "Submitting...",
-                              style: BrandingConfig.instance
-                                  .getPrimaryTextStyle(
-                                      fontSize: 20.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColors.darkGreen)),
-                          SizedBox(
-                            height: 50,
-                          ),
-                          CircleAvatar(
-                              radius: 36.r,
-                              backgroundColor: AppColors.lightGreen,
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              )),
-                          SizedBox(
-                            height: 50,
-                          ),
-                        ],
-                      )
-                    : RecordingButton(
-                        text: sentence.text,
-                        isRecording: (RecordingState? state) {
-                          debugPrint("Recording state changed: $state");
-                          if (state != null &&
-                              state == RecordingState.recording) {
-                            enableSubmit.value = false;
-                            enableSkip.value = false;
-                          } else if (state != null &&
-                              state == RecordingState.stopped) {
-                            enableSkip.value = true;
-                            enableSubmit.value = true;
-                          }
-                        },
-                        getRecordedFile: (File? file) {
-                          debugPrint("Received recorded file: ${file?.path}");
-                          enableSubmit.value = file != null;
-                          recordedFile = file;
-                        },
-                      );
+                if (submitValue || skipvalue) {
+                  return Column(
+                    children: [
+                      Text(skipvalue ? "Skipping..." : "Submitting...",
+                          style: BrandingConfig.instance
+                              .getPrimaryTextStyle(
+                                  fontSize: 20.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.darkGreen)),
+                      SizedBox(height: 50),
+                      CircleAvatar(
+                          radius: 36.r,
+                          backgroundColor: AppColors.lightGreen,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          )),
+                      SizedBox(height: 50),
+                    ],
+                  );
+                }
+                
+                if (isSessionComplete) {
+                  return RecordingButton(
+                    text: sentence.text,
+                    isDisabled: true,
+                    isRecording: (RecordingState? state) {},
+                    getRecordedFile: (File? file) {},
+                  );
+                }
+                
+                return RecordingButton(
+                  text: sentence.text,
+                  isRecording: (RecordingState? state) {
+                    debugPrint("Recording state changed: $state");
+                    if (state != null &&
+                        state == RecordingState.recording) {
+                      enableSubmit.value = false;
+                      enableSkip.value = false;
+                    } else if (state != null &&
+                        state == RecordingState.stopped) {
+                      enableSkip.value = true;
+                      enableSubmit.value = true;
+                    }
+                  },
+                  getRecordedFile: (File? file) {
+                    debugPrint("Received recorded file: ${file?.path}");
+                    enableSubmit.value = file != null;
+                    recordedFile = file;
+                  },
+                );
               });
         });
   }
 
   Widget _actionButtons(
       {required Sentence currentSentence, required int length}) {
-    final bool isSessionComplete = currentIndex >= length - 1;
+    final bool isSessionComplete = submittedCount >= totalContributions;
 
     if (isSessionComplete) {
       return Row(
@@ -458,9 +483,16 @@ class _BoloContentSectionState extends State<BoloContentSection> {
       );
     }
     if (isSubmitted) {
+      submittedCount++;
       enableSubmit.value = true;
       recordedFile = null;
-      await moveToNext();
+
+      if (submittedCount < totalContributions) {
+        await moveToNext();
+      } else {
+        setState(() {});
+      }
+
       if (mounted) {
         Helper.showSnackBarMessage(
           context: context,

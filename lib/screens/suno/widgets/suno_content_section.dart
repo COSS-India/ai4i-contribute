@@ -57,7 +57,12 @@ class _SunoContentSectionState extends State<SunoContentSection> {
   void didUpdateWidget(covariant SunoContentSection oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.language.languageCode != widget.language.languageCode) {
+      currentIndex = 0;
+      submittedCount = 0;
+      totalContributions = 5;
+      _resetAudioState();
       _loadSunoData();
+      setState(() {});
     }
     if (currentIndex != widget.currentIndex) {
       currentIndex = widget.currentIndex;

@@ -97,7 +97,7 @@ class _LikhoGetStartedState extends State<LikhoGetStarted> {
         child: Column(
           children: [
             BoloHeadersSection(
-              logoAsset: 'assets/images/likho.png',
+                logoAsset: 'assets/images/likho_header.png',
               title: 'LIKHO India',
               subtitle: 'Enrich your language by donating your text',
               onBackPressed: () => Navigator.pushReplacement(

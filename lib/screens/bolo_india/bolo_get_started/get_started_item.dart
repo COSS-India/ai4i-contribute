@@ -25,7 +25,7 @@ class GetStartedItem extends StatelessWidget {
           children: [
             ImageWidget(
               imageUrl: iconPath,
-              imageColor: AppColors.darkGreen,
+              // imageColor: AppColors.darkGreen,
               height: 28.w,
               width: 28.w,
               boxFit: BoxFit.contain,

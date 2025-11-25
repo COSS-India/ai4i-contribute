@@ -20,11 +20,13 @@ class RecordingButton extends StatefulWidget {
   final String text;
   final Function(File?) getRecordedFile;
   final Function(RecordingState?) isRecording;
+  final bool isDisabled;
   const RecordingButton(
       {super.key,
       required this.text,
       required this.getRecordedFile,
-      required this.isRecording});
+      required this.isRecording,
+      this.isDisabled = false});
 
   @override
   State<RecordingButton> createState() => _RecordingButtonState();
@@ -139,6 +141,8 @@ class _RecordingButtonState extends State<RecordingButton>
   }
 
   Future<void> _toggleState() async {
+    if (widget.isDisabled) return;
+    
     if (_state == RecordingState.idle || _state == RecordingState.stopped) {
       await _startRecording();
       if (mounted) {
@@ -156,51 +160,35 @@ class _RecordingButtonState extends State<RecordingButton>
   }
 
   Widget _buildIcon() {
-    switch (_state) {
-      case RecordingState.idle:
-        return SizedBox(
-          height: 150,
-          child: CircleAvatar(
-              radius: 36.r,
-              backgroundColor: AppColors.darkGreen,
-              child:
-                  Icon(Icons.mic_outlined, size: 45.sp, color: Colors.white)),
-        );
-      case RecordingState.recording:
-        return SizedBox(
-          height: 150,
-          child: CircleAvatar(
-              radius: 36.r,
-              backgroundColor: AppColors.lightGreen,
-              child:
-                  Icon(Icons.stop_rounded, size: 45.sp, color: Colors.white)),
-        );
-      case RecordingState.stopped:
-        return SizedBox(
-          height: 150,
-          child: CircleAvatar(
-              radius: 36.r,
-              backgroundColor: AppColors.darkGreen,
-              child:
-                  Icon(Icons.mic_outlined, size: 45.sp, color: Colors.white)),
-        );
-    }
+    Color backgroundColor = widget.isDisabled ? AppColors.grey16 : 
+        (_state == RecordingState.recording ? AppColors.lightGreen : AppColors.darkGreen);
+    IconData iconData = _state == RecordingState.recording ? Icons.stop_rounded : Icons.mic_outlined;
+    
+    return SizedBox(
+      height: 150,
+      child: CircleAvatar(
+          radius: 36.r,
+          backgroundColor: backgroundColor,
+          child: Icon(iconData, size: 45.sp, color: Colors.white)),
+    );
   }
 
   Widget _buildText() {
+    Color textColor = widget.isDisabled ? AppColors.grey16 : AppColors.darkGreen;
+    
     switch (_state) {
       case RecordingState.idle:
         return Text(AppLocalizations.of(context)!.startRecording,
             style: BrandingConfig.instance.getPrimaryTextStyle(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w600,
-                color: AppColors.darkGreen));
+                color: textColor));
       case RecordingState.recording:
         return Text(AppLocalizations.of(context)!.stopRecording,
             style: BrandingConfig.instance.getPrimaryTextStyle(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w600,
-                color: AppColors.darkGreen));
+                color: textColor));
       case RecordingState.stopped:
         return Column(
           children: [
@@ -208,7 +196,7 @@ class _RecordingButtonState extends State<RecordingButton>
               SizedBox(height: 8.w),
               CustomAudioPlayer(
                 filePath: recordedFilePath!,
-                activeColor: AppColors.darkGreen,
+                activeColor: widget.isDisabled ? AppColors.grey16 : AppColors.darkGreen,
               ),
             ] else ...[
               Text(
@@ -225,7 +213,7 @@ class _RecordingButtonState extends State<RecordingButton>
                 style: BrandingConfig.instance.getPrimaryTextStyle(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.darkGreen)),
+                    color: textColor)),
           ],
         );
     }

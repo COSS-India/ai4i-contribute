@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:VoiceGive/common_widgets/audio_player/widgets/audio_player_skeleton.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
+import 'package:VoiceGive/providers/audio_playback_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_audio/just_audio.dart';
@@ -54,9 +55,9 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
   bool _isSeeking = false;
   bool _isLoading = true;
   bool _hasEnded = false;
-  double _playbackSpeed = 1.0;
   bool _showSpeedDropdown = false;
   final GlobalKey _speedButtonKey = GlobalKey();
+  final AudioPlaybackProvider _playbackProvider = AudioPlaybackProvider();
   static final Map<String, SunoAudioPlayerController> _controllers = {};
 
   @override
@@ -67,7 +68,14 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
       controller._attach(this);
       _controllers[widget.filePath] = controller;
     }
+    _playbackProvider.addListener(_onPlaybackSpeedChanged);
     _initializePlayer();
+  }
+
+  void _onPlaybackSpeedChanged() {
+    if (mounted) {
+      _setPlaybackSpeed(_playbackProvider.playbackSpeed);
+    }
   }
 
   Future<void> _initializePlayer() async {
@@ -104,6 +112,9 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
         _duration = duration ?? Duration.zero;
         _isLoading = false;
       });
+
+      // Set initial playback speed from global state
+      await _player.setSpeed(_playbackProvider.playbackSpeed);
 
       _player.positionStream.listen((pos) {
         if (!_isSeeking && mounted) {
@@ -169,7 +180,6 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
       _duration = Duration.zero;
       _isPlaying = false;
       _hasEnded = false;
-      _playbackSpeed = 1.0;
     });
     _initializePlayer();
   }
@@ -180,6 +190,7 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
       _controllers[widget.filePath]?._detach();
       _controllers.remove(widget.filePath);
     }
+    _playbackProvider.removeListener(_onPlaybackSpeedChanged);
     _player.dispose();
     super.dispose();
   }
@@ -249,9 +260,7 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
   Future<void> _setPlaybackSpeed(double speed) async {
     try {
       await _player.setSpeed(speed);
-      setState(() {
-        _playbackSpeed = speed;
-      });
+      _playbackProvider.setPlaybackSpeed(speed);
     } catch (e) {
       debugPrint('Error setting playback speed: $e');
     }
@@ -299,7 +308,7 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              '${_playbackSpeed}x',
+              '${_playbackProvider.playbackSpeed}x',
               style: TextStyle(
                 fontSize: 12.sp,
                 color: AppColors.darkGreen,
@@ -344,7 +353,7 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 4.w),
                 decoration: BoxDecoration(
-                  color: _playbackSpeed == speed
+                  color: _playbackProvider.playbackSpeed == speed
                       ? AppColors.lightGreen4
                       : Colors.transparent,
                 ),
@@ -354,7 +363,7 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
                   style: TextStyle(
                     fontSize: 11.sp,
                     color: AppColors.darkGreen,
-                    fontWeight: _playbackSpeed == speed
+                    fontWeight: _playbackProvider.playbackSpeed == speed
                         ? FontWeight.w600
                         : FontWeight.normal,
                   ),

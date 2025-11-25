@@ -78,7 +78,14 @@ class _SunoValidationContentSectionState
   void didUpdateWidget(covariant SunoValidationContentSection oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.language.languageCode != widget.language.languageCode) {
+      currentIndex = 0;
+      submittedCount = 0;
+      currentBatchIndex = 0;
+      totalContributions = 25;
+      validationItems.clear();
+      _resetAudioState();
       _loadValidationData();
+      setState(() {});
     }
     if (currentIndex != widget.currentIndex) {
       currentIndex = widget.currentIndex;
@@ -392,115 +399,6 @@ class _SunoValidationContentSectionState
         ),
       );
 
-  Widget _textInputField() => ValueListenableBuilder<bool>(
-        valueListenable: audioCompleted,
-        builder: (context, isEnabled, child) {
-          if (!_needsChange) {
-            return Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8).r,
-                color: Colors.white,
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.lightGreen4,
-                  borderRadius: BorderRadius.circular(8).r,
-                  border: Border.all(
-                    color: AppColors.darkGreen,
-                    width: 1.5,
-                  ),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(12).r,
-                  child: TextField(
-                    controller: TextEditingController(
-                        text: validationItems[currentBatchIndex].transcript),
-                    enabled: false,
-                    maxLines: 4,
-                    decoration: InputDecoration(
-                      hintText: isEnabled
-                          ? "Original transcript"
-                          : "Please listen to the complete audio first...",
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(
-                        color: AppColors.darkGreen,
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    style: TextStyle(
-                      fontSize: 20.sp,
-                      color: AppColors.darkGreen,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-            );
-          } else {
-            return Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 125.h,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8).r,
-                        color: Colors.white),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.lightGreen4,
-                        borderRadius: BorderRadius.circular(8).r,
-                        border: Border.all(
-                          color: AppColors.grey16,
-                          width: 1.5,
-                        ),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(12).r,
-                        child: TextField(
-                          controller: TextEditingController(
-                              text: validationItems[currentBatchIndex]
-                                  .transcript),
-                          enabled: false,
-                          maxLines: 5,
-                          decoration: InputDecoration(
-                            hintText: "Original",
-                            border: InputBorder.none,
-                            hintStyle: TextStyle(
-                              color: AppColors.darkGreen,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                            color: AppColors.darkGreen,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 12.w),
-                Expanded(
-                  child: UnicodeValidationTextField(
-                    controller: correctedTextController,
-                    enabled: isEnabled,
-                    maxLines: 4,
-                    languageCode: widget.language.languageCode,
-                    hintText: "Corrected transcript",
-                    onChanged: (value) {
-                      final hasError = _validateUnicodeText(value);
-                      _onValidationChanged(hasError);
-                    },
-                  ),
-                ),
-              ],
-            );
-          }
-        },
-      );
 
   bool _validateUnicodeText(String text) {
     if (text.isEmpty) return false;
@@ -697,20 +595,6 @@ class _SunoValidationContentSectionState
         ),
       );
 
-  Widget _contributeButton() => SizedBox(
-        width: 140.w,
-        child: PrimaryButtonWidget(
-          title: "Contribute",
-          textFontSize: 16.sp,
-          onTap: () => Navigator.pop(context),
-          textColor: AppColors.backgroundColor,
-          decoration: BoxDecoration(
-            color: AppColors.orange,
-            border: Border.all(color: AppColors.orange),
-            borderRadius: BorderRadius.all(Radius.circular(6.0).r),
-          ),
-        ),
-      );
 
   void _onSkip() async {
     _resetAudioState();

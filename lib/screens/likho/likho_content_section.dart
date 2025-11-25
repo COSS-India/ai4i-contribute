@@ -56,11 +56,19 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
   @override
   void didUpdateWidget(covariant LikhoContentSection oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.sourceLanguage.languageCode != widget.sourceLanguage.languageCode ||
-        oldWidget.targetLanguage.languageCode != widget.targetLanguage.languageCode) {
-      _loadLikhoData();
+    if (oldWidget.targetLanguage.languageCode !=
+            widget.targetLanguage.languageCode ||
+        oldWidget.sourceLanguage.languageCode !=
+            widget.sourceLanguage.languageCode) {
+      currentIndex = 0;
+      submittedCount = 0;
+      displayIndex = 0;
+      totalContributions = 5;
       textController.clear();
       enableSubmit.value = false;
+      _hasValidationError = false;
+      _loadLikhoData();
+      setState(() {});
     }
     if (currentIndex != widget.currentIndex) {
       currentIndex = widget.currentIndex;
@@ -72,6 +80,7 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
     enableSubmit.value = false;
     submittedCount = 0;
     currentIndex = 0;
+    displayIndex = 0;
   }
 
   Future<void> _loadLikhoData() async {
@@ -160,7 +169,7 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
                           currentItem: currentItemNumber),
                       SizedBox(height: 24.w),
                       _sentenceText(currentSentence),
-                      SizedBox(height: 16.w),
+                      SizedBox(height: 20.w),
                       _instructionText(),
                       SizedBox(height: 30.w),
                       _textInputField(),
@@ -214,9 +223,9 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
         child: Text(
           text,
           style: BrandingConfig.instance.getPrimaryTextStyle(
-            fontSize: 16.sp,
+            fontSize: 20.sp,
             color: AppColors.greys87,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
           ),
           textAlign: TextAlign.center,
         ),
@@ -241,7 +250,8 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
       controller: textController,
       enabled: !isSessionComplete,
       maxLines: 4,
-      languageCode: widget.targetLanguage.languageCode, // Users translate TO target language
+      languageCode: widget
+          .targetLanguage.languageCode, // Users translate TO target language
       hintText: "Start typing here...",
       onChanged: (value) {
         // UnicodeValidationTextField handles its own validation and error display
@@ -428,7 +438,7 @@ class _LikhoContentSectionState extends State<LikhoContentSection> {
       print('Source Language: ${widget.sourceLanguage.languageCode}');
       print('Translation: ${textController.text.trim()}');
       print('========================');
-      
+
       final success = await _likhoService.submitTranslation(
         itemId: likhoItems[currentIndex].itemId,
         srcLanguage: widget.sourceLanguage.languageCode,

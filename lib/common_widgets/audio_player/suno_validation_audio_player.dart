@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:VoiceGive/common_widgets/audio_player/widgets/audio_player_skeleton.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/common_widgets/unicode_validation_text_field.dart';
+import 'package:VoiceGive/providers/audio_playback_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_audio/just_audio.dart';
@@ -52,14 +53,21 @@ class _SunoValidationAudioPlayerState extends State<SunoValidationAudioPlayer> {
   bool _isSeeking = false;
   bool _isLoading = true;
   bool _hasEnded = false;
-  double _playbackSpeed = 1.0;
   bool _showSpeedDropdown = false;
   final GlobalKey _speedButtonKey = GlobalKey();
+  final AudioPlaybackProvider _playbackProvider = AudioPlaybackProvider();
 
   @override
   void initState() {
     super.initState();
+    _playbackProvider.addListener(_onPlaybackSpeedChanged);
     _initializePlayer();
+  }
+
+  void _onPlaybackSpeedChanged() {
+    if (mounted) {
+      _setPlaybackSpeed(_playbackProvider.playbackSpeed);
+    }
   }
 
   Future<void> _initializePlayer() async {
@@ -95,6 +103,9 @@ class _SunoValidationAudioPlayerState extends State<SunoValidationAudioPlayer> {
         _duration = duration ?? Duration.zero;
         _isLoading = false;
       });
+
+      // Set initial playback speed from global state
+      await _player.setSpeed(_playbackProvider.playbackSpeed);
 
       _player.positionStream.listen((pos) {
         if (!_isSeeking && mounted) {
@@ -157,13 +168,13 @@ class _SunoValidationAudioPlayerState extends State<SunoValidationAudioPlayer> {
       _duration = Duration.zero;
       _isPlaying = false;
       _hasEnded = false;
-      _playbackSpeed = 1.0;
     });
     _initializePlayer();
   }
 
   @override
   void dispose() {
+    _playbackProvider.removeListener(_onPlaybackSpeedChanged);
     _player.dispose();
     super.dispose();
   }
@@ -229,9 +240,7 @@ class _SunoValidationAudioPlayerState extends State<SunoValidationAudioPlayer> {
   Future<void> _setPlaybackSpeed(double speed) async {
     try {
       await _player.setSpeed(speed);
-      setState(() {
-        _playbackSpeed = speed;
-      });
+      _playbackProvider.setPlaybackSpeed(speed);
     } catch (e) {
       debugPrint('Error setting playback speed: $e');
     }
@@ -279,7 +288,7 @@ class _SunoValidationAudioPlayerState extends State<SunoValidationAudioPlayer> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              '${_playbackSpeed}x',
+              '${_playbackProvider.playbackSpeed}x',
               style: TextStyle(
                 fontSize: 12.sp,
                 color: AppColors.darkGreen,
@@ -287,7 +296,9 @@ class _SunoValidationAudioPlayerState extends State<SunoValidationAudioPlayer> {
               ),
             ),
             Icon(
-              _showSpeedDropdown ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+              _showSpeedDropdown
+                  ? Icons.keyboard_arrow_up
+                  : Icons.keyboard_arrow_down,
               size: 16,
               color: AppColors.darkGreen,
             ),
@@ -322,7 +333,7 @@ class _SunoValidationAudioPlayerState extends State<SunoValidationAudioPlayer> {
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 4.w),
                 decoration: BoxDecoration(
-                  color: _playbackSpeed == speed
+                  color: _playbackProvider.playbackSpeed == speed
                       ? AppColors.lightGreen4
                       : Colors.transparent,
                 ),
@@ -332,7 +343,7 @@ class _SunoValidationAudioPlayerState extends State<SunoValidationAudioPlayer> {
                   style: TextStyle(
                     fontSize: 11.sp,
                     color: AppColors.darkGreen,
-                    fontWeight: _playbackSpeed == speed
+                    fontWeight: _playbackProvider.playbackSpeed == speed
                         ? FontWeight.w600
                         : FontWeight.normal,
                   ),
@@ -393,7 +404,7 @@ class _SunoValidationAudioPlayerState extends State<SunoValidationAudioPlayer> {
         children: [
           Expanded(
             child: Container(
-              height: 125.h,
+              height: 123.h,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8).r,
                   color: Colors.white),
@@ -487,7 +498,8 @@ class _SunoValidationAudioPlayerState extends State<SunoValidationAudioPlayer> {
                       color: _hasEnded
                           ? sliderColor.withValues(alpha: 0.7)
                           : AppColors.greys87,
-                      fontWeight: _hasEnded ? FontWeight.w600 : FontWeight.normal,
+                      fontWeight:
+                          _hasEnded ? FontWeight.w600 : FontWeight.normal,
                     ),
                   ),
                   SizedBox(width: 8.w),
