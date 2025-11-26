@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:VoiceGive/constants/api_url.dart';
 import 'dekho_item_model.dart';
 import 'dekho_validation_model.dart';
 
 class DekhoService {
-  static const String baseUrl = 'http://3.7.77.1:9000';
 
   Future<DekhoQueueResponse> getDekhoQueue({
     required String language,
@@ -12,7 +12,7 @@ class DekhoService {
   }) async {
     try {
       final response = await http.post(
-        Uri.parse('$baseUrl/dekho/queue'),
+        Uri.parse(ApiUrl.dekhoQueueUrl),
         headers: {
           'accept': 'application/json',
           'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ class DekhoService {
   }) async {
     try {
       final response = await http.post(
-        Uri.parse('$baseUrl/dekho/submit'),
+        Uri.parse(ApiUrl.dekhoSubmitUrl),
         headers: {
           'accept': 'application/json',
           'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ class DekhoService {
   }) async {
     try {
       final response = await http.get(
-        Uri.parse('$baseUrl/dekho/validation?batch_size=$batchSize'),
+        Uri.parse('${ApiUrl.dekhoValidationUrl}?batch_size=$batchSize'),
         headers: {
           'accept': 'application/json',
         },
@@ -103,6 +103,6 @@ class DekhoService {
     if (imageUrl.startsWith('http')) {
       return imageUrl;
     }
-    return '$baseUrl$imageUrl';
+    return '${ApiUrl.baseUrl}$imageUrl';
   }
 }

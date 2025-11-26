@@ -1,17 +1,16 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:VoiceGive/constants/api_url.dart';
 import '../models/suno_item_model.dart';
 import '../models/suno_validation_model.dart';
-import '../../../config/app_config.dart';
 
 class SunoService {
-  String get baseUrl => AppConfig.instance.apiBaseUrl;
 
   Future<SunoQueueResponse> getSunoQueue({
     required String language,
     int batchSize = 5,
   }) async {
-    final url = '$baseUrl/suno/queue';
+    final url = ApiUrl.sunoQueueUrl;
     final headers = {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -65,7 +64,7 @@ class SunoService {
     required String transcript,
     Map<String, dynamic>? metadata,
   }) async {
-    final url = '$baseUrl/suno/submit';
+    final url = ApiUrl.sunoSubmitUrl;
     final headers = {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -110,7 +109,7 @@ class SunoService {
     required String itemId,
     required String decision,
   }) async {
-    final url = '$baseUrl/suno/validation/correct';
+    final url = ApiUrl.sunoValidationCorrectUrl;
     final headers = {
       'accept': 'application/json',
       'Content-Type': 'application/json',
@@ -152,7 +151,7 @@ class SunoService {
   Future<SunoValidationResponse> getValidationQueue({
     int batchSize = 5,
   }) async {
-    final url = '$baseUrl/suno/validation?batch_size=$batchSize';
+    final url = '${ApiUrl.sunoValidationUrl}?batch_size=$batchSize';
     final headers = {
       'accept': 'application/json',
     };
@@ -197,13 +196,13 @@ class SunoService {
     
     // For relative URLs starting with /, prepend base URL
     if (audioUrl.startsWith('/')) {
-      final fullUrl = '$baseUrl$audioUrl';
+      final fullUrl = '${ApiUrl.baseUrl}$audioUrl';
       print('Constructed full URL: $fullUrl');
       return fullUrl;
     }
     
     // Fallback for other cases
-    final fullUrl = '$baseUrl/$audioUrl';
+    final fullUrl = '${ApiUrl.baseUrl}/$audioUrl';
     print('Constructed fallback URL: $fullUrl');
     return fullUrl;
   }

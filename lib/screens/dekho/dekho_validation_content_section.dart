@@ -7,23 +7,28 @@ import 'package:VoiceGive/common_widgets/unicode_validation_text_field.dart';
 import 'package:VoiceGive/screens/dekho/image_viewer_widget.dart';
 import 'package:VoiceGive/screens/dekho/dekho_validation_model.dart';
 import 'package:VoiceGive/screens/dekho/dekho_service.dart';
+import 'package:VoiceGive/screens/dekho/dekho_validation_constants.dart';
+import 'package:VoiceGive/screens/dekho/dekho_congratulations_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../config/branding_config.dart';
 
 typedef IntCallback = void Function(int value);
+typedef VoidCallback = void Function();
 
 class DekhoValidationContentSection extends StatefulWidget {
   final LanguageModel language;
   final IntCallback indexUpdate;
   final int currentIndex;
+  final VoidCallback? onComplete;
 
   const DekhoValidationContentSection({
     super.key,
     required this.language,
     required this.indexUpdate,
     required this.currentIndex,
+    this.onComplete,
   });
 
   @override
@@ -42,7 +47,7 @@ class _DekhoValidationContentSectionState
 
   int currentIndex = 0;
   int submittedCount = 0;
-  int totalContributions = 25;
+  int totalContributions = DekhoValidationConstants.totalValidationItems;
   List<DekhoValidationModel> validationItems = [];
   final DekhoService _dekhoService = DekhoService();
 
@@ -60,7 +65,7 @@ class _DekhoValidationContentSectionState
     if (oldWidget.language.languageCode != widget.language.languageCode) {
       currentIndex = 0;
       submittedCount = 0;
-      totalContributions = 25;
+      totalContributions = DekhoValidationConstants.totalValidationItems;
       validationItems.clear();
       _resetState();
       _loadValidationData();
@@ -109,18 +114,29 @@ class _DekhoValidationContentSectionState
     try {
       isLoading.value = true;
       final response = await _dekhoService.getValidationQueue(
-        batchSize: 25,
+        batchSize: DekhoValidationConstants.totalValidationItems,
       );
 
       if (response.success && response.data.isNotEmpty) {
-        validationItems = response.data;
-        setState(() {});
+        validationItems = [];
+        final apiData = response.data;
+        
+        // Loop the API response to reach totalValidationItems
+        for (int i = 0; i < DekhoValidationConstants.totalValidationItems; i++) {
+          validationItems.add(apiData[i % apiData.length]);
+        }
+        
+        if (mounted) {
+          setState(() {});
+        }
       }
     } catch (e) {
-      Helper.showSnackBarMessage(
-        context: context,
-        text: "Failed to load validation data: $e",
-      );
+      if (mounted) {
+        Helper.showSnackBarMessage(
+          context: context,
+          text: "Failed to load validation data: $e",
+        );
+      }
     } finally {
       isLoading.value = false;
     }
@@ -141,7 +157,9 @@ class _DekhoValidationContentSectionState
 
         final int currentItemNumber = (submittedCount + 1).clamp(1, totalContributions);
         final double progress = currentItemNumber / totalContributions;
-        final String currentImageUrl = _dekhoService.getFullImageUrl(validationItems[currentIndex].imageUrl);
+        final String currentImageUrl = currentIndex < validationItems.length 
+            ? _dekhoService.getFullImageUrl(validationItems[currentIndex].imageUrl)
+            : '';
 
         return ClipRRect(
           borderRadius: BorderRadius.circular(8).r,
@@ -204,7 +222,7 @@ class _DekhoValidationContentSectionState
               padding: EdgeInsets.all(12).r,
               child: Column(
                 children: [
-                  _progressHeader(progress: 0.0, total: 25, currentItem: 1),
+                  _progressHeader(progress: 0.0, total: DekhoValidationConstants.totalValidationItems, currentItem: 1),
                   SizedBox(height: 24.w),
                   _instructionText(),
                   SizedBox(height: 22.w),
@@ -317,6 +335,7 @@ class _DekhoValidationContentSectionState
       );
 
   Widget _textDisplaySection() {
+    if (currentIndex >= validationItems.length) return SizedBox.shrink();
     final currentItem = validationItems[currentIndex];
     final labelText = _decodeText(currentItem.label);
 
@@ -465,16 +484,22 @@ class _DekhoValidationContentSectionState
           textFontSize: 16.sp,
           onTap: () {
             if (!_needsChange) {
-              setState(() {
-                _needsChange = true;
-                correctedTextController.text = validationItems[currentIndex].label;
-              });
+              if (mounted) {
+                setState(() {
+                  _needsChange = true;
+                  correctedTextController.text = currentIndex < validationItems.length 
+                      ? validationItems[currentIndex].label 
+                      : '';
+                });
+              }
               _onTextChanged(correctedTextController.text);
             } else {
-              setState(() {
-                _needsChange = false;
-                correctedTextController.clear();
-              });
+              if (mounted) {
+                setState(() {
+                  _needsChange = false;
+                  correctedTextController.clear();
+                });
+              }
               _onTextChanged(correctedTextController.text);
             }
           },
@@ -513,7 +538,9 @@ class _DekhoValidationContentSectionState
 
       if (response.success && response.data.isNotEmpty) {
         validationItems[currentIndex] = response.data.first;
-        setState(() {});
+        if (mounted) {
+          setState(() {});
+        }
       }
     } catch (e) {
       Helper.showSnackBarMessage(
@@ -558,6 +585,14 @@ class _DekhoValidationContentSectionState
     try {
       bool success;
 
+      if (currentIndex >= validationItems.length) {
+        Helper.showSnackBarMessage(
+          context: context,
+          text: "No validation item available.",
+        );
+        return;
+      }
+
       if (_needsChange) {
         success = await _dekhoService.submitLabel(
           itemId: validationItems[currentIndex].itemId,
@@ -586,7 +621,18 @@ class _DekhoValidationContentSectionState
           _needsChange = false;
           _moveToNext();
         } else {
-          setState(() {});
+          if (widget.onComplete != null) {
+            widget.onComplete!();
+          }
+
+          await Future.delayed(const Duration(seconds: 2));
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const DekhoCongratulationsScreen(),
+            ),
+          );
         }
       } else {
         Helper.showSnackBarMessage(
@@ -605,7 +651,7 @@ class _DekhoValidationContentSectionState
   }
 
   void _moveToNext() {
-    if (currentIndex < totalContributions - 1) {
+    if (currentIndex < totalContributions - 1 && currentIndex < validationItems.length - 1) {
       widget.indexUpdate(currentIndex + 1);
     }
   }
