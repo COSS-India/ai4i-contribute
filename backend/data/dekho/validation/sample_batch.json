@@ -3,35 +3,175 @@
     "item_id": "dekho_v_1",
     "language": "en",
     "image_url": "/dekho/static/sample1.jpg",
-    "label": "India is my Country 1",
+    "label": "किसान सुबह जल्दी खेत में काम शुरू करता है।",
     "metadata": {}
   },
   {
     "item_id": "dekho_v_2",
     "language": "en",
     "image_url": "/dekho/static/sample2.jpg",
-    "label": "India is my Country 2",
+    "label": "धान की रोपाई के लिए पर्याप्त पानी की आवश्यकता होती है।",
     "metadata": {}
   },
   {
     "item_id": "dekho_v_3",
     "language": "en",
     "image_url": "/dekho/static/sample3.jpg",
-    "label": "India is my Country 3",
+    "label": "अच्छी पैदावार के लिए मौसम का अनुकूल होना जरूरी है।",
     "metadata": {}
   },
   {
     "item_id": "dekho_v_4",
     "language": "en",
     "image_url": "/dekho/static/sample4.jpg",
-    "label": "India is my Country 4",
+    "label": "किसान बाजार से बीज और खाद खरीदकर लाता है।",
     "metadata": {}
   },
   {
     "item_id": "dekho_v_5",
     "language": "en",
     "image_url": "/dekho/static/sample5.jpg",
-    "label": "India is my Country 5",
+    "label": "पशुओं की देखभाल करना खेती का महत्वपूर्ण हिस्सा है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_6",
+    "language": "en",
+    "image_url": "/dekho/static/sample6.jpg",
+    "label": "खेत में नहर बनाकर सिंचाई की जाती है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_7",
+    "language": "en",
+    "image_url": "/dekho/static/sample7.jpg",
+    "label": "किसान की आय का मुख्य स्रोत खेती है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_8",
+    "language": "en",
+    "image_url": "/dekho/static/sample8.jpg",
+    "label": "कीटनाशकों का सही उपयोग फसल को सुरक्षित रखता है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_9",
+    "language": "en",
+    "image_url": "/dekho/static/sample9.jpg",
+    "label": "फलों और सब्जियों को बाजार में बेचने के लिए पैक किया जाता है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_10",
+    "language": "en",
+    "image_url": "/dekho/static/sample10.jpg",
+    "label": "आधुनिक तकनीक से खेती करना अब आसान हो गया है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_11",
+    "language": "en",
+    "image_url": "/dekho/static/sample11.jpg",
+    "label": "मिट्टी की जांच से पता चलता है कि कौन सी फसल उपयुक्त है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_12",
+    "language": "en",
+    "image_url": "/dekho/static/sample12.jpg",
+    "label": "किसान वर्षा पर निर्भर होकर खेती करता है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_13",
+    "language": "en",
+    "image_url": "/dekho/static/sample13.jpg",
+    "label": "खेत में काम करते समय सुरक्षा का ध्यान रखना जरूरी है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_14",
+    "language": "en",
+    "image_url": "/dekho/static/sample14.jpg",
+    "label": "सरकार किसानों को कई योजनाओं के माध्यम से सहायता देती है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_15",
+    "language": "en",
+    "image_url": "/dekho/static/sample15.jpg",
+    "label": "ट्रैक्टर की मदद से बड़े खेत कम समय में तैयार हो जाते हैं।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_16",
+    "language": "en",
+    "image_url": "/dekho/static/sample16.jpg",
+    "label": "किसान फसल काटने के बाद उसे भंडार में संग्रहित करता है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_17",
+    "language": "en",
+    "image_url": "/dekho/static/sample17.jpg",
+    "label": "पशुओं को समय पर चारा देना आवश्यक है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_18",
+    "language": "en",
+    "image_url": "/dekho/static/sample18.jpg",
+    "label": "फसल की कटाई के समय मजदूरों की आवश्यकता बढ़ जाती है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_19",
+    "language": "en",
+    "image_url": "/dekho/static/sample19.jpg",
+    "label": "किसान मौसम के अनुसार फसल का चयन करता है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_20",
+    "language": "en",
+    "image_url": "/dekho/static/sample20.jpg",
+    "label": "खेत को बाढ़ से बचाने के लिए मेड़ बनाई जाती है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_21",
+    "language": "en",
+    "image_url": "/dekho/static/sample21.jpg",
+    "label": "धूप तेज होने पर किसान सिर पर टोपी पहनता है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_22",
+    "language": "en",
+    "image_url": "/dekho/static/sample22.jpg",
+    "label": "बीज बोने से पहले खेत को अच्छी तरह साफ किया जाता है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_23",
+    "language": "en",
+    "image_url": "/dekho/static/sample23.jpg",
+    "label": "किसानों को कृषि मेले से नई जानकारी मिलती है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_24",
+    "language": "en",
+    "image_url": "/dekho/static/sample24.jpg",
+    "label": "सब्जियों को ताजा रखने के लिए ठंडे स्थान में रखा जाता है।",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_25",
+    "language": "en",
+    "image_url": "/dekho/static/sample25.jpg",
+    "label": "पीक चांगले आल्यावर शेतकरी आनंद साजरा करतात.",
     "metadata": {}
   }
 ]

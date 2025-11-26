@@ -2,7 +2,7 @@ import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
 import 'package:VoiceGive/common_widgets/image_widget.dart';
 import 'package:VoiceGive/common_widgets/primary_button_widget.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
-import 'package:VoiceGive/screens/likho/likho_contribute.dart';
+import 'package:VoiceGive/screens/dekho/dekho_contribute.dart';
 import 'package:VoiceGive/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,15 +12,15 @@ import '../../config/branding_config.dart';
 import '../bolo_india/widgets/bolo_headers_section.dart';
 import '../module_selection_screen.dart';
 
-class LikhoCongratulationsScreen extends StatefulWidget {
-  const LikhoCongratulationsScreen({super.key});
+class DekhoCongratulationsScreen extends StatefulWidget {
+  const DekhoCongratulationsScreen({super.key});
 
   @override
-  State<LikhoCongratulationsScreen> createState() =>
-      _LikhoCongratulationsScreenState();
+  State<DekhoCongratulationsScreen> createState() =>
+      _DekhoCongratulationsScreenState();
 }
 
-class _LikhoCongratulationsScreenState extends State<LikhoCongratulationsScreen>
+class _DekhoCongratulationsScreenState extends State<DekhoCongratulationsScreen>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
@@ -74,30 +74,25 @@ class _LikhoCongratulationsScreenState extends State<LikhoCongratulationsScreen>
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              // Likho India Header
               BoloHeadersSection(
-                logoAsset: 'assets/images/likho_header.png',
-                title: 'LIKHO India',
-                subtitle: 'Enrich your language by donating your translations',
+                logoAsset: 'assets/images/dekho_header.png',
+                title: 'DEKHO India',
+                subtitle: 'Enrich your language by describing images',
                 onBackPressed: () => Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                       builder: (_) => const ModuleSelectionScreen()),
                 ),
               ),
-              // Content Section
               Padding(
                 padding: const EdgeInsets.all(16.0).r,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Congratulations Section
                     _buildCongratulationsSection(),
                     SizedBox(height: 32.w),
-                    // Certificate Preview with Message
                     _buildCertificateWithMessage(),
                     SizedBox(height: 32.w),
-                    // Action Buttons
                     _buildActionButtons(),
                     SizedBox(
                         height: MediaQuery.of(context).padding.bottom + 20.w),
@@ -119,15 +114,13 @@ class _LikhoCongratulationsScreenState extends State<LikhoCongratulationsScreen>
           scale: _scaleAnimation.value,
           child: Column(
             children: [
-              // Badge
               ImageWidget(
-                imageUrl: 'assets/images/likho_badge.png',
+                imageUrl: 'assets/images/dekho_badge.png',
                 height: 120.w,
                 width: 120.w,
                 boxFit: BoxFit.contain,
               ),
               SizedBox(height: 24.w),
-              // Congratulations Text
               Text(
                 '${AppLocalizations.of(context)!.congratulations}!',
                 style: BrandingConfig.instance.getPrimaryTextStyle(
@@ -138,7 +131,6 @@ class _LikhoCongratulationsScreenState extends State<LikhoCongratulationsScreen>
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 16.w),
-              // Achievement Text
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
@@ -178,7 +170,6 @@ class _LikhoCongratulationsScreenState extends State<LikhoCongratulationsScreen>
   Widget _buildCertificateWithMessage() {
     return Stack(
       children: [
-        // Certificate Background
         Container(
           width: double.infinity,
           height: 330.w,
@@ -203,7 +194,6 @@ class _LikhoCongratulationsScreenState extends State<LikhoCongratulationsScreen>
             ),
           ),
         ),
-        // Blur Effect
         Positioned.fill(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12).r,
@@ -215,7 +205,6 @@ class _LikhoCongratulationsScreenState extends State<LikhoCongratulationsScreen>
             ),
           ),
         ),
-        // White Container with Message
         Positioned.fill(
           child: Center(
             child: Container(
@@ -236,13 +225,11 @@ class _LikhoCongratulationsScreenState extends State<LikhoCongratulationsScreen>
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Confetti Emoji
                   Text(
                     '🎉',
                     style: TextStyle(fontSize: 32.sp),
                   ),
                   SizedBox(height: 4.w),
-                  // Main Message
                   Text(
                     'Certificates are on the way!',
                     style: BrandingConfig.instance.getPrimaryTextStyle(
@@ -253,7 +240,6 @@ class _LikhoCongratulationsScreenState extends State<LikhoCongratulationsScreen>
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 4.w),
-                  // Sub Message
                   Text(
                     'Your progress has been saved.\n Thank you for contributing to India\'s \n language strengthening campaign',
                     style: BrandingConfig.instance.getPrimaryTextStyle(
@@ -285,7 +271,7 @@ class _LikhoCongratulationsScreenState extends State<LikhoCongratulationsScreen>
               onTap: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => LikhoContribute()),
+                  MaterialPageRoute(builder: (context) => DekhoContribute()),
                 );
               },
               textColor: AppColors.backgroundColor,
