@@ -101,12 +101,14 @@ class _DekhoValidationContentSectionState
 
   void _onTextChanged(String value) {
     if (_needsChange) {
-      final originalText =
-          validationItems.isNotEmpty ? validationItems[currentIndex].label : '';
-      enableSubmit.value =
-          correctedTextController.text.trim() != originalText.trim() &&
-              correctedTextController.text.trim().isNotEmpty &&
-              !_hasValidationError;
+      final originalText = validationItems.isNotEmpty 
+          ? _decodeText(validationItems[currentIndex].label) 
+          : '';
+      final currentText = correctedTextController.text.trim();
+      
+      enableSubmit.value = currentText.isNotEmpty &&
+                          currentText != originalText.trim() &&
+                          !_hasValidationError;
     } else {
       enableSubmit.value = true;
     }
@@ -179,40 +181,46 @@ class _DekhoValidationContentSectionState
                 .getFullImageUrl(validationItems[currentIndex].imageUrl)
             : '';
 
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(8).r,
-          child: Stack(
-            fit: StackFit.passthrough,
-            children: [
-              Image.asset(
-                'assets/images/contribute_bg.png',
-                fit: BoxFit.cover,
-                width: double.infinity,
-                color: BrandingConfig.instance.primaryColor,
-              ),
-              Padding(
-                padding: EdgeInsets.all(12).r,
-                child: Column(
-                  children: [
-                    _progressHeader(
-                        progress: progress,
-                        total: totalContributions,
-                        currentItem: currentItemNumber),
-                    SizedBox(height: 24.w),
-                    _instructionText(),
-                    SizedBox(height: 22.w),
-                    ImageViewerWidget(imageUrl: currentImageUrl),
-                    SizedBox(height: 22.w),
-                    _textDisplaySection(),
-                    SizedBox(height: 22.w),
-                    _actionButtons(),
-                    SizedBox(height: 20.w),
-                    if (submittedCount < totalContributions) _skipButton(),
-                    SizedBox(height: 50.w),
-                  ],
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8).r,
+            border: Border.all(color: Colors.grey[700]!),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8).r,
+            child: Stack(
+              fit: StackFit.passthrough,
+              children: [
+                // Image.asset(
+                //   'assets/images/contribute_bg.png',
+                //   fit: BoxFit.cover,
+                //   width: double.infinity,
+                //   color: BrandingConfig.instance.primaryColor,
+                // ),
+                Padding(
+                  padding: EdgeInsets.all(12).r,
+                  child: Column(
+                    children: [
+                      _progressHeader(
+                          progress: progress,
+                          total: totalContributions,
+                          currentItem: currentItemNumber),
+                      SizedBox(height: 24.w),
+                      _instructionText(),
+                      SizedBox(height: 22.w),
+                      ImageViewerWidget(imageUrl: currentImageUrl),
+                      SizedBox(height: 22.w),
+                      _textDisplaySection(),
+                      SizedBox(height: 22.w),
+                      _actionButtons(),
+                      SizedBox(height: 20.w),
+                      if (submittedCount < totalContributions) _skipButton(),
+                      SizedBox(height: 50.w),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
@@ -230,12 +238,12 @@ class _DekhoValidationContentSectionState
         child: Stack(
           fit: StackFit.passthrough,
           children: [
-            Image.asset(
-              'assets/images/contribute_bg.png',
-              fit: BoxFit.cover,
-              width: double.infinity,
-              color: BrandingConfig.instance.primaryColor,
-            ),
+            // Image.asset(
+            //   'assets/images/contribute_bg.png',
+            //   fit: BoxFit.cover,
+            //   width: double.infinity,
+            //   color: BrandingConfig.instance.primaryColor,
+            // ),
             Padding(
               padding: EdgeInsets.all(12).r,
               child: Column(
@@ -623,7 +631,7 @@ class _DekhoValidationContentSectionState
     _resetState();
 
     _moveToNext();
-    
+
     _showSnackBar("Item skipped.");
   }
 

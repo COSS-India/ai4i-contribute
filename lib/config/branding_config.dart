@@ -27,11 +27,11 @@ class BrandingConfig {
   }
 
   /// Get app display name
-  String get appDisplayName => _config['app']?['display_name'] ?? 'VoiceGive';
+  String get appDisplayName => _config['app']?['display_name'] ?? 'Bhashadaan';
 
   /// Get app icon path
   String get appIcon =>
-      _config['app']?['app_icon'] ?? 'assets/launcher/ai4i_logo.png';
+      _config['app']?['app_icon'] ?? 'assets/launcher/bhashadaan.png';
 
   /// Get primary brand color
   Color get primaryColor {
@@ -108,7 +108,9 @@ class BrandingConfig {
   String get splashName => _config['branding']?['splash_name'] ?? 'Contribute';
 
   /// Get splash animation path
-  String get splashAnimation => _config['branding']?['splash_animation'] ?? '';
+  String get splashAnimation =>
+      _config['branding']?['splash_animation'] ??
+      'assets/animations/bhashadaan_splash_screen.json';
 
   /// Get header image path
   String get headerPrimaryImage =>
