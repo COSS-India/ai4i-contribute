@@ -17,7 +17,8 @@ class BoloCongratulationsScreen extends StatefulWidget {
   const BoloCongratulationsScreen({super.key});
 
   @override
-  State<BoloCongratulationsScreen> createState() => _BoloCongratulationsScreenState();
+  State<BoloCongratulationsScreen> createState() =>
+      _BoloCongratulationsScreenState();
 }
 
 class _BoloCongratulationsScreenState extends State<BoloCongratulationsScreen>
@@ -99,7 +100,8 @@ class _BoloCongratulationsScreenState extends State<BoloCongratulationsScreen>
                     SizedBox(height: 32.w),
                     // Action Buttons
                     _buildActionButtons(),
-                    SizedBox(height: MediaQuery.of(context).padding.bottom + 20.w),
+                    SizedBox(
+                        height: MediaQuery.of(context).padding.bottom + 20.w),
                   ],
                 ),
               ),
@@ -120,7 +122,7 @@ class _BoloCongratulationsScreenState extends State<BoloCongratulationsScreen>
             children: [
               // Badge
               ImageWidget(
-                imageUrl: 'assets/images/bolo_logo.png',
+                imageUrl: 'assets/images/bolo_badge.png',
                 height: 120.w,
                 width: 120.w,
                 boxFit: BoxFit.contain,

@@ -115,7 +115,7 @@ class _DekhoCongratulationsScreenState extends State<DekhoCongratulationsScreen>
           child: Column(
             children: [
               ImageWidget(
-                imageUrl: 'assets/images/dekho_header.png',
+                imageUrl: 'assets/images/dekho_badge.png',
                 height: 120.w,
                 width: 120.w,
                 boxFit: BoxFit.contain,
@@ -142,7 +142,15 @@ class _DekhoCongratulationsScreenState extends State<DekhoCongratulationsScreen>
                   children: [
                     const TextSpan(text: "You've "),
                     TextSpan(
-                      text: "validated 25 images",
+                      text: "contributed 5 sentences",
+                      style: BrandingConfig.instance.getPrimaryTextStyle(
+                        color: AppColors.darkGreen,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const TextSpan(text: " and \n"),
+                    TextSpan(
+                      text: "validated 25",
                       style: BrandingConfig.instance.getPrimaryTextStyle(
                         color: AppColors.darkGreen,
                         fontWeight: FontWeight.w700,

@@ -37,6 +37,8 @@ class ApiUrl {
   static final String dekhoQueueUrl = '$baseUrl/dekho/queue';
   static final String dekhoSubmitUrl = '$baseUrl/dekho/submit';
   static final String dekhoValidationUrl = '$baseUrl/dekho/validation';
+  static final String dekhoValidationCorrectUrl = '$baseUrl/dekho/validation/correct';
+  static final String dekhoValidationCorrectionUrl = '$baseUrl/dekho/validation/submit-correction';
   
   // Suno URLs
   static final String sunoQueueUrl = '$baseUrl/suno/queue';

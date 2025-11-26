@@ -42,29 +42,102 @@ class DekhoService {
     }
   }
 
+  Future<bool> submitValidationDecision({
+    required String itemId,
+    required String decision,
+  }) async {
+    try {
+      final requestBody = {
+        'item_id': itemId,
+        'decision': decision,
+      };
+      
+      print('DEBUG: Validation URL: ${ApiUrl.dekhoValidationCorrectUrl}');
+      print('DEBUG: Request body: ${jsonEncode(requestBody)}');
+      
+      final response = await http.post(
+        Uri.parse(ApiUrl.dekhoValidationCorrectUrl),
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+        body: jsonEncode(requestBody),
+      );
+
+      print('DEBUG: Response status: ${response.statusCode}');
+      print('DEBUG: Response body: ${response.body}');
+      
+      return response.statusCode == 200;
+    } catch (e) {
+      print('DEBUG: Exception in submitValidationDecision: $e');
+      return false;
+    }
+  }
+
+  Future<bool> submitValidationCorrection({
+    required String itemId,
+    required String correctedLabel,
+  }) async {
+    try {
+      final requestBody = {
+        'item_id': itemId,
+        'corrected_label': correctedLabel,
+      };
+      
+      print('DEBUG: Correction URL: ${ApiUrl.dekhoValidationCorrectionUrl}');
+      print('DEBUG: Request body: ${jsonEncode(requestBody)}');
+      
+      final response = await http.post(
+        Uri.parse(ApiUrl.dekhoValidationCorrectionUrl),
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+        body: jsonEncode(requestBody),
+      );
+
+      print('DEBUG: Response status: ${response.statusCode}');
+      print('DEBUG: Response body: ${response.body}');
+      
+      return response.statusCode == 200;
+    } catch (e) {
+      print('DEBUG: Exception in submitValidationCorrection: $e');
+      return false;
+    }
+  }
+
   Future<bool> submitLabel({
     required String itemId,
     required String language,
     required String label,
   }) async {
     try {
+      final requestBody = {
+        'item_id': itemId,
+        'language': language,
+        'label': label,
+        'labels': [label],
+        'metadata': {},
+      };
+      
+      print('DEBUG: Submit URL: ${ApiUrl.dekhoSubmitUrl}');
+      print('DEBUG: Request body: ${jsonEncode(requestBody)}');
+      
       final response = await http.post(
         Uri.parse(ApiUrl.dekhoSubmitUrl),
         headers: {
           'accept': 'application/json',
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json; charset=utf-8',
         },
-        body: jsonEncode({
-          'item_id': itemId,
-          'language': language,
-          'label': label,
-          'labels': [label],
-          'metadata': {},
-        }),
+        body: jsonEncode(requestBody),
       );
 
+      print('DEBUG: Response status: ${response.statusCode}');
+      print('DEBUG: Response body: ${response.body}');
+      
       return response.statusCode == 200;
     } catch (e) {
+      print('DEBUG: Exception in submitLabel: $e');
       return false;
     }
   }

@@ -51,6 +51,14 @@ class _DekhoValidationContentSectionState
   List<DekhoValidationModel> validationItems = [];
   final DekhoService _dekhoService = DekhoService();
 
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    Helper.showSnackBarMessage(
+      context: context,
+      text: message,
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -68,8 +76,15 @@ class _DekhoValidationContentSectionState
       totalContributions = DekhoValidationConstants.totalValidationItems;
       validationItems.clear();
       _resetState();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          widget.indexUpdate(0);
+        }
+      });
       _loadValidationData();
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     }
     if (currentIndex != widget.currentIndex) {
       currentIndex = widget.currentIndex;
@@ -86,21 +101,23 @@ class _DekhoValidationContentSectionState
 
   void _onTextChanged(String value) {
     if (_needsChange) {
-      final originalText = validationItems.isNotEmpty
-          ? validationItems[currentIndex].label
-          : '';
-      enableSubmit.value = correctedTextController.text.trim() != originalText.trim() &&
-          correctedTextController.text.trim().isNotEmpty &&
-          !_hasValidationError;
+      final originalText =
+          validationItems.isNotEmpty ? validationItems[currentIndex].label : '';
+      enableSubmit.value =
+          correctedTextController.text.trim() != originalText.trim() &&
+              correctedTextController.text.trim().isNotEmpty &&
+              !_hasValidationError;
     } else {
       enableSubmit.value = true;
     }
   }
 
   void _onValidationChanged(bool hasError) {
-    setState(() {
-      _hasValidationError = hasError;
-    });
+    if (mounted) {
+      setState(() {
+        _hasValidationError = hasError;
+      });
+    }
     _onTextChanged(correctedTextController.text);
   }
 
@@ -120,22 +137,21 @@ class _DekhoValidationContentSectionState
       if (response.success && response.data.isNotEmpty) {
         validationItems = [];
         final apiData = response.data;
-        
+
         // Loop the API response to reach totalValidationItems
-        for (int i = 0; i < DekhoValidationConstants.totalValidationItems; i++) {
+        for (int i = 0;
+            i < DekhoValidationConstants.totalValidationItems;
+            i++) {
           validationItems.add(apiData[i % apiData.length]);
         }
-        
+
         if (mounted) {
           setState(() {});
         }
       }
     } catch (e) {
       if (mounted) {
-        Helper.showSnackBarMessage(
-          context: context,
-          text: "Failed to load validation data: $e",
-        );
+        _showSnackBar("Failed to load validation data: $e");
       }
     } finally {
       isLoading.value = false;
@@ -155,10 +171,12 @@ class _DekhoValidationContentSectionState
           return _buildEmptyState();
         }
 
-        final int currentItemNumber = (submittedCount + 1).clamp(1, totalContributions);
+        final int currentItemNumber =
+            (submittedCount + 1).clamp(1, totalContributions);
         final double progress = currentItemNumber / totalContributions;
-        final String currentImageUrl = currentIndex < validationItems.length 
-            ? _dekhoService.getFullImageUrl(validationItems[currentIndex].imageUrl)
+        final String currentImageUrl = currentIndex < validationItems.length
+            ? _dekhoService
+                .getFullImageUrl(validationItems[currentIndex].imageUrl)
             : '';
 
         return ClipRRect(
@@ -222,7 +240,10 @@ class _DekhoValidationContentSectionState
               padding: EdgeInsets.all(12).r,
               child: Column(
                 children: [
-                  _progressHeader(progress: 0.0, total: DekhoValidationConstants.totalValidationItems, currentItem: 1),
+                  _progressHeader(
+                      progress: 0.0,
+                      total: DekhoValidationConstants.totalValidationItems,
+                      currentItem: 1),
                   SizedBox(height: 24.w),
                   _instructionText(),
                   SizedBox(height: 22.w),
@@ -293,7 +314,10 @@ class _DekhoValidationContentSectionState
     );
   }
 
-  Widget _progressHeader({required int total, required double progress, required int currentItem}) =>
+  Widget _progressHeader(
+          {required int total,
+          required double progress,
+          required int currentItem}) =>
       Column(
         children: [
           Row(
@@ -340,28 +364,35 @@ class _DekhoValidationContentSectionState
     final labelText = _decodeText(currentItem.label);
 
     if (_needsChange) {
-      return Row(
+      return Column(
         children: [
-          Expanded(
-            child: _buildTextBox(
-              text: labelText,
-              isEditable: false,
-            ),
-          ),
-          SizedBox(width: 4.w),
-          Expanded(
-            child: UnicodeValidationTextField(
-              controller: correctedTextController,
-              enabled: true,
-              maxLines: 4,
-              languageCode: widget.language.languageCode,
-              hintText: "Start typing here...",
-              onChanged: (value) {
-                _onTextChanged(value);
-              },
-              onValidationChanged: (hasError) {
-                _onValidationChanged(hasError);
-              },
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: _buildTextBox(
+                    text: labelText,
+                    isEditable: false,
+                  ),
+                ),
+                SizedBox(width: 4.w),
+                Expanded(
+                  child: UnicodeValidationTextField(
+                    controller: correctedTextController,
+                    enabled: true,
+                    maxLines: 4,
+                    languageCode: widget.language.languageCode,
+                    hintText: "Start typing here...",
+                    onChanged: (value) {
+                      _onTextChanged(value);
+                    },
+                    onValidationChanged: (hasError) {
+                      _onValidationChanged(hasError);
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -374,10 +405,68 @@ class _DekhoValidationContentSectionState
     }
   }
 
+  bool _validateText(String text) {
+    if (text.isEmpty) return false;
+
+    final ranges = _getLanguageUnicodeRanges(widget.language.languageCode);
+    if (ranges == null) return false;
+
+    for (final rune in text.runes) {
+      if (!_isValidCharacter(rune, ranges)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  List<List<int>>? _getLanguageUnicodeRanges(String languageCode) {
+    const ranges = {
+      'hi': [
+        [0x0900, 0x097F],
+        [0xA8E0, 0xA8FF]
+      ],
+      'en': [
+        [0x0041, 0x005A],
+        [0x0061, 0x007A]
+      ],
+    };
+    return ranges[languageCode];
+  }
+
+  bool _isValidCharacter(int codePoint, List<List<int>> ranges) {
+    if (codePoint == 0x0020 ||
+        (codePoint >= 0x0030 && codePoint <= 0x0039) ||
+        codePoint == 0x002E ||
+        codePoint == 0x002C ||
+        codePoint == 0x003F ||
+        codePoint == 0x0021) {
+      return true;
+    }
+
+    for (final range in ranges) {
+      if (codePoint >= range[0] && codePoint <= range[1]) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   String _decodeText(String text) {
     try {
-      final bytes = text.codeUnits;
-      return utf8.decode(bytes, allowMalformed: true);
+      // Check if text contains Unicode escape sequences
+      if (text.contains('\\u')) {
+        return text.replaceAllMapped(
+          RegExp(r'\\u([0-9a-fA-F]{4})'),
+          (match) => String.fromCharCode(int.parse(match.group(1)!, radix: 16)),
+        );
+      }
+      // If text contains Latin-1 encoded UTF-8, decode it
+      if (text.runes.any((rune) => rune > 127 && rune < 256)) {
+        final bytes = text.codeUnits.map((unit) => unit & 0xFF).toList();
+        return utf8.decode(bytes, allowMalformed: true);
+      }
+      // Return text as-is if it's already properly encoded
+      return text;
     } catch (e) {
       return text;
     }
@@ -487,9 +576,10 @@ class _DekhoValidationContentSectionState
               if (mounted) {
                 setState(() {
                   _needsChange = true;
-                  correctedTextController.text = currentIndex < validationItems.length 
-                      ? validationItems[currentIndex].label 
-                      : '';
+                  correctedTextController.text =
+                      currentIndex < validationItems.length
+                          ? _decodeText(validationItems[currentIndex].label)
+                          : '';
                 });
               }
               _onTextChanged(correctedTextController.text);
@@ -530,53 +620,26 @@ class _DekhoValidationContentSectionState
   void _onSkip() async {
     correctedTextController.clear();
     enableSubmit.value = true;
+    _resetState();
 
-    try {
-      final response = await _dekhoService.getValidationQueue(
-        batchSize: 1,
-      );
-
-      if (response.success && response.data.isNotEmpty) {
-        validationItems[currentIndex] = response.data.first;
-        if (mounted) {
-          setState(() {});
-        }
-      }
-    } catch (e) {
-      Helper.showSnackBarMessage(
-        context: context,
-        text: "Failed to load new validation item: $e",
-      );
-    }
-
-    Helper.showSnackBarMessage(
-      context: context,
-      text: "Item skipped, new item loaded.",
-    );
+    _moveToNext();
+    
+    _showSnackBar("Item skipped.");
   }
 
   void _onSubmit(bool submitEnabled, bool isCorrect) async {
     if (!submitEnabled) {
-      Helper.showSnackBarMessage(
-        context: context,
-        text: "Please check the validation first.",
-      );
+      _showSnackBar("Please check the validation first.");
       return;
     }
 
     if (_needsChange && correctedTextController.text.trim().isEmpty) {
-      Helper.showSnackBarMessage(
-        context: context,
-        text: "Please enter the corrected description.",
-      );
+      _showSnackBar("Please enter the corrected description.");
       return;
     }
 
     if (_hasValidationError) {
-      Helper.showSnackBarMessage(
-        context: context,
-        text: "Please fix the validation errors before submitting.",
-      );
+      _showSnackBar("Please fix the validation errors before submitting.");
       return;
     }
 
@@ -586,33 +649,35 @@ class _DekhoValidationContentSectionState
       bool success;
 
       if (currentIndex >= validationItems.length) {
-        Helper.showSnackBarMessage(
-          context: context,
-          text: "No validation item available.",
-        );
+        print('DEBUG: No validation item available at index $currentIndex');
+        _showSnackBar("No validation item available.");
         return;
       }
 
+      print(
+          'DEBUG: Submitting validation for item ${validationItems[currentIndex].itemId}');
+      print('DEBUG: Needs change: $_needsChange');
+
       if (_needsChange) {
-        success = await _dekhoService.submitLabel(
+        print(
+            'DEBUG: Submitting corrected label: ${correctedTextController.text.trim()}');
+        success = await _dekhoService.submitValidationCorrection(
           itemId: validationItems[currentIndex].itemId,
-          language: widget.language.languageCode,
-          label: correctedTextController.text.trim(),
+          correctedLabel: correctedTextController.text.trim(),
         );
       } else {
-        success = await _dekhoService.submitLabel(
+        print('DEBUG: Submitting validation decision: correct');
+        success = await _dekhoService.submitValidationDecision(
           itemId: validationItems[currentIndex].itemId,
-          language: validationItems[currentIndex].language,
-          label: validationItems[currentIndex].label,
+          decision: 'correct',
         );
       }
 
+      print('DEBUG: Submit validation result: $success');
+
       if (success) {
         submittedCount++;
-        Helper.showSnackBarMessage(
-          context: context,
-          text: "Validation submitted successfully",
-        );
+        _showSnackBar("Validation submitted successfully");
 
         if (submittedCount < totalContributions) {
           correctedTextController.clear();
@@ -635,24 +700,21 @@ class _DekhoValidationContentSectionState
           );
         }
       } else {
-        Helper.showSnackBarMessage(
-          context: context,
-          text: "Failed to submit validation. Please try again.",
-        );
+        print('DEBUG: Submit validation failed');
+        _showSnackBar("Failed to submit validation. Please try again.");
       }
     } catch (e) {
-      Helper.showSnackBarMessage(
-        context: context,
-        text: "Error submitting validation: $e",
-      );
+      print('DEBUG: Exception during submit validation: $e');
+      _showSnackBar("Error submitting validation: $e");
     } finally {
       submitLoading.value = false;
     }
   }
 
   void _moveToNext() {
-    if (currentIndex < totalContributions - 1 && currentIndex < validationItems.length - 1) {
-      widget.indexUpdate(currentIndex + 1);
+    if (validationItems.isNotEmpty) {
+      final nextIndex = (currentIndex + 1) % validationItems.length;
+      widget.indexUpdate(nextIndex);
     }
   }
 }

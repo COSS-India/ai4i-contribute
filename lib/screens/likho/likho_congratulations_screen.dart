@@ -121,7 +121,7 @@ class _LikhoCongratulationsScreenState extends State<LikhoCongratulationsScreen>
             children: [
               // Badge
               ImageWidget(
-                imageUrl: 'assets/images/bolo_logo.png',
+                imageUrl: 'assets/images/likho_badge.png',
                 height: 120.w,
                 width: 120.w,
                 boxFit: BoxFit.contain,
