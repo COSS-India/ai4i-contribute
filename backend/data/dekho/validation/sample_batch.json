@@ -33,5 +33,145 @@
     "image_url": "/dekho/static/sample5.jpg",
     "label": "India is my Country 5",
     "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_6",
+    "language": "en",
+    "image_url": "/dekho/static/sample6.jpg",
+    "label": "India is my Country 1",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_7",
+    "language": "en",
+    "image_url": "/dekho/static/sample7.jpg",
+    "label": "India is my Country 2",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_8",
+    "language": "en",
+    "image_url": "/dekho/static/sample8.jpg",
+    "label": "India is my Country 3",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_9",
+    "language": "en",
+    "image_url": "/dekho/static/sample9.jpg",
+    "label": "India is my Country 4",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_10",
+    "language": "en",
+    "image_url": "/dekho/static/sample10.jpg",
+    "label": "India is my Country 5",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_11",
+    "language": "en",
+    "image_url": "/dekho/static/sample11.jpg",
+    "label": "India is my Country 1",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_12",
+    "language": "en",
+    "image_url": "/dekho/static/sample12.jpg",
+    "label": "India is my Country 2",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_13",
+    "language": "en",
+    "image_url": "/dekho/static/sample13.jpg",
+    "label": "India is my Country 3",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_14",
+    "language": "en",
+    "image_url": "/dekho/static/sample14.jpg",
+    "label": "India is my Country 4",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_15",
+    "language": "en",
+    "image_url": "/dekho/static/sample15.jpg",
+    "label": "India is my Country 5",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_16",
+    "language": "en",
+    "image_url": "/dekho/static/sample16.jpg",
+    "label": "India is my Country 1",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_17",
+    "language": "en",
+    "image_url": "/dekho/static/sample17.jpg",
+    "label": "India is my Country 2",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_18",
+    "language": "en",
+    "image_url": "/dekho/static/sample18.jpg",
+    "label": "India is my Country 3",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_19",
+    "language": "en",
+    "image_url": "/dekho/static/sample19.jpg",
+    "label": "India is my Country 4",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_20",
+    "language": "en",
+    "image_url": "/dekho/static/sample20.jpg",
+    "label": "India is my Country 5",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_21",
+    "language": "en",
+    "image_url": "/dekho/static/sample21.jpg",
+    "label": "India is my Country 1",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_22",
+    "language": "en",
+    "image_url": "/dekho/static/sample22.jpg",
+    "label": "India is my Country 2",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_23",
+    "language": "en",
+    "image_url": "/dekho/static/sample23.jpg",
+    "label": "India is my Country 3",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_24",
+    "language": "en",
+    "image_url": "/dekho/static/sample24.jpg",
+    "label": "India is my Country 4",
+    "metadata": {}
+  },
+  {
+    "item_id": "dekho_v_25",
+    "language": "en",
+    "image_url": "/dekho/static/sample25.jpg",
+    "label": "India is my Country 5",
+    "metadata": {}
   }
 ]
