@@ -9,6 +9,7 @@ import 'package:VoiceGive/screens/module_selection_screen.dart';
 import 'package:VoiceGive/providers/language_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 
 class DekhoValidationScreen extends StatefulWidget {
   const DekhoValidationScreen({super.key});
@@ -17,13 +18,20 @@ class DekhoValidationScreen extends StatefulWidget {
   State<DekhoValidationScreen> createState() => _DekhoValidationScreenState();
 }
 
-class _DekhoValidationScreenState extends State<DekhoValidationScreen> {
+class _DekhoValidationScreenState extends State<DekhoValidationScreen>
+    with TickerProviderStateMixin {
+  late final AnimationController _controller;
   final LanguageProvider _languageProvider = LanguageProvider();
+  bool isCompleted = false;
   int currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    );
     _languageProvider.addListener(() {
       setState(() {});
     });
@@ -31,6 +39,7 @@ class _DekhoValidationScreenState extends State<DekhoValidationScreen> {
 
   @override
   void dispose() {
+    _controller.dispose();
     _languageProvider.removeListener(() {});
     super.dispose();
   }
@@ -42,7 +51,9 @@ class _DekhoValidationScreenState extends State<DekhoValidationScreen> {
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
         appBar: CustomAppBar(),
-        body: SingleChildScrollView(
+        body: Stack(
+          children: [
+            SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
@@ -78,13 +89,39 @@ class _DekhoValidationScreenState extends State<DekhoValidationScreen> {
                           currentIndex = index;
                         });
                       },
+                      onComplete: () {
+                        setState(() {
+                          isCompleted = true;
+                        });
+                      },
                     )
                   ],
                 ),
               ),
             ],
           ),
+            ),
+            if (isCompleted)
+              Positioned(
+                child: _buildConfetti(),
+              ),
+          ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildConfetti() {
+    return Center(
+      child: Lottie.asset(
+        'assets/animations/confetti.json',
+        controller: _controller,
+        fit: BoxFit.fill,
+        alignment: Alignment.center,
+        onLoaded: (composition) {
+          _controller.duration = composition.duration;
+          _controller.forward();
+        },
       ),
     );
   }

@@ -32,4 +32,15 @@ class ApiUrl {
   static final String likhoValidationUrl = '$baseUrl/likho/validation';
   static final String likhoValidationCorrectUrl = '$baseUrl/likho/validation/correct';
   static final String likhoValidationCorrectionUrl = '$baseUrl/likho/validation/submit-correction';
+  
+  // Dekho URLs
+  static final String dekhoQueueUrl = '$baseUrl/dekho/queue';
+  static final String dekhoSubmitUrl = '$baseUrl/dekho/submit';
+  static final String dekhoValidationUrl = '$baseUrl/dekho/validation';
+  
+  // Suno URLs
+  static final String sunoQueueUrl = '$baseUrl/suno/queue';
+  static final String sunoSubmitUrl = '$baseUrl/suno/submit';
+  static final String sunoValidationUrl = '$baseUrl/suno/validation';
+  static final String sunoValidationCorrectUrl = '$baseUrl/suno/validation/correct';
 }
