@@ -74,7 +74,10 @@ class _BoloValidationScreenState extends State<BoloValidationScreen>
                     padding: const EdgeInsets.all(12.0).r,
                     child: Column(
                       children: [
-                        ActionsSection(),
+                        ActionsSection(
+                          itemId: 'bolo_validation_item', // Replace with actual validation item ID
+                          module: 'bolo',
+                        ),
                         SizedBox(height: 16.w),
                         LanguageSelection(
                           description: "Select language for validation",

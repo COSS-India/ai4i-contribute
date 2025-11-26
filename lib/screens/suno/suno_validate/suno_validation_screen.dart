@@ -68,7 +68,10 @@ class _SunoValidationScreenState extends State<SunoValidationScreen>
                     padding: const EdgeInsets.all(12.0).r,
                     child: Column(
                       children: [
-                        ActionsSection(),
+                        ActionsSection(
+                          itemId: 'suno_validation_item_$currentIndex', // Replace with actual validation item ID
+                          module: 'suno',
+                        ),
                         SizedBox(height: 16.w),
                         LanguageSelection(
                           description: "Select the language for validation",
