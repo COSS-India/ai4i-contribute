@@ -3,6 +3,7 @@ import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/bolo_headers_section.dart';
 import 'package:VoiceGive/screens/bolo_india/widgets/language_selection.dart';
+import 'package:VoiceGive/screens/bolo_india/widgets/actions_section.dart';
 import 'package:VoiceGive/screens/dekho/dekho_content_section.dart';
 import 'package:VoiceGive/screens/module_selection_screen.dart';
 import 'package:VoiceGive/config/branding_config.dart';
@@ -48,10 +49,16 @@ class _DekhoContributeState extends State<DekhoContribute> {
                     builder: (_) => const ModuleSelectionScreen()),
               ),
             ),
-            SizedBox(height: 24.h),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.w),
-              child: LanguageSelection(
+              padding: EdgeInsets.all(12.0).r,
+              child: Column(
+                children: [
+                  ActionsSection(
+                    itemId: 'dekho_item_${currentIndex}', // Replace with actual item ID
+                    module: 'dekho',
+                  ),
+                  SizedBox(height: 16.w),
+                  LanguageSelection(
                 description: 'Select the language for contribution',
                 initialLanguage: selectedLanguage,
                 onLanguageChanged: (language) {
@@ -60,24 +67,20 @@ class _DekhoContributeState extends State<DekhoContribute> {
                     currentIndex = 0;
                   });
                 },
+                  ),
+                  SizedBox(height: 24.w),
+                  DekhoContentSection(
+                    selectedLanguage: selectedLanguage,
+                    indexUpdate: (index) {
+                      setState(() {
+                        currentIndex = index;
+                      });
+                    },
+                    currentIndex: currentIndex,
+                  ),
+                ],
               ),
             ),
-            SizedBox(height: 24.h),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.w),
-                child: DekhoContentSection(
-                  selectedLanguage: selectedLanguage,
-                  indexUpdate: (index) {
-                    setState(() {
-                      currentIndex = index;
-                    });
-                  },
-                  currentIndex: currentIndex,
-                ),
-              ),
-            ),
-            SizedBox(height: 24.h),
           ],
         ),
       ),

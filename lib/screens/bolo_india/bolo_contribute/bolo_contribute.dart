@@ -60,7 +60,10 @@ class _BoloContributeState extends State<BoloContribute> {
                 padding: const EdgeInsets.all(12.0).r,
                 child: Column(
                   children: [
-                    ActionsSection(),
+                    ActionsSection(
+                      itemId: 'bolo_item_${currentIndex.value}', // Replace with actual item ID
+                      module: 'bolo',
+                    ),
                     SizedBox(height: 16.w),
                     LanguageSelection(
                       description: AppLocalizations.of(context)!

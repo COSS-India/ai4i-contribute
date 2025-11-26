@@ -41,6 +41,7 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
   int submittedCount = 0;
   int totalContributions = 5;
   List<DekhoItemModel> dekhoItems = [];
+  int displayIndex = 0;
   final DekhoService _dekhoService = DekhoService();
 
   @override
@@ -53,9 +54,11 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
   @override
   void didUpdateWidget(covariant DekhoContentSection oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.selectedLanguage.languageCode != widget.selectedLanguage.languageCode) {
+    if (oldWidget.selectedLanguage.languageCode !=
+        widget.selectedLanguage.languageCode) {
       currentIndex = 0;
       submittedCount = 0;
+      displayIndex = 0;
       totalContributions = 5;
       textController.clear();
       enableSubmit.value = false;
@@ -73,6 +76,7 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
     enableSubmit.value = false;
     submittedCount = 0;
     currentIndex = 0;
+    displayIndex = 0;
   }
 
   Future<void> _loadDekhoData() async {
@@ -99,7 +103,8 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
   }
 
   void _onTextChanged(String value) {
-    enableSubmit.value = textController.text.trim().isNotEmpty && !_hasValidationError;
+    enableSubmit.value =
+        textController.text.trim().isNotEmpty && !_hasValidationError;
   }
 
   void _onValidationChanged(bool hasError) {
@@ -126,9 +131,11 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
           return _buildEmptyState();
         }
 
-        final int currentItemNumber = currentIndex + 1;
-        final double progress = currentItemNumber / totalContributions;
-        final String currentImageUrl = _dekhoService.getFullImageUrl(dekhoItems[currentIndex].imageUrl);
+        final int currentItemNumber =
+            (submittedCount + 1).clamp(1, totalContributions);
+        final double progress = submittedCount / totalContributions;
+        final String currentImageUrl =
+            _dekhoService.getFullImageUrl(dekhoItems[displayIndex].imageUrl);
         print('DEBUG: Image URL: $currentImageUrl');
 
         return Container(
@@ -149,9 +156,9 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
                   ),
                   SizedBox(height: 24.w),
                   Text(
-                    "Describe what you see in the image",
+                    "Type the text from the image",
                     style: BrandingConfig.instance.getPrimaryTextStyle(
-                      fontSize: 16.sp,
+                      fontSize: 12.sp,
                       color: AppColors.darkGreen,
                       fontWeight: FontWeight.w600,
                     ),
@@ -238,8 +245,6 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
           )
         ],
       );
-
-
 
   Widget _textInputField() {
     final bool isSessionComplete = submittedCount >= totalContributions;
@@ -363,27 +368,14 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
   void _onSkip() async {
     textController.clear();
     enableSubmit.value = false;
+    _hasValidationError = false;
 
-    try {
-      final response = await _dekhoService.getDekhoQueue(
-        language: widget.selectedLanguage.languageCode,
-        batchSize: 1,
-      );
-
-      if (response.success && response.data.isNotEmpty) {
-        dekhoItems[currentIndex] = response.data.first;
-        setState(() {});
-      }
-    } catch (e) {
-      Helper.showSnackBarMessage(
-        context: context,
-        text: "Failed to load new image: $e",
-      );
-    }
+    displayIndex = (displayIndex + 1) % dekhoItems.length;
+    setState(() {});
 
     Helper.showSnackBarMessage(
       context: context,
-      text: "Image skipped, new image loaded.",
+      text: "Image skipped.",
     );
   }
 
@@ -408,7 +400,7 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
 
     try {
       final success = await _dekhoService.submitLabel(
-        itemId: dekhoItems[currentIndex].itemId,
+        itemId: dekhoItems[displayIndex].itemId,
         language: widget.selectedLanguage.languageCode,
         label: textController.text.trim(),
       );
@@ -424,7 +416,9 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
           textController.clear();
           enableSubmit.value = false;
           _hasValidationError = false;
-          _moveToNext();
+          currentIndex++;
+          displayIndex = currentIndex;
+          widget.indexUpdate(currentIndex);
         } else {
           setState(() {});
         }
@@ -445,8 +439,9 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
   }
 
   void _moveToNext() {
-    if (currentIndex < totalContributions - 1) {
-      widget.indexUpdate(currentIndex + 1);
+    if (dekhoItems.isNotEmpty) {
+      final nextIndex = (currentIndex + 1) % dekhoItems.length;
+      widget.indexUpdate(nextIndex);
     }
   }
 }

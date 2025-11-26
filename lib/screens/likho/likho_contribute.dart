@@ -58,7 +58,10 @@ class _LikhoContributeState extends State<LikhoContribute> {
                 padding: const EdgeInsets.all(12.0).r,
                 child: Column(
                   children: [
-                    ActionsSection(),
+                    ActionsSection(
+                      itemId: 'likho_item_${currentIndex.value}', // Replace with actual item ID
+                      module: 'likho',
+                    ),
                     SizedBox(height: 16.w),
                     DualLanguageSelectionWidget(
                       description: "Select the language for contribution",

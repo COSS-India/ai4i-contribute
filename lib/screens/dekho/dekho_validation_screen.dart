@@ -70,7 +70,10 @@ class _DekhoValidationScreenState extends State<DekhoValidationScreen>
                 padding: const EdgeInsets.all(12.0).r,
                 child: Column(
                   children: [
-                    ActionsSection(),
+                    ActionsSection(
+                      itemId: 'dekho_validation_item_$currentIndex', // Replace with actual validation item ID
+                      module: 'dekho',
+                    ),
                     SizedBox(height: 16.w),
                     LanguageSelection(
                       description: "Select the language for validation",
