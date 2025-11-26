@@ -532,7 +532,7 @@ class DekhoValidationCorrectionRequest(BaseModel):
     @model_validator(mode="after")
     def _validate_corrected_label(self) -> Self:
         if not text_matches_script(self.corrected_label, self.language if hasattr(self, 'language') else None):
-            raise ValidationError([{"loc": ("corrected_label",), "msg": "Please type in your chosen language", "type": "value_error"}])
+            raise ValueError("Please type in your chosen language")
         return self
 
 # End of AI4I append-only models
