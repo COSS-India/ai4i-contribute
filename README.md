@@ -1,76 +1,167 @@
+# AI4I – Contribute
 
-# AI4I - Contribute Flutter Application - Setup & Authentication Guide
+AI4I – Contribute is an open-source application designed to make it easy for people to help build multilingual datasets across Indian languages. The app enables users to contribute speech and text data through simple, guided tasks. It currently supports three contribution modules:
 
-This document provides a unified guide for setting up your environment, configuring authentication, and following best practices for the AI4I - Contribute Flutter application.
+- **BOLO** - Voice contribution and validation
+- **SUNO** – Speech transcription and validation  
+- **LIKHO** – Text translation and validation  
 
 ---
 
-## 1. Environment Setup
+## Features
 
-### Flutter Version
-Flutter 3.27.1 • channel stable • https://github.com/flutter/flutter.git
-Framework • revision 17025dd882 (10 months ago) • 2024-12-17 03:23:09 +0900
-Engine • revision cb4b5fff73
-Tools • Dart 3.6.0 • DevTools 2.40.2
+### BOLO – Voice Contribution
 
+#### Contribute
+- Read the given text prompt in the selected language.
+- Speak clearly what the prompt says.
+- Skip unclear prompts or report inappropriate content.
+- View a progress summary after completing 5 prompts.
 
-### Java Version
-java 17.0.13 2024-10-15 LTS
-Java(TM) SE Runtime Environment (build 17.0.13+10-LTS-268)
-Java HotSpot(TM) 64-Bit Server VM (build 17.0.13+10-LTS-268, mixed mode, sharing)
+#### Validate
+- Review a text prompt along with its audio clip.
+- Mark the audio as **Correct** or **Needs Change**.
+- Record new audi when corrections are required.
+- Skip if unsure and view a summary after each batch of 25.
 
+---
 
-### Environment Files
-- `.env.development` (development)
-- `.env.staging` (staging)
-- `.env.production` (production)
+### SUNO – Speech Contribution
 
+#### Transcribe
+- Listen to short audio clips.
+- Type what you hear in the selected language.
+- Skip unclear clips or report inappropriate content.
+- View a progress summary after completing 5 clips.
 
-**Steps to run the app:**
-- flutter clean
-- flutter pub get
-- dart run build_scripts/generate_fonts.dart
-- flutter pub run build_runner build --delete-conflicting-outputs
-- flutter run
+#### Validate
+- Review an audio clip along with its transcription.
+- Mark the transcription as **Correct** or **Needs Change**.
+- Edit text when corrections are required.
+- Skip if unsure and view a summary after each batch of 25.
 
-**Production build:**
-- ./build_scripts/build.sh production
+---
 
-## App Customization
+### LIKHO – Text Translation
 
-For organizations wanting to customize the app with their own branding, see the [**Branding Guide**](BRANDING_GUIDE.md) for complete instructions on:
-- App name and icon customization
-- Color schemes and themes
-- Images and animations
-- Consent form configuration
-- Build process
+#### Translate
+- Choose source and target languages.
+- Read the provided sentence.
+- Enter the translation in the chosen language.
+- Skip or report problems.
+- View a summary after every 5 translations.
 
-# API Specification Document
+#### Validate
+- Compare a source sentence with its translated version.
+- Mark it as **Correct** or **Needs Change**.
+- Edit the translation when needed.
+- Skip if unsure and view summary updates after each batch of 25.
 
-Ref Backend installation guide : https://github.com/COSS-India/ai4i-contribute/blob/release/v0.2/backend/README.md
-Swagger UI : http://3.7.77.1:9000/docs
+---
 
-## Code Structure
+## Who Can Contribute
 
-### Key Directories
+AI4I – Contribute is designed for anyone familiar with one or more Indian languages, including:
+
+- Teachers  
+- Language enthusiasts  
+- Students  
+- Volunteers  
+- Community members  
+
+No technical knowledge is required, and tasks are easy to follow.
+
+---
+
+## Why This App Matters
+
+India’s rich linguistic diversity requires strong datasets so that future AI systems can understand and serve all languages effectively.  
+Your contributions help improve:
+
+- Speech recognition  
+- Machine translation  
+- Text understanding  
+- Digital services across Indian languages  
+
+---
+
+## How to Use
+
+1. Open the app and select **BOLO** **Suno** or **Likho**.  
+2. Choose your language(s).  
+3. Follow the task displayed on-screen.  
+4. After every set of 5 tasks, review your contribution summary.  
+5. Continue contributing at your own pace.
+
+---
+
+## Project Structure
 
 ```
-AI4I - Contribute/
-├── android/                 # Android-specific configuration
-├── ios/                     # iOS-specific configuration
-├── lib/                     # Main Dart code
-│   ├── common_widgets/      # Reusable UI components
-│   ├── config/              # App configuration
-│   ├── constants/           # App constants
-│   ├── l10n/               # Localization files
-│   ├── models/             # Data models
-│   ├── providers/          # State management
-│   ├── screens/            # App screens
-│   ├── services/           # API and business logic
-│   └── util/               # Utility functions
-├── backend/                # Mock Backend
-├── assets/                 # Images, icons, animations
-├── build_scripts/          # Build automation scripts
-├── documentation/          # Project documentation
-└── test/                   # Test files
+analysis_options.yaml
+android/
+assets/
+backend/
+branding.yaml
+BRANDING_GUIDE.md
+build_scripts/
+contracts/
+devtools_options.yaml
+documentation/
+ios/
+l10n.yaml
+lib/
+LICENSE
+pubspec.yaml
+README.md
+test/
+tool/
+web/
 ```
+
+---
+
+## Dependencies
+
+Key packages used in the project include:
+
+- UI & layout: flutter_svg, google_fonts, flutter_screenutil, lottie, animations
+- Audio handling: just_audio, audioplayers, record
+- Permissions: permission_handler
+- Networking & storage: http, flutter_secure_storage, shared_preferences
+- State management: provider
+- Configuration & utilities: flutter_dotenv, encrypt, path, yaml, url_launcher
+- Localization: flutter_localizations, intl
+
+---
+
+## Setup
+
+### Install Dependencies
+
+```
+flutter pub get
+```
+
+### Environment Variables
+
+Create a `.env` file at the project root and add:
+
+```
+API_BASE_URL=http://example.com/docs
+```
+
+### Run the App
+
+```
+flutter run
+```
+
+### Run mock backend
+
+```
+cd backend
+pip install -r requirements.txt
+python run.py
+```
+---
