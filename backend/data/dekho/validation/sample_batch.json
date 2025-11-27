@@ -3,35 +3,35 @@
     "item_id": "dekho_v_1",
     "language": "en",
     "image_url": "/dekho/static/sample1.jpg",
-    "label": "किसान सुबह जल्दी खेत में काम शुरू करता है।",
+    "label": "इंडिया मेरा देश है",
     "metadata": {}
   },
   {
     "item_id": "dekho_v_2",
     "language": "en",
     "image_url": "/dekho/static/sample2.jpg",
-    "label": "धान की रोपाई के लिए पर्याप्त पानी की आवश्यकता होती है।",
+    "label": "किसान खेत में गेहूँ की फसल की सिंचाई कर रहा है।",
     "metadata": {}
   },
   {
     "item_id": "dekho_v_3",
     "language": "en",
     "image_url": "/dekho/static/sample3.jpg",
-    "label": "अच्छी पैदावार के लिए मौसम का अनुकूल होना जरूरी है।",
+    "label": "इस साल मानसून समय पर आने से खेती में मदद मिली है।",
     "metadata": {}
   },
   {
     "item_id": "dekho_v_4",
     "language": "en",
     "image_url": "/dekho/static/sample4.jpg",
-    "label": "किसान बाजार से बीज और खाद खरीदकर लाता है।",
+    "label": "खेत की मिट्टी को उपजाऊ बनाने के लिए जैविक खाद का उपयोग किया जाता है।",
     "metadata": {}
   },
   {
     "item_id": "dekho_v_5",
     "language": "en",
     "image_url": "/dekho/static/sample5.jpg",
-    "label": "पशुओं की देखभाल करना खेती का महत्वपूर्ण हिस्सा है।",
+    "label": "ट्रैक्टर की मदद से किसान जमीन को जोत रहा है।",
     "metadata": {}
   },
   {
