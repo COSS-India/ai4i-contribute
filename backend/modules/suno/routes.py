@@ -114,7 +114,7 @@ def session_complete(payload: dict):
 
 @router.get("/test-speaker")
 def test_speaker():
-    return APIResponse(success=True, data={"sample_audio": "/static/suno/sample1.mp3"})
+    return APIResponse(success=True, data={"sample_audio": "/suno/static/sample1.mp3"})
 
 
 # ---------------------------------------------------------

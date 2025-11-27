@@ -24,6 +24,24 @@ class _ImageViewerWidgetState extends State<ImageViewerWidget> {
       TransformationController();
   final GlobalKey _imageKey = GlobalKey();
 
+  @override
+  void initState() {
+    super.initState();
+    // Reset zoom level to 100% on widget initialization
+    _zoomLevel = 1.0;
+    _transformationController.value = Matrix4.identity();
+  }
+
+  @override
+  void didUpdateWidget(ImageViewerWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Reset zoom when image URL changes
+    if (oldWidget.imageUrl != widget.imageUrl) {
+      _zoomLevel = 1.0;
+      _transformationController.value = Matrix4.identity();
+    }
+  }
+
   void _zoomIn() {
     setState(() {
       _zoomLevel = (_zoomLevel + _zoomStep).clamp(_minZoom, _maxZoom);
@@ -82,6 +100,8 @@ class _ImageViewerWidgetState extends State<ImageViewerWidget> {
                   maxScale: _maxZoom,
                   panEnabled: true,
                   scaleEnabled: true,
+                  boundaryMargin: EdgeInsets.zero,
+                  constrained: true,
                   child: Container(
                     key: _imageKey,
                     child: Image.network(

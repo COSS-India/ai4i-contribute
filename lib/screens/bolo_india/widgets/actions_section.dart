@@ -10,7 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class ActionsSection extends StatelessWidget {
   final String? itemId;
   final String module;
-  
+
   const ActionsSection({
     super.key,
     this.itemId,
@@ -22,8 +22,8 @@ class ActionsSection extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(12).r,
       decoration: BoxDecoration(
-        color: AppColors.lightGreen2,
-        border: Border.all(color: AppColors.lightGreen),
+        color: AppColors.lightGreen1,
+        border: Border.all(color: AppColors.lightGreen5),
         borderRadius: BorderRadius.circular(12).r,
       ),
       child: Row(
@@ -43,15 +43,17 @@ class ActionsSection extends StatelessWidget {
           SizedBox(width: 12.w),
           Flexible(
             child: actionButton(
-                onTap: itemId != null ? () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => ReportContentDialog(
-                      itemId: itemId!,
-                      module: module,
-                    ),
-                  );
-                } : null,
+                onTap: itemId != null
+                    ? () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => ReportContentDialog(
+                            itemId: itemId!,
+                            module: module,
+                          ),
+                        );
+                      }
+                    : null,
                 title: AppLocalizations.of(context)!.report,
                 icon: Icons.report_outlined),
           ),
