@@ -10,6 +10,9 @@ class AppColors {
   static Color get orange => BrandingConfig.instance.secondaryColor;
   static Color get darkGreen => BrandingConfig.instance.primaryColor;
   static Color get green => Color(0xFF27C854);
+  static Color get lightGreen1 =>Color(0xFFEBFFF5); // textbox bg color
+    static Color get lightGreen5 => Color(0xFF9AF2CE); // textbox border color
+
   static Color get lightGreen =>
       BrandingConfig.instance.primaryColor.withOpacity(0.3);
   static Color get lightGreen2 =>

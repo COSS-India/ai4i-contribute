@@ -101,14 +101,14 @@ class _DekhoValidationContentSectionState
 
   void _onTextChanged(String value) {
     if (_needsChange) {
-      final originalText = validationItems.isNotEmpty 
-          ? _decodeText(validationItems[currentIndex].label) 
+      final originalText = validationItems.isNotEmpty
+          ? _decodeText(validationItems[currentIndex].label)
           : '';
       final currentText = correctedTextController.text.trim();
-      
+
       enableSubmit.value = currentText.isNotEmpty &&
-                          currentText != originalText.trim() &&
-                          !_hasValidationError;
+          currentText != originalText.trim() &&
+          !_hasValidationError;
     } else {
       enableSubmit.value = true;
     }
@@ -491,10 +491,10 @@ class _DekhoValidationContentSectionState
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.lightGreen4,
+          color: AppColors.lightGreen1,
           borderRadius: BorderRadius.circular(8).r,
           border: Border.all(
-            color: AppColors.darkGreen,
+            color: AppColors.lightGreen5,
             width: 0.5,
           ),
         ),

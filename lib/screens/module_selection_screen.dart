@@ -160,17 +160,6 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
             ),
       },
       {
-        'title': 'Likho India',
-        'icon': Icons.edit,
-        'assetPath': 'assets/images/likho.png',
-        'color': AppColors.lightGreen,
-        'onTap': () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => LikhoGetStarted()),
-            ),
-      },
-
-      {
         'title': 'Dekho India',
         'icon': Icons.visibility,
         'assetPath': 'assets/images/dekho.png',
@@ -178,6 +167,16 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
         'onTap': () => Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => DekhoGetStarted()),
+            ),
+      },
+      {
+        'title': 'Likho India',
+        'icon': Icons.edit,
+        'assetPath': 'assets/images/likho.png',
+        'color': AppColors.lightGreen,
+        'onTap': () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => LikhoGetStarted()),
             ),
       },
       // {

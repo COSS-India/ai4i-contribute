@@ -71,9 +71,9 @@ class _ImageViewerWidgetState extends State<ImageViewerWidget> {
     return Container(
       height: 135.h,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12).r,
-        color: AppColors.lightGreen4,
-        border: Border.all(color: AppColors.darkGreen, width: 2),
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(12),topRight: Radius.circular(12)).r,
+        color: AppColors.lightGreen1,
+        border: Border.all(color: AppColors.lightGreen5, width: 1),
       ),
       child: Row(
         children: [

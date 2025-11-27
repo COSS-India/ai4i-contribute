@@ -56,25 +56,35 @@ class _TestSpeakersDialogState extends State<TestSpeakersDialog> {
       });
 
       try {
-        print('Playing audio from: $audioUrl');
         await _audioPlayer.setVolume(volumeLevel / 10.0);
         await _audioPlayer.play(UrlSource(audioUrl!));
-        print('Audio playback started');
       } catch (e) {
-        print('Audio playback error: $e');
-        // No seek bar animation
+        setState(() {
+          isPlaying = false;
+        });
       }
-    } else {
-      print('No audio URL available');
     }
   }
 
   Future<void> _fetchAudioUrl() async {
-    final fallbackUrl = 'http://3.7.77.1:9000/suno/static/sample1.mp3';
-    print('Using fallback audio URL: $fallbackUrl');
-    setState(() {
-      audioUrl = fallbackUrl;
-    });
+    try {
+      final response = await http.get(
+        Uri.parse(ApiUrl.testSpeakers),
+        headers: {'accept': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if (data['success'] == true && data['data'] != null) {
+          final sampleAudio = data['data']['sample_audio'];
+          setState(() {
+            audioUrl = '${ApiUrl.baseUrl}$sampleAudio';
+          });
+        }
+      }
+    } catch (e) {
+      // Handle error silently
+    }
   }
 
   void _setVolumeLevel(int level) async {
@@ -89,7 +99,7 @@ class _TestSpeakersDialogState extends State<TestSpeakersDialog> {
     try {
       await _setSystemVolume(level / 10.0);
     } catch (e) {
-      print('Could not set system volume: $e');
+      // Handle error silently
     }
 
     HapticFeedback.selectionClick();
@@ -99,7 +109,7 @@ class _TestSpeakersDialogState extends State<TestSpeakersDialog> {
     try {
       VolumeController().setVolume(volume, showSystemUI: false);
     } catch (e) {
-      print('Failed to set system volume: $e');
+      // Handle error silently
     }
   }
 
@@ -217,34 +227,42 @@ class _TestSpeakersDialogState extends State<TestSpeakersDialog> {
                           horizontal: 10,
                           vertical: 10,
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: List.generate(
-                            19, // 10 bars + 9 spacers
-                            (index) {
-                              if (index.isEven) {
-                                // Volume bar
-                                final barIndex = index ~/ 2;
-                                return GestureDetector(
-                                  onTap: () => _setVolumeLevel(barIndex + 1),
-                                  child: _buildVolumeBar(barIndex),
-                                );
-                              } else {
-                                // Transparent spacer
-                                return GestureDetector(
-                                  onTap: () {
-                                    final barIndex = (index + 1) ~/ 2;
-                                    _setVolumeLevel(barIndex);
-                                  },
-                                  child: Container(
-                                    width: 5,
-                                    height: 40,
-                                    color: Colors.transparent,
-                                  ),
-                                );
-                              }
-                            },
-                          ),
+                        child: LayoutBuilder(
+                          builder: (context, constraints) {
+                            final screenWidth = MediaQuery.of(context).size.width;
+                            final int maxBars = screenWidth < 350 ? 6 : 10;
+                            final int totalElements = (maxBars * 2) - 1; // bars + spacers
+                            
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: List.generate(
+                                totalElements,
+                                (index) {
+                                  if (index.isEven) {
+                                    // Volume bar
+                                    final barIndex = index ~/ 2;
+                                    return GestureDetector(
+                                      onTap: () => _setVolumeLevel(((barIndex + 1) * 10 / maxBars).round()),
+                                      child: _buildVolumeBar(barIndex, maxBars),
+                                    );
+                                  } else {
+                                    // Transparent spacer
+                                    return GestureDetector(
+                                      onTap: () {
+                                        final barIndex = (index + 1) ~/ 2;
+                                        _setVolumeLevel(((barIndex * 10) / maxBars).round());
+                                      },
+                                      child: Container(
+                                        width: 5,
+                                        height: 40,
+                                        color: Colors.transparent,
+                                      ),
+                                    );
+                                  }
+                                },
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -258,8 +276,9 @@ class _TestSpeakersDialogState extends State<TestSpeakersDialog> {
     );
   }
 
-  Widget _buildVolumeBar(int index) {
-    final bool isVolumeActive = index < volumeLevel;
+  Widget _buildVolumeBar(int index, int maxBars) {
+    final double barThreshold = (index + 1) * 10 / maxBars;
+    final bool isVolumeActive = volumeLevel >= barThreshold;
 
     return Container(
       width: 13,
@@ -269,6 +288,7 @@ class _TestSpeakersDialogState extends State<TestSpeakersDialog> {
         borderRadius: BorderRadius.circular(4),
         border: Border.all(
           color: const Color(0xFF23D088),
+          width: 0.5,
         ),
       ),
     );

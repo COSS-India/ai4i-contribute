@@ -45,4 +45,7 @@ class ApiUrl {
   static final String sunoSubmitUrl = '$baseUrl/suno/submit';
   static final String sunoValidationUrl = '$baseUrl/suno/validation';
   static final String sunoValidationCorrectUrl = '$baseUrl/suno/validation/correct';
+  
+  // Test Speakers URL
+  static final String testSpeakers = '$baseUrl/suno/test-speaker';
 }

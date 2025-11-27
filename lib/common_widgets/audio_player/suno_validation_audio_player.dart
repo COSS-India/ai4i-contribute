@@ -134,8 +134,8 @@ class _SunoValidationAudioPlayerState extends State<SunoValidationAudioPlayer> {
             if (widget.onAudioEnded != null) {
               widget.onAudioEnded!();
             }
-          } else if (state.processingState == ProcessingState.ready || 
-                     state.processingState == ProcessingState.buffering) {
+          } else if (state.processingState == ProcessingState.ready ||
+              state.processingState == ProcessingState.buffering) {
             setState(() {
               _isPlaying = state.playing;
               if (state.playing) {
@@ -245,22 +245,22 @@ class _SunoValidationAudioPlayerState extends State<SunoValidationAudioPlayer> {
     try {
       if (!_isLoading && _duration > Duration.zero) {
         final wasPlaying = _isPlaying;
-        
+
         // Pause before changing speed to prevent conflicts
         if (wasPlaying) {
           await _player.pause();
           await Future.delayed(Duration(milliseconds: 100));
         }
-        
+
         await _player.setSpeed(speed);
         _currentSpeed = speed;
         _playbackProvider.setPlaybackSpeed(speed);
-        
+
         // Resume if was playing
         if (wasPlaying && !_hasEnded) {
           await _player.play();
         }
-        
+
         if (mounted) {
           setState(() {});
         }
@@ -391,11 +391,11 @@ class _SunoValidationAudioPlayerState extends State<SunoValidationAudioPlayer> {
         ),
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.lightGreen4,
+            color: AppColors.lightGreen1,
             borderRadius: BorderRadius.circular(8).r,
             border: Border.all(
-              color: AppColors.darkGreen,
-              width: 1.5,
+              color: AppColors.lightGreen5,
+              width: 1,
             ),
           ),
           child: Padding(
@@ -436,10 +436,10 @@ class _SunoValidationAudioPlayerState extends State<SunoValidationAudioPlayer> {
                   color: Colors.white),
               child: Container(
                 decoration: BoxDecoration(
-                  color: AppColors.lightGreen4,
+                  color: AppColors.lightGreen1,
                   borderRadius: BorderRadius.circular(8).r,
                   border: Border.all(
-                    color: AppColors.darkGreen,
+                    color: AppColors.lightGreen5,
                     width: 1.5,
                   ),
                 ),
