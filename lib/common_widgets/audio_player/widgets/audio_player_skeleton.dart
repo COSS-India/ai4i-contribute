@@ -22,18 +22,21 @@ class _AudioPlayerSkeletonState extends State<AudioPlayerSkeleton> {
             borderRadius: BorderRadius.circular(40).r,
             border: Border.all(color: AppColors.darkGreen),
           ),
-          child: Row(
-            children: [
-              SizedBox(width: 16.w),
-              ContainerSkeleton(width: 60, height: 12, radius: 2),
-              SizedBox(width: 8.w),
-              Expanded(
-                child: ContainerSkeleton(width: double.infinity, height: 2.5, radius: 2),
-              ),
-              SizedBox(width: 8.w),
-              ContainerSkeleton(width: 30, height: 12, radius: 2),
-              SizedBox(width: 16.w),
-            ],
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 12.h),
+            child: Row(
+              children: [
+                SizedBox(width: 16.w),
+                ContainerSkeleton(width: 60, height: 12, radius: 2),
+                SizedBox(width: 8.w),
+                Expanded(
+                  child: ContainerSkeleton(width: double.infinity, height: 2.5, radius: 2),
+                ),
+                SizedBox(width: 8.w),
+                ContainerSkeleton(width: 30, height: 12, radius: 2),
+                SizedBox(width: 16.w),
+              ],
+            ),
           ),
         ),
         SizedBox(height: 16.h),

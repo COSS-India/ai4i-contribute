@@ -259,6 +259,7 @@ class _SunoContentSectionState extends State<SunoContentSection> {
                             .getFullAudioUrl(sunoItems[currentIndex].audioUrl),
                         onAudioEnded: _onAudioEnded,
                         onAudioStarted: () => audioStarted.value = true,
+                        isDisabled: submittedCount >= totalContributions,
                       ),
                       SizedBox(height: 30.w),
                       _textInputField(),

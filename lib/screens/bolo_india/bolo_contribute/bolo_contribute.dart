@@ -38,12 +38,20 @@ class _BoloContributeState extends State<BoloContribute> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      appBar: CustomAppBar(
-        showThreeLogos: true,
-      ),
-      body: SingleChildScrollView(
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const ModuleSelectionScreen()),
+        );
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        appBar: CustomAppBar(
+          showThreeLogos: true,
+        ),
+        body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
@@ -92,6 +100,7 @@ class _BoloContributeState extends State<BoloContribute> {
               )
             ],
           )),
+      ),
     );
   }
 }

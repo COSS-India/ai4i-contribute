@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -269,6 +270,9 @@ class _ReportContentDialogState extends State<ReportContentDialog> {
                   controller: _reasonController,
                   maxLength: maxCharacters,
                   maxLines: 4,
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(maxCharacters),
+                  ],
                   style: BrandingConfig.instance.getPrimaryTextStyle(
                     fontSize: 14.sp,
                     color: AppColors.greys87,

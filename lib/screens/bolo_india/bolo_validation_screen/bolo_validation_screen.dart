@@ -47,8 +47,12 @@ class _BoloValidationScreenState extends State<BoloValidationScreen>
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
-        return Future.value(false);
+      onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const ModuleSelectionScreen()),
+        );
+        return false;
       },
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,

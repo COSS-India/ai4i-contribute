@@ -38,10 +38,18 @@ class _DekhoContributeState extends State<DekhoContribute> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      appBar: const CustomAppBar(),
-      body: SafeArea(
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const ModuleSelectionScreen()),
+        );
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        appBar: const CustomAppBar(),
+        body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -91,6 +99,7 @@ class _DekhoContributeState extends State<DekhoContribute> {
             ],
           ),
         ),
+      ),
       ),
     );
   }

@@ -131,9 +131,8 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
           return _buildEmptyState();
         }
 
-        final int currentItemNumber =
-            (submittedCount + 1).clamp(1, totalContributions);
-        final double progress = submittedCount / totalContributions;
+        final int currentItemNumber = currentIndex + 1;
+        final double progress = currentItemNumber / totalContributions;
         final String currentImageUrl =
             _dekhoService.getFullImageUrl(dekhoItems[displayIndex].imageUrl);
         print('DEBUG: Image URL: $currentImageUrl');
