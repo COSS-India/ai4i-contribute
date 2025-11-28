@@ -47,7 +47,7 @@ class _DekhoValidationContentSectionState
 
   int currentIndex = 0;
   int submittedCount = 0;
-  int totalContributions = DekhoValidationConstants.totalValidationItems;
+  int totalContributions = 5;
   List<DekhoValidationModel> validationItems = [];
   final DekhoService _dekhoService = DekhoService();
 
@@ -73,7 +73,7 @@ class _DekhoValidationContentSectionState
     if (oldWidget.language.languageCode != widget.language.languageCode) {
       currentIndex = 0;
       submittedCount = 0;
-      totalContributions = DekhoValidationConstants.totalValidationItems;
+      totalContributions = 5;
       validationItems.clear();
       _resetState();
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -133,7 +133,7 @@ class _DekhoValidationContentSectionState
     try {
       isLoading.value = true;
       final response = await _dekhoService.getValidationQueue(
-        batchSize: DekhoValidationConstants.totalValidationItems,
+        batchSize: 5,
       );
 
       if (response.success && response.data.isNotEmpty) {
@@ -141,9 +141,7 @@ class _DekhoValidationContentSectionState
         final apiData = response.data;
 
         // Loop the API response to reach totalValidationItems
-        for (int i = 0;
-            i < DekhoValidationConstants.totalValidationItems;
-            i++) {
+        for (int i = 0; i < 5; i++) {
           validationItems.add(apiData[i % apiData.length]);
         }
 
@@ -248,10 +246,7 @@ class _DekhoValidationContentSectionState
               padding: EdgeInsets.all(12).r,
               child: Column(
                 children: [
-                  _progressHeader(
-                      progress: 0.0,
-                      total: DekhoValidationConstants.totalValidationItems,
-                      currentItem: 1),
+                  _progressHeader(progress: 0.0, total: 5, currentItem: 1),
                   SizedBox(height: 24.w),
                   _instructionText(),
                   SizedBox(height: 22.w),
@@ -384,7 +379,7 @@ class _DekhoValidationContentSectionState
                     isEditable: false,
                   ),
                 ),
-                SizedBox(width: 4.w),
+                SizedBox(width: 10.w),
                 Expanded(
                   child: UnicodeValidationTextField(
                     controller: correctedTextController,
@@ -495,7 +490,7 @@ class _DekhoValidationContentSectionState
           borderRadius: BorderRadius.circular(8).r,
           border: Border.all(
             color: AppColors.lightGreen5,
-            width: 0.5,
+            width: 1,
           ),
         ),
         child: Padding(
@@ -557,7 +552,9 @@ class _DekhoValidationContentSectionState
             isLoading: submitLoading,
             title: _needsChange ? "Submit" : "Correct",
             textFontSize: 16.sp,
-            onTap: () => _onSubmit(enableSubmitValue, true),
+            onTap: (_needsChange && !enableSubmitValue)
+                ? null
+                : () => _onSubmit(enableSubmitValue, true),
             textColor: AppColors.backgroundColor,
             decoration: BoxDecoration(
               color: _needsChange
@@ -619,7 +616,7 @@ class _DekhoValidationContentSectionState
           textColor: AppColors.orange,
           decoration: BoxDecoration(
             color: AppColors.backgroundColor,
-            border: Border.all(color: AppColors.orange),
+            // border: Border.all(color: AppColors.orange),
             borderRadius: BorderRadius.all(Radius.circular(6.0).r),
           ),
         ),

@@ -506,7 +506,7 @@ class _SunoContentSectionState extends State<SunoContentSection> {
         submittedCount++;
         Helper.showSnackBarMessage(
           context: context,
-          text: "Your contribution submitted successfully",
+          text: "Your contribution submitted Successfully",
         );
 
         if (submittedCount < totalContributions) {

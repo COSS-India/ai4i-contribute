@@ -409,7 +409,7 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
         submittedCount++;
         Helper.showSnackBarMessage(
           context: context,
-          text: "Your description submitted successfully",
+          text: "Your Contribution Submitted Successfully",
         );
 
         if (submittedCount < totalContributions) {

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../constants/app_colors.dart';
 import '../../../config/branding_config.dart';
 import '../../../constants/api_url.dart';
@@ -120,11 +121,11 @@ class _TestSpeakersDialogState extends State<TestSpeakersDialog> {
         borderRadius: BorderRadius.circular(24),
       ),
       child: Container(
-        width: 420,
-        padding: const EdgeInsets.all(32),
+        width: 0.9.sw.clamp(300.0, 420.0),
+        padding: EdgeInsets.all(24.w),
         decoration: BoxDecoration(
           color: AppColors.backgroundColor,
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(24.r),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -137,7 +138,7 @@ class _TestSpeakersDialogState extends State<TestSpeakersDialog> {
                 Text(
                   'Test Your Speakers',
                   style: BrandingConfig.instance.getPrimaryTextStyle(
-                    fontSize: 20,
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.w600,
                     color: AppColors.greys87,
                   ),
@@ -146,21 +147,21 @@ class _TestSpeakersDialogState extends State<TestSpeakersDialog> {
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
                   child: Container(
-                    padding: const EdgeInsets.all(6),
+                    padding: EdgeInsets.all(6.w),
                     decoration: BoxDecoration(
                       color: AppColors.orange,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.close,
                       color: Colors.white,
-                      size: 18,
+                      size: 16.sp,
                     ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 24.h),
             // Speaker test container
             Row(
               children: [
@@ -179,20 +180,20 @@ class _TestSpeakersDialogState extends State<TestSpeakersDialog> {
                   child: GestureDetector(
                     onTap: startTest,
                     child: Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: EdgeInsets.all(8.w),
                       decoration: BoxDecoration(
                         color: AppColors.backgroundColor,
                         borderRadius: BorderRadius.circular(14),
                       ),
                       child: Image.asset(
                         'assets/images/volume.png',
-                        width: 40,
-                        height: 40,
+                        width: 32.w,
+                        height: 32.w,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 4),
+                SizedBox(width: 4.w),
                 // Volume bars container
                 Expanded(
                   child: Container(
@@ -223,9 +224,9 @@ class _TestSpeakersDialogState extends State<TestSpeakersDialog> {
                         _setVolumeLevel(newLevel);
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 10,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.w,
+                          vertical: 8.h,
                         ),
                         child: LayoutBuilder(
                           builder: (context, constraints) {
@@ -253,8 +254,8 @@ class _TestSpeakersDialogState extends State<TestSpeakersDialog> {
                                         _setVolumeLevel(((barIndex * 10) / maxBars).round());
                                       },
                                       child: Container(
-                                        width: 5,
-                                        height: 40,
+                                        width: 4.w,
+                                        height: 32.h,
                                         color: Colors.transparent,
                                       ),
                                     );
@@ -281,11 +282,11 @@ class _TestSpeakersDialogState extends State<TestSpeakersDialog> {
     final bool isVolumeActive = volumeLevel >= barThreshold;
 
     return Container(
-      width: 13,
-      height: isVolumeActive ? 38 : 30,
+      width: 10.w,
+      height: isVolumeActive ? 30.h : 24.h,
       decoration: BoxDecoration(
         color: const Color(0xFFE9FAF3),
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(3.r),
         border: Border.all(
           color: const Color(0xFF23D088),
           width: 0.5,

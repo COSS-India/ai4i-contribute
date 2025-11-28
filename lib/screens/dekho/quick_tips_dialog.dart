@@ -27,10 +27,11 @@ class QuickTipsDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
       ),
       child: Container(
-        padding: const EdgeInsets.all(24),
+        width: 0.9.sw.clamp(280.0, 400.0),
+        padding: EdgeInsets.all(20.w),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(24.r),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -43,7 +44,7 @@ class QuickTipsDialog extends StatelessWidget {
                 Text(
                   'Quick Tips',
                   style: BrandingConfig.instance.getPrimaryTextStyle(
-                    fontSize: 18,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
                     color: AppColors.greys87,
                   ),
@@ -52,21 +53,21 @@ class QuickTipsDialog extends StatelessWidget {
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
                   child: Container(
-                    padding: const EdgeInsets.all(6),
+                    padding: EdgeInsets.all(5.w),
                     decoration: const BoxDecoration(
                       color: Color(0xFFFF6B35),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.close,
                       color: Colors.white,
-                      size: 16,
+                      size: 14.sp,
                     ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 24.h),
             // Tips in 2 rows
             Column(
               children: [
@@ -89,27 +90,28 @@ class QuickTipsDialog extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 20.h),
                 // Second row - 2 items
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(width: 40),
+                    SizedBox(width: 20.w),
                     _buildTipItem(
                       visibilityPath ?? 'assets/icons/record_icon.png',
                       'Read once\nbefore\nrecording it',
                     ),
-                    const SizedBox(width: 40),
+                    SizedBox(width: 20.w),
                     _buildTipItem(
                       editPath ?? 'assets/icons/play_icon.png',
                       'Tap Record to\nstart',
                     ),
+                    SizedBox(width: 20.w),
                   ],
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 12.h),
           ],
         ),
       ),
@@ -121,8 +123,8 @@ class QuickTipsDialog extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: 60,
-          height: 60,
+          width: 50.w,
+          height: 50.w,
           decoration: BoxDecoration(
             color: const Color(0xFFE9FAF3),
             shape: BoxShape.circle,
@@ -134,15 +136,15 @@ class QuickTipsDialog extends StatelessWidget {
           child: Center(
             child: Image.asset(
               imagePath,
-              width: 28,
-              height: 28,
+              width: 24.w,
+              height: 24.w,
               fit: BoxFit.contain,
             ),
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 8.h),
         SizedBox(
-          width: 80,
+          width: 70.w,
           child: Text(
             text,
             textAlign: TextAlign.center,
