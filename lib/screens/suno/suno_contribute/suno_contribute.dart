@@ -42,11 +42,19 @@ class _SunoContributeState extends State<SunoContribute> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      appBar: CustomAppBar(
-      ),
-      body: SingleChildScrollView(
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const ModuleSelectionScreen()),
+        );
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        appBar: CustomAppBar(
+        ),
+        body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
@@ -96,6 +104,7 @@ class _SunoContributeState extends State<SunoContribute> {
               )
             ],
           )),
+      ),
     );
   }
 }

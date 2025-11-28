@@ -13,7 +13,10 @@ class LanguageSelection extends StatefulWidget {
   final Function(LanguageModel) onLanguageChanged;
   final LanguageModel? initialLanguage;
   const LanguageSelection(
-      {super.key, required this.description, required this.onLanguageChanged, this.initialLanguage});
+      {super.key,
+      required this.description,
+      required this.onLanguageChanged,
+      this.initialLanguage});
 
   @override
   State<LanguageSelection> createState() => _LanguageSelectionState();
@@ -25,14 +28,15 @@ class _LanguageSelectionState extends State<LanguageSelection> {
 
   @override
   void initState() {
-    selectedLanguage = widget.initialLanguage ?? LanguageModel(
-      languageName: "Hindi",
-      nativeName: "हिन्दी",
-      isActive: true,
-      languageCode: "hi",
-      region: "India",
-      speakers: "",
-    );
+    selectedLanguage = widget.initialLanguage ??
+        LanguageModel(
+          languageName: "Hindi",
+          nativeName: "हिन्दी",
+          isActive: true,
+          languageCode: "hi",
+          region: "India",
+          speakers: "",
+        );
     languagesFuture = BoloService().getLanguages();
     super.initState();
     // Notify initial selection
@@ -53,7 +57,7 @@ class _LanguageSelectionState extends State<LanguageSelection> {
                 style: BrandingConfig.instance.getPrimaryTextStyle(
                     fontSize: 12.sp,
                     color: AppColors.darkGreen,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w600),
               ),
               Spacer(),
               InkWell(

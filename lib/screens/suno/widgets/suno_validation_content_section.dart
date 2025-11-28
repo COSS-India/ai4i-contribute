@@ -195,63 +195,70 @@ class _SunoValidationContentSectionState
       valueListenable: isLoading,
       builder: (context, loading, child) {
         if (loading) {
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(8).r,
-            child: Stack(
-              fit: StackFit.passthrough,
-              children: [
-                Image.asset(
-                  'assets/images/contribute_bg.png',
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  color: BrandingConfig.instance.primaryColor,
-                ),
-                Padding(
-                  padding: EdgeInsets.all(12).r,
-                  child: Column(
-                    children: [
-                      _progressHeader(progress: 0.0, total: 3, currentItem: 1),
-                      SizedBox(height: 24.w),
-                      _instructionText(),
-                      SizedBox(height: 22.w),
-                      const ValidationAudioPlayerSkeleton(),
-                      SizedBox(height: 22.w),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 180.w,
-                            height: 40.h,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(6).r,
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8).r,
+              border: Border.all(color: Colors.grey[700]!),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8).r,
+              child: Stack(
+                fit: StackFit.passthrough,
+                children: [
+                  // Image.asset(
+                  //   'assets/images/contribute_bg.png',
+                  //   fit: BoxFit.cover,
+                  //   width: double.infinity,
+                  //   color: BrandingConfig.instance.primaryColor,
+                  // ),
+                  Padding(
+                    padding: EdgeInsets.all(12).r,
+                    child: Column(
+                      children: [
+                        _progressHeader(
+                            progress: 0.0, total: 3, currentItem: 1),
+                        SizedBox(height: 24.w),
+                        _instructionText(),
+                        SizedBox(height: 22.w),
+                        const ValidationAudioPlayerSkeleton(),
+                        SizedBox(height: 22.w),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 180.w,
+                              height: 40.h,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(6).r,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 24.w),
-                          Container(
-                            width: 140.w,
-                            height: 40.h,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(6).r,
+                            SizedBox(width: 24.w),
+                            Container(
+                              width: 140.w,
+                              height: 40.h,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(6).r,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 20.w),
-                      Container(
-                        width: 120.w,
-                        height: 40.h,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          borderRadius: BorderRadius.circular(6).r,
+                          ],
                         ),
-                      ),
-                      SizedBox(height: 50.w),
-                    ],
+                        SizedBox(height: 20.w),
+                        Container(
+                          width: 120.w,
+                          height: 40.h,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(6).r,
+                          ),
+                        ),
+                        SizedBox(height: 50.w),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         }
@@ -278,78 +285,85 @@ class _SunoValidationContentSectionState
         final int currentItemNumber =
             (submittedCount + 1).clamp(1, totalContributions);
         final double progress = currentItemNumber / totalContributions;
-        return Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8).r,
-              child: Stack(
-                fit: StackFit.passthrough,
-                children: [
-                  Image.asset(
-                    'assets/images/contribute_bg.png',
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    color: BrandingConfig.instance.primaryColor,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(12).r,
-                    child: Column(
-                      children: [
-                        _progressHeader(
-                            progress: progress,
-                            total: totalContributions,
-                            currentItem: currentItemNumber),
-                        SizedBox(height: 24.w),
-                        _instructionText(),
-                        SizedBox(height: 22.w),
-                        SunoValidationAudioPlayer(
-                          key: ValueKey(
-                              '${validationItems[currentBatchIndex].itemId}_$_audioPlayerKey'),
-                          filePath: _sunoService.getFullAudioUrl(
-                              validationItems[currentBatchIndex].audioUrl),
-                          onAudioEnded: _onAudioEnded,
-                          originalText:
-                              validationItems[currentBatchIndex].transcript,
-                          correctedTextController: correctedTextController,
-                          languageCode: widget.language.languageCode,
-                          needsChange: _needsChange,
-                          audioCompleted: audioCompleted.value,
-                          onTextChanged: (value) {
-                            final hasError = _validateUnicodeText(value);
-                            _onValidationChanged(hasError);
-                          },
-                        ),
-                        SizedBox(height: 22.w),
-                        _actionButtons(),
-                        SizedBox(height: 20.w),
-                        if (submittedCount < totalContributions) _skipButton(),
-                        SizedBox(height: 50.w),
-                      ],
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8).r,
+            border: Border.all(color: Colors.grey[700]!),
+          ),
+          child: Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8).r,
+                child: Stack(
+                  fit: StackFit.passthrough,
+                  children: [
+                    // Image.asset(
+                    //   'assets/images/contribute_bg.png',
+                    //   fit: BoxFit.cover,
+                    //   width: double.infinity,
+                    //   color: BrandingConfig.instance.primaryColor,
+                    // ),
+                    Padding(
+                      padding: EdgeInsets.all(12).r,
+                      child: Column(
+                        children: [
+                          _progressHeader(
+                              progress: progress,
+                              total: totalContributions,
+                              currentItem: currentItemNumber),
+                          SizedBox(height: 24.w),
+                          _instructionText(),
+                          SizedBox(height: 22.w),
+                          SunoValidationAudioPlayer(
+                            key: ValueKey(
+                                '${validationItems[currentBatchIndex].itemId}_$_audioPlayerKey'),
+                            filePath: _sunoService.getFullAudioUrl(
+                                validationItems[currentBatchIndex].audioUrl),
+                            onAudioEnded: _onAudioEnded,
+                            originalText:
+                                validationItems[currentBatchIndex].transcript,
+                            correctedTextController: correctedTextController,
+                            languageCode: widget.language.languageCode,
+                            needsChange: _needsChange,
+                            audioCompleted: audioCompleted.value,
+                            onTextChanged: (value) {
+                              final hasError = _validateUnicodeText(value);
+                              _onValidationChanged(hasError);
+                            },
+                          ),
+                          SizedBox(height: 22.w),
+                          _actionButtons(),
+                          SizedBox(height: 20.w),
+                          if (submittedCount < totalContributions)
+                            _skipButton(),
+                          SizedBox(height: 50.w),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            if (_showConfetti)
-              Positioned.fill(
-                child: Lottie.asset(
-                  'assets/animations/confetti.json',
-                  controller: _confettiController,
-                  fit: BoxFit.fill,
-                  onLoaded: (composition) {
-                    _confettiController.duration = composition.duration;
-                    _confettiController.forward().then((_) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SunoCongratulationsScreen(),
-                        ),
-                      );
-                    });
-                  },
+                  ],
                 ),
               ),
-          ],
+              if (_showConfetti)
+                Positioned.fill(
+                  child: Lottie.asset(
+                    'assets/animations/confetti.json',
+                    controller: _confettiController,
+                    fit: BoxFit.fill,
+                    onLoaded: (composition) {
+                      _confettiController.duration = composition.duration;
+                      _confettiController.forward().then((_) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SunoCongratulationsScreen(),
+                          ),
+                        );
+                      });
+                    },
+                  ),
+                ),
+            ],
+          ),
         );
       },
     );
@@ -398,7 +412,6 @@ class _SunoValidationContentSectionState
           textAlign: TextAlign.center,
         ),
       );
-
 
   bool _validateUnicodeText(String text) {
     if (text.isEmpty) return false;
@@ -507,7 +520,7 @@ class _SunoValidationContentSectionState
             isLoading: submitLoading,
             title: _needsChange ? "Submit" : "Correct",
             textFontSize: 16.sp,
-            onTap: () => _onSubmit(enableSubmitValue, true),
+            onTap: enableSubmitValue ? () => _onSubmit(enableSubmitValue, true) : null,
             textColor: AppColors.backgroundColor,
             decoration: BoxDecoration(
               color: enableSubmitValue ? AppColors.orange : AppColors.grey16,
@@ -594,7 +607,6 @@ class _SunoValidationContentSectionState
           ),
         ),
       );
-
 
   void _onSkip() async {
     _resetAudioState();

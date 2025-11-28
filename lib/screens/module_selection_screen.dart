@@ -20,38 +20,46 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/module_selector_bg.png'),
-            fit: BoxFit.cover,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const HomeScreen()),
+        );
+        return false;
+      },
+      child: Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/module_selector_bg.png'),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(24.r),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () => Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const HomeScreen()),
+          child: SafeArea(
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(24.r),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () => Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const HomeScreen()),
+                            ),
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: Colors.black,
+                              size: 24.sp,
+                            ),
                           ),
-                          child: Icon(
-                            Icons.arrow_back,
-                            color: Colors.black,
-                            size: 24.sp,
-                          ),
-                        ),
-                        Spacer(),
-                      ],
-                    ),
+                          Spacer(),
+                        ],
+                      ),
                     SizedBox(height: 40.h),
                     Column(
                       children: [
@@ -118,6 +126,7 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
           ),
         ),
       ),
+      ),
     );
   }
 
@@ -160,17 +169,6 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
             ),
       },
       {
-        'title': 'Likho India',
-        'icon': Icons.edit,
-        'assetPath': 'assets/images/likho.png',
-        'color': AppColors.lightGreen,
-        'onTap': () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => LikhoGetStarted()),
-            ),
-      },
-
-      {
         'title': 'Dekho India',
         'icon': Icons.visibility,
         'assetPath': 'assets/images/dekho.png',
@@ -178,6 +176,16 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
         'onTap': () => Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => DekhoGetStarted()),
+            ),
+      },
+      {
+        'title': 'Likho India',
+        'icon': Icons.edit,
+        'assetPath': 'assets/images/likho.png',
+        'color': AppColors.lightGreen,
+        'onTap': () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => LikhoGetStarted()),
             ),
       },
       // {

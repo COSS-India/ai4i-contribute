@@ -17,7 +17,7 @@ class ImageViewerWidget extends StatefulWidget {
 
 class _ImageViewerWidgetState extends State<ImageViewerWidget> {
   double _zoomLevel = 1.0;
-  final double _minZoom = 0.5;
+  final double _minZoom = 0.8;
   final double _maxZoom = 3.0;
   final double _zoomStep = 0.2;
   final TransformationController _transformationController =
@@ -71,9 +71,9 @@ class _ImageViewerWidgetState extends State<ImageViewerWidget> {
     return Container(
       height: 135.h,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12).r,
-        color: AppColors.lightGreen4,
-        border: Border.all(color: AppColors.darkGreen, width: 2),
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(12),topRight: Radius.circular(12)).r,
+        color: AppColors.lightGreen1,
+        border: Border.all(color: AppColors.lightGreen5, width: 1),
       ),
       child: Row(
         children: [
@@ -102,6 +102,12 @@ class _ImageViewerWidgetState extends State<ImageViewerWidget> {
                   scaleEnabled: true,
                   boundaryMargin: EdgeInsets.zero,
                   constrained: true,
+                  onInteractionUpdate: (details) {
+                    final currentScale = _transformationController.value.getMaxScaleOnAxis();
+                    setState(() {
+                      _zoomLevel = currentScale.clamp(_minZoom, _maxZoom);
+                    });
+                  },
                   child: Container(
                     key: _imageKey,
                     child: Image.network(

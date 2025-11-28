@@ -1,16 +1,17 @@
 # AI4I – Contribute
 
-AI4I – Contribute is an open-source application designed to make it easy for people to help build multilingual datasets across Indian languages. The app enables users to contribute speech and text data through simple, guided tasks. It currently supports three contribution modules:
+AI4I – Contribute is an open-source application designed to make it easy for people to help build multilingual datasets across Indian languages. The app enables users to contribute speech and text data through simple, guided tasks. It currently supports four contribution modules:
 
-- **BOLO** - Voice contribution and validation
+- **BOLO** - Voice narration and validation
 - **SUNO** – Speech transcription and validation  
-- **LIKHO** – Text translation and validation  
+- **LIKHO** – Text translation and validation 
+- **DEKHO** – Image transcription and validaion  
 
 ---
 
 ## Features
 
-### BOLO – Voice Contribution
+### BOLO – Voice Narration
 
 #### Contribute
 - Read the given text prompt in the selected language.
@@ -26,7 +27,7 @@ AI4I – Contribute is an open-source application designed to make it easy for p
 
 ---
 
-### SUNO – Speech Contribution
+### SUNO – Speech Transcription
 
 #### Transcribe
 - Listen to short audio clips.
@@ -59,6 +60,23 @@ AI4I – Contribute is an open-source application designed to make it easy for p
 
 ---
 
+### DEKHO – Image Transcription
+
+#### Transcribe
+- Choose the languages.
+- Read the provided image.
+- Enter the transcription in the chosen language.
+- Skip or report problems.
+- View a summary after every 5 transcriptions.
+
+#### Validate
+- Compare text in image with its transcription.
+- Mark it as **Correct** or **Needs Change**.
+- Edit the transcription when needed.
+- Skip if unsure and view summary updates after each batch of 25.
+
+---
+
 ## Who Can Contribute
 
 AI4I – Contribute is designed for anyone familiar with one or more Indian languages, including:
@@ -87,8 +105,8 @@ Your contributions help improve:
 
 ## How to Use
 
-1. Open the app and select **BOLO** **Suno** or **Likho**.  
-2. Choose your language(s).  
+1. Open the app and select **BOLO** **SUNO** **LIKHO** or **DEKHO**.  
+2. Choose your language(s).
 3. Follow the task displayed on-screen.  
 4. After every set of 5 tasks, review your contribution summary.  
 5. Continue contributing at your own pace.
