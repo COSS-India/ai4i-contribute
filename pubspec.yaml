@@ -60,6 +60,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: 1.0.8
   audioplayers: 6.5.1
+  volume_controller: ^2.0.7
 
 dev_dependencies:
   flutter_test:
@@ -96,7 +97,6 @@ flutter:
     - .env.development
     - .env.staging
     - .env.production
-    - branding.yaml
   #   - images/a_dot_ham.jpeg\
 
 

@@ -133,63 +133,71 @@ class _SunoContentSectionState extends State<SunoContentSection> {
       valueListenable: isLoading,
       builder: (context, loading, child) {
         if (loading) {
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(8).r,
-            child: Stack(
-              fit: StackFit.passthrough,
-              children: [
-                Image.asset(
-                  'assets/images/contribute_bg.png',
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  color: BrandingConfig.instance.primaryColor,
-                ),
-                Padding(
-                  padding: EdgeInsets.all(12).r,
-                  child: Column(
-                    children: [
-                      _progressHeader(
-                          progress: 0.0, total: 5, currentItem: 1),
-                      SizedBox(height: 24.w),
-                      _instructionText(),
-                      SizedBox(height: 30.w),
-                      const AudioPlayerSkeleton(),
-                      SizedBox(height: 30.w),
-                      Container(
-                        height: 120.h,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          borderRadius: BorderRadius.circular(8).r,
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8).r,
+              border: Border.all(
+                color: Colors.grey[700]!,
+              ),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8).r,
+              child: Stack(
+                fit: StackFit.passthrough,
+                children: [
+                  // Image.asset(
+                  //   'assets/images/contribute_bg.png',
+                  //   fit: BoxFit.cover,
+                  //   width: double.infinity,
+                  //   color: BrandingConfig.instance.primaryColor,
+                  // ),
+                  Padding(
+                    padding: EdgeInsets.all(12).r,
+                    child: Column(
+                      children: [
+                        _progressHeader(
+                            progress: 0.0, total: 5, currentItem: 1),
+                        SizedBox(height: 24.w),
+                        _instructionText(),
+                        SizedBox(height: 30.w),
+                        const AudioPlayerSkeleton(),
+                        SizedBox(height: 30.w),
+                        Container(
+                          height: 120.h,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(8).r,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 30.w),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 120.w,
-                            height: 40.h,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(6).r,
+                        SizedBox(height: 30.w),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 120.w,
+                              height: 40.h,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(6).r,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 24.w),
-                          Container(
-                            width: 120.w,
-                            height: 40.h,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(6).r,
+                            SizedBox(width: 24.w),
+                            Container(
+                              width: 120.w,
+                              height: 40.h,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(6).r,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 50.w),
-                    ],
+                          ],
+                        ),
+                        SizedBox(height: 50.w),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         }
@@ -215,50 +223,64 @@ class _SunoContentSectionState extends State<SunoContentSection> {
 
         final int currentItemNumber = currentIndex + 1;
         final double progress = currentItemNumber / totalContributions;
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(8).r,
-          child: Stack(
-            fit: StackFit.passthrough,
-            children: [
-              Image.asset(
-                'assets/images/contribute_bg.png',
-                fit: BoxFit.cover,
-                width: double.infinity,
-                color: BrandingConfig.instance.primaryColor,
-              ),
-              Padding(
-                padding: EdgeInsets.all(12).r,
-                child: Column(
-                  children: [
-                    _progressHeader(
-                        progress: progress, total: totalContributions, currentItem: currentItemNumber),
-                    SizedBox(height: 24.w),
-                    _instructionText(),
-                    SizedBox(height: 30.w),
-                    SunoAudioPlayer(
-                      key: ValueKey(
-                          '${sunoItems[currentIndex].itemId}_$_audioPlayerKey'),
-                      filePath: _sunoService
-                          .getFullAudioUrl(sunoItems[currentIndex].audioUrl),
-                      onAudioEnded: _onAudioEnded,
-                      onAudioStarted: () => audioStarted.value = true,
-                    ),
-                    SizedBox(height: 30.w),
-                    _textInputField(),
-                    SizedBox(height: 30.w),
-                    _actionButtons(),
-                    SizedBox(height: 50.w),
-                  ],
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8).r,
+            border: Border.all(
+              color: Colors.grey[700]!,
+            ),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8).r,
+            child: Stack(
+              fit: StackFit.passthrough,
+              children: [
+                // Image.asset(
+                //   'assets/images/contribute_bg.png',
+                //   fit: BoxFit.cover,
+                //   width: double.infinity,
+                //   color: BrandingConfig.instance.primaryColor,
+                // ),
+                Padding(
+                  padding: EdgeInsets.all(12).r,
+                  child: Column(
+                    children: [
+                      _progressHeader(
+                          progress: progress,
+                          total: totalContributions,
+                          currentItem: currentItemNumber),
+                      SizedBox(height: 24.w),
+                      _instructionText(),
+                      SizedBox(height: 30.w),
+                      SunoAudioPlayer(
+                        key: ValueKey(
+                            '${sunoItems[currentIndex].itemId}_$_audioPlayerKey'),
+                        filePath: _sunoService
+                            .getFullAudioUrl(sunoItems[currentIndex].audioUrl),
+                        onAudioEnded: _onAudioEnded,
+                        onAudioStarted: () => audioStarted.value = true,
+                        isDisabled: submittedCount >= totalContributions,
+                      ),
+                      SizedBox(height: 30.w),
+                      _textInputField(),
+                      SizedBox(height: 30.w),
+                      _actionButtons(),
+                      SizedBox(height: 50.w),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
     );
   }
 
-  Widget _progressHeader({required int total, required double progress, required int currentItem}) =>
+  Widget _progressHeader(
+          {required int total,
+          required double progress,
+          required int currentItem}) =>
       Column(
         children: [
           Row(
@@ -318,8 +340,6 @@ class _SunoContentSectionState extends State<SunoContentSection> {
           );
         },
       );
-
-
 
   Widget _actionButtons() {
     final bool isSessionComplete = submittedCount >= totalContributions;
@@ -487,7 +507,7 @@ class _SunoContentSectionState extends State<SunoContentSection> {
         submittedCount++;
         Helper.showSnackBarMessage(
           context: context,
-          text: "Your contribution submitted successfully",
+          text: "Your contribution submitted Successfully",
         );
 
         if (submittedCount < totalContributions) {

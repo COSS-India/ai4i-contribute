@@ -90,7 +90,8 @@ class _BoloContentSectionState extends State<BoloContentSection> {
           return Center(
               child: Padding(
             padding: const EdgeInsets.only(top: 150.0),
-            child: Text("Selected language is not supported"),
+            child: Text(
+                "We don’t have content in this language right now. Please select another language to continue."),
           ));
         }
         if (snapshot.data!.sentences.isEmpty) {
@@ -219,11 +220,10 @@ class _BoloContentSectionState extends State<BoloContentSection> {
                   return Column(
                     children: [
                       Text(skipvalue ? "Skipping..." : "Submitting...",
-                          style: BrandingConfig.instance
-                              .getPrimaryTextStyle(
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.darkGreen)),
+                          style: BrandingConfig.instance.getPrimaryTextStyle(
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.darkGreen)),
                       SizedBox(height: 50),
                       CircleAvatar(
                           radius: 36.r,
@@ -238,7 +238,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
                     ],
                   );
                 }
-                
+
                 if (isSessionComplete) {
                   return RecordingButton(
                     text: sentence.text,
@@ -247,13 +247,12 @@ class _BoloContentSectionState extends State<BoloContentSection> {
                     getRecordedFile: (File? file) {},
                   );
                 }
-                
+
                 return RecordingButton(
                   text: sentence.text,
                   isRecording: (RecordingState? state) {
                     debugPrint("Recording state changed: $state");
-                    if (state != null &&
-                        state == RecordingState.recording) {
+                    if (state != null && state == RecordingState.recording) {
                       enableSubmit.value = false;
                       enableSkip.value = false;
                     } else if (state != null &&

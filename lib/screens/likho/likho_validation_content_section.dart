@@ -370,7 +370,7 @@ class _LikhoValidationContentSectionState
             ),
             style: BrandingConfig.instance.getPrimaryTextStyle(
               fontSize: 20.sp,
-              color: isEnglish ? Colors.black : AppColors.darkGreen,
+              color: isEnglish ? AppColors.darkGreen : Colors.black,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -418,7 +418,9 @@ class _LikhoValidationContentSectionState
             isLoading: submitLoading,
             title: _needsChange ? "Submit" : "Correct",
             textFontSize: 16.sp,
-            onTap: () => _onSubmit(enableSubmitValue, true),
+            onTap: (_needsChange && !enableSubmitValue)
+                ? null
+                : () => _onSubmit(enableSubmitValue, true),
             textColor: AppColors.backgroundColor,
             decoration: BoxDecoration(
               color: _needsChange
@@ -473,7 +475,7 @@ class _LikhoValidationContentSectionState
           textColor: AppColors.orange,
           decoration: BoxDecoration(
             color: AppColors.backgroundColor,
-            border: Border.all(color: AppColors.orange),
+            // border: Border.all(color: AppColors.orange),
             borderRadius: BorderRadius.all(Radius.circular(6.0).r),
           ),
         ),

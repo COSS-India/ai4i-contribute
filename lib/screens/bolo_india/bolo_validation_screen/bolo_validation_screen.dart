@@ -47,8 +47,12 @@ class _BoloValidationScreenState extends State<BoloValidationScreen>
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
-        return Future.value(false);
+      onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const ModuleSelectionScreen()),
+        );
+        return false;
       },
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
@@ -74,7 +78,10 @@ class _BoloValidationScreenState extends State<BoloValidationScreen>
                     padding: const EdgeInsets.all(12.0).r,
                     child: Column(
                       children: [
-                        ActionsSection(),
+                        ActionsSection(
+                          itemId: 'bolo_validation_item', // Replace with actual validation item ID
+                          module: 'bolo',
+                        ),
                         SizedBox(height: 16.w),
                         LanguageSelection(
                           description: "Select language for validation",

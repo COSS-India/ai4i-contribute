@@ -6,6 +6,7 @@ import 'package:VoiceGive/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../config/branding_config.dart';
+import 'dekho/dekho_get_started.dart';
 
 class ModuleSelectionScreen extends StatefulWidget {
   const ModuleSelectionScreen({super.key});
@@ -19,38 +20,46 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/module_selector_bg.png'),
-            fit: BoxFit.cover,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const HomeScreen()),
+        );
+        return false;
+      },
+      child: Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/module_selector_bg.png'),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(24.r),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () => Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const HomeScreen()),
+          child: SafeArea(
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(24.r),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () => Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const HomeScreen()),
+                            ),
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: Colors.black,
+                              size: 24.sp,
+                            ),
                           ),
-                          child: Icon(
-                            Icons.arrow_back,
-                            color: Colors.black,
-                            size: 24.sp,
-                          ),
-                        ),
-                        Spacer(),
-                      ],
-                    ),
+                          Spacer(),
+                        ],
+                      ),
                     SizedBox(height: 40.h),
                     Column(
                       children: [
@@ -117,6 +126,7 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
           ),
         ),
       ),
+      ),
     );
   }
 
@@ -159,6 +169,16 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
             ),
       },
       {
+        'title': 'Dekho India',
+        'icon': Icons.visibility,
+        'assetPath': 'assets/images/dekho.png',
+        'color': AppColors.grey84,
+        'onTap': () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => DekhoGetStarted()),
+            ),
+      },
+      {
         'title': 'Likho India',
         'icon': Icons.edit,
         'assetPath': 'assets/images/likho.png',
@@ -168,18 +188,6 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
               MaterialPageRoute(builder: (_) => LikhoGetStarted()),
             ),
       },
-      // this will be released in future
-
-      // {
-      //   'title': 'Dekho India',
-      //   'icon': Icons.visibility,
-      //   'assetPath': 'assets/images/dekho.png',
-      //   'color': AppColors.grey84,
-      //   'onTap': () => Navigator.push(
-      //         context,
-      //         MaterialPageRoute(builder: (_) => DekhoDemoScreen()),
-      //       ),
-      // },
       // {
       //   'title': 'Unicode Demo',
       //   'subtitle': 'Text Validation',

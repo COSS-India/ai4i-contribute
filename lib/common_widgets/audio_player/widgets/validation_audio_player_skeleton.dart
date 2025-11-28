@@ -22,46 +22,26 @@ class _ValidationAudioPlayerSkeletonState extends State<ValidationAudioPlayerSke
             borderRadius: BorderRadius.circular(40).r,
             border: Border.all(color: AppColors.darkGreen),
           ),
-          child: Row(
-            children: [
-              SizedBox(width: 16.w),
-              ContainerSkeleton(width: 60, height: 12, radius: 2),
-              SizedBox(width: 8.w),
-              Expanded(
-                child: ContainerSkeleton(width: double.infinity, height: 2.5, radius: 2),
-              ),
-              SizedBox(width: 8.w),
-              ContainerSkeleton(width: 30, height: 12, radius: 2),
-              SizedBox(width: 16.w),
-            ],
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 12.h),
+            child: Row(
+              children: [
+                SizedBox(width: 16.w),
+                ContainerSkeleton(width: 60, height: 12, radius: 2),
+                SizedBox(width: 8.w),
+                Expanded(
+                  child: ContainerSkeleton(width: double.infinity, height: 2.5, radius: 2),
+                ),
+                SizedBox(width: 8.w),
+                ContainerSkeleton(width: 30, height: 12, radius: 2),
+                SizedBox(width: 16.w),
+              ],
+            ),
           ),
         ),
         SizedBox(height: 30.w),
         // Text input field skeleton
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Container(
-                height: 123.h,
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(8).r,
-                ),
-              ),
-            ),
-            SizedBox(width: 8.w),
-            Expanded(
-              child: Container(
-                height: 123.h,
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(8).r,
-                ),
-              ),
-            ),
-          ],
-        ),
+        ContainerSkeleton(width: double.infinity, height: 120.h, radius: 8),
         SizedBox(height: 30.w),
         // Play button skeleton
         ContainerSkeleton(width: 60, height: 60, radius: 30),

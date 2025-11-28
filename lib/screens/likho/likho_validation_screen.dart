@@ -48,7 +48,13 @@ class _LikhoValidationScreenState extends State<LikhoValidationScreen>
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () => Future.value(false),
+      onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const ModuleSelectionScreen()),
+        );
+        return false;
+      },
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
         appBar: CustomAppBar(),
@@ -71,7 +77,10 @@ class _LikhoValidationScreenState extends State<LikhoValidationScreen>
                     padding: const EdgeInsets.all(12.0).r,
                     child: Column(
                       children: [
-                        ActionsSection(),
+                        ActionsSection(
+                          itemId: 'likho_validation_item_$currentIndex', // Replace with actual validation item ID
+                          module: 'likho',
+                        ),
                         SizedBox(height: 16.w),
                         DualLanguageSelectionWidget(
                           description: "Select the language for validation",
