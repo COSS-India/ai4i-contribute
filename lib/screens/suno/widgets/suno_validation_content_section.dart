@@ -520,7 +520,9 @@ class _SunoValidationContentSectionState
             isLoading: submitLoading,
             title: _needsChange ? "Submit" : "Correct",
             textFontSize: 16.sp,
-            onTap: enableSubmitValue ? () => _onSubmit(enableSubmitValue, true) : null,
+            onTap: enableSubmitValue
+                ? () => _onSubmit(enableSubmitValue, true)
+                : null,
             textColor: AppColors.backgroundColor,
             decoration: BoxDecoration(
               color: enableSubmitValue ? AppColors.orange : AppColors.grey16,
@@ -579,7 +581,7 @@ class _SunoValidationContentSectionState
           textColor: AppColors.orange,
           decoration: BoxDecoration(
             color: AppColors.backgroundColor,
-            border: Border.all(color: AppColors.orange),
+            // border: Border.all(color: AppColors.orange),
             borderRadius: BorderRadius.all(Radius.circular(6.0).r),
           ),
         ),

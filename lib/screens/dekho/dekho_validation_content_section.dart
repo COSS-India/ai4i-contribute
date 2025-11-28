@@ -47,7 +47,7 @@ class _DekhoValidationContentSectionState
 
   int currentIndex = 0;
   int submittedCount = 0;
-  int totalContributions = 5;
+  int totalContributions = 25;
   List<DekhoValidationModel> validationItems = [];
   final DekhoService _dekhoService = DekhoService();
 
@@ -73,7 +73,7 @@ class _DekhoValidationContentSectionState
     if (oldWidget.language.languageCode != widget.language.languageCode) {
       currentIndex = 0;
       submittedCount = 0;
-      totalContributions = 5;
+      totalContributions = 25;
       validationItems.clear();
       _resetState();
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -351,7 +351,7 @@ class _DekhoValidationContentSectionState
   Widget _instructionText() => Padding(
         padding: EdgeInsets.symmetric(horizontal: 32).r,
         child: Text(
-          "Is the text captured from image correctly?",
+          "Is the text captured from image correct?",
           style: BrandingConfig.instance.getPrimaryTextStyle(
             fontSize: 14.sp,
             color: AppColors.darkGreen,
