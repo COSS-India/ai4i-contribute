@@ -265,7 +265,6 @@ class _UnicodeValidationTextFieldState
             color: Colors.white,
           ),
           child: TextField(
-            
             controller: _controller,
             enabled: widget.enabled,
             maxLines: widget.maxLines,
@@ -276,7 +275,6 @@ class _UnicodeValidationTextFieldState
               fontWeight: FontWeight.w600,
             ),
             decoration: InputDecoration(
-              
               hintText: widget.hintText,
               labelText: widget.labelText,
               hintStyle: BrandingConfig.instance.getPrimaryTextStyle(
@@ -285,23 +283,23 @@ class _UnicodeValidationTextFieldState
                 fontWeight: FontWeight.w400,
               ),
               filled: true,
-              fillColor: AppColors.lightGreen4,
+              fillColor: AppColors.lightGreen1,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8.r),
                 borderSide: BorderSide(
-                  color: AppColors.darkGreen,
+                  color: AppColors.lightGreen5,
                 ),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8.r),
                 borderSide: BorderSide(
-                  color: AppColors.darkGreen,
+                  color: AppColors.lightGreen5,
                 ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8.r),
                 borderSide: BorderSide(
-                  color: AppColors.darkGreen,
+                  color: AppColors.lightGreen5,
                   width: 2,
                 ),
               ),

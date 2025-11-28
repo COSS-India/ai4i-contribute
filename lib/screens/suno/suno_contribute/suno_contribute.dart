@@ -42,11 +42,19 @@ class _SunoContributeState extends State<SunoContribute> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      appBar: CustomAppBar(
-      ),
-      body: SingleChildScrollView(
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const ModuleSelectionScreen()),
+        );
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        appBar: CustomAppBar(
+        ),
+        body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
@@ -63,7 +71,10 @@ class _SunoContributeState extends State<SunoContribute> {
                 padding: const EdgeInsets.all(12.0).r,
                 child: Column(
                   children: [
-                    ActionsSection(),
+                    ActionsSection(
+                      itemId: 'suno_item_${currentIndex.value}', // Replace with actual item ID
+                      module: 'suno',
+                    ),
                     SizedBox(height: 16.w),
                     LanguageSelection(
                       description: AppLocalizations.of(context)!
@@ -93,6 +104,7 @@ class _SunoContributeState extends State<SunoContribute> {
               )
             ],
           )),
+      ),
     );
   }
 }

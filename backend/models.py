@@ -405,13 +405,6 @@ class SunoValidationCorrectionRequest(BaseModel):
     item_id: str
     corrected_transcript: str
 
-    @model_validator(mode="after")
-    def _validate_correction(self) -> Self:
-        if not text_matches_script(self.corrected_transcript, self.corrected_transcript and self.corrected_transcript[:2]):
-            # best-effort check; primary check will be applied in submission flow
-            pass
-        return self
-
 # --------------------
 # LIKHO (Translation) Models
 # --------------------
@@ -469,12 +462,6 @@ class LikhoValidationCorrectionRequest(BaseModel):
     item_id: str
     corrected_translation: str
 
-    @model_validator(mode="after")
-    def _validate_correction(self) -> Self:
-        if not text_matches_script(self.corrected_translation, self.corrected_translation and self.corrected_translation[:2]):
-            pass
-        return self
-
 # --------------------
 # DEKHO (Labeling) Models
 # --------------------
@@ -528,11 +515,5 @@ class DekhoValidationRejectRequest(BaseModel):
 class DekhoValidationCorrectionRequest(BaseModel):
     item_id: str
     corrected_label: str
-
-    @model_validator(mode="after")
-    def _validate_corrected_label(self) -> Self:
-        if not text_matches_script(self.corrected_label, self.language if hasattr(self, 'language') else None):
-            raise ValidationError([{"loc": ("corrected_label",), "msg": "Please type in your chosen language", "type": "value_error"}])
-        return self
 
 # End of AI4I append-only models

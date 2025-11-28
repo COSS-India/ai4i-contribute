@@ -16,6 +16,7 @@ class SunoAudioPlayer extends StatefulWidget {
   final VoidCallback? onAudioStarted;
   final bool showReplayButton;
   final bool separatePlayButton;
+  final bool isDisabled;
 
   const SunoAudioPlayer({
     super.key,
@@ -27,6 +28,7 @@ class SunoAudioPlayer extends StatefulWidget {
     this.onAudioStarted,
     this.showReplayButton = true,
     this.separatePlayButton = false,
+    this.isDisabled = false,
   });
 
   @override
@@ -143,8 +145,8 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
             if (widget.onAudioEnded != null) {
               widget.onAudioEnded!();
             }
-          } else if (state.processingState == ProcessingState.ready || 
-                     state.processingState == ProcessingState.buffering) {
+          } else if (state.processingState == ProcessingState.ready ||
+              state.processingState == ProcessingState.buffering) {
             setState(() {
               _isPlaying = state.playing;
               if (state.playing) {
@@ -218,6 +220,7 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
   }
 
   Future<void> _handlePlayPause() async {
+    if (widget.isDisabled) return;
     try {
       if (_isPlaying) {
         await _player.pause();
@@ -237,6 +240,7 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
   }
 
   Future<void> _handleReplay() async {
+    if (widget.isDisabled) return;
     try {
       await _player.seek(Duration.zero);
       setState(() {
@@ -265,22 +269,22 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
     try {
       if (!_isLoading && _duration > Duration.zero) {
         final wasPlaying = _isPlaying;
-        
+
         // Pause before changing speed to prevent conflicts
         if (wasPlaying) {
           await _player.pause();
           await Future.delayed(Duration(milliseconds: 100));
         }
-        
+
         await _player.setSpeed(speed);
         _currentSpeed = speed;
         _playbackProvider.setPlaybackSpeed(speed);
-        
+
         // Resume if was playing
         if (wasPlaying && !_hasEnded) {
           await _player.play();
         }
-        
+
         if (mounted) {
           setState(() {});
         }
@@ -291,14 +295,21 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
   }
 
   Widget _buildPlayButton() {
+    final Color iconColor = AppColors.green;
+    final VoidCallback? onPressed = widget.isDisabled
+        ? null
+        : (_hasEnded && widget.showReplayButton
+            ? _handleReplay
+            : _handlePlayPause);
+
     if (_hasEnded && widget.showReplayButton) {
       return IconButton(
         icon: Icon(
           Icons.replay_circle_filled_outlined,
           size: 60,
-          color: AppColors.green,
+          color: iconColor,
         ),
-        onPressed: _handleReplay,
+        onPressed: onPressed,
         tooltip: 'Replay',
       );
     } else {
@@ -306,9 +317,9 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
         icon: Icon(
           _isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
           size: 60,
-          color: AppColors.green,
+          color: iconColor,
         ),
-        onPressed: _handlePlayPause,
+        onPressed: onPressed,
         tooltip: _isPlaying ? 'Pause' : 'Play',
       );
     }
@@ -318,11 +329,13 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
     final speeds = [0.5, 1.0, 2.0];
     return GestureDetector(
       key: _speedButtonKey,
-      onTap: () {
-        setState(() {
-          _showSpeedDropdown = !_showSpeedDropdown;
-        });
-      },
+      onTap: widget.isDisabled
+          ? null
+          : () {
+              setState(() {
+                _showSpeedDropdown = !_showSpeedDropdown;
+              });
+            },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
         decoration: BoxDecoration(
@@ -451,6 +464,9 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
                       inactiveTrackColor: sliderBgColor,
                       thumbColor: sliderColor,
                       overlayColor: sliderColor.withValues(alpha: 0.2),
+                      disabledActiveTrackColor: sliderColor,
+                      disabledInactiveTrackColor: sliderBgColor,
+                      disabledThumbColor: sliderColor,
                       thumbShape:
                           const RoundSliderThumbShape(enabledThumbRadius: 6),
                     ),
@@ -458,16 +474,22 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
                       min: 0.0,
                       max: sliderMax,
                       value: sliderValue.toDouble(),
-                      onChanged: (value) {
-                        setState(() {
-                          _isSeeking = true;
-                          _position = Duration(milliseconds: value.toInt());
-                        });
-                      },
-                      onChangeEnd: (value) async {
-                        await _seekTo(Duration(milliseconds: value.toInt()));
-                        setState(() => _isSeeking = false);
-                      },
+                      onChanged: widget.isDisabled
+                          ? null
+                          : (value) {
+                              setState(() {
+                                _isSeeking = true;
+                                _position =
+                                    Duration(milliseconds: value.toInt());
+                              });
+                            },
+                      onChangeEnd: widget.isDisabled
+                          ? null
+                          : (value) async {
+                              await _seekTo(
+                                  Duration(milliseconds: value.toInt()));
+                              setState(() => _isSeeking = false);
+                            },
                     ),
                   ),
                 ),
@@ -520,6 +542,9 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
                           inactiveTrackColor: sliderBgColor,
                           thumbColor: sliderColor,
                           overlayColor: sliderColor.withValues(alpha: 0.2),
+                          disabledActiveTrackColor: sliderColor,
+                          disabledInactiveTrackColor: sliderBgColor,
+                          disabledThumbColor: sliderColor,
                           thumbShape: const RoundSliderThumbShape(
                               enabledThumbRadius: 6),
                         ),
@@ -527,17 +552,22 @@ class SunoAudioPlayerState extends State<SunoAudioPlayer> {
                           min: 0.0,
                           max: sliderMax,
                           value: sliderValue.toDouble(),
-                          onChanged: (value) {
-                            setState(() {
-                              _isSeeking = true;
-                              _position = Duration(milliseconds: value.toInt());
-                            });
-                          },
-                          onChangeEnd: (value) async {
-                            await _seekTo(
-                                Duration(milliseconds: value.toInt()));
-                            setState(() => _isSeeking = false);
-                          },
+                          onChanged: widget.isDisabled
+                              ? null
+                              : (value) {
+                                  setState(() {
+                                    _isSeeking = true;
+                                    _position =
+                                        Duration(milliseconds: value.toInt());
+                                  });
+                                },
+                          onChangeEnd: widget.isDisabled
+                              ? null
+                              : (value) async {
+                                  await _seekTo(
+                                      Duration(milliseconds: value.toInt()));
+                                  setState(() => _isSeeking = false);
+                                },
                         ),
                       ),
                     ),

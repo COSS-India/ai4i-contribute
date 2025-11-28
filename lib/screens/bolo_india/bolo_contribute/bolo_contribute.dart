@@ -38,12 +38,20 @@ class _BoloContributeState extends State<BoloContribute> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      appBar: CustomAppBar(
-        showThreeLogos: true,
-      ),
-      body: SingleChildScrollView(
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const ModuleSelectionScreen()),
+        );
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        appBar: CustomAppBar(
+          showThreeLogos: true,
+        ),
+        body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
@@ -60,7 +68,10 @@ class _BoloContributeState extends State<BoloContribute> {
                 padding: const EdgeInsets.all(12.0).r,
                 child: Column(
                   children: [
-                    ActionsSection(),
+                    ActionsSection(
+                      itemId: 'bolo_item_${currentIndex.value}', // Replace with actual item ID
+                      module: 'bolo',
+                    ),
                     SizedBox(height: 16.w),
                     LanguageSelection(
                       description: AppLocalizations.of(context)!
@@ -89,6 +100,7 @@ class _BoloContributeState extends State<BoloContribute> {
               )
             ],
           )),
+      ),
     );
   }
 }

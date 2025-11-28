@@ -122,7 +122,7 @@ class _SunoCongratulationsScreenState extends State<SunoCongratulationsScreen>
             children: [
               // Badge
               ImageWidget(
-                imageUrl: 'assets/images/bolo_logo.png',
+                imageUrl: 'assets/images/suno_badge.png',
                 height: 120.w,
                 width: 120.w,
                 boxFit: BoxFit.contain,
