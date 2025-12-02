@@ -91,7 +91,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
               child: Padding(
             padding: const EdgeInsets.only(top: 150.0),
             child: Text(
-                "We don’t have content in this language right now. Please select another language to continue."),
+                "We don't have content in this language right now. Please select another language to continue."),
           ));
         }
         if (snapshot.data!.sentences.isEmpty) {
@@ -112,6 +112,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
             ? totalContributions
             : submittedCount + 1;
         final double progress = currentItemNumber / totalContributions;
+        final bool isSessionComplete = submittedCount >= totalContributions;
 
         return Container(
           decoration: BoxDecoration(
@@ -140,11 +141,8 @@ class _BoloContentSectionState extends State<BoloContentSection> {
                           total: totalContributions,
                           currentItem: currentItemNumber),
                       SizedBox(height: 24.w),
-                      if (submittedCount < totalContributions) ...[
-                        _sentenceText(contributeSentences[currentIndex].text),
-                        SizedBox(height: 50.w),
-                      ] else
-                        SizedBox(height: 24.w),
+                      _sentenceText(contributeSentences[currentIndex].text),
+                      SizedBox(height: 50.w),
                       recordingButton(
                           sentence: contributeSentences[currentIndex]),
                       SizedBox(height: 30.w),
@@ -239,32 +237,40 @@ class _BoloContentSectionState extends State<BoloContentSection> {
                   );
                 }
 
-                if (isSessionComplete) {
-                  return RecordingButton(
-                    text: sentence.text,
-                    isDisabled: true,
-                    isRecording: (RecordingState? state) {},
-                    getRecordedFile: (File? file) {},
+                // When session is complete, show audio player with last recording
+                if (isSessionComplete && recordedFile != null) {
+                  return Column(
+                    children: [
+                      CustomAudioPlayer(
+                        filePath: recordedFile!.path,
+                      ),
+                      SizedBox(height: 16.h),
+                    ],
                   );
                 }
 
                 return RecordingButton(
                   text: sentence.text,
+                  isDisabled: isSessionComplete,
                   isRecording: (RecordingState? state) {
-                    debugPrint("Recording state changed: $state");
-                    if (state != null && state == RecordingState.recording) {
-                      enableSubmit.value = false;
-                      enableSkip.value = false;
-                    } else if (state != null &&
-                        state == RecordingState.stopped) {
-                      enableSkip.value = true;
-                      enableSubmit.value = true;
+                    if (!isSessionComplete) {
+                      debugPrint("Recording state changed: $state");
+                      if (state != null && state == RecordingState.recording) {
+                        enableSubmit.value = false;
+                        enableSkip.value = false;
+                      } else if (state != null &&
+                          state == RecordingState.stopped) {
+                        enableSkip.value = true;
+                        enableSubmit.value = true;
+                      }
                     }
                   },
                   getRecordedFile: (File? file) {
-                    debugPrint("Received recorded file: ${file?.path}");
-                    enableSubmit.value = file != null;
-                    recordedFile = file;
+                    if (!isSessionComplete) {
+                      debugPrint("Received recorded file: ${file?.path}");
+                      enableSubmit.value = file != null;
+                      recordedFile = file;
+                    }
                   },
                 );
               });

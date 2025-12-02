@@ -14,6 +14,7 @@ import 'package:VoiceGive/screens/home_screen/widgets/how_it_works_section.dart'
 import 'package:VoiceGive/screens/home_screen/widgets/need_more_info.dart';
 import 'package:VoiceGive/screens/module_selection_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -66,7 +67,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final branding = BrandingConfig.instance;
 
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        // Exit the app when back button is pressed from home screen
+        SystemNavigator.pop();
+        return false;
+      },
+      child: Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: CustomAppBar(showThreeLogos: true),
       body: SafeArea(
@@ -129,6 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
+      ),
       ),
     );
   }

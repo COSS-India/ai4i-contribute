@@ -142,7 +142,7 @@ class _RecordingButtonState extends State<RecordingButton>
 
   Future<void> _toggleState() async {
     if (widget.isDisabled) return;
-    
+
     if (_state == RecordingState.idle || _state == RecordingState.stopped) {
       await _startRecording();
       if (mounted) {
@@ -160,10 +160,13 @@ class _RecordingButtonState extends State<RecordingButton>
   }
 
   Widget _buildIcon() {
-    Color backgroundColor = widget.isDisabled ? AppColors.grey16 : 
-        (_state == RecordingState.recording ? AppColors.lightGreen : AppColors.darkGreen);
-    IconData iconData = _state == RecordingState.recording ? Icons.stop_rounded : Icons.mic_outlined;
-    
+    Color backgroundColor = (_state == RecordingState.recording
+        ? AppColors.lightGreen
+        : AppColors.darkGreen);
+    IconData iconData = _state == RecordingState.recording
+        ? Icons.stop_rounded
+        : Icons.mic_outlined;
+
     return SizedBox(
       height: 150,
       child: CircleAvatar(
@@ -174,8 +177,8 @@ class _RecordingButtonState extends State<RecordingButton>
   }
 
   Widget _buildText() {
-    Color textColor = widget.isDisabled ? AppColors.grey16 : AppColors.darkGreen;
-    
+    Color textColor = AppColors.darkGreen;
+
     switch (_state) {
       case RecordingState.idle:
         return Text(AppLocalizations.of(context)!.startRecording,
@@ -196,7 +199,7 @@ class _RecordingButtonState extends State<RecordingButton>
               SizedBox(height: 8.w),
               CustomAudioPlayer(
                 filePath: recordedFilePath!,
-                activeColor: widget.isDisabled ? AppColors.grey16 : AppColors.darkGreen,
+                activeColor: AppColors.darkGreen,
               ),
             ] else ...[
               Text(
