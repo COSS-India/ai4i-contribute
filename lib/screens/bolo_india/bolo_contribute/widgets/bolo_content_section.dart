@@ -91,7 +91,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
               child: Padding(
             padding: const EdgeInsets.only(top: 150.0),
             child: Text(
-                "We don't have content in this language right now. Please select another language to continue."),
+                AppLocalizations.of(context)!.noContentInLanguage),
           ));
         }
         if (snapshot.data!.sentences.isEmpty) {
@@ -99,7 +99,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
               child: Padding(
             padding: const EdgeInsets.only(top: 150.0),
             child: Text(
-              "No Contribution sentences, Available for this selected language.",
+              AppLocalizations.of(context)!.noContributionSentences,
               style: TextStyle(),
               textAlign: TextAlign.center,
             ),
@@ -217,7 +217,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
                 if (submitValue || skipvalue) {
                   return Column(
                     children: [
-                      Text(skipvalue ? "Skipping..." : "Submitting...",
+                      Text(skipvalue ? AppLocalizations.of(context)!.skipping : AppLocalizations.of(context)!.submitting,
                           style: BrandingConfig.instance.getPrimaryTextStyle(
                               fontSize: 20.sp,
                               fontWeight: FontWeight.w600,
@@ -305,7 +305,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
   Widget _contributeMoreButton() => SizedBox(
         width: 180.w,
         child: PrimaryButtonWidget(
-          title: "Contribute More",
+          title: AppLocalizations.of(context)!.contributeMore,
           textFontSize: 16.sp,
           onTap: () async {
             if (await onSessionComplete()) {
@@ -321,7 +321,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
               if (mounted) {
                 Helper.showSnackBarMessage(
                   context: context,
-                  text: "Failed to complete session. Please try again.",
+                  text: AppLocalizations.of(context)!.failedToCompleteSession,
                 );
               }
             }
@@ -338,7 +338,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
   Widget _validateButton() => SizedBox(
         width: 140.w,
         child: PrimaryButtonWidget(
-          title: "Validate",
+          title: AppLocalizations.of(context)!.validate,
           textFontSize: 16.sp,
           onTap: () async {
             if (await onSessionComplete()) {
@@ -354,7 +354,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
               if (mounted) {
                 Helper.showSnackBarMessage(
                   context: context,
-                  text: "Failed to complete session. Please try again.",
+                  text: AppLocalizations.of(context)!.failedToCompleteSession,
                 );
               }
             }
@@ -425,8 +425,8 @@ class _BoloContentSectionState extends State<BoloContentSection> {
     try {
       Sentence? newSentence = await BoloContributeRepository().skipContribution(
         sentenceId: currentSentence.sentenceId,
-        reason: "Not Clear",
-        comment: "Noisy Environment",
+        reason: AppLocalizations.of(context)!.notClear,
+        comment: AppLocalizations.of(context)!.noisyEnvironment,
       );
       BoloContributeSentence? contributeSentance = await boloContributeFuture;
       if (newSentence != null && contributeSentance != null) {
@@ -436,14 +436,14 @@ class _BoloContentSectionState extends State<BoloContentSection> {
         if (mounted) {
           Helper.showSnackBarMessage(
             context: context,
-            text: "Sentence skipped. Please contribute the new sentence.",
+            text: AppLocalizations.of(context)!.sentenceSkipped,
           );
         }
       } else {
         if (mounted) {
           Helper.showSnackBarMessage(
             context: context,
-            text: "Failed to skip. Please try again.",
+            text: AppLocalizations.of(context)!.failedToSkip,
           );
         }
       }
@@ -470,7 +470,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
     if (!enableSubmit.value || recordedFile == null) {
       Helper.showSnackBarMessage(
         context: context,
-        text: "Please record your voice before submitting.",
+        text: AppLocalizations.of(context)!.pleaseRecordVoice,
       );
       return;
     }
@@ -502,14 +502,14 @@ class _BoloContentSectionState extends State<BoloContentSection> {
       if (mounted) {
         Helper.showSnackBarMessage(
           context: context,
-          text: "Your Contribution Submitted Successfully",
+          text: AppLocalizations.of(context)!.contributionSubmittedSuccessfully,
         );
       }
     } else {
       if (mounted) {
         Helper.showSnackBarMessage(
           context: context,
-          text: "Failed to submit. Please try again.",
+          text: AppLocalizations.of(context)!.failedToSubmit,
         );
       }
     }

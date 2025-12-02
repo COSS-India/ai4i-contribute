@@ -26,31 +26,12 @@ class BrandingConfig {
     }
   }
 
-  /// Default configuration fallback
-  static Map<String, dynamic> _getDefaultConfig() {
-    return {
-      'app': {
-        'name': 'Bhashadaan',
-        'display_name': 'Bhashadaan',
-        'package_id': 'com.voicegive.app',
-      },
-      'branding': {
-        'primary_color': '21, 125, 82, 1',
-        'secondary_color': '231, 97, 32, 1',
-        'bg_color': '255, 255, 255, 1',
-        'text_color': '0,0,0,1',
-        'toast_color': '27, 76, 161, 1',
-        'splash_animation': 'assets/animations/bhashadaan_splash_screen.json',
-      },
-    };
-  }
-
   /// Get app display name
-  String get appDisplayName => _config['app']?['display_name'] ?? 'Bhashadaan';
+  String get appDisplayName => _config['app']?['display_name'] ?? 'VoiceGive';
 
   /// Get app icon path
   String get appIcon =>
-      _config['app']?['app_icon'] ?? 'assets/launcher/bhashadaan.png';
+      _config['app']?['app_icon'] ?? 'assets/launcher/ai4i_logo.png';
 
   /// Get primary brand color
   Color get primaryColor {
@@ -127,9 +108,7 @@ class BrandingConfig {
   String get splashName => _config['branding']?['splash_name'] ?? 'Contribute';
 
   /// Get splash animation path
-  String get splashAnimation =>
-      _config['branding']?['splash_animation'] ??
-      'assets/animations/bhashadaan_splash_screen.json';
+  String get splashAnimation => _config['branding']?['splash_animation'] ?? '';
 
   /// Get header image path
   String get headerPrimaryImage =>
@@ -305,5 +284,30 @@ class BrandingConfig {
       letterSpacing: letterSpacing,
       decoration: decoration,
     );
+  }
+
+  /// Default configuration fallback
+  static Map<String, dynamic> _getDefaultConfig() {
+    return {
+      'app': {
+        'name': 'VoiceGive',
+        'display_name': 'VoiceGive',
+        'package_id': 'com.voicegive.app',
+      },
+      'branding': {
+        'primary_color': '21, 125, 82, 1',
+        'secondary_color': '231, 97, 32, 1',
+        'bg_color': '255,255,255,1',
+        'text_color': '0,0,0,1',
+        'app_icon': 'assets/launcher/ai4i_logo.png',
+        'splash_logo': 'assets/images/bolo_logo.png',
+        'organization_name': 'COSS India',
+      },
+      'environments': {
+        'development': {'app_name_suffix': ' Dev', 'debug_mode': true},
+        'staging': {'app_name_suffix': ' Staging', 'debug_mode': true},
+        'production': {'app_name_suffix': '', 'debug_mode': false},
+      }
+    };
   }
 }

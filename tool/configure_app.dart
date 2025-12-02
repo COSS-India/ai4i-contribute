@@ -32,17 +32,35 @@ void main(List<String> arguments) async {
   log('🔧 Configuring VoiceGive for environment: $environment');
 
   try {
-    // Use default configuration
-    final appName = 'Bhashadaan';
-    final displayName = 'Bhashadaan';
-    final packageId = 'com.voicegive.app';
+    // Load branding configuration
+    final brandingFile = File('branding.yaml');
+    if (!brandingFile.existsSync()) {
+      log('❌ branding.yaml not found. Please create it first.');
+      exit(1);
+    }
+
+    final yamlString = await brandingFile.readAsString();
+    final yamlData = loadYaml(yamlString);
+    final config = Map<String, dynamic>.from(yamlData);
+
+    // Get app configuration
+    final app = Map<String, dynamic>.from(config['app'] ?? {});
+    final appName = app['name'] ?? 'Contribute';
+    final rawDisplayName = app['display_name'] ?? '';
+    final displayName = rawDisplayName.toString().trim().isEmpty
+        ? 'Contribute'
+        : rawDisplayName;
+    final packageId = app['package_id'] ?? 'com.voicegive.app';
+
+    // Validate app configuration
+    validateAppConfiguration(displayName, config);
 
     // Get environment-specific suffix
-    final suffix = environment == 'production'
-        ? ''
-        : environment == 'staging'
-            ? ' Staging'
-            : ' Dev';
+    final environments =
+        Map<String, dynamic>.from(config['environments'] ?? {});
+    final envConfig =
+        Map<String, dynamic>.from(environments[environment] ?? {});
+    final suffix = envConfig['app_name_suffix'] ?? '';
     final finalDisplayName = displayName + suffix;
 
     log('📱 App Name: $appName');
@@ -56,7 +74,7 @@ void main(List<String> arguments) async {
     // await configureIOS(finalDisplayName, packageId);
 
     // Update app icon
-    await updateAppIcon();
+    await updateAppIcon(config);
 
     // Update environment file
     // await updateEnvironmentFile(environment, appName, finalDisplayName, packageId);
@@ -132,11 +150,21 @@ Future<void> configureAndroid(
 // }
 
 /// Update app icon configuration
-Future<void> updateAppIcon() async {
+Future<void> updateAppIcon(Map<String, dynamic> config) async {
   log('🎨 Configuring app icon...');
 
-  final finalIconPath = 'assets/launcher/bhashadaan.png';
-  log('  ✓ Using default icon: $finalIconPath');
+  final branding = Map<String, dynamic>.from(config['app'] ?? {});
+  final iconPath = branding['app_icon'] ?? 'assets/launcher/ai4i_logo.png';
+  final iconFile = File(iconPath);
+
+  String finalIconPath;
+  if (iconFile.existsSync()) {
+    finalIconPath = iconPath;
+    log('  ✓ Using custom icon: $iconPath');
+  } else {
+    finalIconPath = 'assets/launcher/ai4i_logo.png';
+    log('  ⚠️  Custom icon not found, using default: $finalIconPath');
+  }
 
   // Update pubspec.yaml flutter_icons section
   final pubspecFile = File('pubspec.yaml');
@@ -183,3 +211,45 @@ Future<void> updateAppIcon() async {
 //     return content + '\n$newLine';
 //   }
 // }
+
+/// Validate app configuration values
+void validateAppConfiguration(String displayName, Map<String, dynamic> config) {
+  log('🔍 Validating configuration...');
+
+  // Validate app name
+  if (displayName.length > ValidationConstants.appNameTechnicalLimit) {
+    log('❌ App name "$displayName" exceeds ${ValidationConstants.appNameTechnicalLimit} characters');
+    exit(1);
+  }
+
+  if (!ValidationConstants.appNamePattern.hasMatch(displayName)) {
+    log('❌ App name "$displayName" contains invalid characters. Only letters, numbers, spaces, hyphens, and underscores are allowed.');
+    exit(1);
+  }
+
+  // Validate URLs in branding section
+  final branding = Map<String, dynamic>.from(config['branding'] ?? {});
+  final urlFields = [
+    'home_screen_footer_url',
+    'terms_of_use_url',
+    'privacy_policy_url',
+    'copyright_policy_url'
+  ];
+
+  for (final field in urlFields) {
+    final url = branding[field]?.toString() ?? '';
+    if (url.isNotEmpty) {
+      if (url.length > ValidationConstants.urlTechnicalLimit) {
+        log('❌ URL in $field exceeds ${ValidationConstants.urlTechnicalLimit} characters');
+        exit(1);
+      }
+
+      if (!ValidationConstants.urlPattern.hasMatch(url)) {
+        log('❌ Invalid URL format in $field: "$url"');
+        exit(1);
+      }
+    }
+  }
+
+  log('✅ Configuration validation passed');
+}
