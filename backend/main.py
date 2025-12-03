@@ -25,10 +25,11 @@ from database import get_db, init_database, get_user_by_mobile, get_session_by_i
 from logging_config import setup_logging, get_logger, log_api_call, log_authentication, log_contribution, log_validation, log_certificate, log_error
 from storage_service import storage_service
 
-# Import Phase 1 module routers
+# Import module routers
 from modules.suno.routes import router as suno_router
 from modules.likho.routes import router as likho_router
 from modules.dekho.routes import router as dekho_router
+from modules.bolo.routes import router as bolo_router
 
 
 logger = get_logger(__name__) if 'get_logger' in globals() else logging.getLogger(__name__)
@@ -249,6 +250,7 @@ async def value_error_handler(request: Request, exc: ValueError):
 # Mount static files
 from modules.suno.routes import SUNO_STATIC_DIR
 from modules.dekho.routes import DEKHO_STATIC_DIR
+from modules.bolo.routes import BOLO_STATIC_DIR
 
 app.mount(
     "/suno/static",
@@ -262,10 +264,17 @@ app.mount(
     name="dekho_static"
 )
 
-# Register Phase 1 module routers
+app.mount(
+    "/bolo/static",
+    StaticFiles(directory=BOLO_STATIC_DIR),
+    name="bolo_static"
+)
+
+# Register module routers
 app.include_router(suno_router, prefix="/suno")
 app.include_router(likho_router, prefix="/likho")
 app.include_router(dekho_router, prefix="/dekho")
+app.include_router(bolo_router, prefix="/bolo")
 
 # Mount static files
 from modules.suno.routes import SUNO_STATIC_DIR
@@ -817,185 +826,185 @@ async def get_system_config():
         }
     )
 
-# ==================== Contribution Endpoints ====================
+# # ==================== Contribution Endpoints ====================
 
-@app.post("/contributions/get-sentences", response_model=GetSentencesResponse, tags=["Contribution"])
-async def get_sentences(request: GetSentencesRequest):
-    """Get sentences for recording"""
-    try:
-        log_api_call(logger, "/contributions/get-sentences", "POST")
+# @app.post("/contributions/get-sentences", response_model=GetSentencesResponse, tags=["Contribution"])
+# async def get_sentences(request: GetSentencesRequest):
+#     """Get sentences for recording"""
+#     try:
+#         log_api_call(logger, "/contributions/get-sentences", "POST")
         
-        session_id = str(uuid.uuid4())
-        sentences_data = data_config.get_sentences(request.language, request.count)
+#         session_id = str(uuid.uuid4())
+#         sentences_data = data_config.get_sentences(request.language, request.count)
         
-        # Format sentences with sequence numbers
-        sentences = []
-        for i, sentence_data in enumerate(sentences_data, 1):
-            # Skip sentences without text field
-            if "text" not in sentence_data:
-                continue
+#         # Format sentences with sequence numbers
+#         sentences = []
+#         for i, sentence_data in enumerate(sentences_data, 1):
+#             # Skip sentences without text field
+#             if "text" not in sentence_data:
+#                 continue
                 
-            sentences.append({
-                "sentenceId": sentence_data["sentenceId"],
-                "text": sentence_data["text"],
-                "sequenceNumber": i,
-                "metadata": {
-                    "category": sentence_data.get("category", "agriculture"),
-                    "difficulty": sentence_data.get("difficulty", "medium"),
-                    "topic": sentence_data.get("topic", "general")
-                }
-            })
+#             sentences.append({
+#                 "sentenceId": sentence_data["sentenceId"],
+#                 "text": sentence_data["text"],
+#                 "sequenceNumber": i,
+#                 "metadata": {
+#                     "category": sentence_data.get("category", "agriculture"),
+#                     "difficulty": sentence_data.get("difficulty", "medium"),
+#                     "topic": sentence_data.get("topic", "general")
+#                 }
+#             })
         
-        return GetSentencesResponse(
-            data={
-                "sessionId": session_id,
-                "language": request.language,
-                "sentences": sentences,
-                "totalCount": len(sentences)
-            }
-        )
-    except Exception as e:
-        log_error(logger, e, {"endpoint": "/contributions/get-sentences", "language": request.language})
-        raise HTTPException(status_code=500, detail="Internal server error")
+#         return GetSentencesResponse(
+#             data={
+#                 "sessionId": session_id,
+#                 "language": request.language,
+#                 "sentences": sentences,
+#                 "totalCount": len(sentences)
+#             }
+#         )
+#     except Exception as e:
+#         log_error(logger, e, {"endpoint": "/contributions/get-sentences", "language": request.language})
+#         raise HTTPException(status_code=500, detail="Internal server error")
 
-@app.post("/contributions/record", response_model=RecordContributionResponse, tags=["Contribution"])
-async def record_contribution(request: RecordContributionRequest):
-    """Submit audio recording"""
-    contribution_id = str(uuid.uuid4())
+# @app.post("/contributions/record", response_model=RecordContributionResponse, tags=["Contribution"])
+# async def record_contribution(request: RecordContributionRequest):
+#     """Submit audio recording"""
+#     contribution_id = str(uuid.uuid4())
     
-    return RecordContributionResponse(
-        data={
-            "contributionId": contribution_id,
-            "audioUrl": f"https://storage.example.com/audio/{contribution_id}.mp3",
-            "duration": request.duration,
-            "status": "pending",
-            "sequenceNumber": request.sequenceNumber,
-            "totalInSession": config.session_contributions_limit,
-            "remainingInSession": config.session_contributions_limit - request.sequenceNumber,
-            "progressPercentage": int((request.sequenceNumber / config.session_contributions_limit) * 100)
-        }
-    )
+#     return RecordContributionResponse(
+#         data={
+#             "contributionId": contribution_id,
+#             "audioUrl": f"https://storage.example.com/audio/{contribution_id}.mp3",
+#             "duration": request.duration,
+#             "status": "pending",
+#             "sequenceNumber": request.sequenceNumber,
+#             "totalInSession": config.session_contributions_limit,
+#             "remainingInSession": config.session_contributions_limit - request.sequenceNumber,
+#             "progressPercentage": int((request.sequenceNumber / config.session_contributions_limit) * 100)
+#         }
+#     )
 
-@app.post("/contributions/skip", response_model=Dict[str, Any], tags=["Contribution"])
-async def skip_sentence(request: SkipSentenceRequest):
-    """Skip a sentence"""
-    return {
-        "success": True,
-        "message": "Sentence skipped successfully",
-        "data": {
-            "skippedSentenceId": request.sentenceId,
-            "reason": request.reason,
-            "nextSentence": {
-                "sentenceId": f"sent-next",
-                "text": f"Next sentence in sequence",
-                "sequenceNumber": 1
-            }
-        }
-    }
+# @app.post("/contributions/skip", response_model=Dict[str, Any], tags=["Contribution"])
+# async def skip_sentence(request: SkipSentenceRequest):
+#     """Skip a sentence"""
+#     return {
+#         "success": True,
+#         "message": "Sentence skipped successfully",
+#         "data": {
+#             "skippedSentenceId": request.sentenceId,
+#             "reason": request.reason,
+#             "nextSentence": {
+#                 "sentenceId": f"sent-next",
+#                 "text": f"Next sentence in sequence",
+#                 "sequenceNumber": 1
+#             }
+#         }
+#     }
 
-@app.post("/contributions/report", response_model=Dict[str, Any], tags=["Contribution"])
-async def report_sentence(request: ReportSentenceRequest):
-    """Report issue with sentence"""
-    return {
-        "success": True,
-        "message": "Report submitted. Thank you for your feedback."
-    }
+# @app.post("/contributions/report", response_model=Dict[str, Any], tags=["Contribution"])
+# async def report_sentence(request: ReportSentenceRequest):
+#     """Report issue with sentence"""
+#     return {
+#         "success": True,
+#         "message": "Report submitted. Thank you for your feedback."
+#     }
 
-@app.post("/contributions/session-complete", response_model=Dict[str, Any], tags=["Contribution"])
-async def complete_contribution_session(request: Dict[str, str]):
-    """Complete contribution session"""
-    return {
-        "success": True,
-        "message": "Session completed successfully",
-        "data": {
-            "sessionId": request.get("sessionId"),
-            "totalContributions": config.session_contributions_limit,
-            "userTotalContributions": 5,
-            "certificateProgress": {
-                "contributionsCompleted": config.session_contributions_limit,
-                "contributionsRequired": config.cert_contributions_required,
-                "validationsCompleted": 0,
-                "validationsRequired": config.cert_validations_required,
-                "isEligible": False,
-                "percentageComplete": 17
-            }
-        }
-    }
+# @app.post("/contributions/session-complete", response_model=Dict[str, Any], tags=["Contribution"])
+# async def complete_contribution_session(request: Dict[str, str]):
+#     """Complete contribution session"""
+#     return {
+#         "success": True,
+#         "message": "Session completed successfully",
+#         "data": {
+#             "sessionId": request.get("sessionId"),
+#             "totalContributions": config.session_contributions_limit,
+#             "userTotalContributions": 5,
+#             "certificateProgress": {
+#                 "contributionsCompleted": config.session_contributions_limit,
+#                 "contributionsRequired": config.cert_contributions_required,
+#                 "validationsCompleted": 0,
+#                 "validationsRequired": config.cert_validations_required,
+#                 "isEligible": False,
+#                 "percentageComplete": 17
+#             }
+#         }
+#     }
 
-# ==================== Validation Endpoints ====================
+# # ==================== Validation Endpoints ====================
 
-@app.get("/validations/get-queue", response_model=GetValidationQueueResponse, tags=["Validation"])
-async def get_validation_queue(language: str, count: int = 25):
-    """Get validation queue"""
-    try:
-        log_api_call(logger, "/validations/get-queue", "GET")
+# @app.get("/validations/get-queue", response_model=GetValidationQueueResponse, tags=["Validation"])
+# async def get_validation_queue(language: str, count: int = 25):
+#     """Get validation queue"""
+#     try:
+#         log_api_call(logger, "/validations/get-queue", "GET")
         
-        session_id = str(uuid.uuid4())
-        validation_data = data_config.get_validation_items(language, count)
+#         session_id = str(uuid.uuid4())
+#         validation_data = data_config.get_validation_items(language, count)
         
-        # Format validation items with sequence numbers
-        validation_items = []
-        for i, item_data in enumerate(validation_data, 1):
-            # Skip items without required fields
-            if "text" not in item_data or "contributionId" not in item_data:
-                continue
+#         # Format validation items with sequence numbers
+#         validation_items = []
+#         for i, item_data in enumerate(validation_data, 1):
+#             # Skip items without required fields
+#             if "text" not in item_data or "contributionId" not in item_data:
+#                 continue
                 
-            validation_items.append({
-                "contributionId": item_data["contributionId"],
-                "sentenceId": item_data.get("sentenceId", f"sent-{i}"),
-                "text": item_data["text"],
-                "audioUrl": item_data.get("audioUrl", ""),
-                "duration": item_data.get("duration", 0),
-                "sequenceNumber": i
-            })
+#             validation_items.append({
+#                 "contributionId": item_data["contributionId"],
+#                 "sentenceId": item_data.get("sentenceId", f"sent-{i}"),
+#                 "text": item_data["text"],
+#                 "audioUrl": item_data.get("audioUrl", ""),
+#                 "duration": item_data.get("duration", 0),
+#                 "sequenceNumber": i
+#             })
         
-        return GetValidationQueueResponse(
-            data={
-                "sessionId": session_id,
-                "language": language,
-                "validationItems": validation_items,
-                "totalCount": len(validation_items)
-            }
-        )
-    except Exception as e:
-        log_error(logger, e, {"endpoint": "/validations/get-queue", "language": language})
-        raise HTTPException(status_code=500, detail="Internal server error")
+#         return GetValidationQueueResponse(
+#             data={
+#                 "sessionId": session_id,
+#                 "language": language,
+#                 "validationItems": validation_items,
+#                 "totalCount": len(validation_items)
+#             }
+#         )
+#     except Exception as e:
+#         log_error(logger, e, {"endpoint": "/validations/get-queue", "language": language})
+#         raise HTTPException(status_code=500, detail="Internal server error")
 
-@app.post("/validations/submit", response_model=SubmitValidationResponse, tags=["Validation"])
-async def submit_validation(request: SubmitValidationRequest):
-    """Submit validation decision"""
-    validation_id = str(uuid.uuid4())
+# @app.post("/validations/submit", response_model=SubmitValidationResponse, tags=["Validation"])
+# async def submit_validation(request: SubmitValidationRequest):
+#     """Submit validation decision"""
+#     validation_id = str(uuid.uuid4())
     
-    return SubmitValidationResponse(
-        data={
-            "validationId": validation_id,
-            "sequenceNumber": request.sequenceNumber,
-            "totalInSession": config.session_validations_limit,
-            "remainingInSession": config.session_validations_limit - request.sequenceNumber,
-            "progressPercentage": int((request.sequenceNumber / config.session_validations_limit) * 100)
-        }
-    )
+#     return SubmitValidationResponse(
+#         data={
+#             "validationId": validation_id,
+#             "sequenceNumber": request.sequenceNumber,
+#             "totalInSession": config.session_validations_limit,
+#             "remainingInSession": config.session_validations_limit - request.sequenceNumber,
+#             "progressPercentage": int((request.sequenceNumber / config.session_validations_limit) * 100)
+#         }
+#     )
 
-@app.post("/validations/session-complete", response_model=Dict[str, Any], tags=["Validation"])
-async def complete_validation_session(request: Dict[str, str]):
-    """Complete validation session"""
-    return {
-        "success": True,
-        "message": "Validation session completed",
-        "data": {
-            "sessionId": request.get("sessionId"),
-            "totalValidations": config.session_validations_limit,
-            "userTotalValidations": 25,
-            "certificateProgress": {
-                "contributionsCompleted": config.cert_contributions_required,
-                "contributionsRequired": config.cert_contributions_required,
-                "validationsCompleted": config.session_validations_limit,
-                "validationsRequired": config.cert_validations_required,
-                "isEligible": True,
-                "certificateAvailable": True
-            }
-        }
-    }
+# @app.post("/validations/session-complete", response_model=Dict[str, Any], tags=["Validation"])
+# async def complete_validation_session(request: Dict[str, str]):
+#     """Complete validation session"""
+#     return {
+#         "success": True,
+#         "message": "Validation session completed",
+#         "data": {
+#             "sessionId": request.get("sessionId"),
+#             "totalValidations": config.session_validations_limit,
+#             "userTotalValidations": 25,
+#             "certificateProgress": {
+#                 "contributionsCompleted": config.cert_contributions_required,
+#                 "contributionsRequired": config.cert_contributions_required,
+#                 "validationsCompleted": config.session_validations_limit,
+#                 "validationsRequired": config.cert_validations_required,
+#                 "isEligible": True,
+#                 "certificateAvailable": True
+#             }
+#         }
+#     }
 
 # ==================== Certificate Endpoints ====================
 
@@ -1067,9 +1076,9 @@ async def get_certificate_details(certificate_id: str):
 async def root():
     """Root endpoint with API information"""
     return {
-        "message": "AgriDaan API",
+        "message": "AI4I - Contribute API",
         "version": "1.0.0",
-        "description": "Crowdsourcing platform for agricultural knowledge",
+        "description": "Crowdsourcing platform to collect voice, text and translation data for Indic languages.",
         "documentation": "/docs",
         "redoc": "/redoc",
         "openapi": "/openapi.json"

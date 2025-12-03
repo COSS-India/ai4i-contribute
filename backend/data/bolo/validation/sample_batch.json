@@ -1,0 +1,177 @@
+[
+  {
+    "contributionId": "bolo_v_1",
+    "language": "hi",
+    "text": "भारत विविध संस्कृतियों और भाषाओं वाला देश है।",
+    "audio_url": "/bolo/static/sample1.mp3",
+    "metadata": { "duration": 2.7 }
+  },
+  {
+    "contributionId": "bolo_v_2",
+    "language": "hi",
+    "text": "आज मौसम सुहावना है और हल्की बारिश हो रही है।",
+    "audio_url": "/bolo/static/sample2.mp3",
+    "metadata": { "duration": 3.1 }
+  },
+  {
+    "contributionId": "bolo_v_3",
+    "language": "hi",
+    "text": "कृपया अगला स्टेशन आने पर मुझे सूचित कर दें।",
+    "audio_url": "/bolo/static/sample3.mp3",
+    "metadata": { "duration": 2.2 }
+  },
+  {
+    "contributionId": "bolo_v_4",
+    "language": "hi",
+    "text": "हम सबको मिलकर पर्यावरण की रक्षा करनी चाहिए।",
+    "audio_url": "/bolo/static/sample4.mp3",
+    "metadata": { "duration": 2.8 }
+  },
+  {
+    "contributionId": "bolo_v_5",
+    "language": "hi",
+    "text": "विज्ञान और तकनीक ने हमारे जीवन को बहुत आसान बनाया है।",
+    "audio_url": "/bolo/static/sample5.mp3",
+    "metadata": { "duration": 3.0 }
+  },
+  {
+    "contributionId": "bolo_v_6",
+    "language": "hi",
+    "text": "स्वास्थ्य सबसे बड़ी संपत्ति है, इसे हमें संभाल कर रखना चाहिए।",
+    "audio_url": "/bolo/static/sample6.mp3",
+    "metadata": { "duration": 2.5 }
+  },
+  {
+    "contributionId": "bolo_v_7",
+    "language": "hi",
+    "text": "नदी के किनारे बैठकर सूर्योदय देखना बहुत सुखद अनुभव होता है।",
+    "audio_url": "/bolo/static/sample7.mp3",
+    "metadata": { "duration": 3.4 }
+  },
+  {
+    "contributionId": "bolo_v_8",
+    "language": "hi",
+    "text": "हमारी मित्रता कई वर्षों से है और यह समय के साथ और मजबूत हुई है।",
+    "audio_url": "/bolo/static/sample8.mp3",
+    "metadata": { "duration": 3.3 }
+  },
+  {
+    "contributionId": "bolo_v_9",
+    "language": "hi",
+    "text": "नई तकनीक सीखना हमेशा रोमांचक और चुनौतीपूर्ण होता है।",
+    "audio_url": "/bolo/static/sample9.mp3",
+    "metadata": { "duration": 2.9 }
+  },
+  {
+    "contributionId": "bolo_v_10",
+    "language": "hi",
+    "text": "विद्यार्थियों को नियमित रूप से पढ़ाई और अभ्यास करना चाहिए।",
+    "audio_url": "/bolo/static/sample10.mp3",
+    "metadata": { "duration": 2.6 }
+  },
+  {
+    "contributionId": "bolo_v_11",
+    "language": "hi",
+    "text": "रेलवे स्टेशन पर यात्रियों की भारी भीड़ थी।",
+    "audio_url": "/bolo/static/sample11.mp3",
+    "metadata": { "duration": 2.3 }
+  },
+  {
+    "contributionId": "bolo_v_12",
+    "language": "hi",
+    "text": "शाम के समय पार्क में टहलना मन को शांति देता है।",
+    "audio_url": "/bolo/static/sample12.mp3",
+    "metadata": { "duration": 2.4 }
+  },
+  {
+    "contributionId": "bolo_v_13",
+    "language": "hi",
+    "text": "त्योहारों के समय बाजारों में अलग ही रौनक होती है।",
+    "audio_url": "/bolo/static/sample13.mp3",
+    "metadata": { "duration": 2.7 }
+  },
+  {
+    "contributionId": "bolo_v_14",
+    "language": "hi",
+    "text": "हम सबको प्रकृति से प्रेम करना चाहिए और उसे नुकसान नहीं पहुँचाना चाहिए।",
+    "audio_url": "/bolo/static/sample14.mp3",
+    "metadata": { "duration": 3.0 }
+  },
+  {
+    "contributionId": "bolo_v_15",
+    "language": "hi",
+    "text": "आज के समय में इंटरनेट हमारे जीवन का महत्वपूर्ण हिस्सा बन चुका है।",
+    "audio_url": "/bolo/static/sample15.mp3",
+    "metadata": { "duration": 3.1 }
+  },
+  {
+    "contributionId": "bolo_v_16",
+    "language": "hi",
+    "text": "भारत की पारंपरिक कला और लोक गीत बेहद सुंदर हैं।",
+    "audio_url": "/bolo/static/sample16.mp3",
+    "metadata": { "duration": 2.8 }
+  },
+  {
+    "contributionId": "bolo_v_17",
+    "language": "hi",
+    "text": "ग्रामीण जीवन सरल होता है लेकिन उसमें कई चुनौतियाँ भी होती हैं।",
+    "audio_url": "/bolo/static/sample17.mp3",
+    "metadata": { "duration": 3.2 }
+  },
+  {
+    "contributionId": "bolo_v_18",
+    "language": "hi",
+    "text": "पुस्तकें हमारे ज्ञान को बढ़ाती हैं और सोचने का नया दृष्टिकोण देती हैं।",
+    "audio_url": "/bolo/static/sample18.mp3",
+    "metadata": { "duration": 2.6 }
+  },
+  {
+    "contributionId": "bolo_v_19",
+    "language": "hi",
+    "text": "परीक्षाओं के दौरान छात्रों को समय का सही प्रबंधन करना चाहिए।",
+    "audio_url": "/bolo/static/sample19.mp3",
+    "metadata": { "duration": 2.9 }
+  },
+  {
+    "contributionId": "bolo_v_20",
+    "language": "hi",
+    "text": "समुद्र तट पर सूरज ढलते हुए देखना एक अद्भुत दृश्य होता है।",
+    "audio_url": "/bolo/static/sample20.mp3",
+    "metadata": { "duration": 3.4 }
+  },
+  {
+    "contributionId": "bolo_v_21",
+    "language": "hi",
+    "text": "हमारे देश की विभिन्न भाषाएँ हमारी सांस्कृतिक यात्रा को दर्शाती हैं।",
+    "audio_url": "/bolo/static/sample21.mp3",
+    "metadata": { "duration": 3.0 }
+  },
+  {
+    "contributionId": "bolo_v_22",
+    "language": "hi",
+    "text": "बच्चों को स्वस्थ भोजन और नियमित व्यायाम की आवश्यकता होती है।",
+    "audio_url": "/bolo/static/sample22.mp3",
+    "metadata": { "duration": 2.5 }
+  },
+  {
+    "contributionId": "bolo_v_23",
+    "language": "hi",
+    "text": "हम सबको एक-दूसरे की मदद करने की भावना को बढ़ावा देना चाहिए।",
+    "audio_url": "/bolo/static/sample23.mp3",
+    "metadata": { "duration": 2.7 }
+  },
+  {
+    "contributionId": "bolo_v_24",
+    "language": "hi",
+    "text": "सफाई और स्वच्छता हमारे स्वास्थ्य के लिए अत्यंत महत्वपूर्ण हैं।",
+    "audio_url": "/bolo/static/sample24.mp3",
+    "metadata": { "duration": 2.6 }
+  },
+  {
+    "contributionId": "bolo_v_25",
+    "language": "hi",
+    "text": "कृषि हमारे देश की अर्थव्यवस्था का प्रमुख आधार है।",
+    "audio_url": "/bolo/static/sample25.mp3",
+    "metadata": { "duration": 3.1 }
+  }
+]

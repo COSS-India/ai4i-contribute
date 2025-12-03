@@ -141,97 +141,97 @@ class Language(BaseModel):
     nativeName: str = Field(..., example="मराठी")
     isActive: bool = Field(default=True)
 
-# ==================== Contribution Models ====================
+# # ==================== Contribution Models ====================
 
-class GetSentencesRequest(BaseModel):
-    language: str = Field(..., example="Marathi")
-    count: int = Field(default=5, maximum=5, example=5)
+# class GetSentencesRequest(BaseModel):
+#     language: str = Field(..., example="Marathi")
+#     count: int = Field(default=5, maximum=5, example=5)
 
-class Sentence(BaseModel):
-    sentenceId: str = Field(..., example="sent-12345")
-    text: str = Field(..., example="तुम्ही मला नेहमीच किल्ल्यांबाबत सांगता तशी त्या मार्गदर्शकाने आम्हांला किल्ल्याबाबत खूप छान माहिती पुरवली.")
-    sequenceNumber: int = Field(..., minimum=1, maximum=5, example=1)
-    metadata: Optional[Dict[str, Any]] = None
+# class Sentence(BaseModel):
+#     sentenceId: str = Field(..., example="sent-12345")
+#     text: str = Field(..., example="तुम्ही मला नेहमीच किल्ल्यांबाबत सांगता तशी त्या मार्गदर्शकाने आम्हांला किल्ल्याबाबत खूप छान माहिती पुरवली.")
+#     sequenceNumber: int = Field(..., minimum=1, maximum=5, example=1)
+#     metadata: Optional[Dict[str, Any]] = None
 
-class GetSentencesResponse(BaseModel):
-    success: bool = True
-    data: Dict[str, Any] = Field(example={
-        "sessionId": "session-123-abc",
-        "language": "Marathi",
-        "sentences": [],
-        "totalCount": 5
-    })
+# class GetSentencesResponse(BaseModel):
+#     success: bool = True
+#     data: Dict[str, Any] = Field(example={
+#         "sessionId": "session-123-abc",
+#         "language": "Marathi",
+#         "sentences": [],
+#         "totalCount": 5
+#     })
 
-class RecordContributionRequest(BaseModel):
-    sessionId: str = Field(..., format="uuid")
-    sentenceId: str = Field(...)
-    duration: float = Field(..., example=20.0)
-    language: str = Field(..., example="Marathi")
-    sequenceNumber: int = Field(..., example=1)
-    metadata: Optional[str] = Field(None)
+# class RecordContributionRequest(BaseModel):
+#     sessionId: str = Field(..., format="uuid")
+#     sentenceId: str = Field(...)
+#     duration: float = Field(..., example=20.0)
+#     language: str = Field(..., example="Marathi")
+#     sequenceNumber: int = Field(..., example=1)
+#     metadata: Optional[str] = Field(None)
 
-class RecordContributionResponse(BaseModel):
-    success: bool = True
-    message: str = "Recording submitted successfully"
-    data: Dict[str, Any] = Field(example={
-        "contributionId": "contrib-123-abc",
-        "audioUrl": "https://storage.example.com/audio/123.mp3",
-        "duration": 20.0,
-        "status": "pending",
-        "sequenceNumber": 1,
-        "totalInSession": 5,
-        "remainingInSession": 4,
-        "progressPercentage": 20
-    })
+# class RecordContributionResponse(BaseModel):
+#     success: bool = True
+#     message: str = "Recording submitted successfully"
+#     data: Dict[str, Any] = Field(example={
+#         "contributionId": "contrib-123-abc",
+#         "audioUrl": "https://storage.example.com/audio/123.mp3",
+#         "duration": 20.0,
+#         "status": "pending",
+#         "sequenceNumber": 1,
+#         "totalInSession": 5,
+#         "remainingInSession": 4,
+#         "progressPercentage": 20
+#     })
 
-class SkipSentenceRequest(BaseModel):
-    sessionId: str = Field(..., format="uuid")
-    sentenceId: str = Field(...)
-    reason: Optional[str] = Field(None, example="too_difficult")
-    comment: Optional[str] = Field(None, max_length=200)
+# class SkipSentenceRequest(BaseModel):
+#     sessionId: str = Field(..., format="uuid")
+#     sentenceId: str = Field(...)
+#     reason: Optional[str] = Field(None, example="too_difficult")
+#     comment: Optional[str] = Field(None, max_length=200)
 
-class ReportSentenceRequest(BaseModel):
-    sentenceId: str = Field(...)
-    reportType: str = Field(..., example="inappropriate")
-    description: Optional[str] = Field(None, max_length=500)
+# class ReportSentenceRequest(BaseModel):
+#     sentenceId: str = Field(...)
+#     reportType: str = Field(..., example="inappropriate")
+#     description: Optional[str] = Field(None, max_length=500)
 
-# ==================== Validation Models ====================
+# # ==================== Validation Models ====================
 
-class ValidationItem(BaseModel):
-    contributionId: str = Field(..., format="uuid")
-    sentenceId: str = Field(...)
-    text: str = Field(..., example="तुम्ही मला नेहमीच किल्ल्यांबाबत सांगता तशी त्या मार्गदर्शकाने आम्हांला किल्ल्याबाबत खूप छान माहिती पुरवली.")
-    audioUrl: str = Field(..., format="uri")
-    duration: float = Field(..., example=20.0)
-    sequenceNumber: int = Field(..., minimum=1, maximum=25, example=1)
+# class ValidationItem(BaseModel):
+#     contributionId: str = Field(..., format="uuid")
+#     sentenceId: str = Field(...)
+#     text: str = Field(..., example="तुम्ही मला नेहमीच किल्ल्यांबाबत सांगता तशी त्या मार्गदर्शकाने आम्हांला किल्ल्याबाबत खूप छान माहिती पुरवली.")
+#     audioUrl: str = Field(..., format="uri")
+#     duration: float = Field(..., example=20.0)
+#     sequenceNumber: int = Field(..., minimum=1, maximum=25, example=1)
 
-class GetValidationQueueResponse(BaseModel):
-    success: bool = True
-    data: Dict[str, Any] = Field(example={
-        "sessionId": "validation-session-123",
-        "language": "Marathi",
-        "validationItems": [],
-        "totalCount": 25
-    })
+# class GetValidationQueueResponse(BaseModel):
+#     success: bool = True
+#     data: Dict[str, Any] = Field(example={
+#         "sessionId": "validation-session-123",
+#         "language": "Marathi",
+#         "validationItems": [],
+#         "totalCount": 25
+#     })
 
-class SubmitValidationRequest(BaseModel):
-    sessionId: str = Field(..., format="uuid")
-    contributionId: str = Field(..., format="uuid")
-    sentenceId: str = Field(...)
-    decision: str = Field(..., example="correct")
-    feedback: Optional[str] = Field(None, max_length=200)
-    sequenceNumber: int = Field(..., example=1)
+# class SubmitValidationRequest(BaseModel):
+#     sessionId: str = Field(..., format="uuid")
+#     contributionId: str = Field(..., format="uuid")
+#     sentenceId: str = Field(...)
+#     decision: str = Field(..., example="correct")
+#     feedback: Optional[str] = Field(None, max_length=200)
+#     sequenceNumber: int = Field(..., example=1)
 
-class SubmitValidationResponse(BaseModel):
-    success: bool = True
-    message: str = "Validation submitted successfully"
-    data: Dict[str, Any] = Field(example={
-        "validationId": "valid-123-abc",
-        "sequenceNumber": 1,
-        "totalInSession": 25,
-        "remainingInSession": 24,
-        "progressPercentage": 4
-    })
+# class SubmitValidationResponse(BaseModel):
+#     success: bool = True
+#     message: str = "Validation submitted successfully"
+#     data: Dict[str, Any] = Field(example={
+#         "validationId": "valid-123-abc",
+#         "sequenceNumber": 1,
+#         "totalInSession": 25,
+#         "remainingInSession": 24,
+#         "progressPercentage": 4
+#     })
 
 # ==================== Certificate Models ====================
 
@@ -351,6 +351,167 @@ class APIResponse(BaseModel):
     success: bool
     data: Any | None = None
     error: Optional[str] = None
+
+# ================================================================
+#                   CONTRIBUTION MODELS (BOLO)
+# ================================================================
+
+# ---------------- Get Sentences ----------------
+
+class GetSentencesRequest(BaseModel):
+    language: str
+    count: Optional[int] = 5
+
+
+class SentenceItem(BaseModel):
+    sentenceId: str
+    text: str
+    language: str
+    sequenceNumber: int
+    metadata: Optional[Dict[str, Any]] = None
+
+
+class QueueResponse(BaseModel):
+    sessionId: str
+    language: str
+    sentences: List[SentenceItem]
+    totalCount: int
+
+
+# ---------------- Submit Contribution ----------------
+
+class RecordContributionRequest(BaseModel):
+    sentenceId: str
+    audioUrl: str
+    duration: Optional[float] = None
+    sequenceNumber: Optional[int] = None
+
+
+class SubmitContributionResponse(BaseModel):
+    contributionId: str
+    audioUrl: str
+    duration: Optional[float]
+    status: str
+    sequenceNumber: int
+    totalInSession: int
+    remainingInSession: int
+    progressPercentage: int
+
+
+# ---------------- Skip Sentence ----------------
+
+class SkipSentenceRequest(BaseModel):
+    sentenceId: str
+    reason: Optional[str] = None
+
+
+class SkipSentenceResponse(BaseModel):
+    skippedSentenceId: str
+    reason: Optional[str]
+
+
+# ---------------- Report Sentence ----------------
+
+class ReportSentenceRequest(BaseModel):
+    sentenceId: str
+    reportType: str
+
+
+class ReportSentenceResponse(BaseModel):
+    reportedSentenceId: str
+    reportType: str
+
+
+# ---------------- Session Complete ----------------
+
+class SessionCompleteResponse(BaseModel):
+    summary: Dict[str, int]
+
+
+# ---------------- Test Speaker ----------------
+
+class TestSpeakerResponse(BaseModel):
+    sample_audio: str
+
+
+# ================================================================
+#                       VALIDATION MODELS (BOLO)
+# ================================================================
+
+# ---------------- Validation Queue ----------------
+
+class ValidationItem(BaseModel):
+    contributionId: str
+    sentenceId: str
+    text: str
+    audioUrl: str
+    language: str
+    sequenceNumber: int
+
+
+class ValidationQueueResponse(BaseModel):
+    sessionId: str
+    language: str
+    validationItems: List[ValidationItem]
+    totalCount: int
+
+
+# ---------------- Correct ----------------
+
+class BoloValidationCorrectRequest(BaseModel):
+    contributionId: str
+    sequenceNumber: Optional[int] = None
+
+
+# ---------------- Submit Correction ----------------
+
+class BoloValidationCorrectionRequest(BaseModel):
+    contributionId: str
+    correctedAudioUrl: str
+    sequenceNumber: Optional[int] = None
+
+
+# ---------------- Skip ----------------
+
+class BoloValidationSkipRequest(BaseModel):
+    contributionId: str
+    reason: Optional[str] = None
+
+
+class SkipValidationResponse(BaseModel):
+    skipped_item: str
+
+
+# ---------------- Report ----------------
+
+class BoloValidationReportRequest(BaseModel):
+    contributionId: str
+    reportType: str
+    description: Optional[str] = None
+
+
+class ReportValidationResponse(BaseModel):
+    reported_item: str
+    reportType: str
+
+
+# ---------------- Validation Progress (correct + correction) ----------------
+
+class ValidationProgressResponse(BaseModel):
+    validated_item: Optional[str] = None
+    corrected_item: Optional[str] = None
+    correctedAudioUrl: Optional[str] = None
+
+    sequenceNumber: int
+    totalInSession: int
+    remainingInSession: int
+    progressPercentage: int
+
+
+# ---------------- Validation Session Complete ----------------
+
+class ValidationSessionCompleteResponse(BaseModel):
+    summary: Dict[str, int]
 
 # --------------------
 # SUNO (Transcription) Models
