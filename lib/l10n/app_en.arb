@@ -274,7 +274,6 @@
     "termsOfUse": "Terms of Use / Contribution Terms",
     "privacyPolicy": "Privacy Policy",
     "copyrightPolicy": "Copyright & Licensing Policy",
-    
     "noContentInLanguage": "We don't have content in this language right now. Please select another language to continue.",
     "noContributionSentences": "No Contribution sentences, Available for this selected language.",
     "skipping": "Skipping...",
@@ -288,5 +287,5 @@
     "failedToSkip": "Failed to skip. Please try again.",
     "pleaseRecordVoice": "Please record your voice before submitting.",
     "contributionSubmittedSuccessfully": "Your Contribution Submitted Successfully",
-    "failedToSubmit": "Failed to submit. Please try again.",
+    "failedToSubmit": "Failed to submit. Please try again."
 }

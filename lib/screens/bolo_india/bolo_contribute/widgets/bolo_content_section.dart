@@ -41,6 +41,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
   late Future<BoloContributeSentence?> boloContributeFuture;
 
   File? recordedFile;
+  File? lastRecordedFile; // For validation screen
   int currentIndex = 0;
   int submittedCount = 0;
   int totalContributions = 5;
@@ -65,6 +66,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
       enableSubmit.value = false;
       enableSkip.value = true;
       recordedFile = null;
+      lastRecordedFile = null;
       recordedFiles.clear();
       boloContributeFuture = BoloContributeRepository()
           .getContributionSentances(language: widget.language.languageName);
@@ -90,8 +92,7 @@ class _BoloContentSectionState extends State<BoloContentSection> {
           return Center(
               child: Padding(
             padding: const EdgeInsets.only(top: 150.0),
-            child: Text(
-                AppLocalizations.of(context)!.noContentInLanguage),
+            child: Text(AppLocalizations.of(context)!.noContentInLanguage),
           ));
         }
         if (snapshot.data!.sentences.isEmpty) {
@@ -217,7 +218,10 @@ class _BoloContentSectionState extends State<BoloContentSection> {
                 if (submitValue || skipvalue) {
                   return Column(
                     children: [
-                      Text(skipvalue ? AppLocalizations.of(context)!.skipping : AppLocalizations.of(context)!.submitting,
+                      Text(
+                          skipvalue
+                              ? AppLocalizations.of(context)!.skipping
+                              : AppLocalizations.of(context)!.submitting,
                           style: BrandingConfig.instance.getPrimaryTextStyle(
                               fontSize: 20.sp,
                               fontWeight: FontWeight.w600,
@@ -237,14 +241,47 @@ class _BoloContentSectionState extends State<BoloContentSection> {
                   );
                 }
 
-                // When session is complete, show audio player with last recording
-                if (isSessionComplete && recordedFile != null) {
+                // When session is complete, show disabled audio player
+                if (isSessionComplete && lastRecordedFile != null) {
                   return Column(
                     children: [
-                      CustomAudioPlayer(
-                        filePath: recordedFile!.path,
+                      // Same layout as screen 2 but disabled
+                      Column(
+                        children: [
+                          SizedBox(height: 8.w),
+                          IgnorePointer(
+                            child: CustomAudioPlayer(
+                              filePath: lastRecordedFile!.path,
+                              activeColor: AppColors.darkGreen,
+                            ),
+                          ),
+                          SizedBox(height: 16.w),
+                          Text(
+                            AppLocalizations.of(context)!.reRecord,
+                            style: BrandingConfig.instance.getPrimaryTextStyle(
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.darkGreen,
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 16.h),
+                      SizedBox(height: 30.w),
+                      // Disabled record button with same spacing as original
+                      IgnorePointer(
+                        child: SizedBox(
+                          height: 150,
+                          child: CircleAvatar(
+                            radius: 36.r,
+                            backgroundColor: AppColors.darkGreen,
+                            child: Icon(
+                              Icons.mic_outlined,
+                              size: 45.sp,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   );
                 }
@@ -491,11 +528,13 @@ class _BoloContentSectionState extends State<BoloContentSection> {
     if (isSubmitted) {
       submittedCount++;
       enableSubmit.value = true;
-      recordedFile = null;
-
+      
       if (submittedCount < totalContributions) {
         await moveToNext();
       } else {
+        // Store last recorded file for validation screen
+        lastRecordedFile = recordedFile;
+        recordedFile = null;
         setState(() {});
       }
 

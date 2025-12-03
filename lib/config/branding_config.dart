@@ -35,21 +35,20 @@ class BrandingConfig {
 
   /// Get primary brand color
   Color get primaryColor {
-    final colorRgba = _config['branding']?['primary_color'] ?? '21, 125, 82, 1';
-    if (colorRgba.isEmpty) {
+    final colorRgba = _config['branding']?['primary_color'];
+    if (colorRgba == null || colorRgba.toString().trim().isEmpty) {
       return const Color.fromRGBO(21, 125, 82, 1);
     }
-    return _parseRgbaColor(colorRgba);
+    return _parseRgbaColor(colorRgba.toString());
   }
 
   /// Get secondary brand color
   Color get secondaryColor {
-    final colorRgba =
-        _config['branding']?['secondary_color'] ?? '231, 97, 32, 1';
-    if (colorRgba.isEmpty) {
+    final colorRgba = _config['branding']?['secondary_color'];
+    if (colorRgba == null || colorRgba.toString().trim().isEmpty) {
       return const Color.fromRGBO(231, 97, 32, 1);
     }
-    return _parseRgbaColor(colorRgba);
+    return _parseRgbaColor(colorRgba.toString());
   }
 
   /// Get background brand color
