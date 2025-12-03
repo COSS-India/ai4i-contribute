@@ -32,6 +32,14 @@
     "speakers":"2.3 million"
   },
   {
+    "languageCode":"en",
+    "languageName":"English",
+    "nativeName":"English",
+    "isActive":true,
+    "region":"Pan-India",
+    "speakers":"260 million"
+  },
+  {
     "languageCode":"gu",
     "languageName":"Gujarati",
     "nativeName":"ગુજરાતી",

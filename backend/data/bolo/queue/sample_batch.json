@@ -1,0 +1,32 @@
+[
+  {
+    "sentenceId": "bolo-1",
+    "language": "hi",
+    "text": "भारत विविध संस्कृतियों और भाषाओं वाला देश है।",
+    "metadata": {}
+  },
+  {
+    "sentenceId": "bolo-2",
+    "language": "hi",
+    "text": "आज मौसम सुहावना है और हल्की बारिश हो रही है।",
+    "metadata": {}
+  },
+  {
+    "sentenceId": "bolo-3",
+    "language": "hi",
+    "text": "कृपया अगला स्टेशन आने पर मुझे सूचित कर दें।",
+    "metadata": {}
+  },
+  {
+    "sentenceId": "bolo-4",
+    "language": "hi",
+    "text": "हम सबको मिलकर पर्यावरण की रक्षा करनी चाहिए।",
+    "metadata": {}
+  },
+  {
+    "sentenceId": "bolo-5",
+    "language": "hi",
+    "text": "विज्ञान और तकनीक ने हमारे जीवन को बहुत आसान बनाया है।",
+    "metadata": {}
+  }
+]
