@@ -94,6 +94,7 @@ flutter:
     - assets/animations/
     - assets/launcher/
     - assets/fonts/
+    - branding.yaml
     - .env.development
     - .env.staging
     - .env.production

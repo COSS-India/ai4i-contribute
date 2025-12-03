@@ -9,7 +9,7 @@ import 'package:VoiceGive/screens/dekho/dekho_service.dart';
 import 'package:VoiceGive/screens/dekho/dekho_validation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../../config/branding_config.dart';
 
 typedef IntCallback = void Function(int value);
@@ -331,7 +331,7 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
   Widget _skipButton() => SizedBox(
         width: 120.w,
         child: PrimaryButtonWidget(
-          title: AppLocalizations.of(context)!.skip,
+          title: "Skip",
           textFontSize: 16.sp,
           onTap: () => _onSkip(),
           textColor: AppColors.orange,
@@ -349,7 +349,7 @@ class _DekhoContentSectionState extends State<DekhoContentSection> {
           width: 120.w,
           child: PrimaryButtonWidget(
             isLoading: submitLoading,
-            title: AppLocalizations.of(context)!.submit,
+            title: "Submit",
             textFontSize: 16.sp,
             onTap: () => _onSubmit(enableSubmitValue),
             textColor: AppColors.backgroundColor,

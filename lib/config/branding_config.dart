@@ -159,6 +159,12 @@ class BrandingConfig {
   /// Get tertiary font path
   String get tertiaryFont => _config['branding']?['tertiary_font'] ?? '';
 
+  /// Module configuration getters
+  bool get boloEnabled => _config['modules']?['bolo_enabled'] ?? true;
+  bool get sunoEnabled => _config['modules']?['suno_enabled'] ?? true;
+  bool get likhoEnabled => _config['modules']?['likho_enabled'] ?? true;
+  bool get dekhoEnabled => _config['modules']?['dekho_enabled'] ?? true;
+
   /// Get primary text style - supports both TTF files and Google Fonts
   TextStyle getPrimaryTextStyle({
     double? fontSize,
@@ -301,6 +307,12 @@ class BrandingConfig {
         'app_icon': 'assets/launcher/ai4i_logo.png',
         'splash_logo': 'assets/images/bolo_logo.png',
         'organization_name': 'COSS India',
+      },
+      'modules': {
+        'bolo_enabled': true,
+        'suno_enabled': true,
+        'likho_enabled': true,
+        'dekho_enabled': true,
       },
       'environments': {
         'development': {'app_name_suffix': ' Dev', 'debug_mode': true},

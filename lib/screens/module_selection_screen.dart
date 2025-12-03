@@ -147,58 +147,53 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
   }
 
   List<Map<String, dynamic>> _getModuleData() {
-    return [
-      {
-        'title': 'Bolo India',
-        'icon': Icons.mic,
-        'assetPath': 'assets/images/bolo.png',
-        'color': AppColors.orange,
-        'onTap': () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => BoloGetStarted()),
-            ),
-      },
-      {
-        'title': 'Suno India',
-        'icon': Icons.headphones,
-        'assetPath': 'assets/images/suno.png',
-        'color': AppColors.darkGreen,
-        'onTap': () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => SunoGetStarted()),
-            ),
-      },
-      {
-        'title': 'Dekho India',
-        'icon': Icons.visibility,
-        'assetPath': 'assets/images/dekho.png',
-        'color': AppColors.grey84,
-        'onTap': () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => DekhoGetStarted()),
-            ),
-      },
-      {
-        'title': 'Likho India',
-        'icon': Icons.edit,
-        'assetPath': 'assets/images/likho.png',
-        'color': AppColors.lightGreen,
-        'onTap': () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => LikhoGetStarted()),
-            ),
-      },
-      // {
-      //   'title': 'Unicode Demo',
-      //   'subtitle': 'Text Validation',
-      //   'icon': Icons.text_fields,
-      //   'color': Colors.purple,
-      //   'onTap': () => Navigator.push(
-      //     context,
-      //     MaterialPageRoute(builder: (_) => UnicodeValidationDemoScreen()),
-      //   ),
-      // },
+    final List<Map<String, dynamic>> allModules = [
+      if (BrandingConfig.instance.boloEnabled)
+        {
+          'title': 'Bolo India',
+          'icon': Icons.mic,
+          'assetPath': 'assets/images/bolo.png',
+          'color': AppColors.orange,
+          'onTap': () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => BoloGetStarted()),
+              ),
+        },
+      if (BrandingConfig.instance.sunoEnabled)
+        {
+          'title': 'Suno India',
+          'icon': Icons.headphones,
+          'assetPath': 'assets/images/suno.png',
+          'color': AppColors.darkGreen,
+          'onTap': () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => SunoGetStarted()),
+              ),
+        },
+      if (BrandingConfig.instance.dekhoEnabled)
+        {
+          'title': 'Dekho India',
+          'icon': Icons.visibility,
+          'assetPath': 'assets/images/dekho.png',
+          'color': AppColors.grey84,
+          'onTap': () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => DekhoGetStarted()),
+              ),
+        },
+      if (BrandingConfig.instance.likhoEnabled)
+        {
+          'title': 'Likho India',
+          'icon': Icons.edit,
+          'assetPath': 'assets/images/likho.png',
+          'color': AppColors.lightGreen,
+          'onTap': () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => LikhoGetStarted()),
+              ),
+        },
     ];
+    return allModules;
   }
 
   Widget _buildModuleTile({

@@ -50,6 +50,15 @@ branding:
   primary_font: ""     # e.g., "assets/fonts/primary_font.ttf"
   secondary_font: ""   # e.g., "assets/fonts/secondary_font.ttf"
   tertiary_font: ""    # e.g., "assets/fonts/tertiary_font.ttf"
+
+# Module Configuration - Control which modules are shown
+modules:
+  bolo_enabled: true    # Voice narration and validation
+  suno_enabled: true    # Speech transcription and validation
+  likho_enabled: true   # Text translation and validation
+  dekho_enabled: true   # Image transcription and validation
+
+  
 # Instructions for customization:
 # 1. Change app.display_name to your desired app name
 # 2. Replace branding.primary_color, secondary_color, accent_color with your brand colors
