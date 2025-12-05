@@ -54,8 +54,8 @@ class QuickTipsDialog extends StatelessWidget {
                   onTap: () => Navigator.pop(context),
                   child: Container(
                     padding: EdgeInsets.all(5.w),
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFFF6B35),
+                    decoration: BoxDecoration(
+                      color: AppColors.orange,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(

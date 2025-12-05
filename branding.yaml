@@ -9,8 +9,8 @@ app:
 
 branding:
   # Primary brand colors (RGBA format: "23, 125, 86, 1")
-  primary_color: "125,25,83,1"
-  secondary_color: "23,210,45,1" 
+  primary_color: ""
+  secondary_color: "" 
   banner_color: "" 
   toast_color: ""
   text_color: ""

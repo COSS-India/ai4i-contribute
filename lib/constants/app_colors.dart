@@ -10,8 +10,11 @@ class AppColors {
   static Color get orange => BrandingConfig.instance.secondaryColor;
   static Color get darkGreen => BrandingConfig.instance.primaryColor;
   static Color get green => Color(0xFF27C854);
-  static Color get lightGreen1 =>Color(0xFFEBFFF5); // textbox bg color
-    static Color get lightGreen5 => Color(0xFF9AF2CE); // textbox border color
+  static Color get lightGreen1 =>
+      BrandingConfig.instance.primaryColor.withOpacity(0.1); // textbox bg color
+  static Color get lightGreen5 =>
+      BrandingConfig.instance.primaryColor.withOpacity(0.3);
+  // textbox border color
 
   static Color get lightGreen =>
       BrandingConfig.instance.primaryColor.withOpacity(0.3);
@@ -68,3 +71,9 @@ class AppColors {
   static const positiveLight = Color.fromRGBO(29, 137, 35, 1);
   static const negativeLight = Color.fromRGBO(209, 57, 36, 1);
 }
+
+
+
+// static Color get green => Color(0xFF27C854);
+//   static Color get lightGreen1 =>Color(0xFFEBFFF5); // textbox bg color
+//     static Color get lightGreen5 => Color(0xFF9AF2CE); // textbox border color
