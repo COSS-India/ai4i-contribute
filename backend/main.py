@@ -1,5 +1,5 @@
 """
-AgriDaan FastAPI Backend
+AI4I - Contribute FastAPI Backend
 Complete implementation with Swagger interface
 """
 from fastapi import FastAPI, HTTPException, Depends, status, Request
@@ -37,213 +37,47 @@ logger = get_logger(__name__) if 'get_logger' in globals() else logging.getLogge
 # Initialize FastAPI app
 app = FastAPI()
 
-"""
-Global unified error envelope for the backend.
-
-Ensures that all errors—regardless of source—are returned in a
-single consistent shape:
-
-{
-    "error": {
-        "code": "<ERROR_CODE>",
-        "message": "<HUMAN_READABLE_MESSAGE>",
-        "info": { ...optional context... },
-        "timestamp": "<UTC_ISO_TIMESTAMP>"
-    }
-}
-"""
-
-import datetime as datetime_module
-
-def make_error(code: str, message: str, info: dict = None, status_code=422):
-    """
-    Construct and return the unified error envelope.
-
-    Parameters:
-        code (str): Machine-friendly error code (e.g. INVALID_LANGUAGE)
-        message (str): Human-readable error message.
-        info (dict|None): Optional dictionary of additional context.
-        status_code (int): HTTP status code for the response.
-
-    Returns:
-        JSONResponse: Error envelope response.
-    """
-    return JSONResponse(
-        status_code=status_code,
-        content={
-            "error": {
-                "code": code,
-                "message": message,
-                "info": info or {},
-                "timestamp": datetime_module.datetime.utcnow().isoformat() + "Z"
-            }
-        }
-    )
-
-def sanitize_errors(errors):
-    """
-    Recursively convert non-serializable values (like Exception objects)
-    into strings so JSONResponse never fails.
-    """
-    if isinstance(errors, list):
-        return [sanitize_errors(e) for e in errors]
-
-    if isinstance(errors, dict):
-        clean = {}
-        for k, v in errors.items():
-            clean[k] = sanitize_errors(v)
-        return clean
-
-    # If value is an exception -> convert to str
-    if isinstance(errors, Exception):
-        return str(errors)
-
-    return errors
-
 @app.exception_handler(ValueError)
-async def value_error_handler(request, exc: ValueError):
-    """
-    Handle ValueError raised by our strict validators inside SubmitRequest.
-
-    Expected format: "ERROR_CODE: message"
-    Example: "INVALID_SCRIPT: field 'transcript' does not match language 'hi'"
-
-    If the format does not match the pattern, fallback to a default code.
-    """
-    text = str(exc)
-
-    # Split "CODE: message" into code + message
-    parts = text.split(":", 1)
-    if len(parts) == 2:
-        code, msg = parts[0].strip(), parts[1].strip()
-    else:
-        code, msg = "VALIDATION_ERROR", text
-
-    return make_error(code, msg, status_code=422)
-
+async def value_error_handler(request: Request, exc: ValueError):
+    return JSONResponse(
+        status_code=422,
+        content=APIResponse(
+            success=False,
+            data=None,
+            error=str(exc)
+        ).model_dump()
+    )
 
 
 @app.exception_handler(RequestValidationError)
-async def request_validation_handler(request, exc: RequestValidationError):
-    """
-    Defensive RequestValidationError handler:
-    - Attempts to sanitize Pydantic errors
-    - If sanitization or JSONResponse construction fails for any reason,
-      falls back to a minimal, guaranteed-serializable envelope.
-    - Logs the full failure (safe to send to file/system) for debugging.
-    """
-    try:
-        # best-effort extract and sanitize
-        raw_errors = exc.errors() if hasattr(exc, "errors") else None
-        safe_errors = None
-        try:
-            # call your existing sanitizer if available
-            if raw_errors is not None and 'sanitize_errors' in globals():
-                safe_errors = sanitize_errors(raw_errors)
-            else:
-                safe_errors = raw_errors
-        except Exception as e:
-            # sanitizer itself failed — fall back to stringified raw errors
-            logger.exception("sanitize_errors failed while handling RequestValidationError")
-            safe_errors = str(raw_errors)
+async def request_validation_handler(request: Request, exc: RequestValidationError):
+    messages = []
+    for err in exc.errors():
+        loc = ".".join(str(x) for x in err.get("loc", []))
+        msg = err.get("msg", "Invalid value")
+        messages.append(f"{loc}: {msg}")
 
-        # Build full envelope content (still small and safe)
-        content = {
-            "error": {
-                "code": "INVALID_REQUEST",
-                "message": "Invalid request payload",
-                "info": safe_errors if safe_errors is not None else {},
-                "timestamp": datetime.utcnow().isoformat()
-            }
-        }
+    final_message = " | ".join(messages) if messages else "Invalid request payload"
 
-        # Final safety: try to JSON-serialize the content (use json.dumps)
-        # This ensures JSONResponse won't blow up inside Starlette.
-        try:
-            import json as _json
-            _json.dumps(content)  # if this raises, we handle in outer except
-        except Exception:
-            # serialization failed — replace info with string fallback
-            logger.exception("Serialization of request-validation envelope failed; falling back to minimal envelope")
-            content = {
-                "error": {
-                    "code": "INVALID_REQUEST",
-                    "message": "Invalid request payload (serialization fallback)",
-                    "info": str(safe_errors),
-                    "timestamp": datetime.utcnow().isoformat()
-                }
-            }
-
-        return JSONResponse(status_code=400, content=content)
-
-    except Exception as top_exc:
-        # If anything at all goes wrong, do not crash — return a minimal, guaranteed-serializable response.
-        # Also log the full traceback to your logs for post-mortem.
-        tb = traceback.format_exc()
-        logger.error("Unhandled exception inside RequestValidationError handler:\n%s", tb)
-        fallback = {
-            "error": {
-                "code": "INVALID_REQUEST",
-                "message": "Invalid request payload (handler failure)",
-                "info": {"error_str": str(top_exc)},
-                "timestamp": datetime.utcnow().isoformat()
-            }
-        }
-        # At this point, returning the fallback should never raise.
-        return JSONResponse(status_code=400, content=fallback)
-
-@app.exception_handler(StarletteHTTPException)
-async def http_exception_handler(request, exc: StarletteHTTPException):
-    """
-    Handle HTTP-level exceptions (e.g., 404, 401, 403).
-
-    Instead of FastAPI default:
-        {"detail": "Not Found"}
-
-    We return:
-        {
-            "error": {
-                "code": "HTTP_ERROR",
-                "message": "Not Found",
-                ...
-            }
-        }
-    """
-    return make_error(
-        "HTTP_ERROR",
-        str(exc.detail),
-        {},
-        status_code=exc.status_code
+    return JSONResponse(
+        status_code=400,
+        content=APIResponse(
+            success=False,
+            data=None,
+            error=final_message
+        ).model_dump()
     )
 
-@app.exception_handler(ValueError)
-async def value_error_handler(request: Request, exc: ValueError):
-    """
-    Handles ValueError exceptions raised by Pydantic validators
-    or internal logic.
 
-    Format supported:
-        "CODE: message"
-
-    If prefix exists before the first ":", use it as `code`.
-    Otherwise fall back to VALIDATION_ERROR.
-    """
-
-    raw = str(exc).strip()
-
-    if ":" in raw:
-        prefix, msg = raw.split(":", 1)
-        code = prefix.strip()
-        message = msg.strip()
-    else:
-        code = "VALIDATION_ERROR"
-        message = raw
-
-    return make_error_envelope(
-        code=code,
-        message=message,
-        info={"path": request.url.path},
-        status_code=400,
+@app.exception_handler(StarletteHTTPException)
+async def http_exception_handler(request: Request, exc: StarletteHTTPException):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content=APIResponse(
+            success=False,
+            data=None,
+            error=str(exc.detail)
+        ).model_dump()
     )
 
 
@@ -275,16 +109,6 @@ app.include_router(suno_router, prefix="/suno")
 app.include_router(likho_router, prefix="/likho")
 app.include_router(dekho_router, prefix="/dekho")
 app.include_router(bolo_router, prefix="/bolo")
-
-# Mount static files
-from modules.suno.routes import SUNO_STATIC_DIR
-
-app.mount(
-    "/suno/static",
-    StaticFiles(directory=SUNO_STATIC_DIR),
-    name="suno_static"
-)
-
 
 
 # Setup middleware
@@ -826,185 +650,6 @@ async def get_system_config():
         }
     )
 
-# # ==================== Contribution Endpoints ====================
-
-# @app.post("/contributions/get-sentences", response_model=GetSentencesResponse, tags=["Contribution"])
-# async def get_sentences(request: GetSentencesRequest):
-#     """Get sentences for recording"""
-#     try:
-#         log_api_call(logger, "/contributions/get-sentences", "POST")
-        
-#         session_id = str(uuid.uuid4())
-#         sentences_data = data_config.get_sentences(request.language, request.count)
-        
-#         # Format sentences with sequence numbers
-#         sentences = []
-#         for i, sentence_data in enumerate(sentences_data, 1):
-#             # Skip sentences without text field
-#             if "text" not in sentence_data:
-#                 continue
-                
-#             sentences.append({
-#                 "sentenceId": sentence_data["sentenceId"],
-#                 "text": sentence_data["text"],
-#                 "sequenceNumber": i,
-#                 "metadata": {
-#                     "category": sentence_data.get("category", "agriculture"),
-#                     "difficulty": sentence_data.get("difficulty", "medium"),
-#                     "topic": sentence_data.get("topic", "general")
-#                 }
-#             })
-        
-#         return GetSentencesResponse(
-#             data={
-#                 "sessionId": session_id,
-#                 "language": request.language,
-#                 "sentences": sentences,
-#                 "totalCount": len(sentences)
-#             }
-#         )
-#     except Exception as e:
-#         log_error(logger, e, {"endpoint": "/contributions/get-sentences", "language": request.language})
-#         raise HTTPException(status_code=500, detail="Internal server error")
-
-# @app.post("/contributions/record", response_model=RecordContributionResponse, tags=["Contribution"])
-# async def record_contribution(request: RecordContributionRequest):
-#     """Submit audio recording"""
-#     contribution_id = str(uuid.uuid4())
-    
-#     return RecordContributionResponse(
-#         data={
-#             "contributionId": contribution_id,
-#             "audioUrl": f"https://storage.example.com/audio/{contribution_id}.mp3",
-#             "duration": request.duration,
-#             "status": "pending",
-#             "sequenceNumber": request.sequenceNumber,
-#             "totalInSession": config.session_contributions_limit,
-#             "remainingInSession": config.session_contributions_limit - request.sequenceNumber,
-#             "progressPercentage": int((request.sequenceNumber / config.session_contributions_limit) * 100)
-#         }
-#     )
-
-# @app.post("/contributions/skip", response_model=Dict[str, Any], tags=["Contribution"])
-# async def skip_sentence(request: SkipSentenceRequest):
-#     """Skip a sentence"""
-#     return {
-#         "success": True,
-#         "message": "Sentence skipped successfully",
-#         "data": {
-#             "skippedSentenceId": request.sentenceId,
-#             "reason": request.reason,
-#             "nextSentence": {
-#                 "sentenceId": f"sent-next",
-#                 "text": f"Next sentence in sequence",
-#                 "sequenceNumber": 1
-#             }
-#         }
-#     }
-
-# @app.post("/contributions/report", response_model=Dict[str, Any], tags=["Contribution"])
-# async def report_sentence(request: ReportSentenceRequest):
-#     """Report issue with sentence"""
-#     return {
-#         "success": True,
-#         "message": "Report submitted. Thank you for your feedback."
-#     }
-
-# @app.post("/contributions/session-complete", response_model=Dict[str, Any], tags=["Contribution"])
-# async def complete_contribution_session(request: Dict[str, str]):
-#     """Complete contribution session"""
-#     return {
-#         "success": True,
-#         "message": "Session completed successfully",
-#         "data": {
-#             "sessionId": request.get("sessionId"),
-#             "totalContributions": config.session_contributions_limit,
-#             "userTotalContributions": 5,
-#             "certificateProgress": {
-#                 "contributionsCompleted": config.session_contributions_limit,
-#                 "contributionsRequired": config.cert_contributions_required,
-#                 "validationsCompleted": 0,
-#                 "validationsRequired": config.cert_validations_required,
-#                 "isEligible": False,
-#                 "percentageComplete": 17
-#             }
-#         }
-#     }
-
-# # ==================== Validation Endpoints ====================
-
-# @app.get("/validations/get-queue", response_model=GetValidationQueueResponse, tags=["Validation"])
-# async def get_validation_queue(language: str, count: int = 25):
-#     """Get validation queue"""
-#     try:
-#         log_api_call(logger, "/validations/get-queue", "GET")
-        
-#         session_id = str(uuid.uuid4())
-#         validation_data = data_config.get_validation_items(language, count)
-        
-#         # Format validation items with sequence numbers
-#         validation_items = []
-#         for i, item_data in enumerate(validation_data, 1):
-#             # Skip items without required fields
-#             if "text" not in item_data or "contributionId" not in item_data:
-#                 continue
-                
-#             validation_items.append({
-#                 "contributionId": item_data["contributionId"],
-#                 "sentenceId": item_data.get("sentenceId", f"sent-{i}"),
-#                 "text": item_data["text"],
-#                 "audioUrl": item_data.get("audioUrl", ""),
-#                 "duration": item_data.get("duration", 0),
-#                 "sequenceNumber": i
-#             })
-        
-#         return GetValidationQueueResponse(
-#             data={
-#                 "sessionId": session_id,
-#                 "language": language,
-#                 "validationItems": validation_items,
-#                 "totalCount": len(validation_items)
-#             }
-#         )
-#     except Exception as e:
-#         log_error(logger, e, {"endpoint": "/validations/get-queue", "language": language})
-#         raise HTTPException(status_code=500, detail="Internal server error")
-
-# @app.post("/validations/submit", response_model=SubmitValidationResponse, tags=["Validation"])
-# async def submit_validation(request: SubmitValidationRequest):
-#     """Submit validation decision"""
-#     validation_id = str(uuid.uuid4())
-    
-#     return SubmitValidationResponse(
-#         data={
-#             "validationId": validation_id,
-#             "sequenceNumber": request.sequenceNumber,
-#             "totalInSession": config.session_validations_limit,
-#             "remainingInSession": config.session_validations_limit - request.sequenceNumber,
-#             "progressPercentage": int((request.sequenceNumber / config.session_validations_limit) * 100)
-#         }
-#     )
-
-# @app.post("/validations/session-complete", response_model=Dict[str, Any], tags=["Validation"])
-# async def complete_validation_session(request: Dict[str, str]):
-#     """Complete validation session"""
-#     return {
-#         "success": True,
-#         "message": "Validation session completed",
-#         "data": {
-#             "sessionId": request.get("sessionId"),
-#             "totalValidations": config.session_validations_limit,
-#             "userTotalValidations": 25,
-#             "certificateProgress": {
-#                 "contributionsCompleted": config.cert_contributions_required,
-#                 "contributionsRequired": config.cert_contributions_required,
-#                 "validationsCompleted": config.session_validations_limit,
-#                 "validationsRequired": config.cert_validations_required,
-#                 "isEligible": True,
-#                 "certificateAvailable": True
-#             }
-#         }
-#     }
 
 # ==================== Certificate Endpoints ====================
 
