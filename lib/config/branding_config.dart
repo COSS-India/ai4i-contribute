@@ -26,13 +26,20 @@ class BrandingConfig {
     }
   }
 
+  // =============================================================================
+  // APP CONFIGURATION
+  // =============================================================================
+  
   /// Get app display name
   String get appDisplayName => _config['app']?['display_name'] ?? 'VoiceGive';
 
   /// Get app icon path
-  String get appIcon =>
-      _config['app']?['app_icon'] ?? 'assets/launcher/ai4i_logo.png';
+  String get appIcon => _config['app']?['app_icon'] ?? 'assets/launcher/ai4i_logo.png';
 
+  // =============================================================================
+  // COLORS
+  // =============================================================================
+  
   /// Get primary brand color
   Color get primaryColor {
     final colorRgba = _config['branding']?['primary_color'];
@@ -75,10 +82,10 @@ class BrandingConfig {
     if (bannerColorRgba.isNotEmpty) {
       return _parseRgbaColor(bannerColorRgba);
     }
-    // Fallback to secondary color
     return secondaryColor;
   }
 
+  /// Get toast color
   Color get toastColor {
     final colorRgba = _config['branding']?['toast_color'] ?? '27, 76, 161, 1';
     if (colorRgba.isEmpty) {
@@ -86,6 +93,12 @@ class BrandingConfig {
     }
     return _parseRgbaColor(colorRgba);
   }
+
+  /// Get banner color string for checking if empty
+  String get bannerColorString => _config['branding']?['banner_color'] ?? '';
+
+  /// Get secondary color string for checking if empty
+  String get secondaryColorString => _config['branding']?['secondary_color'] ?? '';
 
   /// Parse RGBA color string to Color object
   Color _parseRgbaColor(String rgbaString) {
@@ -97,59 +110,47 @@ class BrandingConfig {
       final a = double.tryParse(parts[3].trim()) ?? 1.0;
       return Color.fromRGBO(r, g, b, a);
     }
-    return const Color.fromRGBO(33, 150, 243, 1.0); // Default blue
+    return const Color.fromRGBO(33, 150, 243, 1.0);
   }
 
-  /// Get splash logo path
+  // =============================================================================
+  // IMAGES
+  // =============================================================================
+  
+  /// Splash screen images
   String get splashLogo => _config['branding']?['splash_logo'] ?? '';
-
-  /// Get splash name
-  String get splashName => _config['branding']?['splash_name'] ?? 'Contribute';
-
-  /// Get splash animation path
   String get splashAnimation => _config['branding']?['splash_animation'] ?? '';
-
-  /// Get header image path
-  String get headerPrimaryImage =>
-      _config['branding']?['header_primary_image'] ?? '';
-
-  String get headerSecondaryImage =>
-      _config['branding']?['header_secondary_image'] ?? '';
-
-  String get headerTertiaryImage =>
-      _config['branding']?['header_tertiary_image'] ?? '';
-
+  
+  /// Header images
+  String get headerPrimaryImage => _config['branding']?['header_primary_image'] ?? '';
+  String get headerSecondaryImage => _config['branding']?['header_secondary_image'] ?? '';
+  String get headerTertiaryImage => _config['branding']?['header_tertiary_image'] ?? '';
+  
+  /// Banner and home screen images
   String get bannerImage => _config['branding']?['banner_image'] ?? '';
-
-  String get homeScreenBodyImage =>
-      _config['branding']?['home_screen_body_image'] ?? '';
-
-  String get homeScreenFooterImage =>
-      _config['branding']?['home_screen_footer_image'] ?? '';
-
-  String get homeScreenFooterUrl =>
-      _config['branding']?['home_screen_footer_url'] ?? '';
-
-  /// Get consent document URLs
-  String get termsOfUseUrl => _config['branding']?['terms_of_use_url'] ?? '';
-  String get privacyPolicyUrl =>
-      _config['branding']?['privacy_policy_url'] ?? '';
-  String get copyrightPolicyUrl =>
-      _config['branding']?['copyright_policy_url'] ?? '';
-
-  /// Get badge image
+  String get homeScreenBodyImage => _config['branding']?['home_screen_body_image'] ?? '';
+  String get homeScreenFooterImage => _config['branding']?['home_screen_footer_image'] ?? '';
+  
+  /// Achievement images
   String get badgeImage => _config['branding']?['badge_image'] ?? '';
+  String get certificateImage => _config['branding']?['certificate_image'] ?? '';
 
-  String get certificateImage =>
-      _config['branding']?['certificate_image'] ?? '';
+  // =============================================================================
+  // URLS
+  // =============================================================================
+  
+  /// Home screen footer URL
+  String get homeScreenFooterUrl => _config['branding']?['home_screen_footer_url'] ?? '';
+  
+  /// Legal document URLs
+  String get termsOfUseUrl => _config['branding']?['terms_of_use_url'] ?? '';
+  String get privacyPolicyUrl => _config['branding']?['privacy_policy_url'] ?? '';
+  String get copyrightPolicyUrl => _config['branding']?['copyright_policy_url'] ?? '';
 
-  /// Get banner color string for checking if empty
-  String get bannerColorString => _config['branding']?['banner_color'] ?? '';
-
-  /// Get secondary color string for checking if empty
-  String get secondaryColorString =>
-      _config['branding']?['secondary_color'] ?? '';
-
+  // =============================================================================
+  // FONTS
+  // =============================================================================
+  
   /// Get primary font path
   String get primaryFont => _config['branding']?['primary_font'] ?? '';
 
@@ -159,7 +160,18 @@ class BrandingConfig {
   /// Get tertiary font path
   String get tertiaryFont => _config['branding']?['tertiary_font'] ?? '';
 
-  /// Module configuration getters
+  // =============================================================================
+  // TEXT & LABELS
+  // =============================================================================
+  
+  /// Get splash name
+  String get splashName => _config['branding']?['splash_name'] ?? 'Contribute';
+
+  // =============================================================================
+  // MODULE CONFIGURATION
+  // =============================================================================
+  
+  /// Module enablement flags
   bool get boloEnabled => _config['modules']?['bolo_enabled'] ?? true;
   bool get sunoEnabled => _config['modules']?['suno_enabled'] ?? true;
   bool get likhoEnabled => _config['modules']?['likho_enabled'] ?? true;

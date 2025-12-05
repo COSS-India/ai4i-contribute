@@ -123,9 +123,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _navigateBackToOtp();
       },
       child: Scaffold(
-        appBar: const CustomAppBar(
-          showThreeLogos: true,
-        ),
+        appBar: const CustomAppBar(),
         backgroundColor: AppColors.backgroundColor,
         body: SafeArea(
           child: Column(

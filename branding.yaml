@@ -9,8 +9,8 @@ app:
 
 branding:
   # Primary brand colors (RGBA format: "23, 125, 86, 1")
-  primary_color: ""
-  secondary_color: "" 
+  primary_color: "125,25,83,1"
+  secondary_color: "23,210,45,1" 
   banner_color: "" 
   toast_color: ""
   text_color: ""
@@ -58,7 +58,7 @@ modules:
   likho_enabled: true   # Text translation and validation
   dekho_enabled: true   # Image transcription and validation
 
-  
+
 # Instructions for customization:
 # 1. Change app.display_name to your desired app name
 # 2. Replace branding.primary_color, secondary_color, accent_color with your brand colors

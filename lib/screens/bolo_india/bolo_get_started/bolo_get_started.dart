@@ -93,9 +93,7 @@ class _BoloGetStartedState extends State<BoloGetStarted> {
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: const CustomAppBar(
-        showThreeLogos: true,
-      ),
+      appBar: const CustomAppBar(),
       body: SafeArea(
         child: Column(
           children: [
@@ -132,7 +130,7 @@ class _BoloGetStartedState extends State<BoloGetStarted> {
             //   ]),
             // ),
             BoloHeadersSection(
-                logoAsset: 'assets/images/bolo_header.png',
+              logoAsset: 'assets/images/bolo_header.png',
               title: 'BOLO India',
               subtitle: 'Enrich your language by donating your voice',
               onBackPressed: () => Navigator.pushReplacement(

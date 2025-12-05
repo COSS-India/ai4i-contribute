@@ -90,14 +90,12 @@ class _LikhoGetStartedState extends State<LikhoGetStarted> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: const CustomAppBar(
-        showThreeLogos: true,
-      ),
+      appBar: const CustomAppBar(),
       body: SafeArea(
         child: Column(
           children: [
             BoloHeadersSection(
-                logoAsset: 'assets/images/likho_header.png',
+              logoAsset: 'assets/images/likho_header.png',
               title: 'LIKHO India',
               subtitle: 'Enrich your language by donating your translations',
               onBackPressed: () => Navigator.pushReplacement(

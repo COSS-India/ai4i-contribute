@@ -48,58 +48,57 @@ class _BoloContributeState extends State<BoloContribute> {
       },
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
-        appBar: CustomAppBar(
-          showThreeLogos: true,
-        ),
+        appBar: CustomAppBar(),
         body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              BoloHeadersSection(
-                logoAsset: 'assets/images/bolo_header.png',
-                title: 'Contribution',
-                onBackPressed: () => Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => const ModuleSelectionScreen()),
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                BoloHeadersSection(
+                  logoAsset: 'assets/images/bolo_header.png',
+                  title: 'Contribution',
+                  onBackPressed: () => Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const ModuleSelectionScreen()),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0).r,
-                child: Column(
-                  children: [
-                    ActionsSection(
-                      itemId: 'bolo_item_${currentIndex.value}', // Replace with actual item ID
-                      module: 'bolo',
-                    ),
-                    SizedBox(height: 16.w),
-                    LanguageSelection(
-                      description: AppLocalizations.of(context)!
-                          .selectLanguageForContribution,
-                      initialLanguage: _languageProvider.selectedLanguage,
-                      onLanguageChanged: (value) {
-                        _languageProvider.updateLanguage(value);
-                        currentIndex.value = 0;
-                        setState(() {});
-                      },
-                    ),
-                    SizedBox(height: 24.w),
-                    ValueListenableBuilder<int>(
-                        valueListenable: currentIndex,
-                        builder: (context, index, child) {
-                          return BoloContentSection(
-                            language: _languageProvider.selectedLanguage,
-                            currentIndex: index,
-                            indexUpdate: (value) => setState(() {
-                              currentIndex.value = value;
-                            }),
-                          );
-                        }),
-                  ],
-                ),
-              )
-            ],
-          )),
+                Padding(
+                  padding: const EdgeInsets.all(12.0).r,
+                  child: Column(
+                    children: [
+                      ActionsSection(
+                        itemId:
+                            'bolo_item_${currentIndex.value}', // Replace with actual item ID
+                        module: 'bolo',
+                      ),
+                      SizedBox(height: 16.w),
+                      LanguageSelection(
+                        description: AppLocalizations.of(context)!
+                            .selectLanguageForContribution,
+                        initialLanguage: _languageProvider.selectedLanguage,
+                        onLanguageChanged: (value) {
+                          _languageProvider.updateLanguage(value);
+                          currentIndex.value = 0;
+                          setState(() {});
+                        },
+                      ),
+                      SizedBox(height: 24.w),
+                      ValueListenableBuilder<int>(
+                          valueListenable: currentIndex,
+                          builder: (context, index, child) {
+                            return BoloContentSection(
+                              language: _languageProvider.selectedLanguage,
+                              currentIndex: index,
+                              indexUpdate: (value) => setState(() {
+                                currentIndex.value = value;
+                              }),
+                            );
+                          }),
+                    ],
+                  ),
+                )
+              ],
+            )),
       ),
     );
   }

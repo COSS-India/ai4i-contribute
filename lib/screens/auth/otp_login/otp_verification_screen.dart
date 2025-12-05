@@ -157,9 +157,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       resizeToAvoidBottomInset: true,
-      appBar: const CustomAppBar(
-        showThreeLogos: true,
-      ),
+      appBar: const CustomAppBar(),
       body: SafeArea(
         child: Column(
           children: [

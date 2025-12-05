@@ -4,14 +4,13 @@ import 'package:VoiceGive/common_widgets/consent_modal.dart';
 import 'package:VoiceGive/constants/app_colors.dart';
 import 'package:VoiceGive/constants/app_routes.dart';
 import 'package:VoiceGive/config/branding_config.dart';
-import 'package:VoiceGive/screens/module_selection_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../common_widgets/image_widget.dart';
 import '../../bolo_india/bolo_get_started/bolo_get_started.dart';
 import '../../bolo_india/service/bolo_service.dart';
+import '../../module_selection_screen.dart';
 
 class HomeHeaderSection extends StatefulWidget {
   const HomeHeaderSection({super.key});
@@ -68,26 +67,6 @@ class _HomeHeaderSectionState extends State<HomeHeaderSection> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ShaderMask(
-                            shaderCallback: (bounds) => LinearGradient(
-                              colors: [
-                                AppColors.darkGreen,
-                                AppColors.lightGreen
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ).createShader(Rect.fromLTWH(
-                                0, 0, bounds.width, bounds.height)),
-                            child: Text(
-                              'AgriDaan',
-                              // AppLocalizations.of(context)!.contribute,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
                           Text(
                             AppLocalizations.of(context)!
                                 .empowerIndiasLinguisticDiversity,
@@ -102,15 +81,15 @@ class _HomeHeaderSectionState extends State<HomeHeaderSection> {
                   ),
                 ],
               ),
-              Positioned(
-                top: 20,
-                right: -5,
-                child: ImageWidget(
-                  imageUrl: "assets/images/home_header_image.png",
-                  width: 168.w,
-                  height: 139.h,
-                ),
-              ),
+              // Positioned(
+              //   top: 0,
+              //   right: -20,
+              //   child: ImageWidget(
+              //     imageUrl: "assets/images/home_header_image.png",
+              //     width: 180.w,
+              //     height: 180.h,
+              //   ),
+              // ),
             ],
           ),
           SizedBox(height: 12.w),

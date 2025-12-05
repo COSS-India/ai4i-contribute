@@ -75,7 +75,8 @@ class _SunoValidationScreenState extends State<SunoValidationScreen>
                     child: Column(
                       children: [
                         ActionsSection(
-                          itemId: 'suno_validation_item_$currentIndex', // Replace with actual validation item ID
+                          itemId:
+                              'suno_validation_item_$currentIndex', // Replace with actual validation item ID
                           module: 'suno',
                         ),
                         SizedBox(height: 16.w),

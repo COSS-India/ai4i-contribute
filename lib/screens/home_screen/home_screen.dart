@@ -74,69 +74,69 @@ class _HomeScreenState extends State<HomeScreen> {
         return false;
       },
       child: Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      appBar: CustomAppBar(showThreeLogos: true),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (branding.homeScreenBodyImage.isEmpty) ...[
-                      HomeHeaderSection(),
-                      SizedBox(height: 16.w),
-                    ],
-                    branding.homeScreenBodyImage.isNotEmpty
-                        ? GestureDetector(
-                            onTap: _handleGetStartedAction,
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: ImageWidget(
-                                imageUrl: branding.homeScreenBodyImage,
+        backgroundColor: AppColors.backgroundColor,
+        appBar: CustomAppBar(),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (branding.homeScreenBodyImage.isEmpty) ...[
+                        HomeHeaderSection(),
+                        SizedBox(height: 16.w),
+                      ],
+                      branding.homeScreenBodyImage.isNotEmpty
+                          ? GestureDetector(
+                              onTap: _handleGetStartedAction,
+                              child: SizedBox(
                                 width: double.infinity,
-                                boxFit: BoxFit.cover,
+                                child: ImageWidget(
+                                  imageUrl: branding.homeScreenBodyImage,
+                                  width: double.infinity,
+                                  boxFit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.all(16.0).r,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  HomeAboutSection(),
+                                  SizedBox(height: 24.w),
+                                  HowItWorksSection(),
+                                  SizedBox(height: 36.w),
+                                ],
                               ),
                             ),
-                          )
-                        : Padding(
-                            padding: const EdgeInsets.all(16.0).r,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                HomeAboutSection(),
-                                SizedBox(height: 24.w),
-                                HowItWorksSection(),
-                                SizedBox(height: 36.w),
-                              ],
-                            ),
-                          ),
-                    NeedMoreInfo(),
-                    HomeFooterSection2(),
-                    // if (branding.homeScreenFooterImage.isEmpty) NeedMoreInfo(),
-                    // branding.homeScreenFooterImage.isNotEmpty
-                    //     ? InkWell(
-                    //         onTap: branding.homeScreenFooterUrl.isNotEmpty
-                    //             ? () => _launchUrl(branding.homeScreenFooterUrl)
-                    //             : null,
-                    //         child: SizedBox(
-                    //           width: double.infinity,
-                    //           child: ImageWidget(
-                    //             imageUrl: branding.homeScreenFooterImage,
-                    //             width: double.infinity,
-                    //             boxFit: BoxFit.cover,
-                    //           ),
-                    //         ))
-                    //     : SizedBox.shrink(),
-                  ],
+                      NeedMoreInfo(),
+                      HomeFooterSection(),
+                      // if (branding.homeScreenFooterImage.isEmpty) NeedMoreInfo(),
+                      // branding.homeScreenFooterImage.isNotEmpty
+                      //     ? InkWell(
+                      //         onTap: branding.homeScreenFooterUrl.isNotEmpty
+                      //             ? () => _launchUrl(branding.homeScreenFooterUrl)
+                      //             : null,
+                      //         child: SizedBox(
+                      //           width: double.infinity,
+                      //           child: ImageWidget(
+                      //             imageUrl: branding.homeScreenFooterImage,
+                      //             width: double.infinity,
+                      //             boxFit: BoxFit.cover,
+                      //           ),
+                      //         ))
+                      //     : SizedBox.shrink(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
       ),
     );
   }

@@ -68,9 +68,7 @@ class _SunoCongratulationsScreenState extends State<SunoCongratulationsScreen>
       },
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
-        appBar: CustomAppBar(
-          showThreeLogos: true,
-        ),
+        appBar: CustomAppBar(),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(

@@ -68,9 +68,7 @@ class _BoloCongratulationsScreenState extends State<BoloCongratulationsScreen>
       },
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
-        appBar: CustomAppBar(
-          showThreeLogos: true,
-        ),
+        appBar: CustomAppBar(),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../config/branding_config.dart';
 import 'dekho/dekho_get_started.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ModuleSelectionScreen extends StatefulWidget {
   const ModuleSelectionScreen({super.key});
@@ -60,72 +61,73 @@ class _ModuleSelectionScreenState extends State<ModuleSelectionScreen> {
                           Spacer(),
                         ],
                       ),
-                    SizedBox(height: 40.h),
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Namaste ',
-                              style:
-                                  BrandingConfig.instance.getPrimaryTextStyle(
-                                fontSize: 24.sp,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.orange,
+                      SizedBox(height: 40.h),
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.welcome,
+                                style:
+                                    BrandingConfig.instance.getPrimaryTextStyle(
+                                  fontSize: 24.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.orange,
+                                ),
                               ),
+                              Text(
+                                '🙏',
+                                style: TextStyle(fontSize: 24.sp),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 8.h),
+                          Text(
+                            AppLocalizations.of(context)!.user,
+                            textAlign: TextAlign.center,
+                            style: BrandingConfig.instance.getPrimaryTextStyle(
+                              fontSize: 22.sp,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.orange,
                             ),
-                            Text(
-                              '🙏',
-                              style: TextStyle(fontSize: 24.sp),
+                          ),
+                          SizedBox(height: 16.h),
+                          Text(
+                            AppLocalizations.of(context)!.welcomeToContribute,
+                            textAlign: TextAlign.center,
+                            style: BrandingConfig.instance.getPrimaryTextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.darkGreen,
                             ),
-                          ],
-                        ),
-                        SizedBox(height: 8.h),
-                        Text(
-                          'Contributor/Validator',
-                          textAlign: TextAlign.center,
-                          style: BrandingConfig.instance.getPrimaryTextStyle(
-                            fontSize: 22.sp,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.orange,
                           ),
-                        ),
-                        SizedBox(height: 16.h),
-                        Text(
-                          'Welcome to BhashaDaan',
-                          textAlign: TextAlign.center,
-                          style: BrandingConfig.instance.getPrimaryTextStyle(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.darkGreen,
+                          SizedBox(height: 12.h),
+                          Text(
+                            AppLocalizations.of(context)!
+                                .moduleScreenDescription,
+                            textAlign: TextAlign.center,
+                            style: BrandingConfig.instance.getPrimaryTextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.darkGreen,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 12.h),
-                        Text(
-                          'A movement to strengthen India\'s languages. Your contributions help make technology truly multilingual.',
-                          textAlign: TextAlign.center,
-                          style: BrandingConfig.instance.getPrimaryTextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.darkGreen,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  child: _buildGridView(),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 24.w),
+                    child: _buildGridView(),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
       ),
     );
   }

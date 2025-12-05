@@ -148,7 +148,7 @@ class _SignupScreenState extends State<SignupScreen> {
         child: Scaffold(
           backgroundColor: Colors.white,
           resizeToAvoidBottomInset: true,
-          appBar: const CustomAppBar(showThreeLogos: true,),
+          appBar: const CustomAppBar(),
           body: SafeArea(
             child: Column(
               children: [

@@ -56,9 +56,7 @@ class _BoloValidationScreenState extends State<BoloValidationScreen>
       },
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
-        appBar: CustomAppBar(
-          showThreeLogos: true,
-        ),
+        appBar: CustomAppBar(),
         body: Stack(
           children: [
             SingleChildScrollView(
@@ -79,7 +77,8 @@ class _BoloValidationScreenState extends State<BoloValidationScreen>
                     child: Column(
                       children: [
                         ActionsSection(
-                          itemId: 'bolo_validation_item', // Replace with actual validation item ID
+                          itemId:
+                              'bolo_validation_item', // Replace with actual validation item ID
                           module: 'bolo',
                         ),
                         SizedBox(height: 16.w),

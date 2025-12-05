@@ -90,9 +90,7 @@ class _DekhoGetStartedState extends State<DekhoGetStarted> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: const CustomAppBar(
-        showThreeLogos: true,
-      ),
+      appBar: const CustomAppBar(),
       body: SafeArea(
         child: Column(
           children: [

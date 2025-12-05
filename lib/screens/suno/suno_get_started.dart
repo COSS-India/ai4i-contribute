@@ -92,12 +92,12 @@ class _SunoGetStartedState extends State<SunoGetStarted> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: const CustomAppBar(showThreeLogos: true,),
+      appBar: const CustomAppBar(),
       body: SafeArea(
         child: Column(
           children: [
             BoloHeadersSection(
-                logoAsset: 'assets/images/suno_header.png',
+              logoAsset: 'assets/images/suno_header.png',
               title: 'SUNO India',
               subtitle: 'Enrich your language by listening to audio',
               onBackPressed: () => Navigator.pushReplacement(
