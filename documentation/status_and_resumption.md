@@ -24,3 +24,4 @@
 - Workflow documentation
 - Configuration guide
 - contracts.yaml
+- code cleanup
