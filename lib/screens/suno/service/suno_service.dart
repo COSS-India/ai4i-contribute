@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:VoiceGive/constants/api_url.dart';
+import 'package:ai4i_contribute/constants/api_url.dart';
 import '../models/suno_item_model.dart';
 import '../models/suno_validation_model.dart';
 

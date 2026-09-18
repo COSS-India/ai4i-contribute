@@ -1,14 +1,14 @@
-import 'package:VoiceGive/common_widgets/primary_button_widget.dart';
-import 'package:VoiceGive/constants/app_colors.dart';
-import 'package:VoiceGive/constants/helper.dart';
-import 'package:VoiceGive/screens/bolo_india/models/bolo_validate_model.dart';
-import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
-import 'package:VoiceGive/screens/bolo_india/models/validation_submit_model.dart';
-import 'package:VoiceGive/screens/bolo_india/repository/bolo_validate_repository.dart';
-import 'package:VoiceGive/screens/bolo_india/widgets/bolo_content_skeleton.dart';
+import 'package:ai4i_contribute/common_widgets/primary_button_widget.dart';
+import 'package:ai4i_contribute/constants/app_colors.dart';
+import 'package:ai4i_contribute/constants/helper.dart';
+import 'package:ai4i_contribute/screens/bolo_india/models/bolo_validate_model.dart';
+import 'package:ai4i_contribute/screens/bolo_india/models/language_model.dart';
+import 'package:ai4i_contribute/screens/bolo_india/models/validation_submit_model.dart';
+import 'package:ai4i_contribute/screens/bolo_india/repository/bolo_validate_repository.dart';
+import 'package:ai4i_contribute/screens/bolo_india/widgets/bolo_content_skeleton.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:VoiceGive/screens/bolo_india/bolo_validation_screen/widgets/audio_player_buttons.dart';
-import 'package:VoiceGive/screens/bolo_india/bolo_congratulations_screen.dart';
+import 'package:ai4i_contribute/screens/bolo_india/bolo_validation_screen/widgets/audio_player_buttons.dart';
+import 'package:ai4i_contribute/screens/bolo_india/bolo_congratulations_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

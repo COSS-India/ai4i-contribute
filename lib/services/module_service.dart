@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
-import 'package:VoiceGive/models/module_status_model.dart';
-import 'package:VoiceGive/models/module_sample_model.dart';
+import 'package:ai4i_contribute/models/module_status_model.dart';
+import 'package:ai4i_contribute/models/module_sample_model.dart';
 
 class ModuleService {
   static const String baseUrl = 'http://10.0.2.2:9000'; // Use 10.0.2.2 for Android emulator

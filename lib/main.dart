@@ -1,15 +1,15 @@
-import 'package:VoiceGive/constants/app_constants.dart';
-import 'package:VoiceGive/constants/app_theme.dart';
-import 'package:VoiceGive/screens/splash_screen/splash_screen.dart';
-import 'package:VoiceGive/util/routes.dart';
+import 'package:ai4i_contribute/constants/app_constants.dart';
+import 'package:ai4i_contribute/constants/app_theme.dart';
+import 'package:ai4i_contribute/screens/splash_screen/splash_screen.dart';
+import 'package:ai4i_contribute/util/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:VoiceGive/config/app_config.dart';
-import 'package:VoiceGive/config/branding_config.dart';
-import 'package:VoiceGive/services/auth_manager.dart';
+import 'package:ai4i_contribute/config/app_config.dart';
+import 'package:ai4i_contribute/config/branding_config.dart';
+import 'package:ai4i_contribute/services/auth_manager.dart';
 import 'package:provider/provider.dart';
-import 'package:VoiceGive/providers/auth_provider.dart';
+import 'package:ai4i_contribute/providers/auth_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

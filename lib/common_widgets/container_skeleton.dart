@@ -1,4 +1,4 @@
-import 'package:VoiceGive/constants/app_colors.dart';
+import 'package:ai4i_contribute/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ContainerSkeleton extends StatefulWidget {

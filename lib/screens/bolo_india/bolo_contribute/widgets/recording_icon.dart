@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:VoiceGive/common_widgets/audio_player/custom_audio_player.dart';
-import 'package:VoiceGive/constants/app_colors.dart';
-import 'package:VoiceGive/constants/helper.dart';
+import 'package:ai4i_contribute/common_widgets/audio_player/custom_audio_player.dart';
+import 'package:ai4i_contribute/constants/app_colors.dart';
+import 'package:ai4i_contribute/constants/helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

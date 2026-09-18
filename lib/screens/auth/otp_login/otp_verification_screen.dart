@@ -1,4 +1,4 @@
-import 'package:VoiceGive/screens/profile_screen/screens/profile_screen.dart';
+import 'package:ai4i_contribute/screens/profile_screen/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

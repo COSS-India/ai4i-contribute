@@ -1,12 +1,12 @@
-import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
-import 'package:VoiceGive/common_widgets/searchable_bottom_sheet/searchable_boottosheet_content.dart';
-import 'package:VoiceGive/constants/app_colors.dart';
-import 'package:VoiceGive/screens/profile_screen/model/age_group_model.dart';
-import 'package:VoiceGive/screens/profile_screen/repository/profile_repository.dart';
+import 'package:ai4i_contribute/common_widgets/custom_app_bar.dart';
+import 'package:ai4i_contribute/common_widgets/searchable_bottom_sheet/searchable_boottosheet_content.dart';
+import 'package:ai4i_contribute/constants/app_colors.dart';
+import 'package:ai4i_contribute/screens/profile_screen/model/age_group_model.dart';
+import 'package:ai4i_contribute/screens/profile_screen/repository/profile_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:VoiceGive/screens/auth/otp_login/otp_verification_screen.dart';
-import 'package:VoiceGive/screens/home_screen/home_screen.dart';
-import 'package:VoiceGive/screens/profile_screen/screens/other_information_screen.dart';
+import 'package:ai4i_contribute/screens/auth/otp_login/otp_verification_screen.dart';
+import 'package:ai4i_contribute/screens/home_screen/home_screen.dart';
+import 'package:ai4i_contribute/screens/profile_screen/screens/other_information_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

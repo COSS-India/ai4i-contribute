@@ -1,10 +1,10 @@
-import 'package:VoiceGive/common_widgets/primary_button_widget.dart';
-import 'package:VoiceGive/constants/app_colors.dart';
-import 'package:VoiceGive/constants/helper.dart';
-import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
-import 'package:VoiceGive/common_widgets/audio_player/custom_audio_player.dart';
-import 'package:VoiceGive/common_widgets/unicode_validation_text_field.dart';
-import 'package:VoiceGive/screens/suno/suno_congratulations_screen.dart';
+import 'package:ai4i_contribute/common_widgets/primary_button_widget.dart';
+import 'package:ai4i_contribute/constants/app_colors.dart';
+import 'package:ai4i_contribute/constants/helper.dart';
+import 'package:ai4i_contribute/screens/bolo_india/models/language_model.dart';
+import 'package:ai4i_contribute/common_widgets/audio_player/custom_audio_player.dart';
+import 'package:ai4i_contribute/common_widgets/unicode_validation_text_field.dart';
+import 'package:ai4i_contribute/screens/suno/suno_congratulations_screen.dart';
 import '../../../common_widgets/audio_player/suno_validation_audio_player.dart';
 import '../../../common_widgets/audio_player/widgets/validation_audio_player_skeleton.dart';
 import '../models/suno_validation_model.dart';

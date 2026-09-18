@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:VoiceGive/constants/app_colors.dart';
-import 'package:VoiceGive/config/branding_config.dart';
+import 'package:ai4i_contribute/constants/app_colors.dart';
+import 'package:ai4i_contribute/config/branding_config.dart';
 
 class ImageViewerWidget extends StatefulWidget {
   final String imageUrl;

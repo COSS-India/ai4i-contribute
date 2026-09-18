@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:VoiceGive/constants/network_headers.dart';
-import 'package:VoiceGive/models/auth/consent_response.dart';
+import 'package:ai4i_contribute/constants/network_headers.dart';
+import 'package:ai4i_contribute/models/auth/consent_response.dart';
 import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:http/http.dart' as http;
 import '../config/app_config.dart';

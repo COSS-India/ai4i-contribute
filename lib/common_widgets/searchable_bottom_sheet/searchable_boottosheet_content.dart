@@ -1,5 +1,5 @@
-import 'package:VoiceGive/common_widgets/searchable_bottom_sheet/widgets/bottom_field_search_field.dart';
-import 'package:VoiceGive/common_widgets/searchable_bottom_sheet/widgets/bottom_sheet_items.dart';
+import 'package:ai4i_contribute/common_widgets/searchable_bottom_sheet/widgets/bottom_field_search_field.dart';
+import 'package:ai4i_contribute/common_widgets/searchable_bottom_sheet/widgets/bottom_sheet_items.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

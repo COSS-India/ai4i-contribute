@@ -32,7 +32,7 @@ class BrandingConfig {
       'app': {
         'name': 'Bhashadaan',
         'display_name': 'Bhashadaan',
-        'package_id': 'com.voicegive.app',
+        'package_id': 'org.ai4voice.ai4icontribute',
       },
       'branding': {
         'primary_color': '21, 125, 82, 1',

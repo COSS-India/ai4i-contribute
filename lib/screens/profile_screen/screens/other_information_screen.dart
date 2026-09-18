@@ -1,10 +1,10 @@
-import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
-import 'package:VoiceGive/common_widgets/searchable_bottom_sheet/searchable_boottosheet_content.dart';
-import 'package:VoiceGive/constants/app_colors.dart';
-import 'package:VoiceGive/screens/module_selection_screen.dart';
-import 'package:VoiceGive/screens/profile_screen/model/country_model.dart';
+import 'package:ai4i_contribute/common_widgets/custom_app_bar.dart';
+import 'package:ai4i_contribute/common_widgets/searchable_bottom_sheet/searchable_boottosheet_content.dart';
+import 'package:ai4i_contribute/constants/app_colors.dart';
+import 'package:ai4i_contribute/screens/module_selection_screen.dart';
+import 'package:ai4i_contribute/screens/profile_screen/model/country_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:VoiceGive/screens/bolo_india/bolo_get_started/bolo_get_started.dart';
+import 'package:ai4i_contribute/screens/bolo_india/bolo_get_started/bolo_get_started.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

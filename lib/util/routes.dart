@@ -1,7 +1,7 @@
-import 'package:VoiceGive/common_widgets/fade_route.dart';
-import 'package:VoiceGive/constants/app_routes.dart';
-import 'package:VoiceGive/screens/bolo_india/bolo_contribute/bolo_contribute.dart';
-import 'package:VoiceGive/screens/home_screen/home_screen.dart';
+import 'package:ai4i_contribute/common_widgets/fade_route.dart';
+import 'package:ai4i_contribute/constants/app_routes.dart';
+import 'package:ai4i_contribute/screens/bolo_india/bolo_contribute/bolo_contribute.dart';
+import 'package:ai4i_contribute/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../common_widgets/error_page.dart';

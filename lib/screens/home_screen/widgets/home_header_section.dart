@@ -1,10 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:VoiceGive/common_widgets/consent_modal.dart';
-import 'package:VoiceGive/constants/app_colors.dart';
-import 'package:VoiceGive/constants/app_routes.dart';
-import 'package:VoiceGive/config/branding_config.dart';
-import 'package:VoiceGive/screens/module_selection_screen.dart';
+import 'package:ai4i_contribute/common_widgets/consent_modal.dart';
+import 'package:ai4i_contribute/constants/app_colors.dart';
+import 'package:ai4i_contribute/constants/app_routes.dart';
+import 'package:ai4i_contribute/config/branding_config.dart';
+import 'package:ai4i_contribute/screens/module_selection_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

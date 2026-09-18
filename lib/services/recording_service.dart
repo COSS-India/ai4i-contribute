@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
-import 'package:VoiceGive/config/app_config.dart';
+import 'package:ai4i_contribute/config/app_config.dart';
 import 'package:flutter/foundation.dart';
 
 class RecordingService {

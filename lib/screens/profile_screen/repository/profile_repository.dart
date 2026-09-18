@@ -1,4 +1,4 @@
-import 'package:VoiceGive/screens/profile_screen/service/profile_service.dart';
+import 'package:ai4i_contribute/screens/profile_screen/service/profile_service.dart';
 import 'package:flutter/material.dart';
 
 import '../model/age_group_model.dart';

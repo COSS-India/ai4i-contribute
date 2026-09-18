@@ -1,4 +1,4 @@
-import 'package:VoiceGive/common_widgets/image_widget.dart';
+import 'package:ai4i_contribute/common_widgets/image_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

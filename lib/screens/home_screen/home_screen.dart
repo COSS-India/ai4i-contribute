@@ -1,18 +1,18 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:VoiceGive/common_widgets/consent_modal.dart';
-import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
-import 'package:VoiceGive/common_widgets/image_widget.dart';
-import 'package:VoiceGive/constants/app_colors.dart';
-import 'package:VoiceGive/constants/app_routes.dart';
-import 'package:VoiceGive/screens/bolo_india/bolo_get_started/bolo_get_started.dart';
-import 'package:VoiceGive/screens/bolo_india/service/bolo_service.dart';
-import 'package:VoiceGive/screens/home_screen/widgets/home_about_section.dart';
-import 'package:VoiceGive/screens/home_screen/widgets/home_footer_section2.dart';
-import 'package:VoiceGive/screens/home_screen/widgets/home_header_section.dart';
-import 'package:VoiceGive/screens/home_screen/widgets/how_it_works_section.dart';
-import 'package:VoiceGive/screens/home_screen/widgets/need_more_info.dart';
-import 'package:VoiceGive/screens/module_selection_screen.dart';
+import 'package:ai4i_contribute/common_widgets/consent_modal.dart';
+import 'package:ai4i_contribute/common_widgets/custom_app_bar.dart';
+import 'package:ai4i_contribute/common_widgets/image_widget.dart';
+import 'package:ai4i_contribute/constants/app_colors.dart';
+import 'package:ai4i_contribute/constants/app_routes.dart';
+import 'package:ai4i_contribute/screens/bolo_india/bolo_get_started/bolo_get_started.dart';
+import 'package:ai4i_contribute/screens/bolo_india/service/bolo_service.dart';
+import 'package:ai4i_contribute/screens/home_screen/widgets/home_about_section.dart';
+import 'package:ai4i_contribute/screens/home_screen/widgets/home_footer_section2.dart';
+import 'package:ai4i_contribute/screens/home_screen/widgets/home_header_section.dart';
+import 'package:ai4i_contribute/screens/home_screen/widgets/how_it_works_section.dart';
+import 'package:ai4i_contribute/screens/home_screen/widgets/need_more_info.dart';
+import 'package:ai4i_contribute/screens/module_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';

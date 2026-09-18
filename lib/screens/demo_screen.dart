@@ -1,10 +1,10 @@
-import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
-import 'package:VoiceGive/common_widgets/image_widget.dart';
-import 'package:VoiceGive/constants/app_colors.dart';
-import 'package:VoiceGive/models/module_status_model.dart';
-import 'package:VoiceGive/models/module_sample_model.dart';
-import 'package:VoiceGive/screens/module_selection_screen.dart';
-import 'package:VoiceGive/services/module_service.dart';
+import 'package:ai4i_contribute/common_widgets/custom_app_bar.dart';
+import 'package:ai4i_contribute/common_widgets/image_widget.dart';
+import 'package:ai4i_contribute/constants/app_colors.dart';
+import 'package:ai4i_contribute/models/module_status_model.dart';
+import 'package:ai4i_contribute/models/module_sample_model.dart';
+import 'package:ai4i_contribute/screens/module_selection_screen.dart';
+import 'package:ai4i_contribute/services/module_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../config/branding_config.dart';

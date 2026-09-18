@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:VoiceGive/constants/api_url.dart';
-import 'package:VoiceGive/constants/network_headers.dart';
+import 'package:ai4i_contribute/constants/api_url.dart';
+import 'package:ai4i_contribute/constants/network_headers.dart';
 import 'package:http/http.dart';
 import 'package:flutter/foundation.dart';
 import 'likho_item_model.dart';

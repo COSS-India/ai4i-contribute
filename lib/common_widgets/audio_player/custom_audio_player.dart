@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:VoiceGive/common_widgets/audio_player/widgets/audio_player_skeleton.dart';
-import 'package:VoiceGive/constants/app_colors.dart';
+import 'package:ai4i_contribute/common_widgets/audio_player/widgets/audio_player_skeleton.dart';
+import 'package:ai4i_contribute/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_audio/just_audio.dart';

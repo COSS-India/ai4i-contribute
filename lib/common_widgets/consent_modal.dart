@@ -1,7 +1,7 @@
-import 'package:VoiceGive/common_widgets/page_loader.dart';
-import 'package:VoiceGive/constants/helper.dart';
-import 'package:VoiceGive/models/auth/consent_response.dart';
-import 'package:VoiceGive/services/auth_service.dart';
+import 'package:ai4i_contribute/common_widgets/page_loader.dart';
+import 'package:ai4i_contribute/constants/helper.dart';
+import 'package:ai4i_contribute/models/auth/consent_response.dart';
+import 'package:ai4i_contribute/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../constants/app_colors.dart';

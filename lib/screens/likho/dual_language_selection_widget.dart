@@ -1,8 +1,8 @@
-import 'package:VoiceGive/common_widgets/language_searchable_bottom_sheet/searchable_boottosheet_content.dart';
-import 'package:VoiceGive/constants/app_colors.dart';
-import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
-import 'package:VoiceGive/screens/bolo_india/service/bolo_service.dart';
-import 'package:VoiceGive/providers/likho_language_provider.dart';
+import 'package:ai4i_contribute/common_widgets/language_searchable_bottom_sheet/searchable_boottosheet_content.dart';
+import 'package:ai4i_contribute/constants/app_colors.dart';
+import 'package:ai4i_contribute/screens/bolo_india/models/language_model.dart';
+import 'package:ai4i_contribute/screens/bolo_india/service/bolo_service.dart';
+import 'package:ai4i_contribute/providers/likho_language_provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

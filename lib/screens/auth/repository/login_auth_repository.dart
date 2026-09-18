@@ -1,4 +1,4 @@
-import 'package:VoiceGive/screens/auth/model/auth_model.dart';
+import 'package:ai4i_contribute/screens/auth/model/auth_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants/storage_constants.dart';

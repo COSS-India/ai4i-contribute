@@ -1,8 +1,8 @@
-import 'package:VoiceGive/constants/app_colors.dart';
-import 'package:VoiceGive/config/branding_config.dart';
-import 'package:VoiceGive/screens/dekho/quick_tips_dialog.dart';
-import 'package:VoiceGive/screens/dekho/report_content_dialog.dart';
-import 'package:VoiceGive/screens/bolo_india/widgets/test_speakers_dialog.dart';
+import 'package:ai4i_contribute/constants/app_colors.dart';
+import 'package:ai4i_contribute/config/branding_config.dart';
+import 'package:ai4i_contribute/screens/dekho/quick_tips_dialog.dart';
+import 'package:ai4i_contribute/screens/dekho/report_content_dialog.dart';
+import 'package:ai4i_contribute/screens/bolo_india/widgets/test_speakers_dialog.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

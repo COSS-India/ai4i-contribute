@@ -1,5 +1,5 @@
-import 'package:VoiceGive/constants/app_colors.dart';
-import 'package:VoiceGive/config/branding_config.dart';
+import 'package:ai4i_contribute/constants/app_colors.dart';
+import 'package:ai4i_contribute/config/branding_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,7 +18,7 @@ class _HomeAboutSectionState extends State<HomeAboutSection> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          AppLocalizations.of(context)!.whatIsVoiceGive,
+          AppLocalizations.of(context)!.whatIsAi4iContribute,
           style: BrandingConfig.instance.getPrimaryTextStyle(
             color: AppColors.darkGreen,
             fontSize: 18.sp,
@@ -27,7 +27,7 @@ class _HomeAboutSectionState extends State<HomeAboutSection> {
         ),
         SizedBox(height: 16.w),
         Text(
-          AppLocalizations.of(context)!.voiceGiveDescription,
+          AppLocalizations.of(context)!.ai4iContributeDescription,
           style: BrandingConfig.instance.getPrimaryTextStyle(
             color: AppColors.greys87,
             fontSize: 14.sp,

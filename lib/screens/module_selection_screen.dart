@@ -1,8 +1,8 @@
-import 'package:VoiceGive/constants/app_colors.dart';
-import 'package:VoiceGive/screens/bolo_india/bolo_get_started/bolo_get_started.dart';
-import 'package:VoiceGive/screens/suno/suno_get_started.dart';
-import 'package:VoiceGive/screens/likho/likho_get_started.dart';
-import 'package:VoiceGive/screens/home_screen/home_screen.dart';
+import 'package:ai4i_contribute/constants/app_colors.dart';
+import 'package:ai4i_contribute/screens/bolo_india/bolo_get_started/bolo_get_started.dart';
+import 'package:ai4i_contribute/screens/suno/suno_get_started.dart';
+import 'package:ai4i_contribute/screens/likho/likho_get_started.dart';
+import 'package:ai4i_contribute/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../config/branding_config.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:VoiceGive/services/password_encryption_service.dart';
+import 'package:ai4i_contribute/services/password_encryption_service.dart';
 
 void main() {
   group('PasswordEncryptionService Tests', () {

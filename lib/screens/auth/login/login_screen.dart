@@ -1,5 +1,5 @@
-import 'package:VoiceGive/screens/bolo_india/bolo_contribute/bolo_contribute.dart';
-import 'package:VoiceGive/config/branding_config.dart';
+import 'package:ai4i_contribute/screens/bolo_india/bolo_contribute/bolo_contribute.dart';
+import 'package:ai4i_contribute/config/branding_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';

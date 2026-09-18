@@ -1,5 +1,5 @@
-import 'package:VoiceGive/common_widgets/image_widget.dart';
-import 'package:VoiceGive/constants/app_colors.dart';
+import 'package:ai4i_contribute/common_widgets/image_widget.dart';
+import 'package:ai4i_contribute/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

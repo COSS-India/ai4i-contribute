@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:VoiceGive/constants/api_url.dart';
+import 'package:ai4i_contribute/constants/api_url.dart';
 import 'dekho_item_model.dart';
 import 'dekho_validation_model.dart';
 

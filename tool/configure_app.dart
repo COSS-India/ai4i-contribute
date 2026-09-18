@@ -1,7 +1,6 @@
 #!/usr/bin/env dart
 
 import 'dart:io';
-import 'dart:convert';
 import 'dart:developer' as developer;
 import 'package:yaml/yaml.dart';
 
@@ -17,25 +16,25 @@ class ValidationConstants {
 void log(String message) {
   if (bool.fromEnvironment('dart.vm.product')) {
     // In production, use developer.log
-    developer.log(message, name: 'VoiceGive Config');
+    developer.log(message, name: 'AI4I Contribute Config');
   } else {
     // In development, use print for visibility
     print(message);
   }
 }
 
-/// Build-time configuration script for VoiceGive
+/// Build-time configuration script for AI4I Contribute
 /// This script configures the app name and package ID based on branding.yaml and environment
 void main(List<String> arguments) async {
   final environment = arguments.isNotEmpty ? arguments[0] : 'development';
 
-  log('🔧 Configuring VoiceGive for environment: $environment');
+  log('🔧 Configuring AI4I Contribute for environment: $environment');
 
   try {
     // Use default configuration
     final appName = 'Bhashadaan';
     final displayName = 'Bhashadaan';
-    final packageId = 'com.voicegive.app';
+    final packageId = 'org.ai4voice.ai4icontribute';
 
     // Get environment-specific suffix
     final suffix = environment == 'production'

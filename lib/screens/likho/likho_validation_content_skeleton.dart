@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:VoiceGive/constants/app_colors.dart';
+import 'package:ai4i_contribute/constants/app_colors.dart';
 
 class LikhoValidationContentSkeleton extends StatelessWidget {
   const LikhoValidationContentSkeleton({super.key});

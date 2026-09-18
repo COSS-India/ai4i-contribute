@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:VoiceGive/common_widgets/custom_app_bar.dart';
-import 'package:VoiceGive/common_widgets/unicode_validation_text_field.dart';
-import 'package:VoiceGive/constants/app_colors.dart';
-import 'package:VoiceGive/config/branding_config.dart';
-import 'package:VoiceGive/screens/bolo_india/models/language_model.dart';
+import 'package:ai4i_contribute/common_widgets/custom_app_bar.dart';
+import 'package:ai4i_contribute/common_widgets/unicode_validation_text_field.dart';
+import 'package:ai4i_contribute/constants/app_colors.dart';
+import 'package:ai4i_contribute/config/branding_config.dart';
+import 'package:ai4i_contribute/screens/bolo_india/models/language_model.dart';
 
 class UnicodeValidationDemoScreen extends StatefulWidget {
   const UnicodeValidationDemoScreen({super.key});
