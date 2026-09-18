@@ -1,10 +1,10 @@
-# Branding Configuration for VoiceGive
+# Branding Configuration for AI4I Contribute
 # This file controls all branding elements of the app
 # Modify this file to customize the app for different organizations
 
 # App Name and Logo
 app:
-  display_name: "Voicegive"
+  display_name: "AI4I Contribute"
   app_icon: ""
 
 branding:

@@ -3,7 +3,7 @@
 ### Key Directories
 
 ```
-VoiceGive/
+ai4i-contribute/
 ├── android/                 # Android-specific configuration
 ├── ios/                     # iOS-specific configuration
 ├── lib/                     # Main Dart code

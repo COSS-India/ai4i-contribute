@@ -1,8 +1,8 @@
-# VoiceGive Project Setup Guide
+# AI4I Contribute Project Setup Guide
 
 ## Project Overview
 
-VoiceGive is a Flutter-based UI application designed for language data collection and crowdsourcing initiatives. This project provides a complete, customizable user interface that can be adopted by organizations, government agencies, and developers to build their own language data collection applications with features like voice recording, text validation, and multi-language support.
+AI4I Contribute is a Flutter-based UI application designed for language data collection and crowdsourcing initiatives. This project provides a complete, customizable user interface that can be adopted by organizations, government agencies, and developers to build their own language data collection applications with features like voice recording, text validation, and multi-language support.
 
 The UI is built on a Swagger API specification, making it adaptable for different implementations. Adopters can:
 
@@ -13,7 +13,7 @@ The UI is built on a Swagger API specification, making it adaptable for differen
 
 ## Prerequisites
 
-Before setting up the VoiceGive project, ensure you have the following software and tools installed:
+Before setting up the AI4I Contribute project, ensure you have the following software and tools installed:
 
 ### Required Software
 - **Flutter 3.27.1 • channel [user-branch] • unknown source
@@ -91,7 +91,7 @@ Before setting up the VoiceGive project, ensure you have the following software 
 
 ```bash
 git clone <repository-url>
-cd VoiceGive
+cd ai4i-contribute
 ```
 
 ### 2. Verify Flutter Installation
