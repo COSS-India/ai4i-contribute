@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
-  title: VoiceGive API
+  title: AI4I Contribute API
   description: |
-    VoiceGive is a mobile friendly application designed for language data (Voice based) collection 
+    AI4I Contribute is a mobile friendly application designed for language data (Voice based) collection
     and crowdsourcing initiatives. This project provides a complete, customizable user interface 
     that can be adopted by organizations, government agencies, and developers to build their own 
     language voice data collection applications.
@@ -13,8 +13,8 @@ info:
     
   version: 1.0.0
   contact:
-    name: VoiceGive Support
-    email: voicegive.ai4x@gmail.com
+    name: AI4I Contribute Support
+    email: info@ai4inclusion.org
   license:
     name: MIT
 
@@ -141,7 +141,7 @@ paths:
                         example: "This number isn't registered with us."
                       supportEmail:
                         type: string
-                        example: "voicegive.ai4x@gmail.com"
+                        example: "info@ai4inclusion.org"
                       contactMessage:
                         type: string
                         example: "Please contact admin to continue."
@@ -2043,7 +2043,7 @@ components:
           properties:
             supportEmail:
               type: string
-              example: "voicegive.ai4x@gmail.com"
+              example: "info@ai4inclusion.org"
               description: Support email address
             supportPhone:
               type: string
